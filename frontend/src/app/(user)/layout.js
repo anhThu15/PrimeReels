@@ -1,8 +1,8 @@
 import localFont from "next/font/local";
-import "./globals.css";
-import "../../public/bootstrap/css/bootstrap.min.css";
-import HeaderUser from "./layout/user/header";
-import FooterUser from "./layout/user/footer";
+import "../globals.css";
+import "../../../public/bootstrap/css/bootstrap.min.css";
+import HeaderUser from "../layout/user/header";
+import FooterUser from "../layout/user/footer";
 
 export default function RootLayout({ children }) {
   return (
