@@ -5,8 +5,8 @@ export default function Home() {
   
   return (
     <>
-     <div className="container-fluid " style={{backgroundColor:"#283237", width:"100%", height:"83vh"}}>
-        <div className="container">
+     <div className="container-fluid d-flex justify-content-center pt-3" style={{backgroundColor:"#283237", width:"100%", height:"83vh"}}>
+        <div className="containerVipPro font-monospace bg-dark h-100 " data-bs-theme="dark">
             
         </div>
      </div>

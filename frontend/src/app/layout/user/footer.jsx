@@ -3,7 +3,7 @@ import "../../../app/globals.css"
 export default function FooterUser(){
     return(
         <>
-        <div className="container-fluid d-flex justify-content-center" style={{backgroundColor:"#283237"}}>
+        <div className="container-fluid d-flex justify-content-center pt-3" style={{backgroundColor:"#283237"}}>
             <div className="containerVipPro" >
                 <nav class="navbar navbar-expand-lg bg-dark " data-bs-theme="dark" >
                   <div class="container">
