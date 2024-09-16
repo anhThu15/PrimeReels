@@ -15,7 +15,7 @@ export default function FooterUser(){
                       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item me-3 font-monospace">
                           <a class="nav-link active" aria-current="page" href="#">XEM PHIM</a>
-                          <div className="segment mt-2"></div>
+                          <div className="segment"></div>
                         </li>
                         <li class="nav-item me-3 font-monospace">
                           <a class="nav-link " aria-current="page" href="#">VỀ CHÚNG TÔI</a>

@@ -47,7 +47,7 @@ export default function HeaderUser(){
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                       <a class="nav-link active me-3  font-monospace" aria-current="page" href="#">TRANG CHỦ</a>
-                      <div className="segment mt-2"></div>
+                      <div className="segment"></div>
                     </li>
                     <li class="nav-item">
                       <button class="nav-link custom-tooltip me-3 font-monospace" data-bs-toggle="tooltip" data-bs-placement="bottom" 
