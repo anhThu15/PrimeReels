@@ -17,3 +17,25 @@
 .bg-nenVipPro{
   background-color: #101416;
 }
+
+.homnayxemgi{
+  background-color: #bfe661;
+  height: 6px;
+}
+.homnayxemgi2{
+  background-color: white;
+  height: 1px;
+}
+
+/* CSS */
+.card-subtitle {
+  font-size: 16px; /* Kích thước chữ mặc định */
+  transition: font-size 0.3s, color 0.3s, text-shadow 0.3s;
+  cursor: pointer;
+}
+
+.card-subtitle:hover {
+  font-size: 18px; /* Kích thước chữ khi hover */
+  color: #f0a; /* Màu chữ khi hover */
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); /* Đổ bóng chữ khi hover */
+}
