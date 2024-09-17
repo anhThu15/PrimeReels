@@ -39,3 +39,33 @@
   color: #f0a; /* Màu chữ khi hover */
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); /* Đổ bóng chữ khi hover */
 }
+
+
+/* Hiệu ứng hover cho ảnh */
+.card:hover .card-img {
+  filter: brightness(0.5); /* Làm tối nền khi hover */
+  transition: filter 0.3s ease;
+}
+
+/* Ẩn icon play ban đầu */
+.play-icon-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+/* Hiển thị icon play khi hover vào card */
+.card:hover .play-icon-overlay {
+  display: block;
+}
+
+/* Làm mờ dần và hiển thị icon play */
+.play-icon-overlay i {
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .ten {
+  display: none;
+}
