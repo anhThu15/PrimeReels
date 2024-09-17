@@ -40,6 +40,7 @@
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); /* Đổ bóng chữ khi hover */
 }
 
+
 /* Hiệu ứng hover cho ảnh */
 .card:hover .card-img {
   filter: brightness(0.5); /* Làm tối nền khi hover */

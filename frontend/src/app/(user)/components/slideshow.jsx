@@ -10,10 +10,10 @@ export default function SlideShow(){
                   <CardSlide></CardSlide>
                 </div>
                 <div class="carousel-item">
-                  <img src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/05/anh-meme-meo-15.jpg" height={200} class="d-block w-100" alt="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/05/anh-meme-meo-15.jpg"/>
+                  <CardSlide></CardSlide>
                 </div>
                 <div class="carousel-item">
-                  <img src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/05/anh-meme-meo-15.jpg" height={200} class="d-block w-100" alt="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/05/anh-meme-meo-15.jpg"/>
+                  <CardSlide></CardSlide>
                 </div>
               </div>
               <button class="carousel-control-prev bg-white" style={{width:"50px"}} type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
