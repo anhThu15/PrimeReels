@@ -46,7 +46,7 @@ export default function HeaderUser(){
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                      <a class="nav-link active me-3  font-monospace" aria-current="page" href="#">TRANG CHỦ</a>
+                      <a class="nav-link active me-3  font-monospace" aria-current="page" href="/">TRANG CHỦ</a>
                       <div className="segment"></div>
                     </li>
                     <li class="nav-item">
