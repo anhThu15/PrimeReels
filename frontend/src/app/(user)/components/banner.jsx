@@ -15,7 +15,7 @@ export default function Banner(){
                   <p class="card-text col-5"> <i class="fa-solid fa-star" style={{color:"#bfe661"}}></i> Đánh Giá: .....</p>
                   <p class="card-text col-5"> <i class="fa-solid fa-film" style={{color:"#bfe661"}}></i> Số Tập: .....</p>
                 </div>
-                <button class="btn btn-danger font-monospace" type="submit"><i class="fa-solid fa-play text-white"></i> Xem Phim </button>
+                <a href="/film/15" class="btn btn-danger font-monospace" type="submit"><i class="fa-solid fa-play text-white"></i> Xem Phim </a>
               </div>
             </div>
          </div>

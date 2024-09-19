@@ -18,6 +18,7 @@ export default function Home() {
                   <h3 className=" fw-bold rounded" style={{width:300, backgroundColor:"#932730"}}>Phim Mới Cập Nhập <i class="fa-solid fa-chevron-right"></i> </h3>
                   <div className=" d-flex flex-wrap">
                     <Film></Film>
+                    <button type="button" class="btn btn-dark w-100">Xem Thêm</button>
                   </div>
               </div>
               
@@ -25,6 +26,7 @@ export default function Home() {
                   <h3 className=" fw-bold rounded" style={{width:190, backgroundColor:"#932730"}}>Phim Đề Cử <i class="fa-solid fa-chevron-right"></i> </h3>
                   <div className=" d-flex flex-wrap">
                     <Film></Film>
+                    <button type="button" class="btn btn-dark w-100">Xem Thêm</button>
                   </div>
               </div>
           </div>
