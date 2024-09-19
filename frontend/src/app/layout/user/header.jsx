@@ -50,6 +50,9 @@ export default function HeaderUser(){
                       <div className="segment"></div>
                     </li>
                     <li class="nav-item">
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="/film">XEM PHIM</a>
+                    </li>
+                    <li class="nav-item">
                       <button class="nav-link custom-tooltip me-3 font-monospace" data-bs-toggle="tooltip" data-bs-placement="bottom" 
                       data-bs-html="true" data-bs-original-title={dangphim}>
                         DẠNG PHIM <i class="fa-solid fa-caret-down" style={{color: "#bfe661"}}></i>
