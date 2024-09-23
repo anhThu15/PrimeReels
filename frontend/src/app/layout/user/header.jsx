@@ -71,7 +71,7 @@ export default function HeaderUser(){
                       </button>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link font-monospace" aria-current="page" href="#">THƯ VIỆN</a>
+                      <a class="nav-link font-monospace" aria-current="page" href="/libary">THƯ VIỆN</a>
                     </li>
                   </ul>
                   <form class="d-flex" role="search">
