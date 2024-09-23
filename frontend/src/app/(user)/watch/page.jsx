@@ -75,7 +75,7 @@ export default function Watch(){
 
 
                         {/* cmt */}
-                          <div className="col font-monospace text-white">
+                          <div className="col mt-4 font-monospace text-white">
                             <div className="col">
                                 <Comment></Comment>
                             </div>

@@ -36,7 +36,7 @@ export default function AnimeSeries() {
                     </div>
                 </div>
 
-                <section>
+                {/* <section>
                     <div class="Top">
                         <div class="wp-pagenavi">
                             <span class="pages">
@@ -52,7 +52,38 @@ export default function AnimeSeries() {
                             <a href="page larger" title="Trang cuối">Trang cuối</a>
                         </div>
                     </div>
-                </section>
+                </section> */}
+
+                  {/* thanh lọc theo chữ  */}
+                  <div className="d-flex justify-content-center">
+                            <button className="btn btn-info me-1">A</button>
+                            <button className="btn btn-outline-info  me-1">B</button>
+                            <button className="btn btn-outline-info  me-1">C</button>
+                            <button className="btn btn-outline-info  me-1">D</button>
+                            <button className="btn btn-outline-info  me-1">E</button>
+                            <button className="btn btn-outline-info  me-1">F</button>
+                            <button className="btn btn-outline-info  me-1">G</button>
+                            <button className="btn btn-outline-info  me-1">H</button>
+                            <button className="btn btn-outline-info  me-1">I</button>
+                            <button className="btn btn-outline-info  me-1">J</button>
+                            <button className="btn btn-outline-info  me-1">K</button>
+                            <button className="btn btn-outline-info  me-1">L</button>
+                            <button className="btn btn-outline-info  me-1">M</button>
+                            <button className="btn btn-outline-info  me-1">N</button>
+                            <button className="btn btn-outline-info  me-1">O</button>
+                            <button className="btn btn-outline-info  me-1">P</button>
+                            <button className="btn btn-outline-info  me-1">Q</button>
+                            <button className="btn btn-outline-info  me-1">R</button>
+                            <button className="btn btn-outline-info  me-1">S</button>
+                            <button className="btn btn-outline-info  me-1">T</button>
+                            <button className="btn btn-outline-info  me-1">U</button>
+                            <button className="btn btn-outline-info  me-1">V</button>
+                            <button className="btn btn-outline-info  me-1">W</button>
+                            <button className="btn btn-outline-info  me-1">X</button>
+                            <button className="btn btn-outline-info  me-1">Y</button>
+                            <button className="btn btn-outline-info  me-1">Z</button>
+                        </div>
+                        {/* thanh lọc theo chữ  */}
 
                 <div className=" mt-3 col font-monospace text-white">
 
