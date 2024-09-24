@@ -96,7 +96,7 @@
   line-height: 23px;
   background: #d43939;
   color: #FFF;
-  margin-bottom: 10px;
+  /* margin-left: -12px; */
 }
 
 b,
@@ -358,9 +358,12 @@ img, video, iframe {
   position: relative;
   display: block;
   padding: 0;
+
 }
 
-
+.list-movie-filter .ml-title .schedule-title-main{
+  font-family: monospace;
+}
 
 .ml-title {
   display: block;
@@ -380,6 +383,7 @@ img, video, iframe {
   background: #b5e745;
   color: #333;
   border-radius: 3px 3px 0 0;
+  font-family: monospace;
 }
 
 .filter-toogle {
@@ -395,6 +399,113 @@ img, video, iframe {
 
 .filter-toogle i{
   color: black;
+}
+
+.filter{
+  padding: 10px 20px;
+  background: #fff;
+  position: relative;
+  padding-bottom: 110px;
+  box-shadow: 0 3px 0 0 rgba(0, 0, 0, .1);
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.filter .fc-title{
+  font-size: 18px;
+  font-family: alata;
+  margin-bottom: 5px;
+  display: block;
+  color: #0397d6;
+}
+
+.filter .fc-main-list{
+  padding: 0;
+  border: none;
+  overflow: visible;
+  background: 0 0;
+}
+
+.filter ul{
+  list-style: none;
+  padding: 10px 15px 8px;
+  border: 1px solid #e5e5e5;
+  background: #f8f8f8;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.filter .cs10-top ul li{
+  float: left;
+  width: 130px;
+  padding: 3px 5px 3px 2px;
+  margin: 0 0 5px;
+  width: auto;
+  margin-right: 5px;
+}
+
+.filter .cs10-top .fc-genre .fc-release{
+  clear: both;
+  display: block;
+  /* font-family: monospace; */
+}
+.filter li{
+  display: block;
+  width: 100%;
+  float: none;
+  padding: 0;
+  margin-bottom: 4px;
+}
+
+.filter .fc-main-list li a{
+  font-size: 14px;
+  background: #eee;
+  color: #333;
+  display: block;
+  padding: 7px 10px;
+}
+
+.filter .fc-main-list a{
+  text-decoration: none;
+  font-family: monospace;
+}
+
+.filter .cs10-top .fc-filmtype{
+  float: left;
+  width: 50%;
+}
+
+
+.filter ul li label input{
+  margin: 0 3px 0 0;
+  vertical-align: text-top;
+}
+
+.filter .fc-filter{
+  font-size: 18px;
+  font-family: alata;
+  margin-bottom: 5px;
+  display: block;
+  color: #0397d6;
+}
+
+.filter .fc-quality{
+  margin-left: 52%;
+}
+
+.filter .filter-btn{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+}
+
+.filter .row{
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
 .schedule-title-main {
@@ -473,7 +584,7 @@ b, strong, em {
   border-radius: 3px!important; 
 }
 
-/* CSS RANKING ANIME */
+/* CSS FILM SERIES */
 
 .box_top_search {
   float: left;
@@ -529,6 +640,7 @@ b, strong, em {
   background: #263238;
   margin: 0;
   padding: 0;
+
 }
 .ranking-movie .po-01{
   background-image:url(../../public/images/animevsub-OZnzTG4k9y.webp) ;
@@ -544,7 +656,12 @@ ul.ranking-movie li:first-child {
 }
 .ranking-movie .row-display{
   cursor: pointer;
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between; */
 }
+
+
 .ranking-movie .txt-rank{
   color: #FE0000;
   font-size: 26px;
@@ -663,7 +780,7 @@ ul.ranking-movie li:first-child {
   clear: both;
 }
 .ranking-movie .po-02 .rank-score .score{
-  margin-left: 25px;
+  /* margin-left: 25px; */
   font-weight: 300;
   color: #9e9e9e;
 }
