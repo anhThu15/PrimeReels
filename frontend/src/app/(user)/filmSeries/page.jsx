@@ -230,9 +230,7 @@ export default function FilmSeries() {
 
                     <div class="schedule-title-main">
                         <strong>MẸO SỬ DỤNG:</strong>
-                        Sử dụng chức năng
-                        <strong>Lọc Anime</strong>
-                        trên thanh công cụ để lọc những phim bạn đang cần xem chính xác nhất.
+                        Sử dụng chức năng <strong>Lọc Anime</strong> trên thanh công cụ để lọc những phim bạn đang cần xem chính xác nhất.
                     </div>
                 </div>
 

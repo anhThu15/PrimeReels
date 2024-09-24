@@ -39,7 +39,7 @@ export default function Register() {
                                 </div>
 
 
-                                <div class="mb-3 form-group">
+                                {/* <div class="mb-3 form-group">
                                     <input type="captcha" name="repassword" maxLength={8}
                                         placeholder="Mã bảo vệ"
                                         class="lg-capcha" />
@@ -48,7 +48,7 @@ export default function Register() {
                                             <img style={{ height: "height: 44px;" }} src="https://animevietsub.pub/ajax/captcha/rand/8470/" height="50" alt="Captcha" id="verify-image" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="button-submit">
                                     <button type="submit" className="btn btn-primary">Đăng ký</button>

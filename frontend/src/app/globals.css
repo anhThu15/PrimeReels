@@ -173,10 +173,10 @@ span[class='fa fa-facebook'] {
   cursor: pointer;
 }
 
-span.label {
-  font-family: serif;
-  font-weight: normal;
-}
+/* span.label {
+   font-family: serif;
+   font-weight: normal; 
+} */
 
 span.icon {
   background: url(../../public/images/g-normal.png) transparent 5px 50% no-repeat;
@@ -255,7 +255,7 @@ p.sug {
   height: 45px;
   text-align: center;
   color: #333333;
-  font-family: 'Alata', sans-serif;
+  font-family: monospace;
   font-size: 15px;
   border: 0px;
   box-shadow: none;
@@ -269,7 +269,7 @@ p.sug {
   border-radius: 20px;
   padding: 6px 15px;
   color: #000;
-  font-family: 'Alata', sans-serif;
+  font-family: monospace;
   font-size: 12px;
   border: 0px;
   box-shadow: none;
@@ -306,7 +306,7 @@ img, video, iframe {
   height: 45px;
   text-align: center;
   color: #333333;
-  font-family: 'Alata', sans-serif;
+  font-family: monospace;
   font-size: 15px;
   border: 0px;
   box-shadow: none;
@@ -320,7 +320,7 @@ img, video, iframe {
   border-radius: 20px;
   padding: 6px 15px;
   color: #000;
-  font-family: 'Alata', sans-serif;
+  font-family: monospace;
   font-size: 12px;
   border: 0px;
   box-shadow: none;
@@ -361,10 +361,6 @@ img, video, iframe {
 
 }
 
-.list-movie-filter .ml-title .schedule-title-main{
-  font-family: monospace;
-}
-
 .ml-title {
   display: block;
   margin-bottom: 10px;
@@ -373,7 +369,6 @@ img, video, iframe {
 .ml-title span {
   font-size: 16px;
   text-transform: uppercase;
-  font-family: 'Alata';
   font-weight: 500;
   letter-spacing: 1px;
   display: inline-block;
@@ -383,7 +378,6 @@ img, video, iframe {
   background: #b5e745;
   color: #333;
   border-radius: 3px 3px 0 0;
-  font-family: monospace;
 }
 
 .filter-toogle {
@@ -413,7 +407,7 @@ img, video, iframe {
 
 .filter .fc-title{
   font-size: 18px;
-  font-family: alata;
+  font-family: monospace;
   margin-bottom: 5px;
   display: block;
   color: #0397d6;
@@ -483,7 +477,7 @@ img, video, iframe {
 
 .filter .fc-filter{
   font-size: 18px;
-  font-family: alata;
+  font-family: monospace;
   margin-bottom: 5px;
   display: block;
   color: #0397d6;
@@ -646,6 +640,17 @@ b, strong, em {
   background-image:url(../../public/images/animevsub-OZnzTG4k9y.webp) ;
 }
 
+.ranking-movie img{
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+  .containerVipPro {
+      width: 100%; /* Cho màn hình nhỏ hơn 768px */
+  }
+}
+
 ul.ranking-movie li:first-child {
   border-top: 0 !important;
   overflow: hidden;
@@ -656,9 +661,6 @@ ul.ranking-movie li:first-child {
 }
 .ranking-movie .row-display{
   cursor: pointer;
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between; */
 }
 
 
@@ -667,7 +669,6 @@ ul.ranking-movie li:first-child {
   font-size: 26px;
   width: 60px;
   float: left;
-  /* color: #4C4C4C; */
   font-size: 26px;
   text-align: center;
   display: block;

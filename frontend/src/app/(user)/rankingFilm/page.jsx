@@ -4,7 +4,7 @@ import Film from "../components/film";
 export default function RankingAnime() {
     return (
         <div className="container-fluid d-flex justify-content-center pt-3" style={{ backgroundColor: "#283237", width: "100%" }}>
-            <div className="container font-monospace h-100 bg-nenVipPro row pb-5" data-bs-theme="dark">
+            <div className="containerVipPro font-monospace h-100 bg-nenVipPro row pb-5" data-bs-theme="dark">
                 <ol class="breadcrumb mt-2">
                     <li>
                         <a href="#" title="Trang chủ">
@@ -91,7 +91,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">02</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
@@ -115,7 +115,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">03</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
@@ -139,7 +139,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">04</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
@@ -163,7 +163,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">05</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
@@ -187,7 +187,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">06</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
@@ -210,7 +210,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">07</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
@@ -233,7 +233,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">08</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
@@ -256,7 +256,7 @@ export default function RankingAnime() {
                                         <span class="txt-rank">09</span>
                                         <div class="e-item">
                                             <a href="#" title="Phim One Piece - Đảo Hải Tặc - Vua Hải Tặc" class="thumb2 pull-left2 _trackLink">
-                                                <img src="https://cdn.animevietsub.uk/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
+                                                <img src="https://cdn.animevietsub.pub/data/poster/2019/09/27/animevsub-sQCBqYz9ve.jpg" alt="" width="45" height="60" />
                                             </a>
                                             <h3 class="title-item">
                                                 <a href="#" title="One Piece - Đảo Hải Tặc">One Piece - Đảo Hải Tặc</a>
