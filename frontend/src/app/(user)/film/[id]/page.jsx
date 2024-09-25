@@ -1,6 +1,7 @@
 import ListChoie from "@/app/layout/user/listchoie";
 import Film from "../../components/film";
 import Comment from "../../components/coment";
+import Link from "next/link";
 
 export default function film({params}){
   // const id = params.id
@@ -47,7 +48,7 @@ export default function film({params}){
                                           </div>
                                           <div class="play-icon-overlay">
                                             <div className="bg-danger text-center" style={{width:"100%"}}>
-                                              Xem Phim
+                                              <Link href="/watch">Xem Phim</Link> 
                                             </div>
                                           </div>
                                         </div>

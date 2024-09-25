@@ -31,7 +31,7 @@ export default function Film(){
               </div>
               <div class="card-img-overlay ">
                 <div className="row">
-                    <div className="card-title rounded-pill bg-black opacity-75 text-white col me-3" style={{width:"40px", height:"35px"}}>
+                    <div className="card-title rounded-pill bg-black opacity-75 text-white me-3" style={{width:"80px", height:"35px"}}>
                       <p className="text-left text-warning mt-2 fw-bolder" style={{fontSize:"13px"}}><i class="fa-solid fa-star"></i> 4.9</p>
                     </div>
                     <div className="card-title rounded-circle bg-danger text-white" style={{width:"47px", height:"47px"}}>
