@@ -1,40 +1,8 @@
-'use client'
-import { useEffect } from "react";
+
 import "../../../app/globals.css"
 
 
 export default function HeaderUser(){
-
-  const dangphim = `<div class="text-start font-monospace">
-                        <a class="dropdown-item p-2" href="#">Phim Dài Tập </a>
-                        <a class="dropdown-item p-2" href="#">Phim Ngắn Tập</a>
-                    </div>`
-  const topphim = `<div class="d-flex flex-wrap font-monospace">
-                        <a class="nav-link p-2 col-6 " href="#">Theo Ngày </a>
-                        <a class="nav-link p-2 col-6 " href="#">Theo Tháng</a>
-                        <a class="nav-link p-2 col-6 " href="#">Theo Năm</a>
-                        <a class="nav-link p-2 col-6 " href="#">Theo Mùa</a>
-                        <a class="nav-link p-2 col-6 " href="#">Theo Yêu Thích</a>
-                    </div>`
-  const theloaiphim = `<div class="d-flex flex-wrap font-monospace">
-                        <a class="nav-link p-2 col-6 " href="#">Phim Hài </a>
-                        <a class="nav-link p-2 col-6 " href="#">Phim Tình Cảm</a>
-                        <a class="nav-link p-2 col-6 " href="#">Phim Kinh Dị</a>
-                        <a class="nav-link p-2 col-6 " href="#">Phim 18+</a>
-                        <a class="nav-link p-2 col-6 " href="#">Phim Hài </a>
-                        <a class="nav-link p-2 col-6 " href="#">Phim Tình Cảm</a>
-                        <a class="nav-link p-2 col-6 " href="#">Phim Kinh Dị</a>
-                        <a class="nav-link p-2 col-6 " href="#">Phim 18+</a>
-                  </div>`
-
-    useEffect(() => {
-      // Kích hoạt tooltip sau khi DOM đã tải xong
-      if (typeof window !== 'undefined') {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-      }
-    }, []);
-
     return(
         <>
             <nav class="navbar navbar-expand-lg bg-nenVipPro " data-bs-theme="dark" >
@@ -47,37 +15,26 @@ export default function HeaderUser(){
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                       <a class="nav-link active me-3  font-monospace" aria-current="page" href="/">TRANG CHỦ</a>
-                      <div className="segment"></div>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link me-3  font-monospace" aria-current="page" href="/film">XEM PHIM</a>
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="#">PHIM BỘ</a>
                     </li>
                     <li class="nav-item">
-                      <button class="nav-link custom-tooltip me-3 font-monospace" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                      data-bs-html="true" data-bs-original-title={dangphim}>
-                        DẠNG PHIM <i class="fa-solid fa-caret-down" style={{color: "#bfe661"}}></i>
-                      </button>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <button class="nav-link custom-tooltip me-3 font-monospace" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                      data-bs-html="true" data-bs-original-title={topphim}>
-                        TOP PHIM <i class="fa-solid fa-caret-down" style={{color: "#bfe661"}}></i>
-                      </button>
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="#">PHIM LẺ</a>
                     </li>
                     <li class="nav-item">
-                      <button class="nav-link custom-tooltip me-3 font-monospace" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                        data-bs-html="true" data-bs-original-title={theloaiphim}>
-                          THỂ LOẠI PHIM <i class="fa-solid fa-caret-down" style={{color: "#bfe661"}}></i>
-                      </button>
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="#">PHIM HOẠT HÌNH</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link font-monospace" aria-current="page" href="/libary">THƯ VIỆN</a>
                     </li>
                   </ul>
-                  <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Hôm nay xem gì ?" aria-label="Search"/>
-                  </form>
-                  <button class="btn btn-danger font-monospace" type="submit">Đăng Nhập</button>
+
+                  <div><i class="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
+                  <div className="rounded-pill bg-danger font-monospace text-white me-3" style={{width:"140px",height:"30px"}}>
+                     <p className="mt-1 ms-2">MUA GÓI VIP  <i class="fa-regular fa-gem"></i></p> 
+                  </div>
+                  <a class=" text-white nav-link font-monospace" aria-current="page" href="#">ĐĂNG NHẬP</a>
                 </div>
               </div>
             </nav>

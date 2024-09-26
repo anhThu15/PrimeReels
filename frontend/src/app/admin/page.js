@@ -1,12 +1,13 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+
+import "../globals.css";
+import ListAdmin from "./components/list";
 
 export default function Home() {
   return (
     <>
-     <div className="container-fluid bg-black text-white">
-       hello cả nhà 
-     </div>
+         <div className="container-fluid d-flex justify-content-center" style={{ width:"100%"}}>
+              <ListAdmin></ListAdmin>
+         </div>
     </>
   );
 }
