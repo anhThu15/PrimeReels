@@ -1,19 +1,20 @@
-import CardSlide from "./cardslide";
+import Card from "./cards";
+
 
 export default function SlideShow(){
     return (
         <>
-         <div className="containerVipPro font-monospace pb-3 mt-3"  data-bs-theme="dark" >
+         <div className="font-monospace pb-3 mt-3"  data-bs-theme="dark" >
             <div id="carouselExample" class="carousel slide">
               <div class="carousel-inner">
                 <div class="carousel-item active ms-5">
-                  <CardSlide></CardSlide>
+                  <Card></Card>
                 </div>
                 <div class="carousel-item">
-                  <CardSlide></CardSlide>
+                  <Card></Card>
                 </div>
                 <div class="carousel-item">
-                  <CardSlide></CardSlide>
+                  <Card></Card>
                 </div>
               </div>
               <button class="carousel-control-prev bg-white" style={{width:"50px"}} type="button" data-bs-target="#carouselExample" data-bs-slide="prev">

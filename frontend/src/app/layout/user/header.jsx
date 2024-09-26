@@ -5,7 +5,8 @@ import "../../../app/globals.css"
 export default function HeaderUser(){
     return(
         <>
-            <nav class="navbar navbar-expand-lg bg-nenVipPro " data-bs-theme="dark" >
+        {/* <div className=" container-fluid position-absolute"> */}
+            <nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
               <div class="container">
                 <img class="navbar-brand me-5" src="/images/Logo-PR-(1).png" width={100}></img>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +39,7 @@ export default function HeaderUser(){
                 </div>
               </div>
             </nav>
+        {/* </div> */}
         </>
     )
 }

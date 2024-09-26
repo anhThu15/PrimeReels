@@ -3,21 +3,25 @@ import CardSlide from "./cardslide";
 export default function Banner(){
     return (
         <>
-         <div className="font-monospace pb-3"  data-bs-theme="dark" >
-            <div class="card text-bg-dark">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF8EF_WqPW3U94JSMFvxi1p0W1aaLgjdEbCQ&s" class="card-img" alt="..."/>
-              <div class="card-img-overlay">
-                <h5 class="card-title fs-1">Phim Chú Mèo Hư Đốn </h5>
-                <p class="card-text overflow-y-auto">Mô Tả Chi Tiết Phim</p>
-                <div className=" row mb-3">
-                  <p class="card-text col-5"> <i class="fa-solid fa-clapperboard" style={{color:"#bfe661"}}></i> Thể Loại: .....</p>
-                  <p class="card-text col-5"> <i class="fa-solid fa-list" style={{color:"#bfe661"}}></i> Danh Mục: .....</p>
-                  <p class="card-text col-5"> <i class="fa-solid fa-star" style={{color:"#bfe661"}}></i> Đánh Giá: .....</p>
-                  <p class="card-text col-5"> <i class="fa-solid fa-film" style={{color:"#bfe661"}}></i> Số Tập: .....</p>
-                </div>
-                <a href="/film/15" class="btn btn-danger font-monospace" type="submit"><i class="fa-solid fa-play text-white"></i> Xem Phim </a>
+         <div className="font-monospace text-white"  data-bs-theme="dark" >
+          <div className=" position-relative">
+              <img src="/images/33178 1.png"  style={{height:"100vh"}} alt="..."/>
+              <div className=" position-absolute " style={{top:180, left:110, width:"600px"}}>
+                    <h1 className=" fw-bold">Tây Du Ký Tiền Truyện</h1>
+                    <div className=" row row-cols-4" style={{width:400}}>
+                       <div className="col"><i class="fa-regular fa-star"></i> 5.2</div>
+                       <div className="col"><i class="fa-regular fa-clock"></i> 20/25</div>
+                       <div className="col"><i class="fa-solid fa-calendar-days"></i> 2024</div>
+                       <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div>
+                    </div>
+                    <div className="col mt-2">
+                        Phim là câu chuyện hài về thầy trò Đường Tăng khi phải đối diện với kiếp nạn thứ 82 lạ lùng chưa từng có.                                                
+                    </div>
+                    <div className="btn btn-light rounded-pill mt-3">
+                        <i class="fa-solid fa-circle-play"></i> Xem Ngay
+                    </div>
               </div>
-            </div>
+          </div>
          </div>
         </>
     )
