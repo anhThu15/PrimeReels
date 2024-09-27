@@ -43,6 +43,10 @@ export default function Home() {
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Rằm Trung Thu</h2>
             <SlideShow></SlideShow>
           </div>
+          <div >
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Mọt Phim Củm Lạnh </h2>
+            <SlideShowAnother></SlideShowAnother>
+          </div>
         </div>
 
      </div>

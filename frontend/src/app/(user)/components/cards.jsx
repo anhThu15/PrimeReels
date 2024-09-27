@@ -5,7 +5,7 @@ export default function Card(){
       <>
       <div className=" d-flex justify-content-between">
 
-        <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+        <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
                 <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
             </div>
@@ -27,7 +27,7 @@ export default function Card(){
             </div>
         </div>
 
-        <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+        <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
                 <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
             </div>
@@ -49,7 +49,7 @@ export default function Card(){
             </div>
         </div>
 
-        <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+        <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
                 <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
             </div>
@@ -71,7 +71,7 @@ export default function Card(){
             </div>
         </div>
 
-        <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+        <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
                 <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
             </div>
@@ -93,7 +93,7 @@ export default function Card(){
             </div>
         </div>
 
-        <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+        <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
                 <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
             </div>
@@ -115,7 +115,7 @@ export default function Card(){
             </div>
         </div>
 
-        <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+        <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
                 <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
             </div>
@@ -137,7 +137,7 @@ export default function Card(){
             </div>
         </div>
 
-        <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+        <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
                 <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
             </div>

@@ -786,3 +786,13 @@ ul.ranking-movie li:first-child {
   color: #9e9e9e;
 }
 
+.hover-box {
+  padding: 0px;
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi khi hover */
+}
+
+.hover-box:hover {
+  transform: scale(1.2); /* Phóng to phần tử khi hover */
+}
+
+
