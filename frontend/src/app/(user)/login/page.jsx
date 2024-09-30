@@ -4,59 +4,57 @@ import Link from 'next/link';
 
 export default function Login() {
     return (
-        <div className="container-fluid d-flex justify-content-center pt-3" style={{ backgroundColor: "#283237", width: "100%" }}>
-            <div className="containerVipPro font-monospace h-100 bg-nenVipPro row pb-5" data-bs-theme="dark">
-
-
-                    <div className=" mt-3 col-sm font-monospace text-white form">
-                        <div className="schedule-title-main mb-3">
-                            <strong>Lưu ý:</strong>
-                            "ĐĂNG NHẬP TÀI KHOẢN GIÚP LƯU LỊCH SỬ XEM VÀ NHẬN THÔNG BÁO ANIME MỚI TỐT NHẤT"
+        <div class="modal-login">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>ĐĂNG NHẬP</h3>
+                    </div>
+                    <div class="login-by d-flex justify-content-center mb-3">
+                        <div class="icon-fb me-2">
+                            <a href="#" class="btn btn-primary">
+                                <span class="fa fa-facebook"></span> Đăng nhập bằng Facebook
+                            </a>
                         </div>
+                        <div class="icon-google">
+                            <a href="#" class="btn d-flex align-items-center">
+                                <img src="images/google-icon.png" alt="Google" class="google-icon" /> Đăng nhập bằng Google
+                            </a>
+                        </div>
+                    </div>
 
-                        <div className="tab-login" id="tab-login">
-
-                            <div className="title">ĐĂNG NHẬP</div>
-                            
-                            <div className="bor-form mt-3">
-                                <form className="form-login">
-                                    {/* <p className="sug">Hoặc :</p> */}
-                                    <div className="mb-3 form-group">
-                                        <input type="email"
-                                            placeholder="Email đăng nhập"
-                                            className="lg-email" />
-                                    </div>
-
-                                    <div className="mb-3 form-group">
-                                        <input type="password" 
-                                            placeholder="Mật khẩu"
-                                            className="lg-password" />
-                                        <a href="#" className="forgot-password">Quên mật khẩu?</a>
-                                    </div>
-
-                                    <div className="mb-3 form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                        <label className="form-check-label text-white" htmlFor="exampleCheck1">Lưu mật khẩu</label>
-                                    </div>
-
-                                    <div className="button-submit">
-                                        <button type="submit" className="btn btn-primary">Đăng nhập</button>
-                                    </div>
-
-                                    <div className="mt-3 text-white">
-                                        Chưa có tài khoản?
-                                        <Link href="/register" className="btn-register">Đăng ký</Link> ngay!
-                                    </div>
-                                </form>
+                    <div class="bor-form">
+                        <form class="form-login">
+                            <div class="mb-3 form-group">
+                                <input type="email"
+                                    placeholder="Email đăng nhập"
+                                    class="lg-email" />
                             </div>
-                        </div>
 
+                            <div class="mb-3 form-group">
+                                <input type="password" id="exampleInputPassword1"
+                                    placeholder="Mật khẩu"
+                                    class="lg-password" />
+                                <Link href="/forgot-password" className="forgot-password">Quên mật khẩu</Link>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+                                <label class="form-check-label text-white" for="exampleCheck1">Lưu mật khẩu</label>
+                            </div>
+
+                            <div class="button-submit">
+                                <button type="submit" name="submit">Đăng nhập</button>
+                            </div>
+
+                            <div class="mt-2 text-white text-center">
+                                Chưa có tài khoản?
+                                <Link href="/register" className="btn-register">Đăng ký</Link> ngay!
+                            </div>
+
+                        </form>
                     </div>
-                    <div className=" mt-3 col-sm-4 font-monospace text-white">
-                        <ListChoie></ListChoie>
-                    </div>
-
-
+                </div>
             </div>
         </div>
     );
