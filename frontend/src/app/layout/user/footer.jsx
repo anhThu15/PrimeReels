@@ -19,6 +19,7 @@ export default function FooterUser(){
              <div className="col">
                 <nav class="navbar navbar-expand-lg w-100">
                   <div class="container-fluid">
+                      <a class="nav-link" href="#">Giới Thiệu</a>
                       <a class="nav-link" href="#">GÓI COMBO</a>
                       <a class="nav-link" href="#">CHÍNH SÁCH</a>
                       <a class="nav-link" href="#">ĐIỀU KHOẢN</a>

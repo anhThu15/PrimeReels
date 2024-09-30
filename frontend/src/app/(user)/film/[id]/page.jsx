@@ -86,7 +86,7 @@ export default function film({params}){
             {/* tập phim */}
 
             {/* cmt */}
-            <div className="container mt-5 " style={{marginLeft:"90px"}}>
+            <div className=" mt-5 container " style={{marginLeft:"90px" }}>
                 <Comment></Comment>
             </div>
             {/* cmt */}

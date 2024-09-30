@@ -18,13 +18,13 @@ export default function HeaderUser(){
                       <a class="nav-link active me-3  font-monospace" aria-current="page" href="/">TRANG CHỦ</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link me-3  font-monospace" aria-current="page" href="#">PHIM BỘ</a>
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="/filmSeries" >PHIM BỘ</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link me-3  font-monospace" aria-current="page" href="#">PHIM LẺ</a>
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="/oddFilm" >PHIM LẺ</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link me-3  font-monospace" aria-current="page" href="#">PHIM HOẠT HÌNH</a>
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="animeFilm">PHIM HOẠT HÌNH</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link font-monospace" aria-current="page" href="/libary">THƯ VIỆN</a>
