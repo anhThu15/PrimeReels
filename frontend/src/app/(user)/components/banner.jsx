@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CardSlide from "./cardslide";
 
 export default function Banner(){
@@ -21,9 +22,9 @@ export default function Banner(){
                     <div className="col mt-2">
                         Phim là câu chuyện hài về thầy trò Đường Tăng khi phải đối diện với kiếp nạn thứ 82 lạ lùng chưa từng có.                                                
                     </div>
-                    <div className="btn btn-light rounded-pill mt-3">
+                    <Link href="/film/1" className="btn btn-light rounded-pill mt-3">
                         <i class="fa-solid fa-circle-play"></i> Xem Ngay
-                    </div>
+                    </Link>
               </div>
           </div>
         </div>
@@ -78,11 +79,11 @@ export default function Banner(){
 
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+  <button class="carousel-control-prev" style={{width:"100px"}} type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+  <button class="carousel-control-next" style={{width:"100px"}} type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
