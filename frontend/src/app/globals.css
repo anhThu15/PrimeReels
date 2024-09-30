@@ -1,4 +1,4 @@
-.segment{
+.segment {
   background-color: #bfe661;
   width: 100%;
   height: 5px;
@@ -6,44 +6,52 @@
 
 /* Lớp CSS tùy chỉnh cho tooltip */
 .tooltip .tooltip-inner {
-  background-color: white; /* Màu nền mặc định */
-  color: black; /* Màu chữ */
+  background-color: white;
+  /* Màu nền mặc định */
+  color: black;
+  /* Màu chữ */
 }
 
-.containerVipPro{
+.containerVipPro {
   width: 1102px;
 }
 
-.bg-nenVipPro{
+.bg-nenVipPro {
   background-color: #101416;
 }
 
-.homnayxemgi{
+.homnayxemgi {
   background-color: #bfe661;
   height: 6px;
 }
-.homnayxemgi2{
+
+.homnayxemgi2 {
   background-color: white;
   height: 1px;
 }
 
 /* CSS */
 .card-subtitle {
-  font-size: 16px; /* Kích thước chữ mặc định */
+  font-size: 16px;
+  /* Kích thước chữ mặc định */
   transition: font-size 0.3s, color 0.3s, text-shadow 0.3s;
   cursor: pointer;
 }
 
 .card-subtitle:hover {
-  font-size: 18px; /* Kích thước chữ khi hover */
-  color: #f0a; /* Màu chữ khi hover */
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); /* Đổ bóng chữ khi hover */
+  font-size: 18px;
+  /* Kích thước chữ khi hover */
+  color: #f0a;
+  /* Màu chữ khi hover */
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+  /* Đổ bóng chữ khi hover */
 }
 
 
 /* Hiệu ứng hover cho ảnh */
 .card:hover .card-img {
-  filter: brightness(0.5); /* Làm tối nền khi hover */
+  filter: brightness(0.5);
+  /* Làm tối nền khi hover */
   transition: filter 0.3s ease;
 }
 
@@ -81,181 +89,154 @@
   border-radius: 0.25rem;
 }
 
-/* CSS FORM-LOGIN ANF FORM REGISTER */
 
-.form{
-  background-color: #283237;
-  /* width: 90%; */
-  margin-left: 10px;
-}
 
-.schedule-title-main {
-  font-size: 14px;
-  display: inline-block;
-  padding: 5px 10px;
-  line-height: 23px;
-  background: #d43939;
-  color: #FFF;
-  /* margin-left: -12px; */
-}
+/* CSS FORM LOGIN, REGISTER, FORGOT PASSWORD */
 
-b,
-strong,
-em {
-  font-weight: 700;
-}
-
-.tab-login {
-  padding: 0px 160px;
-  
-}
-
-.row .col-md-7{
-  background: #283237;
-  margin: 20px 40px 0;
-}
-
-.title {
-  float: left;
-  width: 100%;
-  font-weight: bold;
-  font-size: 30px;
-  color: #fff;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.tab-login .lg-mxh {
-  float: left;
-  width: 100%;
-  padding: 0px;
-  margin-bottom: 20px;
-  /* display: flex; */
-}
-
-.tab-login .lg-mxh .face {
-  padding: 0px 5px 0px 0px;
-}
-
-.tab-login .lg-mxh .face>a {
-  float: left;
-  width: 100%;
-  padding: 12px 25px;
-  text-align: center;
-  color: #ffffff;
-  background: #3b5998;
-  border-radius: 20px;
-  font-family: 'Poppins', sans-serif;
-}
-
-span[class='fa fa-facebook'] {
-  display: inline-block;
-}
-
-.tab-login .lg-mxh .gg {
-  padding: 0px 0px 0px 5px;
-}
-.tab-login .lg-mxh .google{
-  float: left;
-}
-#customBtn {
-  display: inline-block;
-  background: white;
-  color: #444;
-  width: 190px;
-  border-radius: 5px;
-  border: thin solid #888;
-  box-shadow: 1px 1px 1px grey;
-  white-space: nowrap;
-}
-
-#customBtn:hover {
-  cursor: pointer;
-}
-
-/* span.label {
-   font-family: serif;
-   font-weight: normal; 
-} */
-
-span.icon {
-  background: url(../../public/images/g-normal.png) transparent 5px 50% no-repeat;
-  display: inline-block;
-  vertical-align: middle;
-  width: 42px;
-  height: 42px;
-}
-
-span.buttonText {
-  display: inline-block;
-  vertical-align: middle;
-
-  font-size: 14px;
-  font-weight: bold;
-  /* Use the Roboto font that is loaded in the <head> */
-  font-family: 'Roboto', sans-serif;
-}
-
-.tab-login .bor-form {
-  float: left;
-  width: 100%;
-}
-
-p.sug {
-  font-size: 15px;
-  color: #6e6d6d;
-}
-
-.tab-login .bor-form input.lg-email {
-  background: url(../../public/images/icon-email.webp) no-repeat 0px center;
-}
-
-.tab-login .bor-form input.lg-password {
-  background: url(../../public/images/icon-pass.webp) no-repeat 0px center;
-}
-
-.tab-login .bor-form input.lg-name{
-  background: url(../../public/images/icon-user.webp) no-repeat 0px center
-}
-.tab-login .bor-form input.lg-capcha{
-  background: url(../../public/images/icon-sec.webp) no-repeat 0px center
-}
-.tab-login .bor-form .form-group {
+.modal-login {
+  background-image: url(../../public/images/bg_login.jpg);
+  background-size: cover;
+  display: block;
+  padding-left: 15px;
+  height: 100vh;
   position: relative;
 }
 
-.form-group input{
+.modal-login .modal-dialog {
+  position: absolute;
+  top: 100px;
+  right: 100px;
+  width: 600px;
+  height: 500px;
+}
+
+@media (max-width: 768px) {
+  .modal-login .modal-dialog {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-login .modal-dialog {
+
+    padding: 20px;
+  }
+}
+
+.modal-login p {
+  color: #808080;
+  width: 90%;
+}
+
+.modal-login .modal-content {
+  border: none;
+  border-radius: 20px;
+  background: #222;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .5);
+  padding: 80px 40px 20px 40px;
+}
+
+.modal-login .modal-content .modal-header {
+  border-bottom: none;
+  padding: 0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bor-form {
+  float: left;
+  width: 100%;
+}
+
+.modal-login .icon-fb a {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  border: none;
+}
+
+.modal-login .icon-fb a {
+  background-color: #3b5998;
+}
+
+.modal-login .google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.modal-login .icon-google {
+  background: white;
+  border-radius: 30px;
+}
+
+.modal-login .icon-google a {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.modal-dialog .bor-form input.lg-email {
+  background: url(../../public/images/icon-email.webp) no-repeat 0px center;
+}
+
+.modal-dialog .bor-form input.lg-password {
+  background: url(../../public/images/icon-pass.webp) no-repeat 0px center;
+}
+
+.modal-dialog .bor-form input.lg-name {
+  background: url(../../public/images/icon-user.webp) no-repeat 0px center
+}
+
+.modal-dialog .bor-form .form-group {
+  position: relative;
+}
+
+.form-group input {
   border: none;
   outline: none;
   height: 45px;
   padding-left: 25px;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   background: transparent;
   height: 45px;
   color: white;
-  /* width: 100%; */
+
   width: 100%;
 }
 
-.tab-login .bor-form .form-group .forgot-password {
+.modal-dialog .bor-form .form-group .forgot-password {
   position: absolute;
   top: 10px;
   right: 0px;
-  color: #3b5998;
+  color: #F62F39;
   text-decoration: none;
 }
 
-.tab-login .bor-form .button-submit{
+.modal-dialog .bor-form .button-submit {
   text-align: center;
 }
 
-.tab-login .bor-form .button-submit button{
-  background: #d8d8d8;
+.modal-dialog .bor-form .button-submit button {
+  background: #F62F39;
   width: 150px;
   height: 45px;
   text-align: center;
-  color: #333333;
-  font-family: monospace;
+  color: #fff;
+  font-family: 'Alata', sans-serif;
   font-size: 15px;
   border: 0px;
   box-shadow: none;
@@ -264,69 +245,186 @@ p.sug {
   font-weight: 600;
 }
 
-.tab-login .bor-form .btn-register {
-  background-color: #f3cb2b;
+.modal-dialog .bor-form .btn-register {
+  color: white;
+  border: 1px solid white;
   border-radius: 20px;
   padding: 6px 15px;
-  color: #000;
-  font-family: monospace;
   font-size: 12px;
-  border: 0px;
   box-shadow: none;
   text-transform: uppercase;
   font-weight: 600;
   text-decoration: none;
+
+}
+
+/* CSS INFOMATION USER */
+
+.first-page {
+  background: black;
+}
+
+.u-menu {
+  list-style: none;
+  padding: 0;
+  /* Bỏ padding mặc định của ul */
+}
+
+.u-menu li {
   display: inline-block;
+  margin: 0 15px 0 5px;
+}
+
+.u-menu li a {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.active-indicator {
+  height: 5px;
+  border-radius:10px ;
+  width: 50%; 
+  background-color: red; 
+  position: absolute; 
+  left: 50%;
+  transform: translateX(-50%); 
+  bottom: -10px; 
 }
 
 
-#tab-register .bor-form .form-group .capcha {
+.user-info {
+  /* background-color: #343a40; */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.user-image {
+  width: 100px; 
+  height: 100px; 
+  overflow: hidden;
+  border-radius: 50%; 
+  margin: 0 auto; 
+  background: white; 
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  position: relative; /* Để cho button có thể căn giữa */
+}
+
+.user-image img {
+  width: 100%; 
+  height: auto; 
+  display: block;
+}
+
+.upload-button {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
 }
 
-#tab-register .bor-form .form-group .capcha .code {
-  width: 110px;
-  height: 45px;
-  float: left;
+.upload-button label{
+  border-radius: 30px;
 }
 
-img, video, iframe {
-  border: 0;
-  max-width: 100%;
+
+input.form-control {
+  border-radius: 30px;
+}
+
+.u-button {
+  float: right;
+}
+
+.u-button button {
+  border-radius: 30px;
+}
+
+.u-service-buy .card img {
+  margin: 10px;
+  padding: 10px;
+  height: 150px;
+}
+
+.u-service-buy .card {
+  border: 1px solid white;
+  background: black;
+  color: white;
+}
+
+.card .card-body .u-service-buy-title {
+  border-bottom: 1px solid red;
   display: inline-block;
-  vertical-align: middle;
-  -ms-interpolation-mode: bicubic;
+  padding-bottom: 5px;
 }
 
-#tab-register .bor-form .button-submit button{
-  background: #f3cb2b;
-  width: 150px;
-  height: 45px;
-  text-align: center;
-  color: #333333;
-  font-family: monospace;
+.card .card-body .u-service-buy-title {
+  border-bottom: 1px solid red;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.u-service-buy .card-body button{
+  float: right;
+}
+
+.u-history-view {
+  margin-top: 20px;
+}
+
+.u-history-view .card .card-body button {
+  margin-left: 5px;
+}
+
+.card-view{
+  background: #393E40;
+  border-radius: 10px;
+}
+
+.card img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card {
+  position: relative;
+}
+
+.image-container {
+  position: relative;
+}
+
+.icon-delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+  z-index: 1;
+}
+
+.episode-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: #A82E26;
+  color: white;
+  border-radius: 30px;
   font-size: 15px;
-  border: 0px;
-  box-shadow: none;
-  border-radius: 20px;
-  text-transform: uppercase;
-  font-weight: 600;
+  padding: 2px 5px;
+  z-index: 1;
 }
 
-#tab-register .bor-form .btn-login {
-  background-color: #d8d8d8;
-  border-radius: 20px;
-  padding: 6px 15px;
-  color: #000;
-  font-family: monospace;
-  font-size: 12px;
-  border: 0px;
-  box-shadow: none;
-  text-transform: uppercase;
-  font-weight: 600;
-  text-decoration: none;
+.card-body {
+  padding: 15px;
 }
 
 /* CSS RANKING FILM */
@@ -338,16 +436,16 @@ img, video, iframe {
   border-radius: 4px;
 }
 
-.breadcrumb li{
+.breadcrumb li {
   display: inline-block;
 }
 
-.breadcrumb a{
+.breadcrumb a {
   color: white;
   text-decoration: none;
 }
 
-.breadcrumb li+li::before{
+.breadcrumb li+li::before {
   padding: 0 5px;
   color: #ccc;
   content: "/\00a0";
@@ -391,11 +489,11 @@ img, video, iframe {
   color: black;
 }
 
-.filter-toogle i{
+.filter-toogle i {
   color: black;
 }
 
-.filter{
+.filter {
   padding: 10px 20px;
   background: #fff;
   position: relative;
@@ -405,7 +503,7 @@ img, video, iframe {
   margin-bottom: 20px;
 }
 
-.filter .fc-title{
+.filter .fc-title {
   font-size: 18px;
   font-family: monospace;
   margin-bottom: 5px;
@@ -413,14 +511,14 @@ img, video, iframe {
   color: #0397d6;
 }
 
-.filter .fc-main-list{
+.filter .fc-main-list {
   padding: 0;
   border: none;
   overflow: visible;
   background: 0 0;
 }
 
-.filter ul{
+.filter ul {
   list-style: none;
   padding: 10px 15px 8px;
   border: 1px solid #e5e5e5;
@@ -429,7 +527,7 @@ img, video, iframe {
   overflow: hidden;
 }
 
-.filter .cs10-top ul li{
+.filter .cs10-top ul li {
   float: left;
   width: 130px;
   padding: 3px 5px 3px 2px;
@@ -438,12 +536,13 @@ img, video, iframe {
   margin-right: 5px;
 }
 
-.filter .cs10-top .fc-genre .fc-release{
+.filter .cs10-top .fc-genre .fc-release {
   clear: both;
   display: block;
   /* font-family: monospace; */
 }
-.filter li{
+
+.filter li {
   display: block;
   width: 100%;
   float: none;
@@ -451,7 +550,7 @@ img, video, iframe {
   margin-bottom: 4px;
 }
 
-.filter .fc-main-list li a{
+.filter .fc-main-list li a {
   font-size: 14px;
   background: #eee;
   color: #333;
@@ -459,23 +558,23 @@ img, video, iframe {
   padding: 7px 10px;
 }
 
-.filter .fc-main-list a{
+.filter .fc-main-list a {
   text-decoration: none;
   font-family: monospace;
 }
 
-.filter .cs10-top .fc-filmtype{
+.filter .cs10-top .fc-filmtype {
   float: left;
   width: 50%;
 }
 
 
-.filter ul li label input{
+.filter ul li label input {
   margin: 0 3px 0 0;
   vertical-align: text-top;
 }
 
-.filter .fc-filter{
+.filter .fc-filter {
   font-size: 18px;
   font-family: monospace;
   margin-bottom: 5px;
@@ -483,11 +582,11 @@ img, video, iframe {
   color: #0397d6;
 }
 
-.filter .fc-quality{
+.filter .fc-quality {
   margin-left: 52%;
 }
 
-.filter .filter-btn{
+.filter .filter-btn {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -497,7 +596,7 @@ img, video, iframe {
   border-top: 1px solid #eee;
 }
 
-.filter .row{
+.filter .row {
   margin-right: -15px;
   margin-left: -15px;
 }
@@ -512,7 +611,9 @@ img, video, iframe {
   margin-bottom: 10px;
 }
 
-b, strong, em {
+b,
+strong,
+em {
   font-weight: 700;
 }
 
@@ -523,7 +624,7 @@ b, strong, em {
   z-index: 1;
 }
 
-.wp-pagenavi .pages{
+.wp-pagenavi .pages {
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -540,28 +641,28 @@ b, strong, em {
   position: relative;
   padding: 0 10px;
   background-color: #78909C;
-  border-radius: 3px!important; 
+  border-radius: 3px !important;
 }
 
-.wp-pagenavi span:after{
+.wp-pagenavi span:after {
   background: red;
 }
 
-.wp-pagenavi span.current{
+.wp-pagenavi span.current {
   color: white;
   background-color: #b71c1c;
   opacity: 1;
 }
 
-.wp-pagenavi span.current::after{
+.wp-pagenavi span.current::after {
   opacity: 1;
 }
 
-.wp-pagenavi a{
+.wp-pagenavi a {
   color: #78909c;
 }
 
-.wp-pagenavi a{
+.wp-pagenavi a {
   display: inline-block;
   vertical-align: top;
   margin: 0 5px 5px;
@@ -575,7 +676,7 @@ b, strong, em {
   text-decoration: none;
   background-color: #78909C;
   color: white;
-  border-radius: 3px!important; 
+  border-radius: 3px !important;
 }
 
 /* CSS FILM SERIES */
@@ -586,6 +687,7 @@ b, strong, em {
   color: #333333;
   position: relative;
 }
+
 .search_control_select {
   float: left;
   width: 100%;
@@ -596,11 +698,13 @@ b, strong, em {
   color: #737373;
   border-radius: 3px;
 }
+
 .search_control_select li {
   float: left;
   margin: 11px 20px 16px 0px;
   list-style: none;
 }
+
 .search_control_select li a {
   position: relative;
   padding: 0px 0px 10px 0px;
@@ -609,16 +713,19 @@ b, strong, em {
   font-size: 14px;
   text-transform: uppercase;
 }
-.search_control_select a{
+
+.search_control_select a {
   background-color: transparent;
   text-decoration: none;
   color: #fff;
 }
+
 .header-ranking-list {
   clear: both;
   position: relative;
   display: inline-block;
 }
+
 .header-ranking-list span {
   float: left;
   display: block;
@@ -630,24 +737,27 @@ b, strong, em {
   line-height: 36px;
   margin: 0 0 10px 0;
 }
-.ranking-movie{
+
+.ranking-movie {
   background: #263238;
   margin: 0;
   padding: 0;
 
 }
-.ranking-movie .po-01{
-  background-image:url(../../public/images/animevsub-OZnzTG4k9y.webp) ;
+
+.ranking-movie .po-01 {
+  background-image: url(../../public/images/animevsub-OZnzTG4k9y.webp);
 }
 
-.ranking-movie img{
-    max-width: 100%;
-    height: auto;
+.ranking-movie img {
+  max-width: 100%;
+  height: auto;
 }
 
 @media (max-width: 768px) {
   .containerVipPro {
-      width: 100%; /* Cho màn hình nhỏ hơn 768px */
+    width: 100%;
+    /* Cho màn hình nhỏ hơn 768px */
   }
 }
 
@@ -659,12 +769,13 @@ ul.ranking-movie li:first-child {
   padding: 30px 0;
   height: 200px;
 }
-.ranking-movie .row-display{
+
+.ranking-movie .row-display {
   cursor: pointer;
 }
 
 
-.ranking-movie .txt-rank{
+.ranking-movie .txt-rank {
   color: #FE0000;
   font-size: 26px;
   width: 60px;
@@ -674,11 +785,13 @@ ul.ranking-movie li:first-child {
   display: block;
   line-height: 60px;
 }
-.ranking-movie .e-item{
+
+.ranking-movie .e-item {
   float: left;
   width: 75%;
 }
-.ranking-movie .e-item .thumb{
+
+.ranking-movie .e-item .thumb {
   margin-bottom: 0;
   margin-right: 15px;
   position: relative;
@@ -686,52 +799,60 @@ ul.ranking-movie li:first-child {
   margin-bottom: 8px;
   background-color: #000;
 }
-.ranking-movie .e-item a{
+
+.ranking-movie .e-item a {
   text-decoration: none;
   color: #fff;
 }
-.ranking-movie .e-item .pull-left{
-  float: left!important;
+
+.ranking-movie .e-item .pull-left {
+  float: left !important;
 }
+
 .ranking-movie li:first-child .e-item img {
   width: 100px !important;
   height: 100% !important;
   border: 2px solid #fff;
   border-radius: 3px;
 }
-.ranking-movie li .e-item .title-item{
+
+.ranking-movie li .e-item .title-item {
   /* margin-top: 6px; */
   margin-bottom: 4px;
 }
-.ranking-movie li:first-child .e-item .title-item a{
+
+.ranking-movie li:first-child .e-item .title-item a {
   color: #fff;
   font-size: 28px;
   text-transform: uppercase;
   font-weight: 600;
 }
-.ranking-movie li .e-item .ellipsis{
+
+.ranking-movie li .e-item .ellipsis {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.ranking-movie .inblock h4{
+
+.ranking-movie .inblock h4 {
   color: #fff;
   display: inline;
   font-size: 14px;
 }
 
-.ranking-movie .po-02 .txt-rank{
+.ranking-movie .po-02 .txt-rank {
   color: #FE3200;
   font-size: 30px;
 }
 
-.ranking-movie .rank-score{
+.ranking-movie .rank-score {
   margin-right: 20px;
   line-height: 60px;
   /* margin-right: 5px; */
   position: relative;
 }
-.ranking-movie li:first-child .rank-score .score{
+
+.ranking-movie li:first-child .rank-score .score {
   color: #fff;
   font-size: 22px !important;
   position: absolute;
@@ -740,35 +861,41 @@ ul.ranking-movie li:first-child {
 }
 
 
-.ranking-movie .po-02{
+.ranking-movie .po-02 {
   border-bottom: 1px solid #222e33;
   border-top: 0;
   list-style: none;
   padding: 10px 0;
 }
-.ranking-movie .po-02 .e-item .title-item a{
+
+.ranking-movie .po-02 .e-item .title-item a {
   color: #fff;
   font-size: 16px;
   font-weight: 500;
 }
+
 .ranking-movie .po-02 .e-item .pull-left2 {
   float: left !important;
 }
-.ranking-movie .po-02 .e-item .thumb2   {
+
+.ranking-movie .po-02 .e-item .thumb2 {
   margin-bottom: 0;
   margin-right: 15px;
 }
-.ranking-movie .po-02 .statistics{
+
+.ranking-movie .po-02 .statistics {
   width: 60px;
   float: left;
   display: none;
 }
-.ranking-movie .po-02 .e-item .title-item a{
+
+.ranking-movie .po-02 .e-item .title-item a {
   color: #fff;
   font-size: 16px;
   font-weight: 500;
 }
-.ranking-movie .po-02 .e-item .inblock .title-small{
+
+.ranking-movie .po-02 .e-item .inblock .title-small {
   display: inline;
   color: #808080;
   font-size: 14px;
@@ -780,8 +907,20 @@ ul.ranking-movie li:first-child {
   display: table;
   clear: both;
 }
-.ranking-movie .po-02 .rank-score .score{
+
+.ranking-movie .po-02 .rank-score .score {
   /* margin-left: 25px; */
   font-weight: 300;
   color: #9e9e9e;
+}
+
+.hover-box {
+  padding: 0px;
+  transition: transform 0.3s ease;
+  /* Hiệu ứng chuyển đổi khi hover */
+}
+
+.hover-box:hover {
+  transform: scale(1.2);
+  /* Phóng to phần tử khi hover */
 }
