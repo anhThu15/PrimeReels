@@ -93,7 +93,7 @@ export default function film({params}){
 
 
             {/* Có thể bạn sẽ thích */}
-            <div>
+            <div style={{marginLeft:"90px"}} className="container">
               <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Có thể bạn sẽ thích</h2>
               <SlideShow></SlideShow>
             </div>

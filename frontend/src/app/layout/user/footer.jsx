@@ -40,7 +40,7 @@ export default function FooterUser(){
              </div>
              <div className="col-3 mt-2"> 
                 <div className="col">
-                  <img src="/images/right.png" className=" position-relative" style={{right:"-260px"}} alt="" />
+                  {/* <img src="/images/right.png" className=" position-relative" style={{right:"-260px"}} alt="" /> */}
                 </div>
                 <div className="row">
                   <div className="rounded-pill bg-danger font-monospace text-white me-3 col mt-2" style={{height:"40px"}}>
