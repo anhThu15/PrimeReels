@@ -12,10 +12,10 @@ export default function SlideShowAnother(){
                   <Film></Film>
                 </div>
                 <div class="carousel-item">
-                  {/* <Card></Card> */}
+                  <Film></Film>
                 </div>
                 <div class="carousel-item">
-                  {/* <Card></Card> */}
+                  <Film></Film>
                 </div>
               </div>
               <button class="carousel-control-prev bg-white" style={{width:"50px"}} type="button" data-bs-target="#carouselExample2" data-bs-slide="prev">

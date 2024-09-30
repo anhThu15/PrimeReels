@@ -1,4 +1,7 @@
 import Link from "next/link";
+import SlideShowAnother from "../../components/slideshowAnother";
+import Comment from "../../components/coment";
+import SlideShow from "../../components/slideshow";
 
 export default function film({params}){
   // const id = params.id
@@ -41,7 +44,7 @@ export default function film({params}){
             {/*  banner */}
             
             {/* quốc gia & diễn viên, đạo diển  */}
-              <div className="row container p-0 row-cols-4" style={{marginLeft:"90px"}}  >
+              <div className="row container p-0 row-cols-3" style={{marginLeft:"90px"}}  >
                 <div className="col-1 fw-bold"><p className=" text-secondary">Quốc Gia:</p> Việt Nam</div>
                 <div className="col-1 fw-bold"><p className=" text-secondary">Đạo Diễn:</p> Anh Thư</div>
                 <div className="col-4 fw-bold">
@@ -66,18 +69,35 @@ export default function film({params}){
 
                   </div>
                 </div>
-                  <div className=" d-flex mt-4">
-                      <img className="rounded-circle ms-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsQhR6JWWhb68Nz_vLkh-tip454BNgEKocgg&s" alt="" />
-                      <img className="rounded-circle ms-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ01YdOXA8nYkxTFcY2Qj-yq-1raQNUnIk9rNyWrXPLEnTvsRTYW75so9IAUx6shol_ViY&usqp=CAU" alt="" />
-                      <img className="rounded-circle ms-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM63cmNP0ltQ6b-q4PJFMsXB6P0aptMxu6D1f5QizvIuyhcq9NQXvFxtdq5WS3Q-umij8&usqp=CAU" alt="" />
-                      <img className="rounded-circle ms-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgYj3wmgKDT0uxK9jRSQpGHTxjJLRGoDjaqsYvA6dXeMIOZRpCcmJxL1qRJpyhywn4LCs&usqp=CAU" alt="" />
-                      <img className="rounded-circle ms-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCpZ7HAiUsTmjmzAFxUZKQaVYSDK3j3OWhLkXfC_di4nVVKrl25gWAC_Fk__Uu4kol3k8&usqp=CAU" alt="" />
-                      <img className="rounded-circle ms-3 bg-black opacity-25" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCpZ7HAiUsTmjmzAFxUZKQaVYSDK3j3OWhLkXfC_di4nVVKrl25gWAC_Fk__Uu4kol3k8&usqp=CAU" alt="" />
+                  <div className=" col d-flex flex-wrap mt-4">
+                      <img className="rounded-circle ms-3 mt-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsQhR6JWWhb68Nz_vLkh-tip454BNgEKocgg&s" alt="" />
+                      <img className="rounded-circle ms-3 mt-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ01YdOXA8nYkxTFcY2Qj-yq-1raQNUnIk9rNyWrXPLEnTvsRTYW75so9IAUx6shol_ViY&usqp=CAU" alt="" />
+                      <img className="rounded-circle ms-3 mt-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM63cmNP0ltQ6b-q4PJFMsXB6P0aptMxu6D1f5QizvIuyhcq9NQXvFxtdq5WS3Q-umij8&usqp=CAU" alt="" />
+                      <img className="rounded-circle ms-3 mt-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgYj3wmgKDT0uxK9jRSQpGHTxjJLRGoDjaqsYvA6dXeMIOZRpCcmJxL1qRJpyhywn4LCs&usqp=CAU" alt="" />
+                      <img className="rounded-circle ms-3 mt-3" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCpZ7HAiUsTmjmzAFxUZKQaVYSDK3j3OWhLkXfC_di4nVVKrl25gWAC_Fk__Uu4kol3k8&usqp=CAU" alt="" />
+                      <img className="rounded-circle ms-3 mt-3 bg-black opacity-25" width={100} height={100} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCpZ7HAiUsTmjmzAFxUZKQaVYSDK3j3OWhLkXfC_di4nVVKrl25gWAC_Fk__Uu4kol3k8&usqp=CAU" alt="" />
                   </div>
               </div>
             {/* quốc gia & diễn viên, đạo diển  */}
 
+            {/* tập phim */}
+            <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
+            <SlideShowAnother></SlideShowAnother>
+            {/* tập phim */}
 
+            {/* cmt */}
+            <div className="container mt-5 " style={{marginLeft:"90px"}}>
+                <Comment></Comment>
+            </div>
+            {/* cmt */}
+
+
+            {/* Có thể bạn sẽ thích */}
+            <div>
+              <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Có thể bạn sẽ thích</h2>
+              <SlideShow></SlideShow>
+            </div>
+            {/* Có thể bạn sẽ thích */}
           </div>   
         </>
     )
