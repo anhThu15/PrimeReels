@@ -36,9 +36,9 @@ export default function film({params}){
                 </div>
                 <div className="col">
                   <img width={"100%"} height={"400px"} className=" bg-black opacity-75" src="/images/33178 1.png" alt="" />
-                  <button className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
-                    <i class="fa-solid fa-play fs-1 ms-1"></i>
-                  </button>
+                  <Link href="/watch" className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
+                    <i class="fa-solid fa-play fs-1 ms-1 mt-2"></i>
+                  </Link>
                 </div>                 
               </div>
             {/*  banner */}
