@@ -7,8 +7,8 @@ export default function CardSlide(){
         <div className=" row row-cols-5 m-0 ">
           
           <div className="row row-cols-2 mb-3">
-            <div className="col-3">
-                <img src="/images/image 19.png" className="mt-5 ms-4" height={200} width={200} alt="" />
+            <div className="col-5">
+                <img src="/images/image 19.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
@@ -36,8 +36,8 @@ export default function CardSlide(){
           </div>
 
           <div className="row row-cols-2 mb-3">
-            <div className="col-3">
-                <img src="/images/2.png" className="mt-5 ms-4" height={200} width={200} alt="" />
+            <div className="col-5">
+                <img src="/images/2.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
@@ -65,8 +65,8 @@ export default function CardSlide(){
           </div>
 
           <div className="row row-cols-2 mb-3">
-            <div className="col-3">
-                <img src="/images/3.png" className="mt-5 ms-4" height={200} width={200} alt="" />
+            <div className="col-5">
+                <img src="/images/3.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
@@ -94,8 +94,8 @@ export default function CardSlide(){
           </div>
 
           <div className="row row-cols-2 mb-3">
-            <div className="col-3">
-                <img src="/images/4.png" className="mt-5 ms-4" height={200} width={200} alt="" />
+            <div className="col-5">
+                <img src="/images/4.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
@@ -123,8 +123,8 @@ export default function CardSlide(){
           </div>
 
           <div className="row row-cols-2 mb-3">
-            <div className="col-3">
-                <img src="/images/5.png" className="mt-5 ms-4" height={200} width={200} alt="" />
+            <div className="col-5">
+                <img src="/images/5.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>

@@ -35,7 +35,7 @@ export default function HeaderUser(){
                   <div className="rounded-pill bg-danger font-monospace text-white me-3" style={{width:"140px",height:"30px"}}>
                      <p className="mt-1 ms-2">MUA GÓI VIP  <i class="fa-regular fa-gem"></i></p> 
                   </div>
-                  <a class=" text-white nav-link font-monospace" aria-current="page" href="#">ĐĂNG NHẬP</a>
+                  <a class=" text-white nav-link font-monospace" aria-current="page" href="/login">ĐĂNG NHẬP</a>
                 </div>
               </div>
             </nav>
