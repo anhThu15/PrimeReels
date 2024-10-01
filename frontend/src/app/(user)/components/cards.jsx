@@ -3,7 +3,7 @@ import "../../../app/globals.css"
 export default function Card(){
     return (
       <>
-      <div className=" d-flex justify-content-between">
+      <div className=" d-flex justify-content-between flex-wrap">
 
         <div class="card text-bg-dark me-3 hover-box" style={{width:"180px"}}>
             <div className="bg-black opacity-75">
