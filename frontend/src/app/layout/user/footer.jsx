@@ -1,3 +1,4 @@
+import Link from "next/link"
 import "../../../app/globals.css"
 
 export default function FooterUser(){
@@ -20,7 +21,7 @@ export default function FooterUser(){
                 <nav class="navbar navbar-expand-lg w-100">
                   <div class="container-fluid">
                       <a class="nav-link" href="/introduce">Giới Thiệu</a>
-                      <a class="nav-link" href="#">GÓI COMBO</a>
+                      <a class="nav-link" href="/buyPackage">GÓI COMBO</a>
                       <a class="nav-link" href="#">CHÍNH SÁCH</a>
                       <a class="nav-link" href="#">ĐIỀU KHOẢN</a>
                       <a class="nav-link" href="contact">LIÊN HỆ</a>
@@ -45,10 +46,10 @@ export default function FooterUser(){
                 </div>
                 <div className="row">
                   <div className="rounded-pill bg-danger font-monospace text-white me-3 col mt-2" style={{height:"40px"}}>
-                       <p className="pt-2 ms-4"> <i class="fa-solid fa-phone"></i> Hotline </p> 
+                       <Link href="/contact" className=" nav-link pt-2 ms-4"> <i class="fa-solid fa-phone"></i> Hotline </Link> 
                   </div>
                   <div className="rounded-pill bg-danger font-monospace text-white me-3 col mt-2" style={{height:"40px"}}>
-                       <p className="pt-2 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </p> 
+                       <Link href="/contact" className=" nav-link pt-2 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </Link> 
                   </div>
                 </div>
                 <div className="row row-cols-3 mt-3">

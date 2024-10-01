@@ -1,4 +1,5 @@
 
+import Link from "next/link"
 import "../../../app/globals.css"
 
 
@@ -24,7 +25,7 @@ export default function HeaderUser(){
                       <a class="nav-link me-3  font-monospace" aria-current="page" href="/oddFilm" >PHIM LẺ</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link me-3  font-monospace" aria-current="page" href="animeFilm">PHIM HOẠT HÌNH</a>
+                      <a class="nav-link me-3  font-monospace" aria-current="page" href="/animeFilm">PHIM HOẠT HÌNH</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link font-monospace" aria-current="page" href="/libary">THƯ VIỆN</a>
@@ -33,7 +34,7 @@ export default function HeaderUser(){
 
                   <div><i class="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
                   <div className="rounded-pill bg-danger font-monospace text-white me-3" style={{width:"140px",height:"30px"}}>
-                     <p className="mt-1 ms-2">MUA GÓI VIP  <i class="fa-regular fa-gem"></i></p> 
+                     <Link href="/buyPackage" className=" nav-link mt-1 ms-2">MUA GÓI VIP  <i class="fa-regular fa-gem"></i></Link> 
                   </div>
                   <a class=" text-white nav-link font-monospace" aria-current="page" href="/login">ĐĂNG NHẬP</a>
                 </div>
