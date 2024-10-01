@@ -450,6 +450,12 @@ input.form-control {
   z-index: 1;
 }
 
+.u-favorite .image-container img{
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
 .episode-label {
   position: absolute;
   bottom: 10px;
@@ -961,6 +967,250 @@ ul.ranking-movie li:first-child {
 
 .hover-box:hover {
   transform: scale(1.2);
-  /* Phóng to phần tử khi hover */
 }
 
+/* CSS USER BUY PACKAGE */
+.title-back {
+  color: #F62F39;
+}
+.vip-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; 
+}
+
+.vip-item {
+  display: flex;
+  align-items: center; 
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+}
+
+.icon-container i {
+  background: green;
+  color: white;
+  border-radius: 50%; 
+  width: 30px; 
+  height: 30px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  margin-right: 10px; 
+}
+
+.package .img{
+  background-image: url(../../public/images/cinema-4153289_640.webp);
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  /* text-align: center;  */
+  color: white; 
+  padding: 0px 20px;
+  border-radius: 20px;
+}
+
+.package .img h6{
+  font-size: x-large;
+  color: #A82E26;
+}
+.package .img .price{
+  color: white;
+  font-size: xx-large;
+}
+.package .img .text{
+  width: 200px;
+}
+.package .button-vip button{
+  width: 100%;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.package .content-vip {
+  display: flex;
+  flex-direction: column; 
+  gap: 8px;
+}
+
+.package .content-vip .item {
+  display: flex;
+  align-items: center; 
+}
+
+.package .content-vip i {
+  color: gold; 
+  margin-right: 8px;
+}
+
+.package .bx-vnpay{
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  display: flex; 
+  align-items: center; 
+  padding: 10px;
+}
+
+.package .bx-vnpay .icon-vnpay img{
+  width: 100%;
+  height: 100px;
+}
+.package .text-sales {
+  flex: 1; 
+}
+/* thanh toan buoc 2 */
+.u-pay .u-pay-note i{
+  color: #A82E26;
+}
+.payment-option {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.payment-option input[type="radio"] {
+  margin-right: 10px;
+}
+
+.payment-option label {
+  display: flex;
+  align-items: center;
+}
+
+.payment-option img {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.u-pay .u-pay-detail{
+  border: 0.5px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+.u-pay .u-pay-detail .name{
+  display: flex;
+  justify-content: space-between;
+}
+.divider-detail {
+  border-top: 1px dotted black;
+  margin: 10px 0;
+}
+.u-pay .u-pay-detail .name-package{
+  display: flex;
+  justify-content: space-between;
+}
+.u-pay .u-pay-detail .date-package{
+  display: flex;
+  justify-content: space-between;
+}
+.u-pay .u-pay-detail .effective-date{
+  display: flex;
+  justify-content: space-between;
+}
+.u-pay .u-pay-detail .package-useto{
+  display: flex;
+  justify-content: space-between;
+}
+.u-pay .u-pay-detail .package-useto{
+  display: flex;
+  justify-content: space-between;
+}
+.u-pay .u-pay-detail .price{
+  display: flex;
+  justify-content: space-between;
+}
+
+.code-sales {
+  margin-top: 10px; 
+}
+
+.discount-code {
+  border: none;
+  border-bottom: 1px solid #ccc; 
+  outline: none;
+  width: 200px; 
+}
+
+.u-pay .u-pay-detail .code-sales{
+  display: flex;
+  justify-content: space-between;
+}
+
+.u-pay .u-pay-detail button{
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.u-pay .u-pay-detail .total-package{
+  display: flex;
+  justify-content: space-between;
+}
+
+.u-pay .u-pay-detail .button-pay button{
+  width: 100%;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+}
+
+.thank-you-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 20px; 
+}
+
+.thank-you-user img {
+  max-width: 100%; 
+  height: auto;
+}
+
+.hr-thankyou {
+  width: 50%; 
+  margin: 20px 0;
+}
+
+.text-thankyou{
+  width: 650px;
+  margin: 0 auto; 
+}
+
+@media (max-width: 768px) { 
+  .text-thankyou {
+      width: 90%;
+  }
+}
+
+@media (max-width: 480px) { 
+  .text-thankyou {
+      width: 100%; 
+  }
+}
+
+.thank-you-user button{
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+}
+
+
+@media (max-width: 768px) {
+  .u-pay-detail{
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .u-pay-detail{
+    margin-top: 20px;
+  }
+}

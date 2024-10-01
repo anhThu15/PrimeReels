@@ -130,7 +130,31 @@ export default function InfomationUser() {
                 <div class="u-service-buy mt-3" id="u-service-buy" style={{ display: 'none' }}>
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                            <div class="card">
+                            <div class="card box-card">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="images/cinema-4153289_640.webp" class="img-fluid rounded-start" alt="Service Image 1" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div>
+                                                <h5 class="u-service-buy-title">Gói VIP 39K</h5>
+                                                <button class="btn btn-sm btn-success">Đang sử dụng</button>
+                                            </div>
+                                            <p class="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
+                                            <p class="card-text text-end">
+                                                <small class="text-white">
+                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                    Xem chi tiết
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card box-card">
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <img src="images/cinema-4153289_640.webp" class="img-fluid rounded-start" alt="Service Image 1" />
@@ -154,30 +178,6 @@ export default function InfomationUser() {
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-4">
-                            <div class="card">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="images/cinema-4153289_640.webp" class="img-fluid rounded-start" alt="Service Image 2" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <div class="position-relative">
-                                                <h5 class="u-service-buy-title">Dịch vụ 2</h5>
-                                                <button class="btn btn-sm btn-danger">Hết hạn</button>
-                                            </div>
-                                            <p class="card-text">Thông tin mô tả về dịch vụ 2. Đây là nơi bạn có thể thêm một số chi tiết.</p>
-                                            <p class="card-text text-end">
-                                                <small class="text-white">
-                                                    <i class="fa-solid fa-chevron-left"></i>
-                                                    Xem chi tiết
-                                                </small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -190,8 +190,8 @@ export default function InfomationUser() {
                             </div>
                             <div class="row mt-3">
 
-                                <div class="col-md-2">
-                                    <div class="card">
+                                <div class="col-md-2 mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>
@@ -209,8 +209,8 @@ export default function InfomationUser() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="card">
+                                <div class="col-sm-2 mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>
@@ -228,8 +228,8 @@ export default function InfomationUser() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="card">
+                                <div class="col-sm-2 mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>
@@ -247,8 +247,8 @@ export default function InfomationUser() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="card">
+                                <div class="col-sm-2 mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>
@@ -266,8 +266,8 @@ export default function InfomationUser() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="card">
+                                <div class="col-sm-2 mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>
@@ -285,8 +285,8 @@ export default function InfomationUser() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="card">
+                                <div class="col-sm-2 mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>
@@ -304,6 +304,7 @@ export default function InfomationUser() {
                                         </div>
                                     </div>
                                 </div>
+
 
 
 
@@ -320,8 +321,8 @@ export default function InfomationUser() {
                             </div>
                             <div class="row mt-3">
 
-                                <div class="col-sm-2 position-relative">
-                                    <div class="card">
+                                <div class="col-sm-2 position-relative mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>
@@ -332,57 +333,61 @@ export default function InfomationUser() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 position-relative">
-                                    <div class="card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 position-relative">
-                                    <div class="card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 position-relative">
-                                    <div class="card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 position-relative">
-                                    <div class="card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
 
+                                <div class="col-sm-2 position-relative mt-2">
+                                    <div class="card u-card">
+                                        <div class="image-container">
+                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
+                                            <span class="episode-label">Tập 01</span>
+                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Thần thâm dật chiến</h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 position-relative">
-                                    <div class="card">
+
+                                <div class="col-sm-2 position-relative mt-2">
+                                    <div class="card u-card">
+                                        <div class="image-container">
+                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
+                                            <span class="episode-label">Tập 01</span>
+                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Thần thâm dật chiến</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2 position-relative mt-2">
+                                    <div class="card u-card">
+                                        <div class="image-container">
+                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
+                                            <span class="episode-label">Tập 01</span>
+                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Thần thâm dật chiến</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2 position-relative mt-2">
+                                    <div class="card u-card">
+                                        <div class="image-container">
+                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
+                                            <span class="episode-label">Tập 01</span>
+                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Thần thâm dật chiến</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2 position-relative mt-2">
+                                    <div class="card u-card">
                                         <div class="image-container">
                                             <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
                                             <span class="episode-label">Tập 01</span>

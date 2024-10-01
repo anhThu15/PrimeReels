@@ -21,7 +21,9 @@ export default function FooterUser(){
                 <nav class="navbar navbar-expand-lg w-100">
                   <div class="container-fluid">
                       <a class="nav-link" href="/introduce">Giới Thiệu</a>
-                      <a class="nav-link" href="/buyPackage">GÓI COMBO</a>
+                      <Link href="/user-buy-package" class="nav-link">
+                        GÓI COMBO
+                      </Link>
                       <a class="nav-link" href="#">CHÍNH SÁCH</a>
                       <a class="nav-link" href="#">ĐIỀU KHOẢN</a>
                       <a class="nav-link" href="contact">LIÊN HỆ</a>
