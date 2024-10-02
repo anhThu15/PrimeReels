@@ -42,19 +42,19 @@ export default function FooterUser(){
                     <p>Giấy phép Cung cấp Dịch vụ Phát thanh, Truyền hình trên mạng Internet số 273/GP-BTTTT cấp ngày 08/11/2022</p>
                 </div>
              </div>
-             <div className="col-3 mt-2"> 
+             <div className="col-3 mt-2 d-flex flex-wrap"> 
                 <div className="col">
                   <img src="/images/right.png"className="responsive-icon-img" alt="" />
                 </div>
                 <div className="row">
-                  <div className="rounded-pill bg-danger font-monospace text-white me-3 col mt-2" style={{height:"40px"}}>
-                       <Link href="/contact" className=" nav-link pt-2 ms-4"> <i class="fa-solid fa-phone"></i> Hotline </Link> 
+                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"40px"}}>
+                       <Link href="/contact" className=" nav-link pt-2 ms-4"> <i class="fa-solid fa-phone"></i>Hotline</Link> 
                   </div>
-                  <div className="rounded-pill bg-danger font-monospace text-white me-3 col mt-2" style={{height:"40px"}}>
+                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"40px"}}>
                        <Link href="/contact" className=" nav-link pt-2 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </Link> 
                   </div>
                 </div>
-                <div className="row row-cols-3 mt-3">
+                <div className="row mt-3  d-flex flex-wrap">
                     <div className="col">
                       <img width={70} src="https://png.pngtree.com/png-clipart/20180626/ourmid/pngtree-instagram-icon-instagram-logo-png-image_3584852.png" alt="" />
                     </div>

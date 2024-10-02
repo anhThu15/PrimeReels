@@ -17,11 +17,11 @@ export default function Comment(){
                     </div>
                 </div>
                 {/* load bình luận */}
-                <div className="row rounded-pill bg-dark mt-3">
-                    <div className="col-2 mt-3 ps-5">
+                <div className="row d-flex flex-wrap rounded-pill bg-dark mt-3" >
+                    <div className="col-1 mt-3 ps-4 me-5">
                         <img className="rounded-pill" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWFHANMR9GiCp0h0TmnItAno7AkgaTJ_ZpZA&s" width={60} height={60} alt="" />
                     </div>
-                    <div className="col" style={{marginLeft:"-100px"}}>
+                    <div className="col"  >
                         <div className="fs-4 text-danger fw-bold">Anh Thư</div>
                         <p style={{fontSize:"12px"}}>Thời gian ....</p>
                         <div>Phim này hay vá ~~</div>
@@ -34,11 +34,11 @@ export default function Comment(){
                         <i class="fa-solid fa-star"></i>
                     </div>
                 </div>
-                <div className="row rounded-pill bg-dark mt-3">
-                    <div className="col-2 mt-3 ps-5">
+                <div className="row d-flex flex-wrap rounded-pill bg-dark mt-3" >
+                    <div className="col-1 mt-3 ps-4 me-5">
                         <img className="rounded-pill" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWFHANMR9GiCp0h0TmnItAno7AkgaTJ_ZpZA&s" width={60} height={60} alt="" />
                     </div>
-                    <div className="col" style={{marginLeft:"-100px"}}>
+                    <div className="col" >
                         <div className="fs-4 text-danger fw-bold">Anh Thư</div>
                         <p style={{fontSize:"12px"}}>Thời gian ....</p>
                         <div>Phim này hay vá ~~</div>
@@ -52,11 +52,11 @@ export default function Comment(){
                     </div>
                 </div>
 
-                <div className="row rounded-pill bg-dark mt-3">
-                    <div className="col-2 mt-3 ps-5">
+                <div className="row d-flex flex-wrap rounded-pill bg-dark mt-3" >
+                    <div className="col-1 mt-3 ps-4 me-5">
                         <img className="rounded-pill" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWFHANMR9GiCp0h0TmnItAno7AkgaTJ_ZpZA&s" width={60} height={60} alt="" />
                     </div>
-                    <div className="col" style={{marginLeft:"-100px"}}>
+                    <div className="col">
                         <div className="fs-4 text-danger fw-bold">Anh Thư</div>
                         <p style={{fontSize:"12px"}}>Thời gian ....</p>
                         <div>Phim này hay vá ~~</div>
