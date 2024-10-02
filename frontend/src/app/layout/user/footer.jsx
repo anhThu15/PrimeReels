@@ -43,15 +43,15 @@ export default function FooterUser(){
                 </div>
              </div>
              <div className="col-3 mt-2 d-flex flex-wrap"> 
-                <div className="col">
+                <div className="col-1">
                   <img src="/images/right.png"className="responsive-icon-img" alt="" />
                 </div>
-                <div className="row">
-                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"40px"}}>
-                       <Link href="/contact" className=" nav-link pt-2 ms-4"> <i class="fa-solid fa-phone"></i>Hotline</Link> 
+                <div className="row" style={{width:"150px"}}>
+                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
+                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i class="fa-solid fa-phone"></i>Hotline</Link> 
                   </div>
-                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"40px"}}>
-                       <Link href="/contact" className=" nav-link pt-2 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </Link> 
+                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
+                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </Link> 
                   </div>
                 </div>
                 <div className="row mt-3  d-flex flex-wrap">
