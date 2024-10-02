@@ -2,7 +2,7 @@ import "../../globals.css";
 import Link from 'next/link';
 export default function UserPayMentPackage(){
     return(
-        <div className="container">
+        <div className="container font-monospace">
             <div class="title-back mt-2">
                 <i class="fa-solid fa-chevron-left"></i> Trở về
             </div>
