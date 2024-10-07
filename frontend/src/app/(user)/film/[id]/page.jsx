@@ -81,12 +81,14 @@ export default function film({params}){
             {/* quốc gia & diễn viên, đạo diển  */}
 
             {/* tập phim */}
-            <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
+            <div style={{backgroundColor:"#808080"}}>
+            <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim</div>
             <SlideShowAnother></SlideShowAnother>
+            </div>
             {/* tập phim */}
 
             {/* cmt */}
-            <div className="container mt-5 " style={{marginLeft:"90px"}}>
+            <div className=" mt-5 container " style={{marginLeft:"90px" }}>
                 <Comment></Comment>
             </div>
             {/* cmt */}

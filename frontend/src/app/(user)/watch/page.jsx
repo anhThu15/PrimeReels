@@ -41,7 +41,7 @@ export default function Watch(){
                           </div>
                           <div className="col">
                               <h1 className=" fw-bold text-danger">One Pice</h1>
-                              <div className=" row row-cols-4" style={{width:400}}>
+                              <div className=" row row-cols-4" style={{width:380}}>
                                  <div className="col"><i class="fa-regular fa-star"></i> 5.2</div>
                                  <div className="col"><i class="fa-regular fa-clock"></i> <span className=" text-secondary">20</span>/25</div>
                                  <div className="col"><i class="fa-solid fa-calendar-days"></i> 2024</div>
@@ -59,13 +59,13 @@ export default function Watch(){
 
 
                       {/* cmt */}
-                      <div className="container mt-5 " style={{marginLeft:"90px"}}>
+                      <div className="container mt-5 ">
                           <Comment></Comment>
                       </div>
                       {/* cmt */}
 
                       {/* Có thể bạn sẽ thích */}
-                      <div style={{marginLeft:"90px"}} className="container">
+                      <div className="container">
                         <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Có thể bạn sẽ thích</h2>
                         <SlideShow></SlideShow>
                       </div>

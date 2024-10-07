@@ -1,3 +1,4 @@
+import Link from "next/link"
 import "../../../app/globals.css"
 
 export default function FooterUser(){
@@ -19,10 +20,13 @@ export default function FooterUser(){
              <div className="col">
                 <nav class="navbar navbar-expand-lg w-100">
                   <div class="container-fluid">
-                      <a class="nav-link" href="#">GÓI COMBO</a>
+                      <a class="nav-link" href="/introduce">Giới Thiệu</a>
+                      <Link href="/user-buy-package" class="nav-link">
+                        GÓI COMBO
+                      </Link>
                       <a class="nav-link" href="#">CHÍNH SÁCH</a>
                       <a class="nav-link" href="#">ĐIỀU KHOẢN</a>
-                      <a class="nav-link" href="#">LIÊN HỆ</a>
+                      <a class="nav-link" href="contact">LIÊN HỆ</a>
                   </div>
                 </nav>
                 <p className=" bg-white" style={{height:"1px"}}></p>
@@ -38,19 +42,19 @@ export default function FooterUser(){
                     <p>Giấy phép Cung cấp Dịch vụ Phát thanh, Truyền hình trên mạng Internet số 273/GP-BTTTT cấp ngày 08/11/2022</p>
                 </div>
              </div>
-             <div className="col-3 mt-2"> 
-                <div className="col">
-                  {/* <img src="/images/right.png" className=" position-relative" style={{right:"-260px"}} alt="" /> */}
+             <div className="col-3 mt-2 d-flex flex-wrap"> 
+                <div className="col-1">
+                  <img src="/images/right.png"className="responsive-icon-img" alt="" />
                 </div>
-                <div className="row">
-                  <div className="rounded-pill bg-danger font-monospace text-white me-3 col mt-2" style={{height:"40px"}}>
-                       <p className="pt-2 ms-4"> <i class="fa-solid fa-phone"></i> Hotline </p> 
+                <div className="row" style={{width:"150px"}}>
+                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
+                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i class="fa-solid fa-phone"></i>Hotline</Link> 
                   </div>
-                  <div className="rounded-pill bg-danger font-monospace text-white me-3 col mt-2" style={{height:"40px"}}>
-                       <p className="pt-2 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </p> 
+                  <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
+                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </Link> 
                   </div>
                 </div>
-                <div className="row row-cols-3 mt-3">
+                <div className="row mt-3  d-flex flex-wrap">
                     <div className="col">
                       <img width={70} src="https://png.pngtree.com/png-clipart/20180626/ourmid/pngtree-instagram-icon-instagram-logo-png-image_3584852.png" alt="" />
                     </div>

@@ -32,9 +32,15 @@ export default function Home() {
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Rằm Trung Thu</h2>
             <SlideShow></SlideShow>
           </div>
-          <div className="mt-5">
-              <Image src="/images/image 23.png" width={1550} height={200}></Image>
-          </div>
+          <div className="mt-5 img-banner">
+            <Image 
+                src="/images/image 23.png" 
+                layout="responsive"
+                width={1920} 
+                height={1080} 
+                alt="Description of the image" 
+            />
+          </div> 
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Mọt Phim Tình Củm</h2>
             <SlideShowAnother></SlideShowAnother>
