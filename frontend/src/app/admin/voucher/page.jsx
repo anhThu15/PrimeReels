@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function theLoai(){
+export default function voucher(){
 
     const id = 15;
 
@@ -8,39 +8,36 @@ export default function theLoai(){
         <>
             <div className=" container-fluid">
               <div className="row">
-                <h2 className=" col fw-bold">Thể Loại</h2>
+                <h2 className=" col fw-bold">Voucher</h2>
                 <div className="col-2">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      + Thêm Thể Loại
+                      + Thêm Voucher
                     </button>
                     
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Tạo Mới Thể Loại</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Tạo Mới Voucher</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
                               <form>
                                 <div class="mb-3">
-                                  <label class="form-label">Tên Thể Loại</label>
+                                  <label class="form-label">Tên Voucher</label>
                                   <input type="text" class="form-select" />
                                 </div>
                                 <div class="mb-3">
-                                  <label for="exampleInputPassword1" class="form-label">Tên Danh Mục</label>
-                                  <select class="form-select" aria-label="Default select example">
-                                    <option selected>Phim Bộ</option>
-                                    <option value="1">Phim Lẻ</option>
-                                    <option value="1">Phim Hoạt Hình</option>
-                                  </select>
+                                  <label class="form-label">Giảm Voucher</label>
+                                  <input type="text" class="form-select" />
                                 </div>
                                 <div class="mb-3">
-                                  <label for="exampleInputPassword1" class="form-label">Trạng Thái</label>
-                                  <select class="form-select" aria-label="Default select example">
-                                    <option selected>Công Khai</option>
-                                    <option value="1">Không Công Khai</option>
-                                  </select>
+                                  <label class="form-label">Ngày Bắt Đầu</label>
+                                  <input type="date" class="form-select" />
+                                </div>
+                                <div class="mb-3">
+                                  <label class="form-label">Ngày Kết Thúc</label>
+                                  <input type="date" class="form-select" />
                                 </div>
                               </form>
                           </div>
@@ -88,10 +85,11 @@ export default function theLoai(){
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col">TÊN THỂ LOẠI</th>
-                      <th scope="col">SỐ LƯỢNG PHIM</th>
-                      <th scope="col" className="text-center">TRẠNG THÁI</th>
-                      <th scope="col">THỜI GIAN TẠO</th>
+                      <th scope="col">TÊN VOUCHER</th>
+                      <th scope="col">GIÁ GIẢM</th>
+                      <th scope="col">NGÀY BẮT ĐẦU</th>
+                      <th scope="col">NGÀY KẾT THÚC</th>
+                      <th scope="col">THÒI GIAN TẠO</th>
                       <th scope="col">TÁC VỤ</th>
                     </tr>
                   </thead>
@@ -100,14 +98,11 @@ export default function theLoai(){
                       <th scope="row">1</th>
                       <td>Viễn tưởng</td>
                       <td>39</td>
-                      <td>
-                          <div class=" bg-success text-white rounded-pill text-center">
-                            Công Khai
-                          </div>
-                      </td>
+                      <td>01 Th10 2024 </td>
+                      <td>01 Th10 2024 </td>
                       <td>01 Th10 2024 vào lúc 12 giờ 21 phút</td>
                       <td>
-                        <Link href={`/admin/theLoai/${id}`} className="btn btn-secondary">
+                        <Link href={`/admin/voucher/${id}`} className="btn btn-secondary">
                             <i class="fa-solid fa-pen"></i>
                         </Link>
                         <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
