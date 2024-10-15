@@ -1,5 +1,7 @@
 import Link from "next/link";
 import "../globals.css";
+import Table from "./components/table";
+import Table2 from "./components/table2";
 
 export default function Home() {
   return (
@@ -63,7 +65,7 @@ export default function Home() {
               <div className="col-md-6 pt-3"  data-aos="fade-up-right" data-aos-duration="3000">
                 <div className="card text-center ">
                   <div className="card-body">
-                  {/* <Table></Table> */}
+                  <Table></Table>
                   </div>
                 </div>
                 {/* <OrderAdmin data={data}></OrderAdmin> */}
@@ -75,7 +77,7 @@ export default function Home() {
                     <b>Thông Tin Tổng Quan</b>
                   </div>
                   <div className="card-body">
-                        {/* <Table2></Table2> */}
+                        <Table2></Table2>
                   </div>
                 </div>
               </div>
