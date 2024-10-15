@@ -1,18 +1,29 @@
-import localFont from "next/font/local";
+'use client'
 import "../globals.css";
 import "../../../public/bootstrap/css/bootstrap.min.css";
-// import "../../../public/js/plugins/nucleo/css/nucleo.css";
-// import "../../../public/js/plugins/@fortawesome/fontawesome-free/css/all.min.css";
-// import "../../../public/css/argon-dashboard.css?v=1.1.2";
+import Link from "next/link";
+import NavAdmin from "../layout/admin/nav";
+import HeaderAdmin from "../layout/admin/header";
+
 
 
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="en">
       <body>
-       
+      <div className="container-fluid" >
+      <div className="row">
+        <NavAdmin></NavAdmin>
+        <div className="col-md p-0">
+          <HeaderAdmin></HeaderAdmin>
 
-        {children}
+            {children}
+
+        </div>
+      </div>
+    </div>
 
      
 
