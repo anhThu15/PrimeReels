@@ -13,7 +13,7 @@ export default function NavAdmin(){
             <Link style={{backgroundColor:"#213436"}} href="/admin" className={`list-group-item list-group-item-action text-white ${pathName == '/admin' ? "text-bg-dark":"" }`} aria-current="true">
             <img src="/images/tk.png" alt="" /><span> Thống Kê</span>
             </Link>
-            <Link style={{backgroundColor:"#213436"}} href="/admin/order" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/order' ? "text-bg-dark":"" }`}><img src="/images/tt.png" alt="" /><span> Thanh Toán</span></Link>
+            <Link style={{backgroundColor:"#213436"}} href="/admin/hoaDon" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/hoaDon' ? "text-bg-dark":"" }`}><img src="/images/tt.png" alt="" /><span> Thanh Toán</span></Link>
             <Link style={{backgroundColor:"#213436"}} href="/admin/product" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/product' ? "text-bg-dark":"" }`}><img src="/images/vip.png" alt="" /><span> Gói Vip</span></Link>
             <Link style={{backgroundColor:"#213436"}} href="/admin/category" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/category' ? "text-bg-dark":"" }`}><img src="/images/vch.png" alt="" /><span> Voucher</span></Link>
             <Link style={{backgroundColor:"#213436"}} href="/admin/user" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/user' ? "text-bg-dark":"" }`}><img src="/images/flim.png" alt="" /><span> Bộ Phim</span></Link>
