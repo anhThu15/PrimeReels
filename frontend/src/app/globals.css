@@ -1214,3 +1214,7 @@ ul.ranking-movie li:first-child {
     margin-top: 20px;
   }
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
