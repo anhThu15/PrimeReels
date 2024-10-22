@@ -93,13 +93,16 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
 
 Route::middleware(['jwt.verify', 'admin'])->post('/upload-video', [VideoController::class, 'uploadVideo']); // Upload video
 Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
-=======
+// =======
 
 
 //______________________________________UPLOAD VIDEO_______________________________________________
 
 Route::middleware(['jwt.verify', 'admin'])->post('/upload-video', [VideoController::class, 'uploadVideo']); // Upload video
 //>>>>>>> main
+
+Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
+Route::get('/movies/{id}', [MovieController::class, 'show']); // Lấy thông tin chi tiết một phim
 
 Route::middleware(['jwt.verify', 'admin'])->group(function () {
     //______________________________________MOVIE TYPES_______________________________________________
@@ -111,9 +114,7 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
     //______________________________________MOVIE_______________________________________________
 //<<<<<<< backend
 //=======
-    Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
 //>>>>>>> main
-    Route::get('/movies/{id}', [MovieController::class, 'show']); // Lấy thông tin chi tiết một phim
     Route::post('/movies', [MovieController::class, 'store']); // Thêm một phim mới
     Route::put('/movies/{id}', [MovieController::class, 'update']); // Cập nhật một phim
     Route::delete('/movies/{id}', [MovieController::class, 'destroy']); // Xóa một phim
