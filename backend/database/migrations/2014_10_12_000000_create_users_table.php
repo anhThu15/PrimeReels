@@ -10,11 +10,19 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id'); // user_id: int(11)
+//<<<<<<< backend
+            $table->string('user_name', 255); // user_name: varchar(255)
+            $table->string('avatar', 1000)->nullable(); // avatar: varchar(1000)
+            $table->string('email', 255)->unique(); // email: varchar(255)
+            $table->string('password', 1000); // password: varchar(1000)
+            $table->enum('gender', ['nam', 'nu']); // gender: enum('nam', 'nu')
+//=======
             $table->string('user_name', 255)->nullable(); // user_name: varchar(255)
             $table->string('avatar', 1000)->nullable(); // avatar: varchar(1000)
             $table->string('email', 255)->unique(); // email: varchar(255)
             $table->string('password', 1000); // password: varchar(1000)
             $table->enum('gender', ['nam', 'nu'])->nullable(); // gender: enum('nam', 'nu')
+//>>>>>>> main
             $table->tinyInteger('role')->default(0); // role: tinyint(0)
             $table->string('google_id', 1000)->nullable(); // google_id: varchar(1000)
             $table->string('access_token', 500)->nullable(); // access_token: varchar(500)
