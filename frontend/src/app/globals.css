@@ -1218,3 +1218,9 @@ ul.ranking-movie li:first-child {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.text-with-shadow {
+  color: white; /* Màu chữ trắng */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 10); /* Bóng chữ tối */
+}
+
