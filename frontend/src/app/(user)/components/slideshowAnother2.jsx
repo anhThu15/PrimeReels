@@ -1,10 +1,10 @@
 
 
-export default function SlideShowAnother(props){
+export default function SlideShowAnother2(props){
     return (
         <>
          <div className="font-monospace pb-3 mt-3"   data-bs-theme="dark" >
-            <div id="carouselExample6" class="carousel slide">
+            <div id="carouselExample5" class="carousel slide">
               <div class="carousel-inner">
                 <div class="carousel-item active ms-5">
                     <div className=" row-cols-3 row">
@@ -73,11 +73,11 @@ export default function SlideShowAnother(props){
                     </div>
                 </div>
               </div>
-              <button class="carousel-control-prev bg-white" style={{width:"50px"}} type="button" data-bs-target="#carouselExample6" data-bs-slide="prev">
+              <button class="carousel-control-prev bg-white" style={{width:"50px"}} type="button" data-bs-target="#carouselExample5" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next bg-white" style={{width:"50px"}} type="button" data-bs-target="#carouselExample6" data-bs-slide="next">
+              <button class="carousel-control-next bg-white" style={{width:"50px"}} type="button" data-bs-target="#carouselExample5" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>

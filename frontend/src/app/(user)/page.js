@@ -10,6 +10,7 @@ import axios from "axios";
 import SlideShow2 from "./components/slideshow2";
 import SlideShow3 from "./components/slideshow3";
 import SlideShow4 from "./components/slideshow4";
+import SlideShowAnother2 from "./components/slideshowAnother2";
 
 export default function Home() {
   const [action, setAction] = useState([])
@@ -51,6 +52,7 @@ export default function Home() {
     }
     const getCountry = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
+      
       setCountry(res)
     }
 
@@ -61,7 +63,7 @@ export default function Home() {
     getCountry()
   },[])
   
-  console.log(country);
+  // console.log(country);
   
 
   return (
@@ -108,7 +110,7 @@ export default function Home() {
           </div>
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Mọt Phim Củm Lạnh </h2>
-            <SlideShowAnother></SlideShowAnother>
+            <SlideShowAnother2 data={country}></SlideShowAnother2>
           </div>
         </div>
 
