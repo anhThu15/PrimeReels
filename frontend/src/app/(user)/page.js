@@ -1,12 +1,71 @@
+'use client'
 import Image from "next/image";
 import Banner from "./components/banner";
 import BannerAnother from "./components/bannerAnother";
 import CardSlide from "./components/cardslide";
 import SlideShow from "./components/slideshow";
 import SlideShowAnother from "./components/slideshowAnother";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import SlideShow2 from "./components/slideshow2";
+import SlideShow3 from "./components/slideshow3";
+import SlideShow4 from "./components/slideshow4";
+import SlideShowAnother2 from "./components/slideshowAnother2";
 
 export default function Home() {
+  const [action, setAction] = useState([])
+  const [comendy, setComendy] = useState([])
+  const [random, setRandom] = useState([])
+  const [better, setBetter] = useState([])
+  const [country, setCountry] = useState([])
+
+
+  useEffect(() => {
+    const getAction = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,{ revalidate: 3600 }).then((res) => res.data)
+      setAction(res)
+    }
+    const getComendy = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,{ revalidate: 3600 }).then((res) => res.data)
+      setComendy(res)
+    }
+    const getRandom = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+      // Hàm xáo trộn mảng
+      const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        // Chọn chỉ số ngẫu nhiên
+        const j = Math.floor(Math.random() * (i + 1));
+        // Hoán đổi các phần tử
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+      };
+      setRandom(shuffleArray(res))
+    }
+    const getBetter = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+
+      res.sort((a,b) => b.favorites_count - a.favorites_count )
+
+      setBetter(res)
+    }
+    const getCountry = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
+      
+      setCountry(res)
+    }
+
+    getAction()
+    getComendy()
+    getRandom()
+    getBetter()
+    getCountry()
+  },[])
   
+  // console.log(country);
+  
+
   return (
     <>
      <div className="container-fluid bg-dark p-0 font-monospace text-white">
@@ -14,23 +73,23 @@ export default function Home() {
           <div>
             <Banner></Banner> 
           </div>
-          <div className=" position-relative" style={{bottom:150}}>
+          <div className=" position-relative" style={{bottom:40}}>
               <CardSlide></CardSlide>
           </div>
           <div >
-            <h2 className="fw-bold mb-3" style={{marginLeft:"50px"}}>Thứ 6 Ngày 13</h2>
-            <SlideShow></SlideShow>
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Đề Xuất Hôm Nay</h2>
+            <SlideShow3 data={random}></SlideShow3>
           </div>
           <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Thảm họa thiên nhiên</h2>
-            <SlideShow></SlideShow>
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>PrimeReels Phim hay mỗi ngày</h2>
+            <SlideShow4 data={better}></SlideShow4>
           </div>
           <div>
             <BannerAnother></BannerAnother>
           </div>
           <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Rằm Trung Thu</h2>
-            <SlideShow></SlideShow>
+            <h2 className="fw-bold mb-3" style={{marginLeft:"50px"}}>Phim Hành Động</h2>
+            <SlideShow data={action}></SlideShow>
           </div>
           <div className="mt-5 img-banner">
             <Image 
@@ -42,16 +101,16 @@ export default function Home() {
             />
           </div> 
           <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Mọt Phim Tình Củm</h2>
-            <SlideShowAnother></SlideShowAnother>
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Mỹ</h2>
+            <SlideShowAnother data={country}></SlideShowAnother>
           </div>
           <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Rằm Trung Thu</h2>
-            <SlideShow></SlideShow>
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hài Hước</h2>
+            <SlideShow2 data={comendy}></SlideShow2>
           </div>
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Mọt Phim Củm Lạnh </h2>
-            <SlideShowAnother></SlideShowAnother>
+            <SlideShowAnother2 data={country}></SlideShowAnother2>
           </div>
         </div>
 

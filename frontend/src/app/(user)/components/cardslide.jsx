@@ -1,9 +1,29 @@
+'use client'
 import "../../../app/globals.css"
+import Link from "next/link";
+import useSWR from "swr";
 
 export default function CardSlide(){
+  const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
+  
+  const {data,error,isLoading} = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/movies`, fetcher)
+  if (error) return <div>Lỗi tải dữ liệu</div>
+  if (isLoading) return (
+  <>
+      {/* <div class="spinner-border text-danger" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div> */}
+  </>
+  );
+
+  const top5 = data.sort((a,b) => b.views - a.views ).slice(0,5)
+
+  // console.log(top5);
+
+
     return (
         <>
-        <h2 className="fw-bold mb-3" style={{marginLeft:"80px"}}>Top 5 PrimeReels</h2>
+        <h2 className="fw-bold mb-3 text-with-shadow" style={{marginLeft:"80px"}}>Top 5 PrimeReels</h2>
         <div className=" row row-cols-5 m-0 ">
           
           <div className="row row-cols-2 mb-3">
@@ -12,19 +32,8 @@ export default function CardSlide(){
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
-                  <div className="bg-black opacity-75">
-                      <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
-                  </div>
-                  <div class="card-img-overlay ">
-                    <div className="row">
-                        <div className="card-title rounded-pill bg-black opacity-75 text-white" style={{width:"70px", height:"35px"}}>
-                          <p className="text-left text-warning mt-2 fw-bolder" style={{fontSize:"13px"}}><i class="fa-solid fa-star"></i> 4.9</p>
-                        </div>
-                        <div className="card-title rounded-circle bg-danger text-white ms-5" style={{width:"47px", height:"47px"}}>
-                          <p className="text-center fw-bolder mt-1" style={{fontSize:"13px"}}>Tập 15</p>
-                        </div>
-                    </div>
-                    <h5 class="card-title ten fw-bold" style={{marginTop:"60px", marginLeft:"30px"}}>One Pice</h5>
+                  <div>
+                      <img src={top5[0].poster} height={300} class="card-img" alt="..."/>
                   </div>
                   <div class="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
@@ -41,19 +50,8 @@ export default function CardSlide(){
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
-                  <div className="bg-black opacity-75">
-                      <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
-                  </div>
-                  <div class="card-img-overlay ">
-                    <div className="row">
-                        <div className="card-title rounded-pill bg-black opacity-75 text-white " style={{width:"70px", height:"35px"}}>
-                          <p className="text-left text-warning mt-2 fw-bolder" style={{fontSize:"13px"}}><i class="fa-solid fa-star"></i> 4.9</p>
-                        </div>
-                        <div className="card-title rounded-circle bg-danger text-white ms-5" style={{width:"47px", height:"47px"}}>
-                          <p className="text-center fw-bolder mt-1" style={{fontSize:"13px"}}>Tập 15</p>
-                        </div>
-                    </div>
-                    <h5 class="card-title ten fw-bold" style={{marginTop:"60px", marginLeft:"30px"}}>One Pice</h5>
+                  <div>
+                      <img src={top5[1].poster} height={300} class="card-img" alt="..."/>
                   </div>
                   <div class="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
@@ -70,19 +68,8 @@ export default function CardSlide(){
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
-                  <div className="bg-black opacity-75">
-                      <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
-                  </div>
-                  <div class="card-img-overlay ">
-                    <div className="row">
-                        <div className="card-title rounded-pill bg-black opacity-75 text-white " style={{width:"70px", height:"35px"}}>
-                          <p className="text-left text-warning mt-2 fw-bolder" style={{fontSize:"13px"}}><i class="fa-solid fa-star"></i> 4.9</p>
-                        </div>
-                        <div className="card-title rounded-circle bg-danger text-white ms-5" style={{width:"47px", height:"47px"}}>
-                          <p className="text-center fw-bolder mt-1" style={{fontSize:"13px"}}>Tập 15</p>
-                        </div>
-                    </div>
-                    <h5 class="card-title ten fw-bold" style={{marginTop:"60px", marginLeft:"30px"}}>One Pice</h5>
+                  <div>
+                      <img src={top5[2].poster} height={300} class="card-img" alt="..."/>
                   </div>
                   <div class="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
@@ -99,19 +86,8 @@ export default function CardSlide(){
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
-                  <div className="bg-black opacity-75">
-                      <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
-                  </div>
-                  <div class="card-img-overlay ">
-                    <div className="row">
-                        <div className="card-title rounded-pill bg-black opacity-75 text-white " style={{width:"70px", height:"35px"}}>
-                          <p className="text-left text-warning mt-2 fw-bolder" style={{fontSize:"13px"}}><i class="fa-solid fa-star"></i> 4.9</p>
-                        </div>
-                        <div className="card-title rounded-circle bg-danger text-white ms-5" style={{width:"47px", height:"47px"}}>
-                          <p className="text-center fw-bolder mt-1" style={{fontSize:"13px"}}>Tập 15</p>
-                        </div>
-                    </div>
-                    <h5 class="card-title ten fw-bold" style={{marginTop:"60px", marginLeft:"30px"}}>One Pice</h5>
+                  <div>
+                      <img src={top5[3].poster} height={300} class="card-img" alt="..."/>
                   </div>
                   <div class="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
@@ -128,19 +104,8 @@ export default function CardSlide(){
             </div>
             <div className="col">
                 <div class="card text-bg-dark me-3" style={{width:"180px"}}>
-                  <div className="bg-black opacity-75">
-                      <img src="https://i1.sndcdn.com/artworks-m9ATljdbyyrlrBXm-rFUoMA-t500x500.png" height={300} class="card-img" alt="..."/>
-                  </div>
-                  <div class="card-img-overlay ">
-                    <div className="row">
-                        <div className="card-title rounded-pill bg-black opacity-75 text-white " style={{width:"70px", height:"35px"}}>
-                          <p className="text-left text-warning mt-2 fw-bolder" style={{fontSize:"13px"}}><i class="fa-solid fa-star"></i> 4.9</p>
-                        </div>
-                        <div className="card-title rounded-circle bg-danger text-white ms-5" style={{width:"47px", height:"47px"}}>
-                          <p className="text-center fw-bolder mt-1" style={{fontSize:"13px"}}>Tập 15</p>
-                        </div>
-                    </div>
-                    <h5 class="card-title ten fw-bold" style={{marginTop:"60px", marginLeft:"30px"}}>One Pice</h5>
+                  <div>
+                      <img src={top5[4].poster} height={300} class="card-img" alt="..."/>
                   </div>
                   <div class="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
