@@ -60,6 +60,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::put('profile/update', [ProfileController::class, 'updateProfile']); // Cập nhật thông tin user
     Route::put('profile/change-password', [ProfileController::class, 'changePassword']); // Đổi mật khẩu
 });
+// <<<<<<< backend
 //______________________________________PACKAGES_______________________________________________
 Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::post('packages', [PackageController::class, 'createPackage']); // Thêm gói cước
@@ -92,6 +93,13 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
 
 Route::middleware(['jwt.verify', 'admin'])->post('/upload-video', [VideoController::class, 'uploadVideo']); // Upload video
 Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
+=======
+
+
+//______________________________________UPLOAD VIDEO_______________________________________________
+
+Route::middleware(['jwt.verify', 'admin'])->post('/upload-video', [VideoController::class, 'uploadVideo']); // Upload video
+//>>>>>>> main
 
 Route::middleware(['jwt.verify', 'admin'])->group(function () {
     //______________________________________MOVIE TYPES_______________________________________________
@@ -101,6 +109,10 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::put('/movie-types/{id}', [MovieTypeController::class, 'update']); // Cập nhật thể loại phim
     Route::delete('/movie-types/{id}', [MovieTypeController::class, 'destroy']); // Xoá thể loại phim
     //______________________________________MOVIE_______________________________________________
+//<<<<<<< backend
+//=======
+    Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
+//>>>>>>> main
     Route::get('/movies/{id}', [MovieController::class, 'show']); // Lấy thông tin chi tiết một phim
     Route::post('/movies', [MovieController::class, 'store']); // Thêm một phim mới
     Route::put('/movies/{id}', [MovieController::class, 'update']); // Cập nhật một phim
@@ -138,6 +150,7 @@ Route::get('/movies/filter/director/{director}', [MovieController::class, 'filte
 Route::get('/movies/filter/actor/{actorId}', [MovieController::class, 'filterByActor']); // lọc phim theo diễn viên
 Route::get('/movies-type/{typeId}', [MovieController::class, 'filterByType']); // lọc phim theo thể loại movie type
 Route::get('/movies-genre/{genreId}', [MovieController::class, 'filterByGenre']); // lọc phim theo thể loại genre
+//<<<<<<< backend
 //______________________________________COMMENT_______________________________________________
 Route::middleware(['jwt.verify'])->post('/movies/{movieId}/comment', [CommentController::class, 'store']); // Thêm bình luận
 Route::get('/movies/{movieId}/comments', [CommentController::class, 'index']); // Lấy danh sách bình luận
@@ -157,3 +170,6 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::post('/movies/{movie_id}/episodes/{episode_id}/history', [HistoryController::class, 'store']); // Lưu lịch sử xem phim
     Route::get('/history', [HistoryController::class, 'index']); // Lấy danh sách lịch sử xem phim
 });
+//=======
+
+//>>>>>>> main
