@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 class EpisodeController extends Controller
 {
     // Lấy danh sách episodes của một movie
-    public function index(Movie $movie)
+    public function index(Request $request, $id)
     {
-        return response()->json($movie->episodes);
+        $episodes =  Episode::where('movie_id', "=", $id)->get();
+        return response()->json($episodes);
     }
 
     // Thêm episode mới
