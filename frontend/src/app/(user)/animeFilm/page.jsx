@@ -77,7 +77,7 @@ export default function animeFilm() {
                         <Banner></Banner>
                     </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Đề Xuất Hôm Nay </h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt Hình Đề Xuất Hôm Nay </h2>
                     <SlideShow data={random}></SlideShow>
                   </div>
                   <div>
@@ -85,19 +85,19 @@ export default function animeFilm() {
                     <SlideShowAnother data={date}></SlideShowAnother>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Được Quan Tâm Nhất  </h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhĐược Quan Tâm Nhất  </h2>
                     <SlideShow2 data={better}></SlideShow2>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Hành Động </h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhHành Động </h2>
                     <SlideShow3 data={action}></SlideShow3>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Mỹ </h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhMỹ </h2>
                     <SlideShowAnother2 data={country}></SlideShowAnother2>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Hài Hước</h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhHài Hước</h2>
                     <SlideShow4 data={comendy}></SlideShow4>
                   </div>
                 </div>  
