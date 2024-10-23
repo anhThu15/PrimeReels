@@ -1,48 +1,82 @@
-
-import Link from "next/link"
-import "../../../app/globals.css"
-
+"use client";
+import Link from "next/link";
+import "../../../app/globals.css";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
 
 export default function HeaderUser() {
-  return (
-    <>
-      {/* <div className=" container-fluid position-absolute"> */}
-      <nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
-        <div class="container">
-          <img class="navbar-brand me-5" src="/images/Logo-PR-(1).png" width={100}></img>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active me-3  font-monospace" aria-current="page" href="/">TRANG CHỦ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link me-3  font-monospace" aria-current="page" href="/filmSeries" >PHIM BỘ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link me-3  font-monospace" aria-current="page" href="/oddFilm" >PHIM LẺ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link me-3  font-monospace" aria-current="page" href="/animeFilm">PHIM HOẠT HÌNH</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link font-monospace" aria-current="page" href="/libary">THƯ VIỆN</a>
-              </li>
-            </ul>
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
 
-            <div><i class="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
-            <div className="rounded-pill bg-danger font-monospace text-white me-3" style={{ width: "140px", height: "30px" }}>
-              <Link href="/user-buy-package" style={{ textDecoration: 'none', color: 'white' }}>
-                <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
-              </Link>
-            </div>
-            <a class=" text-white nav-link font-monospace" aria-current="page" href="/login">ĐĂNG NHẬP</a>
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+      const user = JSON.parse(localStorage.getItem('user')); //lấy user đã được lưu là một object trong localStorage ra
+      if (user) { 
+        setUserName(user.user_name);  //và setUsername là user_name trong object
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Xóa token
+    localStorage.removeItem("user"); // Xóa user đã đăng nhập
+    router.push("/");
+    toast.success("Đăng xuất thành công");
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <nav className="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
+      <div className="container">
+        <img className="navbar-brand me-5" src="/images/Logo-PR-(1).png" width={100} alt="Logo" />
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link active me-3 font-monospace" href="/">TRANG CHỦ</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link me-3 font-monospace" href="/filmSeries">PHIM BỘ</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link me-3 font-monospace" href="/oddFilm">PHIM LẺ</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link me-3 font-monospace" href="/animeFilm">PHIM HOẠT HÌNH</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link font-monospace" href="/libary">THƯ VIỆN</Link>
+            </li>
+          </ul>
+
+          <div><i className="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
+          <div className="rounded-pill bg-danger font-monospace text-white me-3" style={{ width: "140px", height: "30px" }}>
+            <Link href="/user-buy-package" style={{ textDecoration: 'none', color: 'white' }}>
+              <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
+            </Link>
           </div>
+
+          {isLoggedIn ? (
+            <div className="dropdown">
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                {userName}
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><Link className="dropdown-item" href="/settings">Cài đặt</Link></li>
+                <li><a className="dropdown-item" onClick={handleLogout}>Đăng xuất</a></li>
+              </ul>
+            </div>
+          ) : (
+            <Link className="text-white nav-link font-monospace" href="/login">ĐĂNG NHẬP</Link>
+          )}
         </div>
-      </nav>
-      {/* </div> */}
-    </>
-  )
+      </div>
+    </nav>
+  );
 }
