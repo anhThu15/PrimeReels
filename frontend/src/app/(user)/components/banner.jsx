@@ -40,7 +40,7 @@ export default function Banner(){
                     <div className="col mt-2 text-with-shadow overflow-auto" style={{height:"200px"}} >
                         {topBanner[0].description}                                                
                     </div>
-                    <Link href="/film/1" className="btn btn-light rounded-pill mt-3">
+                    <Link href={`/film/${topBanner[0].movie_id}`} className="btn btn-light rounded-pill mt-3">
                         <i class="fa-solid fa-circle-play"></i> Xem Ngay
                     </Link>
               </div>
@@ -64,7 +64,7 @@ export default function Banner(){
                     <div className="col mt-2  text-with-shadow overflow-auto" style={{height:"200px"}} >
                         {topBanner[1].description}                                                
                     </div>
-                    <Link href="/film/1" className="btn btn-light rounded-pill mt-3">
+                    <Link href={`/film/${topBanner[1].movie_id}`} className="btn btn-light rounded-pill mt-3">
                         <i class="fa-solid fa-circle-play"></i> Xem Ngay
                     </Link>
               </div>
@@ -88,7 +88,7 @@ export default function Banner(){
                     <div className="col mt-2 text-with-shadow overflow-auto" style={{height:"200px"}} >
                         {topBanner[2].description}                                                
                     </div>
-                    <Link href="/film/1" className="btn btn-light rounded-pill mt-3">
+                    <Link href={`/film/${topBanner[2].movie_id}`} className="btn btn-light rounded-pill mt-3">
                         <i class="fa-solid fa-circle-play"></i> Xem Ngay
                     </Link>
               </div>
