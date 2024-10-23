@@ -46,7 +46,7 @@ class AuthController extends Controller
             'user_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed', // Xác thực mật khẩu
-            'gender' => 'required|in:nam,nu',
+            // 'gender' => 'required|in:nam,nu',
         ]);
 
         if ($validator->fails()) {
@@ -58,7 +58,7 @@ class AuthController extends Controller
             'user_name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'gender' => $request->gender,
+            // 'gender' => $request->gender,
             'role' => 0, // Mặc định là người dùng bình thường
             'email_verified_at' => null, // Chưa xác minh
             'email_verification_token' => Str::random(60), // Tạo token xác minh
