@@ -2,12 +2,12 @@
 import "../../globals.css";
 import ReactPlayer from 'react-player/lazy';
 import { React ,useState, useEffect } from 'react'
-import SlideShowAnother from "../components/slideshowAnother";
-import Comment from "../components/coment";
-import SlideShow from "../components/slideshow";
+import SlideShowAnother from "../../components/slideshowAnother";
+import Comment from "../../components/coment";
+import SlideShow from "../../components/slideshow";
 
 
-export default function Watch(){
+export default function Watch({params}){
   const [isClient, setIsClient] = useState(false)
   useEffect(() => {
     setIsClient(true)
@@ -31,7 +31,7 @@ export default function Watch(){
 
                       {/* Tập Phim */}
                       <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
-                      <SlideShowAnother></SlideShowAnother>
+                      {/* <SlideShowAnother></SlideShowAnother> */}
                       {/* Tập Phim */}
 
                       {/* Card phim */}
@@ -67,7 +67,7 @@ export default function Watch(){
                       {/* Có thể bạn sẽ thích */}
                       <div className="container">
                         <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Có thể bạn sẽ thích</h2>
-                        <SlideShow></SlideShow>
+                        {/* <SlideShow></SlideShow> */}
                       </div>
                       {/* Có thể bạn sẽ thích */}
 
