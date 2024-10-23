@@ -18,7 +18,7 @@ export default function Home() {
   const [random, setRandom] = useState([])
   const [better, setBetter] = useState([])
   const [country, setCountry] = useState([])
-
+  const [date, setDate] = useState([])
 
   useEffect(() => {
     const getAction = async () => {
@@ -52,15 +52,21 @@ export default function Home() {
     }
     const getCountry = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
-      
       setCountry(res)
     }
+    const getDate = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+            res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      setDate(res)
+    }
+
 
     getAction()
     getComendy()
     getRandom()
     getBetter()
     getCountry()
+    getDate()
   },[])
   
   // console.log(country);
@@ -79,6 +85,10 @@ export default function Home() {
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Đề Xuất Hôm Nay</h2>
             <SlideShow3 data={random}></SlideShow3>
+          </div>
+          <div >
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Cập Nhập Mới Nhất </h2>
+            <SlideShowAnother2 data={date}></SlideShowAnother2>
           </div>
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>PrimeReels Phim hay mỗi ngày</h2>
@@ -107,10 +117,6 @@ export default function Home() {
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hài Hước</h2>
             <SlideShow2 data={comendy}></SlideShow2>
-          </div>
-          <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Mọt Phim Củm Lạnh </h2>
-            <SlideShowAnother2 data={country}></SlideShowAnother2>
           </div>
         </div>
 

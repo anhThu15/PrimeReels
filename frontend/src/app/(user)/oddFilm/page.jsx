@@ -8,6 +8,8 @@ import axios from "axios";
 import Banner from "../components/banner";
 import SlideShow2 from "../components/slideshow2";
 import SlideShow3 from "../components/slideshow3";
+import SlideShow4 from "../components/slideshow4";
+import SlideShowAnother2 from "../components/slideshowAnother2";
 
 export default function oddFilm() {
 
@@ -16,19 +18,20 @@ export default function oddFilm() {
   const [random, setRandom] = useState([])
   const [better, setBetter] = useState([])
   const [country, setCountry] = useState([])
+  const [date, setDate] = useState([])
 
 
   useEffect(() => {
     const getAction = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,{ revalidate: 3600 }).then((res) => res.data)
-      setAction(res)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/2`,{ revalidate: 3600 }).then((res) => res.data)
+      setAction(res.movies)
     }
     const getComendy = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,{ revalidate: 3600 }).then((res) => res.data)
-      setComendy(res)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/3`,{ revalidate: 3600 }).then((res) => res.data)
+      setComendy(res.movies)
     }
     const getRandom = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`,{ revalidate: 3600 }).then((res) => res.data)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`,{ revalidate: 3600 }).then((res) => res.data)
       // Hàm xáo trộn mảng
       const shuffleArray = (array) => {
       for (let i = array.length - 1; i > 0; i--) {
@@ -42,16 +45,20 @@ export default function oddFilm() {
       setRandom(shuffleArray(res))
     }
     const getBetter = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`,{ revalidate: 3600 }).then((res) => res.data)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`,{ revalidate: 3600 }).then((res) => res.data)
 
       res.sort((a,b) => b.favorites_count - a.favorites_count )
 
       setBetter(res)
     }
     const getCountry = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
-      
-      setCountry(res)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
+      setCountry(res.movies)
+    }
+    const getDate = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`,{ revalidate: 3600 }).then((res) => res.data)
+            res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      setDate(res)
     }
 
     getAction()
@@ -59,6 +66,7 @@ export default function oddFilm() {
     getRandom()
     getBetter()
     getCountry()
+    getDate()
   },[])
 
     return (
@@ -69,28 +77,28 @@ export default function oddFilm() {
                         <Banner></Banner>
                     </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Đề Xuất Hôm Nay </h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Lẻ Đề Xuất Hôm Nay </h2>
                     <SlideShow data={random}></SlideShow>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Được Quan Tâm Nhất  </h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Cập Nhập Mới Nhất </h2>
+                    <SlideShowAnother data={date}></SlideShowAnother>
+                  </div>
+                  <div>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Lẻ Được Quan Tâm Nhất  </h2>
                     <SlideShow2 data={better}></SlideShow2>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Bộ Hành Động </h2>
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Lẻ Hành Động </h2>
                     <SlideShow3 data={action}></SlideShow3>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Thảm họa dự án </h2>
-                    {/* <SlideShow></SlideShow> */}
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Lẻ Mỹ </h2>
+                    <SlideShowAnother2 data={country}></SlideShowAnother2>
                   </div>
                   <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Thảm họa dự án </h2>
-                    {/* <SlideShowAnother></SlideShowAnother> */}
-                  </div>
-                  <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Thảm họa dự án </h2>
-                    {/* <SlideShow></SlideShow> */}
+                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Lẻ Hài Hước</h2>
+                    <SlideShow4 data={comendy}></SlideShow4>
                   </div>
                 </div>  
             </div>
