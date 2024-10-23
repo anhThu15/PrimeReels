@@ -49,7 +49,7 @@ class MovieController extends Controller
         $movie = Movie::with(['movieType', 'actors', 'genres', 'comments'])->find($id);
 
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found'], 404);
+            return response()->json(['message' => 'Không tìm thấy phim nào'], 404);
         }
 
         return response()->json($movie);
@@ -61,7 +61,7 @@ class MovieController extends Controller
         $movie = Movie::find($movie_id);
 
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found'], 404);
+            return response()->json(['message' => 'Không tìm thấy phim nào'], 404);
         }
 
         $validatedData = $request->validate([
@@ -91,7 +91,7 @@ class MovieController extends Controller
         $movie = Movie::find($movie_id);
 
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found'], 404);
+            return response()->json(['message' => 'Không tìm thấy phim nào'], 404);
         }
 
         $movie->delete();
@@ -208,7 +208,7 @@ public function filterByGenre($genreId)
 
     // Kiểm tra nếu không có phim nào
     if ($movies->isEmpty()) {
-        return response()->json(['message' => 'No movies found.'], 404);
+        return response()->json(['message' => 'Không tìm thấy phim nào'], 404);
     }
 
     return response()->json($movies);

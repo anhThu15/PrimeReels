@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//<<<<<<< backend
-Route::get('/', function () {
-    return view('welcome');
-});
-//=======
-
-//>>>>>>> main
 Route::get('verify', function () {
     return view('emails.verify');
 });
