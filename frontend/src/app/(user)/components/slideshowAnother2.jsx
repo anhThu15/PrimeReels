@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 
 export default function SlideShowAnother2(props){
@@ -19,7 +20,7 @@ export default function SlideShowAnother2(props){
                                 </div>
                                 <div class="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                    <i class="fa-solid fa-play fa-2xl text-white ms-3 mt-4"></i>
+                                     <Link href={`/film/${country.movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                   </div>
                                 </div>
                             </div>
@@ -41,7 +42,7 @@ export default function SlideShowAnother2(props){
                                 </div>
                                 <div class="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                    <i class="fa-solid fa-play fa-2xl text-white ms-3 mt-4"></i>
+                                     <Link href={`/film/${country.movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                   </div>
                                 </div>
                             </div>
@@ -63,7 +64,7 @@ export default function SlideShowAnother2(props){
                                 </div>
                                 <div class="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                    <i class="fa-solid fa-play fa-2xl text-white ms-3 mt-4"></i>
+                                     <Link href={`/film/${country.movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                   </div>
                                 </div>
                             </div>
