@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
 import "../../../app/globals.css";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 
 export default function HeaderUser() {
   const router = useRouter();
+  const pathName = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
 
@@ -39,19 +40,16 @@ export default function HeaderUser() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active me-3 font-monospace" href="/">TRANG CHỦ</Link>
+              <Link className={`nav-link me-3 font-monospace ${pathName == '/' ? 'active':''}`} href="/">TRANG CHỦ</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link me-3 font-monospace" href="/filmSeries">PHIM BỘ</Link>
+              <Link className={`nav-link me-3 font-monospace ${pathName == '/filmSeries' ? 'active':''}`} href="/filmSeries">PHIM BỘ</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link me-3 font-monospace" href="/oddFilm">PHIM LẺ</Link>
+              <Link className={`nav-link me-3 font-monospace ${pathName == '/oddFilm' ? 'active':''}`} href="/oddFilm">PHIM LẺ</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link me-3 font-monospace" href="/animeFilm">PHIM HOẠT HÌNH</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link font-monospace" href="/libary">THƯ VIỆN</Link>
+              <Link className={`nav-link me-3 font-monospace ${pathName == '/animeFilm' ? 'active':''}`}  href="/animeFilm">PHIM HOẠT HÌNH</Link>
             </li>
           </ul>
 
