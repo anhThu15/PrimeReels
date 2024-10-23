@@ -104,9 +104,15 @@ Route::get('/genres/{id}', [GenreController::class, 'show']); // Lấy thông ti
 
 Route::middleware(['jwt.verify', 'admin'])->group(function () {
     //______________________________________MOVIE TYPES_______________________________________________
+// <<<<<<< backend
+    Route::get('/movie-types', [MovieTypeController::class, 'index']); // Lấy danh sách thể loại phim
+    Route::get('/movie-types/{id}/{genreId}', [MovieTypeController::class, 'show']); // Lấy thông tin thể loại phim + lọc theo thể loại
+// =======
+// >>>>>>> main
     Route::post('/movie-types', [MovieTypeController::class, 'store']); // Thêm thể loại phim
     Route::put('/movie-types/{id}', [MovieTypeController::class, 'update']); // Cập nhật thể loại phim
     Route::delete('/movie-types/{id}', [MovieTypeController::class, 'destroy']); // Xoá thể loại phim
+    Route::get('/movie-types/{id}/country/{coutry}', [MovieTypeController::class, 'filterByCountry']); //Lọc movie_types và country
     //______________________________________MOVIE_______________________________________________
     Route::post('/movies', [MovieController::class, 'store']); // Thêm một phim mới
     Route::put('/movies/{id}', [MovieController::class, 'update']); // Cập nhật một phim
