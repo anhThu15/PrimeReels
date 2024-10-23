@@ -46,7 +46,7 @@ class MovieController extends Controller
     // Get movie details
     public function show($id)
     {
-        $movie = Movie::with(['movieType', 'actors', 'genres', 'comments'])->find($id);
+        $movie = Movie::with(['episode','movieType', 'actors', 'genres', 'comments.user'])->find($id);
 
         if (!$movie) {
             return response()->json(['message' => 'Không tìm thấy phim nào'], 404);

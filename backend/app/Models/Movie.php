@@ -25,7 +25,10 @@ class Movie extends Model
         'favorites_count',
         'movie_type_id'
     ];
-
+    public function episode()
+    {
+        return $this->hasMany(Episode::class, 'movie_id');
+    }
     public function movieType()
     {
         return $this->belongsTo(MovieType::class, 'movie_type_id');
