@@ -3,22 +3,22 @@ import Link from 'next/link';
 export default function UserPayMentPackage(){
     return(
         <div className="container font-monospace">
-            <div class="title-back mt-2">
-                <i class="fa-solid fa-chevron-left"></i> Trở về
+            <div className="title-back mt-2">
+                <i className="fa-solid fa-chevron-left"></i> Trở về
             </div>
-            <h4 class="mt-3">Chọn phương thức thanh toán</h4>
-            <div class="row mt-3 u-pay">
-                <div class="col-md-7">
-                    <div class="u-pay-note">
+            <h4 className="mt-3">Chọn phương thức thanh toán</h4>
+            <div className="row mt-3 u-pay">
+                <div className="col-md-7">
+                    <div className="u-pay-note">
                         <div>
-                            <i class="fa-solid fa-triangle-exclamation"></i> Chọn phương thức thanh toán phù hợp & Bấm nút Đăng ký gói để hoàn thành đăng ký gói bạn nhé
+                            <i className="fa-solid fa-triangle-exclamation"></i> Chọn phương thức thanh toán phù hợp & Bấm nút Đăng ký gói để hoàn thành đăng ký gói bạn nhé
                         </div>
                         <div>
-                            <i class="fa-solid fa-lock"></i> PrimeReels đảm bảo mọi giao dịch đều được bảo mật tuyệt đối
+                            <i className="fa-solid fa-lock"></i> PrimeReels đảm bảo mọi giao dịch đều được bảo mật tuyệt đối
                         </div>
                     </div>
 
-                    <div class="payment-option">
+                    <div className="payment-option">
                         <input type="radio" id="momo" name="payment" value="momo"/>
                         <label for="momo">
                             <img src="images/momo.png" alt="Ví MoMo"/>
@@ -26,7 +26,7 @@ export default function UserPayMentPackage(){
                         </label>
                     </div>
 
-                    <div class="payment-option">
+                    <div className="payment-option">
                         <input type="radio" id="visa" name="payment" value="visa"/>
                         <label for="momo">
                             <img src="images/mastercard-visa.png" alt="Thanh toán quốc tế"/>
@@ -34,7 +34,7 @@ export default function UserPayMentPackage(){
                         </label>
                     </div>
 
-                    <div class="payment-option">
+                    <div className="payment-option">
                         <input type="radio" id="zalopay" name="payment" value="zalopay"/>
                         <label for="momo">
                             <img src="images/zalopay.webp" alt="ZaloPay"/>
@@ -42,7 +42,7 @@ export default function UserPayMentPackage(){
                         </label>
                     </div>
 
-                    <div class="payment-option">
+                    <div className="payment-option">
                         <input type="radio" id="vnpay" name="payment" value="vnpay"/>
                         <label for="momo">
                             <img src="images/icon-vnpay.webp" alt="VNPay"/>
@@ -51,54 +51,54 @@ export default function UserPayMentPackage(){
                     </div>
 
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="u-pay-detail">
+                <div className="col-md-4 mb-3">
+                    <div className="u-pay-detail">
                         <h3>Thông tin chi tiết</h3>
-                        <div class="name">
+                        <div className="name">
                             <span>Tài khoản</span>
                             <span>0123456789</span>
                         </div>
-                        <div class="divider-detail"></div>
-                        <div class="package-detail">
-                            <div class="name-package">
+                        <div className="divider-detail"></div>
+                        <div className="package-detail">
+                            <div className="name-package">
                                 <span>Tên gói</span>
                                 <span>VIP39K</span>
                             </div>
-                            <div class="date-package mt-2">
+                            <div className="date-package mt-2">
                                 <span>Thời gian gói</span>
                                 <span>30 ngày</span>
                             </div>
                         </div> 
-                        <div class="divider-detail"></div>
-                        <div class="detail-date-package">
-                            <div class="effective-date">
+                        <div className="divider-detail"></div>
+                        <div className="detail-date-package">
+                            <div className="effective-date">
                                 <span>Ngày hiệu lực</span>
                                 <span>12/09/2024</span>
                             </div>
-                            <div class="package-useto mt-2">
+                            <div className="package-useto mt-2">
                                 <span>Sử dụng đến</span>
                                 <span>12/10/2024</span>
                             </div>
                         </div>
-                        <div class="divider-detail"></div>
-                        <div class="package-price">
-                            <div class="price">
+                        <div className="divider-detail"></div>
+                        <div className="package-price">
+                            <div className="price">
                                 <span>Trị giá</span>
                                 <span>39.000VNĐ</span>
                             </div>
-                            <div class="code-sales">
-                                <input type="text" placeholder="Nhập mã giảm giá" class="discount-code"/>
-                                <button class="btn btn-outline-secondary">Xác nhận</button>
+                            <div className="code-sales">
+                                <input type="text" placeholder="Nhập mã giảm giá" className="discount-code"/>
+                                <button className="btn btn-outline-secondary">Xác nhận</button>
                             </div>
                         </div>
-                        <div class="divider-detail"></div>
-                        <div class="total-package">
+                        <div className="divider-detail"></div>
+                        <div className="total-package">
                             <span>Thành tiền</span>
                             <span>39.000VNĐ</span>
                         </div>
-                        <div class="button-pay">
+                        <div className="button-pay">
                             <Link href="after-payment">
-                                <button class="btn btn-danger">Thanh toán</button>
+                                <button className="btn btn-danger">Thanh toán</button>
                             </Link>
                         </div>
                     </div>

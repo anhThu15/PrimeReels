@@ -18,15 +18,15 @@ export default function FooterUser(){
               </div>
              </div>
              <div className="col">
-                <nav class="navbar navbar-expand-lg w-100">
-                  <div class="container-fluid">
-                      <a class="nav-link" href="/introduce">Giới Thiệu</a>
-                      <Link href="/user-buy-package" class="nav-link">
+                <nav className="navbar navbar-expand-lg w-100">
+                  <div className="container-fluid">
+                      <a className="nav-link" href="/introduce">Giới Thiệu</a>
+                      <Link href="/user-buy-package" className="nav-link">
                         GÓI COMBO
                       </Link>
-                      <a class="nav-link" href="#">CHÍNH SÁCH</a>
-                      <a class="nav-link" href="#">ĐIỀU KHOẢN</a>
-                      <a class="nav-link" href="contact">LIÊN HỆ</a>
+                      <a className="nav-link" href="#">CHÍNH SÁCH</a>
+                      <a className="nav-link" href="#">ĐIỀU KHOẢN</a>
+                      <a className="nav-link" href="contact">LIÊN HỆ</a>
                   </div>
                 </nav>
                 <p className=" bg-white" style={{height:"1px"}}></p>
@@ -48,10 +48,10 @@ export default function FooterUser(){
                 </div>
                 <div className="row" style={{width:"150px"}}>
                   <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
-                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i class="fa-solid fa-phone"></i>Hotline</Link> 
+                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i className="fa-solid fa-phone"></i>Hotline</Link> 
                   </div>
                   <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
-                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i class="fa-solid fa-comment"></i> Hỗ Trợ </Link> 
+                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i className="fa-solid fa-comment"></i> Hỗ Trợ </Link> 
                   </div>
                 </div>
                 <div className="row mt-3  d-flex flex-wrap">

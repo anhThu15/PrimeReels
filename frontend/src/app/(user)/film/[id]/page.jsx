@@ -58,9 +58,9 @@ export default function film({params}){
                     <div className=" position-absolute " style={{top:100, left:110, width:"430px"}}>
                           <h1 className=" fw-bold">{film.title}</h1>
                           <div className=" row" style={{width:400}}>
-                             <div className="col"><i class="fa-regular fa-star"></i> {film.rating}</div>
-                             <div className="col"><i class="fa-regular fa-clock"></i> 20/25</div>
-                             <div className="col"><i class="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
+                             <div className="col"><i className="fa-regular fa-star"></i> {film.rating}</div>
+                             <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
+                             <div className="col"><i className="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
                              {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                           </div>
                           <div className="col mt-2 overflow-auto" style={{height:"100px"}}>
@@ -69,7 +69,7 @@ export default function film({params}){
                           <div className="row mt-2">
                               <div className="col-1">
                                 <button className="btn btn-outline-light rounded-circle">
-                                    <i class="fa-solid fa-plus"></i>
+                                    <i className="fa-solid fa-plus"></i>
                                 </button>
                               </div>
                               <div className="col mt-2 ms-2 fw-bold">Yêu Thích</div>
@@ -79,8 +79,8 @@ export default function film({params}){
                 <div className="col">
                   <img width={"100%"} height={"400px"} className=" bg-black opacity-75" src={film.banner} alt="" />
                   { localStorage.getItem("token") ? (<Link href={`/watch/${id}`} className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
-                    <i class="fa-solid fa-play fs-1 ms-1 mt-2"></i>
-                  </Link>) : (<p class="alert alert-danger position-absolute" role="alert " style={{right:"440px", top:"150px"}}>Chưa Đăng Nhập, Mời Bạn <Link href={'/login'} className="nav-link fw-bold">Đăng Nhập</Link></p>)}
+                    <i className="fa-solid fa-play fs-1 ms-1 mt-2"></i>
+                  </Link>) : (<p className="alert alert-danger position-absolute" role="alert " style={{right:"440px", top:"150px"}}>Chưa Đăng Nhập, Mời Bạn <Link href={'/login'} className="nav-link fw-bold">Đăng Nhập</Link></p>)}
 
                 </div>                 
               </div>

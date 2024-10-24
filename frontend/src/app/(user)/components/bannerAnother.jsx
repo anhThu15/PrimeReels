@@ -15,9 +15,9 @@ export default function BannerAnother(){
                           <img src="/images/image 20.png" height={100} alt="" />
                          <div className="col mt-5">
                             <div className=" row row-cols-4" style={{width:400}}>
-                               <div className="col"><i class="fa-regular fa-star"></i> 5.2</div>
-                               <div className="col"><i class="fa-regular fa-clock"></i> 20/25</div>
-                               <div className="col"><i class="fa-solid fa-calendar-days"></i> 2024</div>
+                               <div className="col"><i className="fa-regular fa-star"></i> 5.2</div>
+                               <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
+                               <div className="col"><i className="fa-solid fa-calendar-days"></i> 2024</div>
                                <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div>
                             </div>
                             <div className="col mt-2 text-start">
@@ -25,7 +25,7 @@ export default function BannerAnother(){
                                 Có ba chàng trai xuất hiện trong cuộc đời của Như Ca, đem lòng yêu thương cô. Vượt qua bao sóng gió, 
                                 họ đã tìm được lời đáp cho số phận của mình và chấm dứt chuỗi bi kịch.     <br />                                            
                                 <div className="btn btn-light rounded-pill mt-3">
-                                    <i class="fa-solid fa-circle-play"></i> Xem Ngay
+                                    <i className="fa-solid fa-circle-play"></i> Xem Ngay
                                 </div>
                             </div>
                          </div>

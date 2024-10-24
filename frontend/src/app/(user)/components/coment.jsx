@@ -11,8 +11,8 @@ export default function Comment( props){
                         <img className=" rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWFHANMR9GiCp0h0TmnItAno7AkgaTJ_ZpZA&s" width={60} height={60} alt="" />
                     </div>
                     <div className="col" style={{marginLeft:"-100px"}}>
-                        <form class="">
-                          <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Viết Bình Luận ..." rows="3"></textarea>
+                        <form className="">
+                          <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Viết Bình Luận ..." rows="3"></textarea>
                         </form>
                     </div>
                 </div>
@@ -30,11 +30,11 @@ export default function Comment( props){
                                     <div>{}</div>
                                 </div>
                                 <div className="col-2 text-warning mt-2">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
                                 </div>
                             </div>
                         </>
@@ -51,11 +51,11 @@ export default function Comment( props){
                         <div>Phim này hay vá ~~</div>
                     </div>
                     <div className="col-2 text-warning">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
                     </div>
                 </div>
 
@@ -69,11 +69,11 @@ export default function Comment( props){
                         <div>Phim này hay vá ~~</div>
                     </div>
                     <div className="col-2 text-warning">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star"></i>
                     </div>
                 </div>
                 {/* load bình luận */}
