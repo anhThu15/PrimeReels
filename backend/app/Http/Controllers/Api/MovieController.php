@@ -52,6 +52,9 @@ class MovieController extends Controller
             return response()->json(['message' => 'Không tìm thấy phim nào'], 404);
         }
 
+        // Tăng lượt xem
+        $movie->increment('views'); // Tăng số lượt xem lên 1
+
         return response()->json($movie);
     }
 
@@ -70,7 +73,7 @@ class MovieController extends Controller
             'country' => 'required|string|max:100',
             'director' => 'required|string|max:100',
             'status' => 'required|integer',
-            'rating' => 'required|numeric|min:0|max:10',
+            'rating' => 'required|numeric|min:0|max:10', 
             'views' => 'required|integer',
             'duration' => 'required|integer',
             'description' => 'nullable|string',
