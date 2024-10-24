@@ -9,7 +9,7 @@ export default function ListChoie(){
                     <div className=" col mb-3 mt-3 homnayxemgi2"></div>
                 </div>
                 <p className="card-title mb-2" style={{color:"#758792"}}>Nếu bạn buồn phiền không biết xem gì hôm nay. Hãy để chúng tôi chọn cho bạn</p>
-                <button class="btn btn-danger font-monospace" type="submit"><i class="fa-solid fa-play text-white"></i> Xem Phim <b>Ngẫu Nhiên</b> </button>
+                <button className="btn btn-danger font-monospace" type="submit"><i className="fa-solid fa-play text-white"></i> Xem Phim <b>Ngẫu Nhiên</b> </button>
               </div>
             </div>
             <div className="card mt-3">

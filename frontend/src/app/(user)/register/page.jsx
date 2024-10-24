@@ -30,7 +30,7 @@ export default function Register() {
         }),
         onSubmit: async (values) => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/register', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

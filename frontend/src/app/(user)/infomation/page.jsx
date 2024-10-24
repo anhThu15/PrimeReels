@@ -127,24 +127,24 @@ export default function InfomationUser() {
                     </div>
                 </div>
 
-                <div class="u-service-buy mt-3" id="u-service-buy" style={{ display: 'none' }}>
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <div class="card box-card">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="images/cinema-4153289_640.webp" class="img-fluid rounded-start" alt="Service Image 1" />
+                <div className="u-service-buy mt-3" id="u-service-buy" style={{ display: 'none' }}>
+                    <div className="row">
+                        <div className="col-md-6 mb-4">
+                            <div className="card box-card">
+                                <div className="row g-0">
+                                    <div className="col-md-4">
+                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
+                                    <div className="col-md-8">
+                                        <div className="card-body">
                                             <div>
-                                                <h5 class="u-service-buy-title">Gói VIP 39K</h5>
-                                                <button class="btn btn-sm btn-success">Đang sử dụng</button>
+                                                <h5 className="u-service-buy-title">Gói VIP 39K</h5>
+                                                <button className="btn btn-sm btn-success">Đang sử dụng</button>
                                             </div>
-                                            <p class="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
-                                            <p class="card-text text-end">
-                                                <small class="text-white">
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                            <p className="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
+                                            <p className="card-text text-end">
+                                                <small className="text-white">
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
@@ -153,22 +153,22 @@ export default function InfomationUser() {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="card box-card">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="images/cinema-4153289_640.webp" class="img-fluid rounded-start" alt="Service Image 1" />
+                        <div className="col-md-6 mb-4">
+                            <div className="card box-card">
+                                <div className="row g-0">
+                                    <div className="col-md-4">
+                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
+                                    <div className="col-md-8">
+                                        <div className="card-body">
                                             <div>
-                                                <h5 class="u-service-buy-title">Gói VIP 39K</h5>
-                                                <button class="btn btn-sm btn-success">Đang sử dụng</button>
+                                                <h5 className="u-service-buy-title">Gói VIP 39K</h5>
+                                                <button className="btn btn-sm btn-success">Đang sử dụng</button>
                                             </div>
-                                            <p class="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
-                                            <p class="card-text text-end">
-                                                <small class="text-white">
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                            <p className="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
+                                            <p className="card-text text-end">
+                                                <small className="text-white">
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
@@ -181,123 +181,123 @@ export default function InfomationUser() {
                     </div>
                 </div>
 
-                <div class="u-history-view" id="u-history-view" style={{ display: 'none' }}>
-                    <div class="card card-view">
-                        <div class="card-body">
-                            <div class="history-view-title d-flex align-items-center">
-                                <p class="mb-0 text-white">Bạn đã xem 5 phim gần đây</p>
-                                <button class="btn btn-danger">Xóa toàn bộ lịch sử</button>
+                <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
+                    <div className="card card-view">
+                        <div className="card-body">
+                            <div className="history-view-title d-flex align-items-center">
+                                <p className="mb-0 text-white">Bạn đã xem 5 phim gần đây</p>
+                                <button className="btn btn-danger">Xóa toàn bộ lịch sử</button>
                             </div>
-                            <div class="row mt-3">
+                            <div className="row mt-3">
 
-                                <div class="col-md-2 mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-md-2 mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                            <small class="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
-                                            <p class="card-text text-end">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                            <small className="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
+                                            <p className="card-text text-end">
                                                 <small>
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                            <small class="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
-                                            <p class="card-text text-end">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                            <small className="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
+                                            <p className="card-text text-end">
                                                 <small>
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                            <small class="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
-                                            <p class="card-text text-end">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                            <small className="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
+                                            <p className="card-text text-end">
                                                 <small>
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                            <small class="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
-                                            <p class="card-text text-end">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                            <small className="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
+                                            <p className="card-text text-end">
                                                 <small>
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                            <small class="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
-                                            <p class="card-text text-end">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                            <small className="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
+                                            <p className="card-text text-end">
                                                 <small>
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                            <small class="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
-                                            <p class="card-text text-end">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                            <small className="text-muted">Bạn đã xem tập 01 lúc 1 tuần trước</small>
+                                            <p className="card-text text-end">
                                                 <small>
-                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                     Xem chi tiết
                                                 </small>
                                             </p>
@@ -312,89 +312,89 @@ export default function InfomationUser() {
                         </div>
                     </div>
                 </div>
-                <div class="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
-                    <div class="card card-view">
-                        <div class="card-body">
-                            <div class="history-view-title d-flex align-items-center">
-                                <p class="mb-0 text-white">Bạn đã xem 5 phim gần đây</p>
-                                <button class="btn btn-danger">Xóa toàn bộ</button>
+                <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
+                    <div className="card card-view">
+                        <div className="card-body">
+                            <div className="history-view-title d-flex align-items-center">
+                                <p className="mb-0 text-white">Bạn đã xem 5 phim gần đây</p>
+                                <button className="btn btn-danger">Xóa toàn bộ</button>
                             </div>
-                            <div class="row mt-3">
+                            <div className="row mt-3">
 
-                                <div class="col-sm-2 position-relative mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 position-relative mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-sm-2 position-relative mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 position-relative mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-2 position-relative mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-sm-2 position-relative mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 position-relative mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-2 position-relative mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-sm-2 position-relative mt-2">
-                                    <div class="card u-card">
-                                        <div class="image-container">
-                                            <img src="images/cinema-4153289_640.webp" class="card-img-top" alt="Phim 1" />
-                                            <span class="episode-label">Tập 01</span>
-                                            <i class="fa-solid fa-trash icon-delete"></i>
+                                <div className="col-sm-2 position-relative mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thần thâm dật chiến</h5>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-sm-2 position-relative mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
+                                        </div>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-sm-2 position-relative mt-2">
+                                    <div className="card u-card">
+                                        <div className="image-container">
+                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
+                                            <span className="episode-label">Tập 01</span>
+                                            <i className="fa-solid fa-trash icon-delete"></i>
+                                        </div>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Thần thâm dật chiến</h5>
                                         </div>
                                     </div>
                                 </div>

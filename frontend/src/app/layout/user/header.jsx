@@ -66,7 +66,7 @@ export default function HeaderUser() {
                 {userName}
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><Link className="dropdown-item" href="/settings">Cài đặt</Link></li>
+                <li><Link className="dropdown-item" href="/infomation">Cài đặt</Link></li>
                 <li><a className="dropdown-item" onClick={handleLogout}>Đăng xuất</a></li>
               </ul>
             </div>

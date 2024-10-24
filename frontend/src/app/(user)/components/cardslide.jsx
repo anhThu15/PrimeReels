@@ -10,8 +10,8 @@ export default function CardSlide(){
   if (error) return <div>Lỗi tải dữ liệu</div>
   if (isLoading) return (
   <>
-      {/* <div class="spinner-border text-danger" role="status">
-        <span class="visually-hidden">Loading...</span>
+      {/* <div className="spinner-border text-danger" role="status">
+        <span className="visually-hidden">Loading...</span>
       </div> */}
   </>
   );
@@ -31,13 +31,13 @@ export default function CardSlide(){
                 <img src="/images/image 19.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
-                <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+                <div className="card text-bg-dark me-3" style={{width:"180px"}}>
                   <div>
-                      <img src={top5[0].poster} height={300} class="card-img" alt="..."/>
+                      <img src={top5[0].poster} height={300} className="card-img" alt="..."/>
                   </div>
-                  <div class="play-icon-overlay">
+                  <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[0].movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[0].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                     </div>
                   </div>
                 </div>
@@ -49,13 +49,13 @@ export default function CardSlide(){
                 <img src="/images/2.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
-                <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+                <div className="card text-bg-dark me-3" style={{width:"180px"}}>
                   <div>
-                      <img src={top5[1].poster} height={300} class="card-img" alt="..."/>
+                      <img src={top5[1].poster} height={300} className="card-img" alt="..."/>
                   </div>
-                  <div class="play-icon-overlay">
+                  <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[1].movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[1].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                     </div>
                   </div>
                 </div>
@@ -67,13 +67,13 @@ export default function CardSlide(){
                 <img src="/images/3.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
-                <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+                <div className="card text-bg-dark me-3" style={{width:"180px"}}>
                   <div>
-                      <img src={top5[2].poster} height={300} class="card-img" alt="..."/>
+                      <img src={top5[2].poster} height={300} className="card-img" alt="..."/>
                   </div>
-                  <div class="play-icon-overlay">
+                  <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[2].movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[2].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                     </div>
                   </div>
                 </div>
@@ -85,13 +85,13 @@ export default function CardSlide(){
                 <img src="/images/4.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
-                <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+                <div className="card text-bg-dark me-3" style={{width:"180px"}}>
                   <div>
-                      <img src={top5[3].poster} height={300} class="card-img" alt="..."/>
+                      <img src={top5[3].poster} height={300} className="card-img" alt="..."/>
                   </div>
-                  <div class="play-icon-overlay">
+                  <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[3].movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[3].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                     </div>
                   </div>
                 </div>
@@ -103,13 +103,13 @@ export default function CardSlide(){
                 <img src="/images/5.png" className="mt-5" height={200} width={200} alt="" />
             </div>
             <div className="col">
-                <div class="card text-bg-dark me-3" style={{width:"180px"}}>
+                <div className="card text-bg-dark me-3" style={{width:"180px"}}>
                   <div>
-                      <img src={top5[4].poster} height={300} class="card-img" alt="..."/>
+                      <img src={top5[4].poster} height={300} className="card-img" alt="..."/>
                   </div>
-                  <div class="play-icon-overlay">
+                  <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[4].movie_id}`} class="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[4].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                     </div>
                   </div>
                 </div>
