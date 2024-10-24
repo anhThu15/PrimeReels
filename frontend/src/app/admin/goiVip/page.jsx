@@ -22,7 +22,29 @@ export default function goiVip(){
 
   const onSubmit = async (data) =>{
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/packages`,data)
+      const token = localStorage.getItem('token');
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/packages`, data, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then((res) => res.data);
+        if (res) {
+          alert('thành công ròi đi chữa lãnh hoy ~~~')
+          window.location.reload()
+        } else {
+          // Xử lý hiển thị lỗi
+          console.error(result.error);
+        }
+      
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+
+  const hanldeDelete = async (data) => {
+    try {
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/packages/${data}`,data)
                                .then((res)=>res.data)
         if (res) {
           alert('thành công ròi đi chữa lãnh hoy ~~~')
@@ -34,7 +56,6 @@ export default function goiVip(){
     } catch (error) {
       console.log(error);
     }
-    
   }
 
     return(
@@ -138,7 +159,7 @@ export default function goiVip(){
                               <Link href={`/admin/goiVip/${goi.package_id}`} className="btn btn-secondary">
                                   <i class="fa-solid fa-pen"></i>
                               </Link>
-                              <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
+                              <button className="btn btn-danger ms-2" onClick={() => hanldeDelete(goi.package_id)}><i class="fa-solid fa-trash"></i></button>
                             </td>
                           </tr>
                         </>
