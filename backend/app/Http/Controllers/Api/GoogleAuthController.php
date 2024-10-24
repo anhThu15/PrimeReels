@@ -24,13 +24,14 @@ class GoogleAuthController extends Controller
         try {
             // Lấy thông tin người dùng từ Google
             $googleUser = Socialite::driver('google')->user();
-            // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
-            $user = User::where('google_id', $googleUser->getId())->first();
-            // // Nếu chưa có, tạo người dùng mới với mật khẩu ngẫu nhiên
-            // $randomPassword = Str::random(10); // Tạo mật khẩu ngẫu nhiên với độ dài 10 ký tự
+
+            // Kiểm tra người dùng bằng google_id hoặc email
+            $user = User::where('google_id', $googleUser->getId())
+                ->orWhere('email', $googleUser->getEmail())
+                ->first();
 
             if (!$user) {
-                // Nếu chưa có, tạo người dùng mới
+                // Nếu không tìm thấy, tạo lại tài khoản người dùng
                 $user = User::create([
                     'user_name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
@@ -38,9 +39,15 @@ class GoogleAuthController extends Controller
                     'google_id' => $googleUser->getId(),
                     'provider' => 'google',
                     'role' => 0, // Mặc định là người dùng bình thường
-                    'password' => Hash::make($randomPassword), // Lưu mật khẩu đã mã hóa
                     'password' => null, // Không cần mật khẩu
                     'email_verified_at' => now(), // Đã xác minh email
+                ]);
+            } else {
+                // Nếu đã tồn tại tài khoản nhưng bị xóa, cập nhật thông tin google_id
+                $user->update([
+                    'google_id' => $googleUser->getId(),
+                    'avatar' => $googleUser->getAvatar(),
+                    'provider' => 'google',
                 ]);
             }
 
@@ -53,9 +60,7 @@ class GoogleAuthController extends Controller
                 'token' => $token,
                 'user' => $user
             ]);
-        }
-
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             // dd($e->getMessage());
             return response()->json(['error' => 'Đăng nhập Google thất bại.'], 500);
         }

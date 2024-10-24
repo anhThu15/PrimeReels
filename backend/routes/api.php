@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\GoogleAuthController;
+use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\VoucherTypeController;
 use App\Http\Controllers\Api\VoucherController;
 use App\Http\Controllers\Api\VideoController;
@@ -31,6 +32,7 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::put('users/{id}', [UserController::class, 'update']); // Cập nhật user
     Route::delete('users/{id}', [UserController::class, 'destroy']); // Xoá user
 });
+Route::middleware(['jwt.verify', 'admin'])->get('/statistics', [InvoiceController::class, 'getStatistics']); // Thống kê doanh thu
 //______________________________________PROFILE USER_______________________________________________
 Route::middleware(['jwt.verify'])->get('profile', [ProfileController::class, 'profile']); // Lấy thông tin user
 //______________________________________LOGIN_______________________________________________
@@ -163,3 +165,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::post('/movies/{movie_id}/episodes/{episode_id}/history', [HistoryController::class, 'store']); // Lưu lịch sử xem phim
     Route::get('/history', [HistoryController::class, 'index']); // Lấy danh sách lịch sử xem phim
 });
+
+//
+Route::get('/movies/{movie_id}/episodes', [EpisodeController::class, 'index']); // Lấy danh sách các tập phim
+Route::get('/movies/{movie_id}/episodes/{episode_id}', [EpisodeController::class, 'show']); // Lấy thông tin chi tiết một tập phim

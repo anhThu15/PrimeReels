@@ -19,19 +19,24 @@ class AuthController extends Controller
     // API đăng nhập
     public function login(Request $request)
     {
-        // Validate các thông tin đăng nhập
+        // Validate thông tin đăng nhập
         $credentials = $request->only('email', 'password');
 
-        // Thực hiện xác thực
         if (!$token = JWTAuth::attempt($credentials)) {
-            Log::error('Login failed', $credentials); // Ghi log thông tin đăng nhập
             return response()->json(['error' => 'Thông tin xác thực không hợp lệ'], 401);
         }
 
         // Lấy thông tin người dùng
         $user = Auth::user();
-        Log::info('User logged in', ['user' => $user]);
-        // Trả về token JWT và thông tin người dùng
+
+        // Kiểm tra nếu người dùng chưa xác minh email
+        if ($user->role == 3) {
+            // Gửi lại email xác nhận
+            Mail::to($user->email)->send(new \App\Mail\VerifyEmail($user));
+            return response()->json(['error' => 'Bạn chưa xác nhận email. Vui lòng kiểm tra email của bạn để xác minh.']);
+        }
+
+        // Đăng nhập thành công
         return response()->json([
             'status' => 'success',
             'token' => $token,
@@ -45,30 +50,31 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'user_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed', // Xác thực mật khẩu
-            // 'gender' => 'required|in:nam,nu',
+            'password' => 'required|string|min:8|confirmed',
+            'gender' => 'required|in:nam,nu',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        // Tạo người dùng mới
+        // Tạo người dùng với role = 3 (chưa xác minh)
         $user = User::create([
             'user_name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            // 'gender' => $request->gender,
-            'role' => 0, // Mặc định là người dùng bình thường
-            'email_verified_at' => null, // Chưa xác minh
-            'email_verification_token' => Str::random(60), // Tạo token xác minh
+            'gender' => $request->gender,
+            'role' => 3, // Người dùng chưa xác minh email
+            'email_verified_at' => null,
+            'email_verification_token' => Str::random(60),
         ]);
 
-        // Gửi email xác nhận (cần cấu hình mail trước)
+        // Gửi email xác nhận
         Mail::to($user->email)->send(new \App\Mail\VerifyEmail($user));
 
         return response()->json(['status' => 'success', 'message' => 'Đăng ký thành công. Vui lòng kiểm tra email để xác minh.']);
     }
+
 
     public function verifyEmail($userId, $token)
     {
@@ -78,12 +84,15 @@ class AuthController extends Controller
             return response()->json(['error' => 'Token xác minh không hợp lệ'], 400);
         }
 
+        // Xác minh email thành công, cập nhật role và email_verified_at
         $user->email_verified_at = now();
         $user->email_verification_token = null;
+        $user->role = 0; // Vai trò người dùng thông thường sau khi xác minh
         $user->save();
 
         return response()->json(['status' => 'success', 'message' => 'Xác minh email thành công.']);
     }
+
     // Phương thức logout
     public function logout(Request $request)
     {
