@@ -1,8 +1,41 @@
+'use client'
+import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export default function goiVip(){
+  const router = useRouter();
+  const [gois, setGois] = useState([])
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
-    const id = 15;
+  useEffect(() => {
+    const getGois = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`,{ revalidate: 3600 }).then((res) => res.data)
+      setGois(res)
+    }
+
+    getGois()
+
+  },[])
+
+  const onSubmit = async (data) =>{
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/packages`,data)
+                               .then((res)=>res.data)
+        if (res) {
+          alert('thành công ròi đi chữa lãnh hoy ~~~')
+        } else {
+          // Xử lý hiển thị lỗi
+          console.error(result.error);
+        }
+      
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
 
     return(
         <>
@@ -22,24 +55,27 @@ export default function goiVip(){
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                              <form>
+                              <form onSubmit={handleSubmit(onSubmit)}>
                                 <div class="mb-3">
                                   <label class="form-label">Tên Gói</label>
-                                  <input type="text" class="form-select" />
+                                  <input type="text" class="form-select" {...register('name', { required: 'Tên Gói là bắt buộc' })} />
+                                  {errors.name && <div className="text-danger">{errors.name.message}</div>}
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label">Giá Gói</label>
-                                  <input type="number" class="form-select" />
+                                  <input type="number" class="form-select" {...register('price', { required: 'Giá Gói là bắt buộc' })} />
+                                  {errors.price && <div className="text-danger">{errors.price.message}</div>}
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label">Thời Gian</label>
-                                  <input type="date" class="form-select" />
+                                  <input type="number" class="form-select" {...register('duration', { required: 'Thời Gian Gói là bắt buộc' })} />
+                                  {errors.duration && <div className="text-danger">{errors.duration.message}</div>}
                                 </div>
+                                <button type="submit" class="btn btn-primary">Tạo Gói</button>
                               </form>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Xác Nhận</button>
                           </div>
                         </div>
                       </div>
@@ -89,19 +125,25 @@ export default function goiVip(){
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>VIP19k</td>
-                      <td>39.000đ</td>
-                      <td> 21 phút</td>
-                      <td>01 Th10 2024 vào lúc 12 giờ 21 phút</td>
-                      <td>
-                        <Link href={`/admin/goiVip/${id}`} className="btn btn-secondary">
-                            <i class="fa-solid fa-pen"></i>
-                        </Link>
-                        <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
-                      </td>
-                    </tr>
+                    {gois.map((goi, i) => {
+                      return(
+                        <>
+                          <tr key={goi.package_id}>
+                            <th scope="row">{i+1}</th>
+                            <td>{goi.name}</td>
+                            <td>{goi.price.toLocaleString()}đ</td>
+                            <td> {goi.duration} phút</td>
+                            <td>{goi.created_at}</td>
+                            <td>
+                              <Link href={`/admin/goiVip/${goi.package_id}`} className="btn btn-secondary">
+                                  <i class="fa-solid fa-pen"></i>
+                              </Link>
+                              <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                          </tr>
+                        </>
+                      )
+                    })}
                   </tbody>
                 </table>
             </div>
