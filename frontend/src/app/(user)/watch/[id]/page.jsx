@@ -57,6 +57,7 @@ export default function Watch({params}){
 
   }, [])
 
+
     return(
         <>
                 <div className="container-fluid bg-black p-0 font-monospace text-white">
@@ -91,9 +92,9 @@ export default function Watch({params}){
                                  <div className="col"><i class="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
                                  {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                               </div>
-                              {/* <div className="col"> <span className=" text-secondary">Thể Loại: </span>{film.genres.map((g) =>  { render(<>{g.name}, </>)})}</div>
+                              <div className="col"> <span className=" text-secondary">Thể Loại: </span>{film?.genres?.map((g) =>  { return(<>{g.name}, </>)})}</div>
                               <div className="col"> <span className=" text-secondary">Đạo Diễn: </span>{film.director}</div>
-                              <div className="col"> <span className=" text-secondary">Diễn Viên: </span>{film.actors.map((g) =>  { render(<>{g.name}, </>)})}</div> */}
+                              <div className="col"> <span className=" text-secondary">Diễn Viên: </span>{film?.actors?.map((g) =>  { return(<>{g.name}, </>)})}</div>
                               <div className="col mt-2">
                                   {film.description}                                                
                               </div>
@@ -104,7 +105,7 @@ export default function Watch({params}){
 
                       {/* cmt */}
                       <div className="container mt-5 ">
-                          {/* <Comment></Comment> */}
+                          <Comment data={film.comments}></Comment>
                       </div>
                       {/* cmt */}
 
