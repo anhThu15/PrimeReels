@@ -44,10 +44,15 @@ export default function goiVip(){
 
   const hanldeDelete = async (data) => {
     try {
-      const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/packages/${data}`,data)
-                               .then((res)=>res.data)
+      const token = localStorage.getItem('token');
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/packages/${data}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then((res) => res.data);
         if (res) {
           alert('thành công ròi đi chữa lãnh hoy ~~~')
+          window.location.reload()
         } else {
           // Xử lý hiển thị lỗi
           console.error(result.error);
