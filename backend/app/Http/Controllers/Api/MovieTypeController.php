@@ -29,7 +29,7 @@ class MovieTypeController extends Controller
         return response()->json($movieType, 201);
     }
 
-    // Lấy thông tin chi tiết một Movie Type
+    // Lấy thông tin chi tiết Movie theo dmuc phim +  thể loại
     public function show($id, $genreId)
     {
         $movieType = MovieType::find($id);
@@ -49,6 +49,18 @@ class MovieTypeController extends Controller
             ->whereHas('genres', function ($query) use ($genreId) {
                 $query->where('movies_genres.genre_id', $genreId);
             })->get();
+
+        return response()->json(['movieType' => $movieType, 'movies' => $movies]);
+    }
+    // Lấy thông tin chi tiết Movie 
+    public function show1($id)
+    {
+        $movieType = MovieType::find($id);
+        if (!$movieType) {
+            return response()->json(['message' => 'Movie Type not found'], 404);
+        }
+        // Tìm các movie thuộc movie_type_id 
+        $movies = Movie::where('movie_type_id', $id)->get();
 
         return response()->json(['movieType' => $movieType, 'movies' => $movies]);
     }
