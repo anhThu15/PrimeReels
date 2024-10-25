@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 export default function AdminFilm() {
     const router = useRouter();
     const [films, setFilms] = useState([])
-    const [genres, setGenres] = useState([])
 
     useEffect(() => {
         const getFilms = async () => {
@@ -19,7 +18,28 @@ export default function AdminFilm() {
     
     },[])
 
-    const id =15
+
+    const hanldeDelete = async (data) => {
+        try {
+          const token = localStorage.getItem('token');
+          const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${data}`,{
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            }
+          }).then((res) => res.data);
+            if (res) {
+              alert('thành công ròi đi chữa lãnh hoy ~~~')
+              window.location.reload()
+            } else {
+              // Xử lý hiển thị lỗi
+              console.error(result.error);
+            }
+          
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -69,9 +89,9 @@ export default function AdminFilm() {
                         </th>
                         <th scope="col">ID</th>
                         <th scope="col">PHIM</th>
-                        <th scope="col">LOẠI PHIM</th>
+                        {/* <th scope="col">LOẠI PHIM</th> */}
                         <th scope="col">NĂM PHÁT HÀNH</th>
-                        <th scope="col">THỂ LOẠI PHIM</th>
+                        {/* <th scope="col">THỂ LOẠI PHIM</th> */}
                         <th scope="col">TRẠNG THÁI</th>
                         <th scope="col">LƯỢT XEM</th>
                         <th scope="col">RATING</th>
@@ -94,11 +114,11 @@ export default function AdminFilm() {
                                             <span className="bg-secondary text-white rounded-pill text-center" style={{width:'70px'}}>8 tập</span>
                                         </div>
                                     </td>
-                                    <td>
-                                        <input type="hidden" value={film.movie_type_id} />
-                                    </td>
+                                    {/* <td>
+                                        {film.movie_type_id}
+                                    </td> */}
                                     <td>{film.created_at}</td>
-                                    <td>
+                                    {/* <td>
                                         <div class=" bg-primary text-white rounded text-center mb-2">
                                             Hài hước
                                         </div>
@@ -108,7 +128,7 @@ export default function AdminFilm() {
                                         <div class=" bg-primary text-white rounded text-center mb-2">
                                             Gia đình
                                         </div>
-                                    </td>
+                                    </td> */}
                                     <td>
                                         {film.status == 1 ? (<div class="bg-success text-white rounded text-center">
                                             Công Khai
@@ -125,10 +145,10 @@ export default function AdminFilm() {
                                         <i class="fa-solid fa-star mx-3" style={{ color: "gold" }}></i>
                                     </td>
                                     <td>
-                                        <Link href={`/admin/adminFilm/${id}`} className="btn btn-secondary">
+                                        <Link href={`/admin/adminFilm/${film.movie_id}`} className="btn btn-secondary">
                                             <i class="fa-solid fa-pen"></i>
                                         </Link>
-                                        <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
+                                        <button className="btn btn-danger ms-2" onClick={() => hanldeDelete(film.movie_id)}><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                             </>

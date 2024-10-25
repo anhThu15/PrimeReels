@@ -1,9 +1,55 @@
+'use client'
 import Link from "next/link";
 import "../globals.css";
 import Table from "./components/table";
 import Table2 from "./components/table2";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
+    const [films, setFilms] = useState([])
+    const [types, setTypes] = useState([])
+    const [genres, setGenres] = useState([])
+    const [users, setUsers] = useState([])
+    
+    useEffect(() => {
+      const getFilms = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+        setFilms(res)
+      }
+      const getTypes = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`,{ revalidate: 3600 }).then((res) => res.data)
+        setTypes(res)
+      }
+      const getGenres = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`,{ revalidate: 3600 }).then((res) => res.data)
+        setGenres(res)
+      }
+      const getUsers = async () => {
+        const token = localStorage.getItem('token');
+        try {
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            }
+          })
+          setUsers(res.data);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        }
+      };
+
+  
+      getFilms() 
+      getTypes() 
+      getGenres()
+      getUsers();
+    
+    },[])
+
+      console.log(users);
+
+
   return (
     <>
         <div className="container-fluid">
@@ -14,7 +60,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                       <h5 className="card-title text-start col">Tổng Phim
-                        <div className="text-start mt-3 fs-1 fw-bold ">00</div>
+                        <div className="text-start mt-3 fs-1 fw-bold ">{films.length}</div>
                       </h5>
                       <img className="col-3" height={45} src="/images/Group 324.png"></img>
                     </div>
@@ -27,7 +73,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                         <h5 className="card-title col text-start">Tổng Danh Mục
-                          <div className="text-start mt-3 fs-1 fw-bold ">00</div>
+                          <div className="text-start mt-3 fs-1 fw-bold ">{types.length}</div>
                         </h5>
                         <img className="col-3" height={45} src="/images/Group 325.png"></img>
                     </div>
@@ -40,7 +86,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                         <h5 className="card-title col text-start">Tổng Thể Loại
-                          <div className="text-start mt-3 fs-1 fw-bold ">00</div>
+                          <div className="text-start mt-3 fs-1 fw-bold ">{genres.length}</div>
                         </h5>
                         <img className="col-3" height={45} src="/images/Group 326.png"></img>
                     </div>
@@ -53,7 +99,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                         <h5 className="card-title col text-start">Tổng Tài Khoản
-                          <div className="text-start mt-3 fs-1 fw-bold ">00</div>
+                          <div className="text-start mt-3 fs-1 fw-bold ">{users.length}</div>
                         </h5>
                         <img className="col-3" height={45} src="/images/Group 327.png"></img>
                     </div>
