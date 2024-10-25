@@ -2,18 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
-// import axios from 'axios';
-// import useSWR from 'swr';
 
-const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
 
 export default function Table(props) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
 
-//   const {data:o} = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/admins/order`, fetcher)
-
-  
   
   const [chartData, setChartData] = useState({
     labels: ["Tổng Doanh Thu", "Tuần 2", "Tuần 3", "Tuần 4"],

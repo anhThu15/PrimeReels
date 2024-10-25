@@ -42,17 +42,21 @@ export default function Home() {
         }
       };
 
-      // const getStatistical = async () => {
-      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`,{ revalidate: 3600 }).then((res) => res.data)
-      //   setSatistical(res)
-      // }
+      const getStatistical = async () => {
+        try {
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`,{ revalidate: 3600 }).then((res) => res.data)
+          setSatistical(res)
+        } catch (error) {
+          console.log(); 
+        }
+      }
 
   
       getFilms() 
       getTypes() 
       getGenres()
       getUsers();
-      // getStatistical();
+      getStatistical();
     
     },[])
 
@@ -120,7 +124,7 @@ export default function Home() {
               <div className="col-md-6 pt-3"  data-aos="fade-up-right" data-aos-duration="3000">
                 <div className="card text-center ">
                   <div className="card-body">
-                  <Table></Table>
+                  {/* <Table data={satistical}></Table> */}
                   </div>
                 </div>
                 {/* <OrderAdmin data={data}></OrderAdmin> */}
