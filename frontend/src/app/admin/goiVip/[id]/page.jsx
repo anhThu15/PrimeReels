@@ -57,8 +57,8 @@ export default function chitietgoiVip({params}){
                     <form onSubmit={handleSubmit(onUpdate)}>
                     <div class="mb-3">
                         <label class="form-label">Tên Gói</label>
-                          <input type="text" class="form-select" {...register('name', { required: 'Tên Gói là bắt buộc' })} />
-                          {errors.name && <div className="text-danger">{errors.name.message}</div>}
+                          <input type="text" class="form-select" {...register('title', { required: 'Tên Gói là bắt buộc' })} />
+                          {errors.title && <div className="text-danger">{errors.title.message}</div>}
                         </div>
                         <div class="mb-3">
                           <label class="form-label">Giá Gói</label>

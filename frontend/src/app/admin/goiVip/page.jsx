@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function goiVip(){
   const router = useRouter();
   const [gois, setGois] = useState([])
+  const [sorts, setSorts] = useState([])
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
   useEffect(() => {
@@ -63,6 +64,19 @@ export default function goiVip(){
     }
   }
 
+  const handleSort = (e) => { 
+    if(0){
+      setSorts(gois)
+    }else if('asc'){
+      console.log('asc');
+    }else if('des'){
+      console.log('des');
+      
+    }
+    
+  }
+  
+
     return(
         <>
             <div className=" container-fluid">
@@ -116,14 +130,13 @@ export default function goiVip(){
                     </div>
                     <div className="col">
                         <div class="dropdown">
-                          <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-filter"></i> Lọc
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">A-Z</a></li>
-                            <li><a class="dropdown-item" href="#">Z-A</a></li>
-                            <li><a class="dropdown-item" href="#">...</a></li>
-                          </ul>
+                            <div className="mb-3 w-25">
+                              <select id="sortOrder" className="form-select" onChange={handleSort}>
+                                <option selected value={0}>Lọc Theo Giá </option>
+                                <option value="asc">Tăng dần</option>
+                                <option value="desc">Giảm dần</option>
+                              </select>
+                            </div>
                         </div>
                     </div>
                     <div className="col-1">

@@ -1,6 +1,23 @@
+'use client'
+import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function hoaDon(){
+  const [hds, setHds] = useState([])
+
+  useEffect(() => {
+    const getHds = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`,{ revalidate: 3600 }).then((res) => res.data)
+        setHds(res)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getHds()
+  },[])
 
     const id = 15;
 
@@ -54,63 +71,35 @@ export default function hoaDon(){
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>pf_kjdheufnch</td>
-                      <td>39.000đ</td>
-                      <td>@VIP39K</td>
-                      <td>Nguyen Vy</td>
-                      <td>
-                          <div class=" bg-success text-white rounded-pill text-center">
-                            Thành Công 
-                          </div>
-                      </td>
-                      <td>Momo</td>
-                      <td>01 Th10 2024 vào lúc 12 giờ 21 phút</td>
-                      <td>
-                        <Link href={`/admin/hoaDon/${id}`} className="btn btn-primary">
-                            <i class="fa-solid fa-eye"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>pf_kjdheufnch</td>
-                      <td>39.000đ</td>
-                      <td>@VIP39K</td>
-                      <td>Nguyen Vy</td>
-                      <td>
-                          <div class=" bg-warning text-white rounded-pill text-center">
-                            Đang Xử Lý 
-                          </div>
-                      </td>
-                      <td>Momo</td>
-                      <td>01 Th10 2024 vào lúc 12 giờ 21 phút</td>
-                      <td>
-                        <Link href={`/admin/hoaDon/${id}`} className="btn btn-primary">
-                            <i class="fa-solid fa-eye"></i>
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>pf_kjdheufnch</td>
-                      <td>39.000đ</td>
-                      <td>@VIP39K</td>
-                      <td>Nguyen Vy</td>
-                      <td>
-                          <div class=" bg-success text-white rounded-pill text-center">
-                            Thành Công 
-                          </div>
-                      </td>
-                      <td>Momo</td>
-                      <td>01 Th10 2024 vào lúc 12 giờ 21 phút</td>
-                      <td>
-                         <Link href={`/admin/hoaDon/${id}`} className="btn btn-primary">
-                            <i class="fa-solid fa-eye"></i>
-                         </Link>
-                      </td>
-                    </tr>
+                    {hds.map((hd, i ) => {
+                      return(
+                        <>
+                          <tr key={hd.invoice_id}>
+                            <th scope="row">{i+1}</th>
+                            <td>{hd.invoice_code}</td>
+                            <td>{hd.total.toLocaleString()}đ</td>
+                            <td>@VIP39K</td>
+                            <td>{hd.user.user_name}</td>
+                            <td>
+                              {hd.status == 'success' ? (
+                                <div class=" bg-success text-white rounded-pill text-center">
+                                  Thành Công 
+                                </div>):(
+                                <div class=" bg-warning text-white rounded-pill text-center">
+                                  Đang Xử Lý 
+                                </div>)}
+                            </td>
+                            <td>{hd.payment_method}</td>
+                            <td>{hd.created_at}</td>
+                            <td>
+                              <Link href={`/admin/hoaDon/${hd.invoice_id}`} className="btn btn-primary">
+                                  <i class="fa-solid fa-eye"></i>
+                              </Link>
+                            </td>
+                          </tr>
+                        </>
+                      )
+                    })}
                   </tbody>
                 </table>
             </div>
