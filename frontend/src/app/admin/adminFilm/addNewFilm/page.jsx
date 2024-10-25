@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 export default function AddNewFilm() {
     const [types, setTypes] = useState([])
+    const router = useRouter()
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
     useEffect(() => {
@@ -21,19 +22,19 @@ export default function AddNewFilm() {
         try {
             console.log(data);
             
-        //   const token = localStorage.getItem('token');
-        //   const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies`, data, {
-        //     headers: {
-        //       'Authorization': `Bearer ${token}`,
-        //     }
-        //   }).then((res) => res.data);
-        //     if (res) {
-        //       alert('thành công ròi đi chữa lãnh hoy ~~~')
-        //       window.location.reload()
-        //     } else {
-        //       // Xử lý hiển thị lỗi
-        //       console.error(result.error);
-        //     }
+          const token = localStorage.getItem('token');
+          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies`, data, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            }
+          }).then((res) => res.data);
+            if (res) {
+              alert('thành công ròi đi chữa lãnh hoy ~~~')
+              router.push('/admin/adminFilm')
+            } else {
+              // Xử lý hiển thị lỗi
+              console.error(result.error);
+            }
           
         } catch (error) {
           console.log(error);
@@ -85,6 +86,12 @@ export default function AddNewFilm() {
                             <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim" 
                                 {...register('director', { required: 'Đạo diễn Phim là bắt buộc' })} />
                                 {errors.director && <div className="text-danger">{errors.director.message}</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="actorName" className="form-label">Thời Gian</label>
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim" 
+                                {...register('duration', { required: 'Thời Gian Phim là bắt buộc' })} />
+                                {errors.duration && <div className="text-danger">{errors.duration.message}</div>}
                         </div>
                     </div>
                     <div className="col-md-4">

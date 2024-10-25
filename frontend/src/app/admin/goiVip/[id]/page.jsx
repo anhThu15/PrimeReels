@@ -16,7 +16,7 @@ export default function chitietgoiVip({params}){
        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages/${id}`)
                               .then((res) => res.data)
        setGoi(res)
-       setValue('name', res.name);
+       setValue('title', res.title);
        setValue('duration', res.duration);
        setValue('price', res.price)
       } 

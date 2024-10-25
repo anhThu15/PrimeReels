@@ -34,6 +34,8 @@ export default function Home() {
             }
           })
           setUsers(res.data);
+          console.log(data);
+          
         } catch (error) {
           console.error("Error fetching users:", error);
         }

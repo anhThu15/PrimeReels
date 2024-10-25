@@ -89,9 +89,9 @@ export default function AdminFilm() {
                         </th>
                         <th scope="col">ID</th>
                         <th scope="col">PHIM</th>
-                        {/* <th scope="col">LOẠI PHIM</th> */}
+                        <th scope="col">LOẠI PHIM</th>
                         <th scope="col">NĂM PHÁT HÀNH</th>
-                        {/* <th scope="col">THỂ LOẠI PHIM</th> */}
+                        <th scope="col">THỂ LOẠI PHIM</th>
                         <th scope="col">TRẠNG THÁI</th>
                         <th scope="col">LƯỢT XEM</th>
                         <th scope="col">RATING</th>
@@ -111,24 +111,24 @@ export default function AdminFilm() {
                                         <img src={film.poster} alt="" style={{ width: "70px", height: "100%", objectFit: "cover" }}/>
                                         <div className="d-flex flex-column">
                                             <p>{film.title}</p>
-                                            <span className="bg-secondary text-white rounded-pill text-center" style={{width:'70px'}}>8 tập</span>
+                                            {/* <span className="bg-secondary text-white rounded-pill text-center" style={{width:'70px'}}>8 tập</span> */}
                                         </div>
                                     </td>
-                                    {/* <td>
-                                        {film.movie_type_id}
-                                    </td> */}
+                                    <td>
+                                        {film.movie_type.name}
+                                    </td>
                                     <td>{film.created_at}</td>
-                                    {/* <td>
-                                        <div class=" bg-primary text-white rounded text-center mb-2">
-                                            Hài hước
-                                        </div>
-                                        <div class=" bg-primary text-white rounded text-center mb-2">
-                                            Tâm lý
-                                        </div>
-                                        <div class=" bg-primary text-white rounded text-center mb-2">
-                                            Gia đình
-                                        </div>
-                                    </td> */}
+                                    <td>
+                                        {film.genres.map((g) => {
+                                            return(
+                                                <>
+                                                    <div class=" bg-primary text-white rounded text-center mb-2">
+                                                        {g.name}
+                                                    </div>
+                                                </>
+                                            )
+                                        })}
+                                    </td>
                                     <td>
                                         {film.status == 1 ? (<div class="bg-success text-white rounded text-center">
                                             Công Khai

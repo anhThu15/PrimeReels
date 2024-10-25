@@ -1,12 +1,149 @@
 "use client"
+import axios from 'axios';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-export default function AddNewFilm() {
+export default function AddNewFilm({params}) {
+    const id = params.id
+    const router = useRouter();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const { register: registerForm2, handleSubmit: handleSubmitForm2, formState: { errors: errorsForm2 } } = useForm();
     const [activeTab, setActiveTab] = useState('info');
     const [genres, setGenres] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const id = 15;
+    const [film, setFilm] = useState([]);
+    const [types, setTypes] = useState([])
+    const [episodes, setEpisodes] = useState([])
+
+
+
+
+    useEffect(() =>{
+        const getFilm = async () => {
+           const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`)
+                                  .then((res) => res.data)
+           setFilm(res)
+           setValue('title', res.title);
+           setValue('poster', res.poster);
+           setValue('banner', res.banner)
+           setValue('description', res.description)
+           setValue('director', res.director)
+           setValue('duration', res.duration)
+           setValue('country', res.country)
+           setValue('status', res.status)
+           setValue('movie_type_id', res.movie_type_id)
+           setValue('views', res.views)
+           setValue('rating', res.rating)
+           setValue('favorites_count', res.favorites_count)
+          } 
+          if(id){
+           getFilm();
+          }
+      },[id, setValue])
+
+      useEffect(() => {
+        const getTypes = async () => {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`).then((res) => res.data)
+            setTypes(res)
+        }
+        const getEpisodes = async () => {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`).then((res) => res.data)
+            setEpisodes(res)
+        }
+
+        getTypes()
+        getEpisodes()
+    },[])
+
+      // xử l1y form
+      const onSubmit = async (data) => {
+        // console.log(data);
+        try {
+            console.log(data);
+            
+          const token = localStorage.getItem('token');
+          const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, data, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            }
+          }).then((res) => res.data);
+            if (res) {
+              alert('thành công ròi đi chữa lãnh hoy ~~~')
+              router.push('/admin/adminFilm')
+            } else {
+              // Xử lý hiển thị lỗi
+              console.error(result.error);
+            }
+          
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+    //  xử lý tập phim 
+    const onAddEpisode = async (data) => {
+        try {
+        //   console.log(data);
+          const token = localStorage.getItem('token');
+
+          const formData = new FormData(); // Tạo FormData mới
+
+        // Thêm các trường dữ liệu vào FormData
+        formData.append('episode_number', data.episode_number); 
+        formData.append('duration', data.duration); 
+        formData.append('video', data.video[0]);
+        formData.append('status', data.status); 
+
+        // Gửi yêu cầu POST với FormData
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data', // Đảm bảo kiểu nội dung là multipart/form-data
+            }
+        }).then((res) => res.data);
+            if (res) {
+              alert('thành công ròi đi chữa lãnh hoy ~~~')
+              window.location.reload();
+            } else {
+              // Xử lý hiển thị lỗi
+              console.error(result.error);
+            }
+          
+        } catch (error) {
+          console.log(error);
+        }
+
+        
+    }
+
+    const deleteEpisode = async (data) => {        
+        try {
+            const token = localStorage.getItem('token');
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${data}`,{
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              }
+            }).then((res) => res.data);
+              if (res) {
+                alert('thành công ròi đi chữa lãnh hoy ~~~')
+                window.location.reload()
+              } else {
+                // Xử lý hiển thị lỗi
+                console.error(result.error);
+              }
+            
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        
+    //  xử lý tập phim 
+
+
+
+    // tempelate
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && inputValue) {
             event.preventDefault();
@@ -14,95 +151,92 @@ export default function AddNewFilm() {
             setInputValue('');
         }
     };
-
     const handleRemove = (index) => {
         const newGenres = genres.filter((_, i) => i !== index);
         setGenres(newGenres);
     };
+    // tempelate
+
     const renderContent = () => {
         switch (activeTab) {
             case 'info':
                 return (
                     <div className="container-fluid">
-                        <form className="p-4 shadow mt-2 rounded">
-                            <button className="btn btn-primary mb-3">Lưu</button>
-                            <div className="row">
-                                <div className="col-md-8">
-                                    <div className="mb-3">
-                                        <label htmlFor="actorName" className="form-label">Tên Phim</label>
-                                        <input type="text" className="form-control rounded" id="actorName" placeholder="Anh Thầy Ngôi Sao" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="actorBio" className="form-label">Mô tả</label>
-                                        <textarea className="form-control rounded" id="actorBio" rows="10" placeholder="Mô tả bộ phim">
-                                            Hoàng là một chàng trai trẻ ôm mộng thành ngôi sao ca nhạc, vì chưa gặp thời nên tạm kiếm sống bằng công việc làm thầy giáo dạy nhạc. Sau biến cố, Hoàng buộc phải chuyển công tác ra một hòn đảo cách xa đất liền và tiếp quản một lớp học đặc biệt...
-                                        </textarea>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="actorName" className="form-label">Đạo diễn</label>
-                                        <input type="text" className="form-control rounded" id="actorName" placeholder="Đức Thịnh" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="actorName" className="form-label">Diễn Viên</label>
-                                        <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="genre" className="form-label">Thể loại</label>
-                                        <div className="input-container">
-                                            <input
-                                                type="text"
-                                                className="form-control rounded"
-                                                id="genre"
-                                                placeholder="Nhập thể loại và nhấn Enter"
-                                                value={inputValue}
-                                                onChange={(e) => setInputValue(e.target.value)}
-                                                onKeyDown={handleKeyDown}
-                                            />
-                                            <div className="tags mt-2">
-                                                {genres.map((genre, index) => (
-                                                    <span key={index} className="badge bg-primary me-1">
-                                                        {genre}
-                                                        <button type="button" className="btn-close btn-close-white ms-1" onClick={() => handleRemove(index)}></button>
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div className="col-md-4">
-                                    <div className="mb-3">
-                                        <label htmlFor="countryFilm" className="form-label">Quốc Gia</label>
-                                        <input type="text" className="form-control rounded" id="countryFilm" placeholder="Việt Nam" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="countryFilm" className="form-label">Trạng thái</label>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Công khai</option>
-                                            <option value="1">Không công khai</option>
-                                        </select>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="countryFilm" className="form-label">Năm phát hành</label>
-                                        <input type="text" className="form-control rounded" id="countryFilm" placeholder="2024" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="countryFilm" className="form-label">Loại phim</label>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Phim bộ</option>
-                                            <option value="1">Phim lẻ</option>
-                                        </select>
-                                    </div>
-                                    <div className="mb-3">
-                                        <img src="../../images/imgFilm2.jpg" alt="" style={{ width: "100%" }} className="rounded" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <button className="btn btn-danger">Chọn hình ảnh</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                <form onSubmit={handleSubmit(onSubmit)} className="p-4 shadow mt-2 rounded">
+                <button className="btn btn-primary mb-3">Lưu</button>
+                <div className="row">
+                    <div className="col-md-8">
+                        <div className="mb-3">
+                            <label htmlFor="actorName" className="form-label">Tên Phim</label>
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim"
+                                {...register('title', { required: 'Tiêu Đề Phim là bắt buộc' })} />
+                                {errors.title && <div className="text-danger">{errors.title.message}</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="actorName" className="form-label">Poster Phim</label>
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập Poster bộ phim"
+                                {...register('poster', { required: 'Poster Phim là bắt buộc' })} />
+                                {errors.poster && <div className="text-danger">{errors.poster.message}</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="actorName" className="form-label">Banner Phim</label>
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập banner bộ phim"
+                                {...register('banner', { required: 'Banner Phim là bắt buộc' })} />
+                                {errors.banner && <div className="text-danger">{errors.banner.message}</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="actorBio" className="form-label">Mô tả</label>
+                            <textarea className="form-control rounded" id="actorBio" rows="10" placeholder="Mô tả bộ phim"
+                                {...register('description', { required: 'Mô Tả Phim là bắt buộc' })} />
+                                {errors.description && <div className="text-danger">{errors.description.message}</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="actorName" className="form-label">Đạo diễn</label>
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim" 
+                                {...register('director', { required: 'Đạo diễn Phim là bắt buộc' })} />
+                                {errors.director && <div className="text-danger">{errors.director.message}</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="actorName" className="form-label">Thời Gian</label>
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim" 
+                                {...register('duration', { required: 'Thời Gian Phim là bắt buộc' })} />
+                                {errors.duration && <div className="text-danger">{errors.duration.message}</div>}
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="mb-3">
+                            <label htmlFor="countryFilm" className="form-label">Quốc Gia</label>
+                            <input type="text" className="form-control rounded" id="countryFilm" placeholder="Nhập quốc gia"
+                                {...register('country', { required: 'Đất Nước là bắt buộc' })} />
+                                {errors.country && <div className="text-danger">{errors.country.message}</div>} 
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="countryFilm" className="form-label">Trạng thái</label>
+                            <select class="form-select" aria-label="Default select example" 
+                            {...register('status', { required: 'Trạng Thái là bắt buộc' })} >
+                                <option selected value="1">Công khai</option>
+                                <option value="0">Không công khai</option>
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="countryFilm" className="form-label">Loại phim</label>
+                            <select class="form-select" aria-label="Default select example"
+                            {...register('movie_type_id', { required: 'Trạng Thái là bắt buộc' })}>
+                                {types.map((type) => {
+                                    return (
+                                        <>
+                                            <option value={type.movie_type_id}>{type.name}</option>
+                                        </>
+                                    )
+                                })}
+                            </select>
+                            <input type="hidden" value={Number(1)}{...register('views')} />
+                            <input type="hidden" value={Number(1)}{...register('rating')} />
+                            <input type="hidden" value={Number(1)}{...register('favorites_count')} />
+                        </div>
+                    </div>
+                </div>
+            </form>
                     </div>
                 );
             case 'episodes':
@@ -124,27 +258,39 @@ export default function AddNewFilm() {
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <form onSubmit={handleSubmitForm2(onAddEpisode)}>
                                                     <div class="mb-3">
                                                         <label class="form-label">Tên Tập Phim</label>
-                                                        <input type="text" class="form-control rounded" />
+                                                        <input type="number" class="form-control rounded" 
+                                                            {...registerForm2('episode_number', { required: 'Tên Tập Phim là bắt buộc' })} />
+                                                            {errorsForm2.episode_number && <div className="text-danger">{errorsForm2.episode_number.message}</div>}
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label">Link Video</label>
-                                                        <input type="text" class="form-control  rounded" />
+                                                        <label class="form-label">Video</label>
+                                                        <input type="file" class="form-control  rounded" 
+                                                            {...registerForm2('video', { required: 'Tên Tập Phim là bắt buộc' })} />
+                                                            {errorsForm2.video && <div className="text-danger">{errorsForm2.video.message}</div>}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Khoảng Thời Gian </label>
+                                                        <input type="text" class="form-control  rounded" 
+                                                            {...registerForm2('duration', { required: 'Khoảng Thời Gian Tập Phim là bắt buộc' })} />
+                                                            {errorsForm2.duration && <div className="text-danger">{errorsForm2.duration.message}</div>}
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleInputPassword1" class="form-label">Trạng Thái</label>
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option selected>Công Khai</option>
-                                                            <option value="1">Không Công Khai</option>
+                                                        <select class="form-select" aria-label="Default select example"
+                                                         {...registerForm2('status', { required: 'Trạng Thái Tập Phim là bắt buộc' })}>
+                                                            <option selected value={1}>Công Khai</option>
+                                                            <option value={0}>Không Công Khai</option>
                                                         </select>
+                                                        {errorsForm2.status && <div className="text-danger">{errorsForm2.status.message}</div>}
                                                     </div>
+                                                    <button type="submit" class="btn btn-primary">Thêm Tập Phim </button>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Xác Nhận</button>
                                             </div>
                                         </div>
                                     </div>
@@ -197,28 +343,36 @@ export default function AddNewFilm() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <input type="checkbox" />
-                                    </th>
-                                    <th scope="row">1</th>
-                                    <td>Tập 8</td>
-                                    <td>/api/videos/1uL1y0h7dxieyi3t0ntTeS_DKnh</td>
-                                    <td>
-                                        00:30:23
-                                    </td>
-                                    <td>
-                                        <div class="bg-success text-white rounded text-center">
-                                            Công Khai
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button className="btn btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i className="fa-solid fa-pen"></i>
-                                        </button>
-                                        <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
-                                    </td>
-                                </tr>
+                                {episodes.map((episode, i) => {
+                                    return(
+                                        <>
+                                            <tr key={episode.episode_id}>
+                                                <th scope="row">
+                                                    <input type="checkbox" />
+                                                </th>
+                                                <th scope="row">{i+1}</th>
+                                                <td>Tập {episode.episode_number}</td>
+                                                <td>{episode.video_url}</td>
+                                                <td>
+                                                    {episode.duration} Phút
+                                                </td>
+                                                <td>
+                                                    {episode.status == 1 ? (<div class="bg-success text-white rounded text-center">
+                                                        Công Khai
+                                                    </div>):(<div class="bg-warning text-white rounded text-center">
+                                                        Không Công Khai
+                                                    </div>)}
+                                                </td>
+                                                <td>
+                                                    <Link className="btn btn-secondary ms-2" href={`/admin/adminFilm/${id}/episode/${episode.episode_id}`} >
+                                                        <i className="fa-solid fa-pen"></i>
+                                                    </Link>
+                                                    <button className="btn btn-danger ms-2" onClick={() => {deleteEpisode(episode.episode_number)}}><i class="fa-solid fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div>
@@ -276,53 +430,35 @@ export default function AddNewFilm() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        <input type="checkbox" />
-                                    </th>
-                                    <th scope="row">70</th>
-                                    <td>
-                                        <img src="../../images/avatarActor1.jpg" alt="" style={{ width: "50px", height: "100%", objectFit: "cover" }} className="rounded-circle" />
-                                    </td>
-                                    <td>Đỗ Công Nam</td>
-                                    <td>
-                                        5
-                                        <i class="fa-solid fa-star mx-1" style={{ color: "gold" }}></i>
-                                    </td>
-                                    <td style={{ width: "30%" }}>
-                                        "Inception" là một tác phẩm xuất sắc của đạo diễn Christopher Nolan, khám phá những tầng sâu của giấc mơ và ý thức con người.
-                                    </td>
-                                    <td style={{ width: "10%" }}>
-                                        12 Th09 2024 vào lúc 10 giờ 2 phút
-                                    </td>
-                                    <td>
-                                        <i class="fa-solid fa-eye"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <input type="checkbox" />
-                                    </th>
-                                    <th scope="row">70</th>
-                                    <td>
-                                        <img src="../../images/avatarActor1.jpg" alt="" style={{ width: "50px", height: "100%", objectFit: "cover" }} className="rounded-circle" />
-                                    </td>
-                                    <td>Đỗ Công Nam</td>
-                                    <td>
-                                        5
-                                        <i class="fa-solid fa-star mx-1" style={{ color: "gold" }}></i>
-                                    </td>
-                                    <td style={{ width: "30%" }}>
-                                        "Inception" là một tác phẩm xuất sắc của đạo diễn Christopher Nolan, khám phá những tầng sâu của giấc mơ và ý thức con người.
-                                    </td>
-                                    <td style={{ width: "10%" }}>
-                                        12 Th09 2024 vào lúc 10 giờ 2 phút
-                                    </td>
-                                    <td>
-                                        <i class="fa-solid fa-eye"></i>
-                                    </td>
-                                </tr>
-
+                                {film.comments.map((cmt) => {
+                                    return(
+                                        <>
+                                            <tr key={cmt.comment_id}>
+                                                <th scope="row">
+                                                    <input type="checkbox" />
+                                                </th>
+                                                <th scope="row">{cmt.comment_id}</th>
+                                                <td>
+                                                    <img src={cmt.user.avatar} alt="" style={{ width: "50px", height: "100%", objectFit: "cover" }} className="rounded-circle" />
+                                                </td>
+                                                <td>{cmt.user.user_name}</td>
+                                                <td>
+                                                    {cmt.rating}
+                                                    <i class="fa-solid fa-star mx-1" style={{ color: "gold" }}></i>
+                                                </td>
+                                                <td style={{ width: "30%" }}>
+                                                    {cmt.content}
+                                                </td>
+                                                <td style={{ width: "10%" }}>
+                                                    {cmt.updated_at}
+                                                </td>
+                                                <td>
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div>
@@ -333,6 +469,7 @@ export default function AddNewFilm() {
     };
 
     return (
+        <>
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
                 <Link href="/admin/adminFilm">
@@ -355,7 +492,7 @@ export default function AddNewFilm() {
                 </div>
             </div>
 
-            <button className="btn btn-primary mb-3 mt-4">Lưu</button>
         </div>
+        </>
     );
 }
