@@ -23,19 +23,28 @@ class EpisodeController extends Controller
         // Validate the request data
         $validatedData = $request->validate([
             'status' => 'required|integer',
-            'video' => 'required|file|mimes:mp4,mov,avi,wmv|max:10240', // max 10MB
+            'video' => 'nullable|file|mimes:mp4,mov,avi,wmv',
+            'link' => 'nullable|url',
             'duration' => 'required|integer',
             'episode_number' => 'required|integer',
         ]);
+        if (!$request->hasFile('video') && !$request->input('link')) {
+            return response()->json(['message' => 'Vui lòng cung cấp tệp video hoặc liên kết video.'], 422);
+        }
+
+        if ($request->hasFile('video')) {
+            $videoPath = $request->file('video')->store('videos', 'public');
+            $validatedData['video_url'] = $videoPath;
+        } else {
+            $validatedData['video_url'] = $request->input('link');
+        }
         // Tự động cập nhật thời gian hiện tại cho 'release_date'
         $validatedData['release_date'] = now();
-        // Upload the video file
-        $videoPath = $request->file('video')->store('videos', 'public'); // Lưu vào thư mục storage/app/public/videos
 
         // Tạo mới tập phim
         $episode = Episode::create([
             'status' => $validatedData['status'],
-            'video_url' => $videoPath, // lưu đường dẫn video
+            'video_url' => $validatedData['video_url'], 
             'duration' => $validatedData['duration'],
             'release_date' => $validatedData['release_date'],
             'episode_number' => $validatedData['episode_number'],
@@ -81,23 +90,48 @@ class EpisodeController extends Controller
     }
 
     // Cập nhật episode
-    public function update(Request $request, Movie $movie, Episode $episode)
+    public function update($movie_id, $episode_id, Request $request)
     {
         $validatedData = $request->validate([
-            'status' => 'sometimes|required|integer',
-            'video_url' => 'sometimes|required|string|max:1000',
-            'duration' => 'sometimes|required|integer',
-            'release_date' => 'sometimes|required|date',
-            'episode_number' => 'sometimes|required|integer',
+            'status' => 'required|integer',
+            'video' => 'nullable|file|mimes:mp4,mov,avi,wmv',
+            'link' => 'nullable|url',
+            'duration' => 'required|integer',
+            'episode_number' => 'required|integer',
         ]);
-
-        // Cập nhật release_date với thời gian hiện tại
-        $validatedData['release_date'] = now();
-
-        $episode->update($validatedData);
-
+        if (!$request->hasFile('video') && !$request->input('link')) {
+            return response()->json(['message' => 'Vui lòng cung cấp tệp video hoặc liên kết video.'], 422);
+        }
+    
+        if ($request->hasFile('video')) {
+            $videoPath = $request->file('video')->store('videos', 'public');
+            $validatedData['video_url'] = $videoPath;
+        } else {
+            $validatedData['video_url'] = $request->input('link');
+        }
+    
+        $validatedData['release_date'] = now(); // Cập nhật release_date
+    
+        $movie = Movie::where('movie_id', $movie_id)->first();
+        $episode = Episode::where('episode_number', $episode_id)
+            ->where('movie_id', $movie->movie_id)
+            ->first();
+    
+        if (!$episode) {
+            return response()->json(['message' => 'Tập phim không tồn tại.'], 404);
+        }
+    
+        $episode->update([
+            'status' => $validatedData['status'],
+            'video_url' => $validatedData['video_url'],
+            'duration' => $validatedData['duration'],
+            'release_date' => $validatedData['release_date'],
+            'episode_number' => $validatedData['episode_number'],
+        ]);
+    
         return response()->json($episode);
     }
+    
 
     // Xóa episode
     public function destroy($movie_id, $episode_id)
