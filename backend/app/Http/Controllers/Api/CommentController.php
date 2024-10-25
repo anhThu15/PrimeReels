@@ -22,6 +22,11 @@ class CommentController extends Controller
         // Lấy tất cả bình luận của bộ phim
         $comments = $movie->comments()->get();
 
+        // Kiểm tra nếu không có bình luận
+        if ($comments->isEmpty()) {
+            return response()->json(['message' => 'Không có comment nào ở movie này.'], 200);
+        }
+        
         return response()->json($comments);
     }
 
