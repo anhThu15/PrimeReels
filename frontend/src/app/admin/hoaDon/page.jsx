@@ -5,21 +5,65 @@ import { useEffect, useState } from "react";
 
 export default function hoaDon(){
   const [hds, setHds] = useState([])
+  const [sorts, setSorts] = useState([])
+  const [sortOrder, setSortOrder] = useState('0'); 
+  const [filteredSorts, setFilteredSorts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');  
+
+  // useEffect(() => {
+  //   const getHds = async () => {
+  //     try {
+  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`,{ revalidate: 3600 }).then((res) => res.data)
+  //       setHds(res)
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  //   getHds()
+  // },[])
+
+  const handleSort = async (sortOrder) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 });
+    const data = res.data;
+
+    if (sortOrder === '0') {
+      // Mặc định - không sắp xếp
+      setSorts(data);
+    } else if (sortOrder === 'asc') {
+      // Sắp xếp tăng dần
+      const sortedData = data.sort((a, b) => a.price - b.price);
+      setSorts(sortedData);
+    } else if (sortOrder === 'des') {
+      // Sắp xếp giảm dần
+      const sortedData = data.sort((a, b) => b.price - a.price);
+      setSorts(sortedData);
+    }
+  };
+
+   // Gọi hàm `handleSort` khi component được mount
+   useEffect(() => {
+    handleSort(sortOrder);
+  }, []); // Chạy chỉ một lần khi component mount
+
+  // Xử lý khi `onChange` từ người dùng
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSortOrder(value);
+    handleSort(value);
+  };
 
   useEffect(() => {
-    const getHds = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`,{ revalidate: 3600 }).then((res) => res.data)
-        setHds(res)
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    const filteredData = sorts.filter((goi) =>
+      goi.invoice_code.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredSorts(filteredData);
+  }, [searchTerm, sorts]); // Cập nhật khi từ khóa hoặc `sorts` thay đổi
 
-    getHds()
-  },[])
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value); // Cập nhật từ khóa tìm kiếm
+  };
 
-    const id = 15;
 
     return(
         <>
@@ -28,20 +72,17 @@ export default function hoaDon(){
                 <div className="row">
                     <div className="col-2">
                         <form class="d-flex" role="search">
-                            <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search"/>
+                            <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search"           
+                                  onChange={handleSearch}
+                                  value={searchTerm}/>
                         </form>
                     </div>
                     <div className="col">
-                        <div class="dropdown">
-                          <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-filter"></i> Lọc
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">A-Z</a></li>
-                            <li><a class="dropdown-item" href="#">Z-A</a></li>
-                            <li><a class="dropdown-item" href="#">...</a></li>
-                          </ul>
-                        </div>
+                              <select id="sortOrder" className="form-select w-25" onChange={handleChange} value={sortOrder}>
+                                <option selected value={0}>Lọc Theo Giá </option>
+                                <option value="asc">Tăng dần</option>
+                                <option value="des">Giảm dần</option>
+                              </select>
                     </div>
                     <div className="col-1">
                         <div class="dropdown">
@@ -71,7 +112,7 @@ export default function hoaDon(){
                     </tr>
                   </thead>
                   <tbody>
-                    {hds.map((hd, i ) => {
+                    {filteredSorts.map((hd, i ) => {
                       return(
                         <>
                           <tr key={hd.invoice_id}>

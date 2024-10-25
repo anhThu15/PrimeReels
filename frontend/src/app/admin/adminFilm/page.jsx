@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 export default function AdminFilm() {
     const router = useRouter();
     const [films, setFilms] = useState([])
+    const [sorts, setSorts] = useState([])
+    const [sortOrder, setSortOrder] = useState('0'); 
+    const [filteredSorts, setFilteredSorts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');  
 
     useEffect(() => {
         const getFilms = async () => {
@@ -40,6 +44,47 @@ export default function AdminFilm() {
         }
       }
 
+      const handleSort = async (sortOrder) => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 });
+        const data = res.data;
+    
+        if (sortOrder === '0') {
+          // Mặc định - không sắp xếp
+          setSorts(data);
+        } else if (sortOrder === 'asc') {
+          // Sắp xếp tăng dần
+          const sortedData = data.sort((a, b) => a.views - b.views);
+          setSorts(sortedData);
+        } else if (sortOrder === 'des') {
+          // Sắp xếp giảm dần
+          const sortedData = data.sort((a, b) => b.views - a.views);
+          setSorts(sortedData);
+        }
+      };
+    
+       // Gọi hàm `handleSort` khi component được mount
+       useEffect(() => {
+        handleSort(sortOrder);
+      }, []); // Chạy chỉ một lần khi component mount
+    
+      // Xử lý khi `onChange` từ người dùng
+      const handleChange = (e) => {
+        const value = e.target.value;
+        setSortOrder(value);
+        handleSort(value);
+      };
+    
+      useEffect(() => {
+        const filteredData = sorts.filter((phim) =>
+          phim.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredSorts(filteredData);
+      }, [searchTerm, sorts]); // Cập nhật khi từ khóa hoặc `sorts` thay đổi
+    
+      const handleSearch = (e) => {
+        setSearchTerm(e.target.value); // Cập nhật từ khóa tìm kiếm
+      };
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -51,23 +96,24 @@ export default function AdminFilm() {
                 </div>
             </div>
             <div className="row">
-                <div className="col-2">
-                    <form class="d-flex" role="search">
-                        <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search" />
-                    </form>
-                </div>
-                <div className="col">
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-filter"></i> Lọc
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">A-Z</a></li>
-                            <li><a class="dropdown-item" href="#">Z-A</a></li>
-                            <li><a class="dropdown-item" href="#">...</a></li>
-                        </ul>
+                    <div className="col-2">
+                        <form class="d-flex" role="search">
+                            <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search"           
+                                  onChange={handleSearch}
+                                  value={searchTerm}/>
+                        </form>
                     </div>
-                </div>
+                    <div className="col">
+                        <div class="dropdown">
+                            <div className="mb-3 w-25">
+                              <select id="sortOrder" className="form-select" onChange={handleChange} value={sortOrder}>
+                                <option selected value={0}>Lọc Theo Giá </option>
+                                <option value="asc">Tăng dần</option>
+                                <option value="des">Giảm dần</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
                 <div className="col-1">
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -99,7 +145,7 @@ export default function AdminFilm() {
                     </tr>
                 </thead>
                 <tbody>
-                    {films.map((film, i ) => {
+                    {filteredSorts.map((film, i ) => {
                         return(
                             <>
                                 <tr key={film.movie_id}>
