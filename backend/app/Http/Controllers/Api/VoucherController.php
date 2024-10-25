@@ -26,27 +26,45 @@ class VoucherController extends Controller
             'name' => 'required|string|max:1000',
             'voucher_type_id' => 'required|exists:voucher_types,voucher_type_id',
             'voucher_quantity' => 'required|integer|min:1',
-            'expired' => 'required|date',
-            'enddate' => 'required|date|after_or_equal:expired',
+            'enddate' => 'required|date|after_or_equal:now',
         ]);
 
-        $voucher = Voucher::create($request->all());
+        // Tạo voucher mới
+        $voucher = Voucher::create([
+            'name' => $request->name,
+            'voucher_type_id' => $request->voucher_type_id,
+            'voucher_quantity' => $request->voucher_quantity,
+            'expired' => false, // Đặt giá trị mặc định cho expired (0 vs 1)
+            'enddate' => $request->enddate,
+        ]);
+
         return response()->json($voucher, 201);
     }
 
     public function update(Request $request, $id)
     {
+        // Tìm voucher theo ID
         $voucher = Voucher::find($id);
         if ($voucher) {
+            // Xác thực các trường trong request
             $request->validate([
-                'name' => 'string|max:1000',
-                'voucher_type_id' => 'exists:voucher_types,voucher_type_id',
-                'voucher_quantity' => 'integer|min:0',
-                'expired' => 'date',
-                'enddate' => 'date|after_or_equal:expired',
+                'name' => 'sometimes|string|max:1000',
+                'voucher_type_id' => 'sometimes|exists:voucher_types,voucher_type_id',
+                'voucher_quantity' => 'sometimes|integer|min:0',
+                'expired' => 'sometimes|boolean', // Thay đổi xác thực cho expired
+                'enddate' => 'sometimes|date|after_or_equal:expired',
             ]);
 
-            $voucher->update($request->all());
+            // Cập nhật các trường cần thiết
+            $voucher->fill($request->only(['name', 'voucher_type_id', 'voucher_quantity', 'expired', 'enddate']));
+
+            // Kiểm tra nếu expired có được cập nhật hay không
+            if ($request->has('expired')) {
+                $voucher->expired = $request->input('expired'); // Đảm bảo cập nhật đúng giá trị boolean
+            }
+
+            $voucher->save(); 
+
             return response()->json($voucher);
         }
         return response()->json(['message' => 'Voucher not found!'], 404);
