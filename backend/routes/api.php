@@ -98,7 +98,7 @@ Route::middleware(['jwt.verify', 'admin'])->post('/upload-video', [VideoControll
 Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
 Route::get('/movies/{id}', [MovieController::class, 'show']); // Lấy thông tin chi tiết một phim
 Route::get('/movie-types', [MovieTypeController::class, 'index']); // Lấy danh sách thể loại phim
-Route::get('/movie-types/{id}', [MovieTypeController::class, 'show']); // Lấy thông tin thể loại phim
+Route::get('/movie-types/{id}', [MovieTypeController::class, 'show1']); // Lấy thông tin thể loại phim
 Route::get('/actors', [ActorController::class, 'index']); // Lấy danh sách diễn viên
 Route::get('/actors/{id}', [ActorController::class, 'show']); // Lấy thông tin chi tiết một diễn viên
 Route::get('/genres', [GenreController::class, 'index']); // Lấy danh sách thể loại

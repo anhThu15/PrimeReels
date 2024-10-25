@@ -100,8 +100,19 @@ class EpisodeController extends Controller
     }
 
     // Xóa episode
-    public function destroy(Movie $movie, Episode $episode)
+    public function destroy($movie_id, $episode_id)
     {
+        $movie = Movie::where('movie_id', "=", $movie_id)->first();
+        if (!$movie) {
+            return response()->json(['error' => 'Movie not found'], 404);
+        }
+    
+        $episode = Episode::where('episode_number', '=', $episode_id)
+        ->where('movie_id', '=', $movie->movie_id)
+        ->first();
+        if (!$episode) {
+            return response()->json(['error' => 'Episode not found'], 404);
+        }
         $episode->delete();
 
         return response()->json(['message' => 'Episode deleted successfully']);
