@@ -7,7 +7,7 @@ import Chart from 'chart.js/auto';
 
 const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
 
-export default function Table() {
+export default function Table(props) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
 
@@ -40,7 +40,7 @@ export default function Table() {
           legend: { display: false },
           title: {
             display: true,
-            text: "Thống Kê Doanh Thu"
+            text: "Thống Kê Hóa Đơn"
           }
         }
       }

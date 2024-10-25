@@ -11,6 +11,7 @@ export default function Home() {
     const [types, setTypes] = useState([])
     const [genres, setGenres] = useState([])
     const [users, setUsers] = useState([])
+    const [satistical, setSatistical] = useState([])
     
     useEffect(() => {
       const getFilms = async () => {
@@ -41,11 +42,17 @@ export default function Home() {
         }
       };
 
+      // const getStatistical = async () => {
+      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`,{ revalidate: 3600 }).then((res) => res.data)
+      //   setSatistical(res)
+      // }
+
   
       getFilms() 
       getTypes() 
       getGenres()
       getUsers();
+      // getStatistical();
     
     },[])
 
