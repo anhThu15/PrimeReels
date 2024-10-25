@@ -1,6 +1,25 @@
-import Link from "next/link"
+'use client'
+import axios from "axios";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function AdminFilm() {
-    const id = 15;
+    const router = useRouter();
+    const [films, setFilms] = useState([])
+    const [genres, setGenres] = useState([])
+
+    useEffect(() => {
+        const getFilms = async () => {
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+          setFilms(res)
+        }
+    
+        getFilms()
+    
+    },[])
+
+    const id =15
     return (
         <div className="container-fluid">
             <div className="row">
@@ -60,50 +79,61 @@ export default function AdminFilm() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">
-                            <input type="checkbox" />
-                        </th>
-                        <th scope="row">1</th>
-                        <td className="d-flex align-items-center gap-2">
-                            <img src="../images/imgFilm.jpg" alt="" style={{ width: "70px", height: "100%", objectFit: "cover" }}/>
-                            <div className="d-flex flex-column">
-                                <p>Anh Thầy Ngôi Sao</p>
-                                <span className="bg-secondary text-white rounded-pill text-center" style={{width:'70px'}}>8 tập</span>
-                            </div>
-                        </td>
-                        <td>Phim bộ</td>
-                        <td>2024</td>
-                        <td>
-                            <div class=" bg-primary text-white rounded text-center mb-2">
-                                Hài hước
-                            </div>
-                            <div class=" bg-primary text-white rounded text-center mb-2">
-                                Tâm lý
-                            </div>
-                            <div class=" bg-primary text-white rounded text-center mb-2">
-                                Gia đình
-                            </div>
-                        </td>
-                        <td>
-                            <div class="bg-success text-white rounded text-center">
-                                Công Khai
-                            </div>
-                        </td>
-                        <td>
-                            8.200
-                        </td>
-                        <td>
-                            4.5
-                            <i class="fa-solid fa-star mx-3" style={{ color: "gold" }}></i>
-                        </td>
-                        <td>
-                            <Link href={`/admin/adminFilm/${id}`} className="btn btn-secondary">
-                                <i class="fa-solid fa-pen"></i>
-                            </Link>
-                            <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
+                    {films.map((film, i ) => {
+                        return(
+                            <>
+                                <tr key={film.movie_id}>
+                                    <th scope="row">
+                                        <input type="checkbox" />
+                                    </th>
+                                    <th scope="row">{i+1}</th>
+                                    <td className="d-flex align-items-center gap-2">
+                                        <img src={film.poster} alt="" style={{ width: "70px", height: "100%", objectFit: "cover" }}/>
+                                        <div className="d-flex flex-column">
+                                            <p>{film.title}</p>
+                                            <span className="bg-secondary text-white rounded-pill text-center" style={{width:'70px'}}>8 tập</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="hidden" value={film.movie_type_id} />
+                                    </td>
+                                    <td>{film.created_at}</td>
+                                    <td>
+                                        <div class=" bg-primary text-white rounded text-center mb-2">
+                                            Hài hước
+                                        </div>
+                                        <div class=" bg-primary text-white rounded text-center mb-2">
+                                            Tâm lý
+                                        </div>
+                                        <div class=" bg-primary text-white rounded text-center mb-2">
+                                            Gia đình
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {film.status == 1 ? (<div class="bg-success text-white rounded text-center">
+                                            Công Khai
+                                        </div>):(<div class="bg-warning text-white rounded text-center">
+                                            Không Công Khai
+                                        </div>)}
+                                        
+                                    </td>
+                                    <td>
+                                        {film.views}
+                                    </td>
+                                    <td>
+                                        {film.rating}
+                                        <i class="fa-solid fa-star mx-3" style={{ color: "gold" }}></i>
+                                    </td>
+                                    <td>
+                                        <Link href={`/admin/adminFilm/${id}`} className="btn btn-secondary">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </Link>
+                                        <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </>
+                        )
+                    })}
                 </tbody>
             </table>
         </div>
