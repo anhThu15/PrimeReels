@@ -90,7 +90,14 @@ class AuthController extends Controller
         $user->role = 0; // Vai trò người dùng thông thường sau khi xác minh
         $user->save();
 
-        return response()->json(['status' => 'success', 'message' => 'Xác minh email thành công.']);
+        // Xác minh email thành công duyệt đăng nhập
+        $token = JWTAuth::fromUser($user);
+        return response()->json([
+            'status' => 'success',
+            'masssage' => 'Xác minh email thành công. Bạn đã được đăng nhập.',
+            'token' => $token,
+            'user' => $user
+        ]);
     }
 
     // Phương thức logout

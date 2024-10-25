@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Episode extends Model
 {
+    protected $primaryKey = 'episode_id'; 
+    public $incrementing = true;          
+    protected $keyType = 'int';
     protected $fillable = [
+        'episode_id',
         'status',
         'video_url',
         'duration',
