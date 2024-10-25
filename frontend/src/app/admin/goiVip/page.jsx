@@ -9,6 +9,9 @@ export default function goiVip(){
   const router = useRouter();
   const [gois, setGois] = useState([])
   const [sorts, setSorts] = useState([])
+  const [sortOrder, setSortOrder] = useState('0'); 
+  const [filteredSorts, setFilteredSorts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');  
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
   useEffect(() => {
@@ -64,18 +67,46 @@ export default function goiVip(){
     }
   }
 
-  const handleSort = (e) => { 
-    if(0){
-      setSorts(gois)
-    }else if('asc'){
-      console.log('asc');
-    }else if('des'){
-      console.log('des');
-      
+  const handleSort = async (sortOrder) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`, { revalidate: 3600 });
+    const data = res.data;
+
+    if (sortOrder === '0') {
+      // Mặc định - không sắp xếp
+      setSorts(data);
+    } else if (sortOrder === 'asc') {
+      // Sắp xếp tăng dần
+      const sortedData = data.sort((a, b) => a.price - b.price);
+      setSorts(sortedData);
+    } else if (sortOrder === 'des') {
+      // Sắp xếp giảm dần
+      const sortedData = data.sort((a, b) => b.price - a.price);
+      setSorts(sortedData);
     }
-    
-  }
-  
+  };
+
+   // Gọi hàm `handleSort` khi component được mount
+   useEffect(() => {
+    handleSort(sortOrder);
+  }, []); // Chạy chỉ một lần khi component mount
+
+  // Xử lý khi `onChange` từ người dùng
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSortOrder(value);
+    handleSort(value);
+  };
+
+  useEffect(() => {
+    const filteredData = sorts.filter((goi) =>
+      goi.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredSorts(filteredData);
+  }, [searchTerm, sorts]); // Cập nhật khi từ khóa hoặc `sorts` thay đổi
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value); // Cập nhật từ khóa tìm kiếm
+  };
 
     return(
         <>
@@ -125,16 +156,18 @@ export default function goiVip(){
                 <div className="row">
                     <div className="col-2">
                         <form class="d-flex" role="search">
-                            <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search"/>
+                            <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search"           
+                                  onChange={handleSearch}
+                                  value={searchTerm}/>
                         </form>
                     </div>
                     <div className="col">
                         <div class="dropdown">
                             <div className="mb-3 w-25">
-                              <select id="sortOrder" className="form-select" onChange={handleSort}>
+                              <select id="sortOrder" className="form-select" onChange={handleChange} value={sortOrder}>
                                 <option selected value={0}>Lọc Theo Giá </option>
                                 <option value="asc">Tăng dần</option>
-                                <option value="desc">Giảm dần</option>
+                                <option value="des">Giảm dần</option>
                               </select>
                             </div>
                         </div>
@@ -164,7 +197,7 @@ export default function goiVip(){
                     </tr>
                   </thead>
                   <tbody>
-                    {gois.map((goi, i) => {
+                    {filteredSorts.map((goi, i) => {
                       return(
                         <>
                           <tr key={goi.package_id}>
