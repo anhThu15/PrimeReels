@@ -32,7 +32,7 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::put('users/{id}', [UserController::class, 'update']); // Cập nhật user
     Route::delete('users/{id}', [UserController::class, 'destroy']); // Xoá user
 });
-Route::middleware(['jwt.verify', 'admin'])->get('/statistics', [InvoiceController::class, 'getStatistics']); // Thống kê doanh thu
+Route::get('/statistics', [InvoiceController::class, 'getStatistics']); // Thống kê doanh thu
 //______________________________________PROFILE USER_______________________________________________
 Route::middleware(['jwt.verify'])->get('profile', [ProfileController::class, 'profile']); // Lấy thông tin user
 //______________________________________LOGIN_______________________________________________
@@ -94,9 +94,6 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::put('voucher-types/{id}', [VoucherTypeController::class, 'update']); // Cập nhật loại voucher
     Route::delete('voucher-types/{id}', [VoucherTypeController::class, 'destroy']); // Xoá loại voucher
 });
-//______________________________________UPLOAD VIDEO_______________________________________________
-
-Route::middleware(['jwt.verify', 'admin'])->post('/upload-video', [VideoController::class, 'uploadVideo']); // Upload video
 
 Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
 Route::get('/movies/{id}', [MovieController::class, 'show']); // Lấy thông tin chi tiết một phim
