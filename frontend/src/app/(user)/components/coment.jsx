@@ -4,7 +4,7 @@ import CardSlide from "./cardslide";
 export default function Comment( props){
     return (
         <>
-          <div className="font-monospace text-white" >
+          <div className="text-white" >
                 { localStorage.getItem("token") ? (
                     <>
                     <p className="ms-3 pt-2">Bình luận tại đây</p>

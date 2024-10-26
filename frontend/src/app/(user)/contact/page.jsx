@@ -5,7 +5,7 @@ export default function contact() {
 
     return (
         <>
-            <div className="container-fluid bg-black p-0 font-monospace text-white">
+            <div className="container-fluid bg-black p-0 text-white">
                 <div className="container p-0">
                     <div className="row pt-5">
                       <div className="col-3">

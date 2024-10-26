@@ -51,7 +51,7 @@ class AuthController extends Controller
             'user_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'gender' => 'required|in:nam,nu',
+            // 'gender' => 'required|in:nam,nu',
         ]);
 
         if ($validator->fails()) {
@@ -63,7 +63,7 @@ class AuthController extends Controller
             'user_name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'gender' => $request->gender,
+            'gender' => null,
             'role' => 3, // Người dùng chưa xác minh email
             'email_verified_at' => null,
             'email_verification_token' => Str::random(60),

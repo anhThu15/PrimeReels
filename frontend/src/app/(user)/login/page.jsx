@@ -38,6 +38,7 @@ export default function Login() {
         console.log(data);
 
         if (response.ok) {
+            
             document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
             document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite=strict; secure`;
             
@@ -45,11 +46,19 @@ export default function Login() {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
-            toast.success('Đăng nhập thành công!');
-            if (data.user.role === 100) {
-                router.push("/admin");
-            } else {
-                router.push("/");
+            console.log(response)
+
+            if(data.user.email_verification_token != null){
+                toast("mày chưa xong đâu con");
+            }else{
+                // alert("mày đã xác minh rồi")
+                toast.success('Đăng nhập thành công!');
+                if (data.user.role === 100) {
+                    router.push("/admin");
+                } else {
+                    router.push("/");
+                }
+                
             }
         } else {
             toast.error(data.error || 'Email hoặc mật khẩu đã bị sai');
@@ -57,7 +66,7 @@ export default function Login() {
     };
 
     return (
-        <div className="modal-login font-monospace">
+        <div className="modal-login">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header mb-3">

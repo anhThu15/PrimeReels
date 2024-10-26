@@ -74,7 +74,7 @@ export default function Home() {
 
   return (
     <>
-     <div className="container-fluid bg-dark p-0 font-monospace text-white">
+     <div className="container-fluid bg-dark p-0 text-white">
         <div className=" container-fluid p-0">
           <div>
             <Banner></Banner> 
