@@ -364,7 +364,7 @@ export default function AddNewFilm({params}) {
                                                     </div>)}
                                                 </td>
                                                 <td>
-                                                    <Link className="btn btn-secondary ms-2" href={`/admin/adminFilm/${id}/episode/${episode.episode_id}`} >
+                                                    <Link className="btn btn-secondary ms-2" href={`/admin/adminFilm/${id}/episode/${episode.episode_number}`} >
                                                         <i className="fa-solid fa-pen"></i>
                                                     </Link>
                                                     <button className="btn btn-danger ms-2" onClick={() => {deleteEpisode(episode.episode_number)}}><i class="fa-solid fa-trash"></i></button>
