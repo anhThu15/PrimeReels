@@ -2,7 +2,7 @@ import "../../globals.css";
 import Link from 'next/link';
 export default function AfterPayment() {
     return (
-        <div className="container-fluid font-monospace">
+        <div className="container-fluid">
             <div class="thank-you-user">
                 <img src="images/Logo-PR.png" alt="" width="200px" />
                 <hr class="hr-thankyou" />

@@ -64,7 +64,7 @@ export default function film({params}){
 
     return(
         <>
-          <div className="container-fluid bg-black p-0 font-monospace text-white">
+          <div className="container-fluid bg-black p-0 text-white">
 
             {/*  banner */}
               <div className="row container-fluid p-0 m-0 position-relative" >

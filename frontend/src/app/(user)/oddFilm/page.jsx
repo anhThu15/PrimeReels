@@ -13,36 +13,36 @@ import SlideShowAnother2 from "../components/slideshowAnother2";
 import { useRouter } from "next/navigation";
 
 export default function OddFilm() {
+  const [comedy, setComedy] = useState([]);
+  const [drama, setDrama] = useState([]);
   const [action, setAction] = useState([]);
-  const [comedy, setComedy] = useState([]); // Đã khai báo comedy
-  const [drama, setDrama] = useState([]); // Đã khai báo drama
   const [random, setRandom] = useState([]);
   const [better, setBetter] = useState([]);
   const [country, setCountry] = useState([]);
   const [date, setDate] = useState([]);
-  const [genre, setGenre] = useState('');
+  const [genres, setGenres] = useState([]); // State for genres
+  const [selectedGenreId, setSelectedGenre] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
-  
+
   const router = useRouter();
 
   useEffect(() => {
-    const getAction = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/2`, { revalidate: 3600 });
-      setAction(res.data.movies);
+    const fetchGenres = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`);
+      setGenres(res.data); // Set the fetched genres
     };
 
-    const getComedy = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/3`, { revalidate: 3600 });
-      setComedy(res.data.movies);
-    };
+    const fetchMovies = async () => {
+      const resAction = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/2`);
+      setAction(resAction.data.movies);
 
-    const getDrama = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/1`, { revalidate: 3600 });
-      setDrama(res.data.movies);
-    };
+      const resComedy = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/3`);
+      setComedy(resComedy.data.movies);
 
-    const getRandom = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`, { revalidate: 3600 });
+      const resDrama = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/1`);
+      setDrama(resDrama.data.movies);
+
+      const resRandom = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`);
       const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -50,71 +50,76 @@ export default function OddFilm() {
         }
         return array;
       };
-      setRandom(shuffleArray(res.data));
+      setRandom(shuffleArray(resRandom.data));
+
+      const resBetter = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`);
+      resBetter.data.sort((a, b) => b.favorites_count - a.favorites_count);
+      setBetter(resBetter.data);
+
+      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/country/Phim Mỹ`);
+      setCountry(resCountry.data.movies);
+
+      const resDate = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`);
+      resDate.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      setDate(resDate.data);
     };
 
-    const getBetter = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`, { revalidate: 3600 });
-      res.data.sort((a, b) => b.favorites_count - a.favorites_count);
-      setBetter(res.data);
-    };
-
-    const getCountry = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/country/Phim Mỹ`, { revalidate: 3600 });
-      setCountry(res.data.movies);
-    };
-
-    const getDate = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`, { revalidate: 3600 });
-      res.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      setDate(res.data);
-    };
-
-    getAction();
-    getComedy();
-    getDrama();
-    getRandom();
-    getBetter();
-    getCountry();
-    getDate();
+    fetchGenres();
+    fetchMovies();
   }, []);
 
   useEffect(() => {
-    if (genre) {
-      let newFilteredMovies = [];
-      if (genre === "1") newFilteredMovies = action;  // Hành động
-      else if (genre === "2") newFilteredMovies = drama; // Drama
-      else if (genre === "3") newFilteredMovies = comedy; // Comedy
-      
+    let newFilteredMovies = [];
+
+    if (selectedGenreId) {
+      // Filter movies based on selected genre ID
+      if (selectedGenreId === "1") newFilteredMovies = action;
+      else if (selectedGenreId === "2") newFilteredMovies = drama;
+      else if (selectedGenreId === "3") newFilteredMovies = comedy;
+
       setFilteredMovies(newFilteredMovies);
     } else {
+      // Show all movies if no genre is selected
       setFilteredMovies([...action, ...comedy, ...drama, ...random, ...better, ...country, ...date]);
     }
-  }, [genre, action, comedy, drama, random, better, country, date]);
+  }, [selectedGenreId, action, comedy, drama, random, better, country, date]);
 
   const handleGenreChange = (event) => {
-    const selectedGenre = event.target.value;
-    setGenre(selectedGenre);
-    if (selectedGenre) {
-      router.push(`/filterOddFilm?genreId=${selectedGenre}`); // Chuyển hướng với genreId
+    const selectedGenreId = event.target.value;
+    setSelectedGenre(selectedGenreId);
+
+
+    if (selectedGenreId) {
+      router.push(`/filterFilmSeries?genreId=${selectedGenreId}&movieTypeId=2`);
     }
   };
 
-
   return (
     <>
-      <div className="container-fluid bg-dark p-0 font-monospace text-white">
+      <div className="container-fluid bg-dark p-0 text-white">
         <div className="container-fluid p-0">
           <Banner />
           <div className="container">
-            <div className="form-group">
-              <label htmlFor="genreSelect">Chọn thể loại:</label>
-              <select id="genreSelect" value={genre} onChange={handleGenreChange} className="form-select">
-                <option value="">-- Chọn thể loại --</option>
-                <option value="1">Hành động</option>
-                <option value="2">Drama</option>
-                <option value="3">Comedy</option>
-              </select>
+          <div className="group-select-box">
+              <div className="form-group">
+                <label htmlFor="genreSelect">Chọn thể loại:</label>
+                <select id="genreSelect" value={selectedGenreId} onChange={handleGenreChange} className="form-select">
+                  <option value="">-- Chọn thể loại --</option>
+                  {genres.map((genre) => (
+                    <option key={genre.genre_id} value={genre.genre_id}>{genre.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="countrySelect">Chọn quốc gia:</label>
+                <select id="countrySelect" className="form-select">
+                  <option value="">-- Chọn quốc gia --</option>
+                  <option value="1">Phim Mỹ</option>
+                  <option value="2">Phim Nhật Bản</option>
+                  <option value="3">Phim Trung Quốc</option>
+                </select>
+              </div>
             </div>
           </div>
           <div>
