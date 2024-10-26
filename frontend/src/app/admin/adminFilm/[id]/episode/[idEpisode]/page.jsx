@@ -18,7 +18,7 @@ export default function Episode({params}) {
                                   .then((res) => res.data)
            setEpisodes(res.episode)
            setValue('episode_number', res.episode.episode_number)
-           setValue('video', res.episode.video_url);
+           setValue('link', res.episode.video_url);
            setValue('duration', res.episode.duration);
            setValue('status', res.episode.status)
           } 
@@ -35,19 +35,20 @@ export default function Episode({params}) {
           console.log(data);
           const token = localStorage.getItem('token');
 
-          const formData = new FormData(); // Tạo FormData mới
+        //   const formData = new FormData(); // Tạo FormData mới
 
-        // Thêm các trường dữ liệu vào FormData
-        formData.append('episode_number', data.episode_number); 
-        formData.append('duration', data.duration); 
-        formData.append('video_url', data.video[0]);
-        formData.append('status', data.status); 
+        // // Thêm các trường dữ liệu vào FormData
+        // formData.append('episode_number', data.episode_number); 
+        // formData.append('duration', data.duration); 
+        // formData.append('link', data.link);
+        // formData.append('status', data.status); 
 
         // Gửi yêu cầu POST với FormData
-        const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, formData, {
+        const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${episodes.episode_number}`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data', // Đảm bảo kiểu nội dung là multipart/form-data
+                // 'Content-Type': 'multipart/form-data', // Đảm bảo kiểu nội dung là multipart/form-data
+                // "Accept": "application/json"
             }
         }).then((res) => res.data);
             if (res) {
@@ -86,8 +87,8 @@ export default function Episode({params}) {
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Video</label>
-                    <input type="file" class="form-control  rounded" 
-                        {...registerForm2('video_url',)} />
+                    <input type="text" class="form-control  rounded" 
+                        {...registerForm2('link',)} />
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Khoảng Thời Gian </label>

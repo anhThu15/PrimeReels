@@ -100,7 +100,7 @@ export default function AdminFilm() {
     return (
         <div className="container-fluid">
             <div className="row">
-                <h2 className=" col fw-bold">Diễn Sách Phim</h2>
+                <h2 className=" col fw-bold">Danh Sách Phim</h2>
                 <div className="col-2 mt-2">
                     <Link href="/admin/adminFilm/addNewFilm" className="btn btn-danger">
                         + Thêm Mới
@@ -119,7 +119,7 @@ export default function AdminFilm() {
                     <div className="dropdown">
                         <div className="mb-3 w-25">
                             <select id="sortOrder" className="form-select" onChange={handleChange} value={sortOrder}>
-                                <option selected value={0}>Lọc Theo Giá </option>
+                                <option selected value={0}>Lọc Theo Đánh Giá </option>
                                 <option value="asc">Tăng dần</option>
                                 <option value="des">Giảm dần</option>
                             </select>

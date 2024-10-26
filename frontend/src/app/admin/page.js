@@ -129,7 +129,8 @@ export default function Home() {
                 </div>
                 {/* <OrderAdmin data={data}></OrderAdmin> */}
               </div>
-
+              
+{/* 
               <div className="col-md-6 pt-3"  data-aos="fade-up-left" data-aos-duration="3000">
                 <div className="card text-start">
                   <div className="card-header">
@@ -139,7 +140,7 @@ export default function Home() {
                         <Table2></Table2>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* <!--  thêm trc đây  --> */}
 
