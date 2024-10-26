@@ -1,40 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export default function AddAccount() {
+export default function UpdateAccount({ params }) {
+    const { id } = params; // Get the ID from the params
     const router = useRouter();
-    const [avatarUrl, setAvatarUrl] = useState('../../images/default-user.png');
-    const [userIdDelete, setUserIdDelete] = useState(null);
 
+    const [loading, setLoading] = useState(true);
 
-    //setup formik và yup để bắt lỗi form
+    // Formik setup
     const formik = useFormik({
         initialValues: {
             user_name: '',
             email: '',
-            password: '', // Thêm password vào initialValues
             gender: '',
-            avatar: avatarUrl // Thay đổi giá trị avatar ban đầu
+            // role: '', 
+            avatar: ''
         },
         validationSchema: Yup.object({
             user_name: Yup.string().required('Tên người dùng là bắt buộc'),
             email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
-            password: Yup.string().required("Mật khẩu là bắt buộc"),
             gender: Yup.string().required('Giới tính là bắt buộc'),
-            avatar: Yup.string().required('URL hình ảnh là bắt buộc'),
+            // role: Yup.string().required('Vai trò là bắt buộc'),
+            avatar: Yup.string().required('URL hình ảnh là bắt buộc'), // Make avatar required
         }),
         onSubmit: async (values) => {
             console.log("Submitting values:", values);
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`http://127.0.0.1:8000/api/users`, {
-                    method: 'POST',
+                const res = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`,
@@ -42,18 +42,47 @@ export default function AddAccount() {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Tạo tài khoản thành công!');
-                    router.push('/admin/account'); // Redirect to account page after creation
+                    alert('Cập nhật tài khoản thành công!');
+                    router.back();
                 } else {
-                    console.error('Lỗi khi tạo tài khoản:', res.status);
-                    alert('Tạo tài khoản không thành công!');
+                    console.error('Lỗi khi cập nhật tài khoản:', res.status);
+                    alert('Cập nhật không thành công!');
                 }
             } catch (error) {
-                console.error('Lỗi khi tạo tài khoản:', error);
+                console.error('Lỗi khi cập nhật tài khoản:', error);
             }
         },
     });
 
+    // Fetch account data based on ID
+    useEffect(() => {
+        const fetchAccount = async () => {
+            try {
+                const token = Cookies.get('token');
+                const res = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                if (!res.ok) {
+                    console.error('Error fetching account:', res.status);
+                    return;
+                }
+                const data = await res.json();
+                formik.setValues(data); // Set the fetched data to Formik state
+            } catch (error) {
+                console.error('Error fetching account:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAccount();
+    }, [id]);
+
+    if (loading) return <div>Loading...</div>;
 
     return (
         <div className="container-fluid">
@@ -63,10 +92,10 @@ export default function AddAccount() {
                         <i className="fas fa-chevron-left"></i>
                     </button>
                 </Link>
-                <h3 className="align-items-center">Tạo mới tài khoản</h3>
+                <h3 className="align-items-center">Cập nhật tài khoản</h3>
             </div>
             <form className="p-4 shadow mt-2 rounded" onSubmit={formik.handleSubmit}>
-                <button className="btn btn-primary mb-3" type="submit">Lưu</button>
+                <button className="btn btn-primary mt-3" type="submit">Lưu</button>
                 <div className="row">
                     <div className="col-md-8">
                         <div className="mb-3">
@@ -79,7 +108,7 @@ export default function AddAccount() {
                                 value={formik.values.user_name}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                placeholder="Nhập tên người dùng"
+                                placeholder="Nguyễn Văn A"
                             />
                             {formik.touched.user_name && formik.errors.user_name ? (
                                 <div className="invalid-feedback">{formik.errors.user_name}</div>
@@ -95,26 +124,10 @@ export default function AddAccount() {
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                placeholder="Nhập email đăng nhập"
+                                placeholder="userpr1234@gmail.com"
                             />
                             {formik.touched.email && formik.errors.email ? (
                                 <div className="invalid-feedback">{formik.errors.email}</div>
-                            ) : null}
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Mật khẩu</label>
-                            <input
-                                type="password"
-                                className={`form-control rounded ${formik.touched.password && formik.errors.password ? 'is-invalid' : ''}`}
-                                id="password"
-                                name="password"
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                placeholder="Nhập mật khẩu"
-                            />
-                            {formik.touched.password && formik.errors.password ? (
-                                <div className="invalid-feedback">{formik.errors.password}</div>
                             ) : null}
                         </div>
                         <div className="mb-3">
@@ -164,20 +177,29 @@ export default function AddAccount() {
                                 <div className="invalid-feedback d-block">{formik.errors.gender}</div>
                             ) : null}
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="actorRole" className="form-label">Vai trò</label>
-                            <select
-                                name="role"
-                                id="actorRole"
-                                className={`form-select ${formik.touched.role && formik.errors.role ? 'is-invalid' : ''}`}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.role}
-                            >
-                                <option value="0">Khách hàng</option>
-                                <option value="100">Quản trị</option>
-                            </select>
-                        </div>
+
+                        {/* <div className="mb-3">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <label htmlFor="role" className="form-label">Vai trò</label>
+                                    <select
+                                        name="role"
+                                        id="role"
+                                        className={`form-select ${formik.touched.role && formik.errors.role ? 'is-invalid' : ''}`}
+                                        value={formik.values.role}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    >
+                                        <option value="0">Khách hàng</option>
+                                        <option value="100">Quản trị</option>
+                                    </select>
+                                    {formik.touched.role && formik.errors.role ? (
+                                        <div className="invalid-feedback">{formik.errors.role}</div>
+                                    ) : null}
+                                </div>
+                            </div>
+                        </div> */}
+                        
                     </div>
 
                     <div className="col-md-4">
@@ -195,10 +217,7 @@ export default function AddAccount() {
                                 placeholder="Nhập URL hình ảnh"
                                 value={formik.values.avatar}
                                 name="avatar"
-                                onChange={(e) => {
-                                    formik.handleChange(e);
-                                    setAvatarUrl(e.target.value); 
-                                }}
+                                onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                             />
                             {formik.touched.avatar && formik.errors.avatar ? (

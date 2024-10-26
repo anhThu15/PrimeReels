@@ -23,6 +23,8 @@ export default function HeaderUser() {
   }, []);
 
   const handleLogout = () => {
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
+    document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
     localStorage.removeItem("token"); // Xóa token
     localStorage.removeItem("user"); // Xóa user đã đăng nhập
     router.push("/");
