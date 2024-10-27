@@ -1,4 +1,5 @@
 import Link from "next/link"
+import ReactPlayer from "react-player"
 
 
 export default function Episodes(props){
@@ -14,7 +15,8 @@ export default function Episodes(props){
                         <>
                             <div key={episodes.episode_id} className="card text-bg-dark hover-box me-5" style={{width:"450px", marginRight:"7.9px"}}>
                                 <div className="bg-black opacity-75">
-                                    <video src={episodes.video_url} height={220} className="card-img" alt="..."/>
+                                <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={episodes.video_url}/>
+                                    {/* <video src={episodes.video_url} height={220} className="card-img" alt="..."/> */}
                                 </div>
                                 <div className="card-img-overlay ">
                                 </div>
