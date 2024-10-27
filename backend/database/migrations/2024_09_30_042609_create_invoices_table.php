@@ -22,6 +22,8 @@ return new class extends Migration
             $table->dateTime('end_date');
             $table->unsignedBigInteger('voucher_id')->nullable();
             $table->string('status')->default('pending');
+            $table->unsignedBigInteger('package_id')->nullable();
+            $table->foreign('package_id')->references('id')->on('packages');
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->foreign('voucher_id')->references('voucher_id')->on('vouchers');
 
