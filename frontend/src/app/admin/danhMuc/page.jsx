@@ -124,8 +124,8 @@ export default function danhMuc() {
         <div className="row">
           <h2 className="col fw-bold">Danh Mục</h2>
           <div className="col-2">
-            <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              + Thêm Danh Mục
+            <button type="button" className="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              + Thêm Mới
             </button>
 
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -190,7 +190,7 @@ export default function danhMuc() {
             <tr>
               <th scope="col">ID</th>
               <th scope="col">TÊN DANH MỤC</th>
-              <th scope="col">SỐ LƯỢNG PHIM</th>
+              {/* <th scope="col">SỐ LƯỢNG PHIM</th> */}
               <th scope="col">TÁC VỤ</th>
             </tr>
           </thead>
@@ -199,7 +199,7 @@ export default function danhMuc() {
               <tr key={movieType.movie_type_id}>
                 <th scope="row">{movieType.movie_type_id}</th>
                 <td>{movieType.name}</td>
-                <td>39</td>
+                {/* <td>39</td> */}
                 <td>
                   <Link href={`/admin/danhMuc/edit/${movieType.movie_type_id}`} className="btn btn-secondary">
                     <i className="fa-solid fa-pen"></i>

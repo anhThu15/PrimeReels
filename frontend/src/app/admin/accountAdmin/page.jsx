@@ -4,20 +4,19 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 
-export default function Account() {
+export default function AccountAdmin() {
     const [data, setData] = useState([]);
     const [userIdToDelete, setUserIdToDelete] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredData, setFilteredData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage, setUsersPerPage] = useState(10);
-    const [sortOrder, setSortOrder] = useState('asc');
 
-    // Fetch user data excluding admins
-    const fetchDataUser = async () => {
+    // Fetch admin user data
+    const fetchDataAdmin = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch('http://127.0.0.1:8000/api/users?role=customer', {
+            const res = await fetch('http://127.0.0.1:8000/api/users', { 
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,66 +24,32 @@ export default function Account() {
                 },
             });
             if (!res.ok) {
-                console.error('Error fetching user list:', res.status);
+                console.error('Error fetching admin user list:', res.status);
                 return;
             }
             const newData = await res.json();
-            setData(newData);
+            // Filter users with role 100
+            const adminUsers = newData.filter(user => user.role === 100);
+            setData(adminUsers);
         } catch (error) {
-            console.error('Error fetching user list:', error);
-        }
-    };
-
-    // Delete user by ID
-    const handleDeleteUser = async () => {
-        if (!userIdToDelete) return;
-        try {
-            const token = Cookies.get('token');
-            const res = await fetch(`http://127.0.0.1:8000/api/users/${userIdToDelete}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            if (res.ok) {
-                alert('User account deleted successfully!');
-                setUserIdToDelete(null);
-                fetchDataUser();
-            } else {
-                console.error('Error deleting account:', res.status);
-                alert('Failed to delete account!');
-            }
-        } catch (error) {
-            console.error('Error deleting account:', error);
+            console.error('Error fetching admin user list:', error);
         }
     };
 
     useEffect(() => {
-        fetchDataUser();
+        fetchDataAdmin();
     }, []);
 
     useEffect(() => {
         const filtered = data.filter(user => {
             const matchesSearch = user.user_name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                 user.email.toLowerCase().includes(searchTerm.toLowerCase());
-            return matchesSearch; 
+            return matchesSearch;
         });
+        setFilteredData(filtered);
+        setCurrentPage(1); // Reset to the first page when the data changes
+    }, [searchTerm, data]);
 
-        // Sort data based on selection
-        const sortedData = [...filtered].sort((a, b) => {
-            if (sortOrder === 'asc') {
-                return a.user_name.localeCompare(b.user_name);
-            } else {
-                return b.user_name.localeCompare(a.user_name);
-            }
-        });
-
-        setFilteredData(sortedData);
-        setCurrentPage(1); // Reset to first page when the filter changes
-    }, [searchTerm, data, sortOrder]);
-
-    // Pagination logic
     const totalPages = Math.ceil(filteredData.length / usersPerPage);
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -93,9 +58,9 @@ export default function Account() {
     return (
         <div className="container-fluid">
             <div className="row">
-                <h2 className="col fw-bold">Tài khoản</h2>
+                <h2 className="col fw-bold">Quản Trị Viên</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/account/addAccount" className="btn btn-success">
+                    <Link href="/admin/accountAdmin/addAdmin" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>
@@ -112,14 +77,14 @@ export default function Account() {
                         />
                     </form>
                 </div>
-                <div className="col-2">
+                <div className="col-1">
                     <div className="dropdown">
                         <button className="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Sắp xếp
+                            {usersPerPage}
                         </button>
                         <ul className="dropdown-menu">
-                            <li><a className="dropdown-item" href="#" onClick={() => setSortOrder('asc')}>Tên (A-Z)</a></li>
-                            <li><a className="dropdown-item" href="#" onClick={() => setSortOrder('desc')}>Tên (Z-A)</a></li>
+                            <li><a className="dropdown-item" href="#" onClick={() => setUsersPerPage(20)}>20</a></li>
+                            <li><a className="dropdown-item" href="#" onClick={() => setUsersPerPage(30)}>30</a></li>
                         </ul>
                     </div>
                 </div>
@@ -153,22 +118,14 @@ export default function Account() {
                             <td>{user.email}</td>
                             <td>{user.gender || "Chưa xác định"}</td>
                             <td>
-                                <div className="rounded text-center mb-2 bg-primary text-white">
-                                    Khách hàng
+                                <div className="rounded text-center mb-2 bg-danger text-white">
+                                    Quản trị viên
                                 </div>
                             </td>
                             <td>
-                                <Link href={`/admin/account/edit/${user.user_id}`} className="btn btn-secondary">
+                                <Link href={`/admin/accountAdmin/edit/${user.user_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
-                                <button
-                                    className="btn btn-danger ms-2"
-                                    onClick={() => setUserIdToDelete(user.user_id)}
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#confirmDeleteModal"
-                                >
-                                    <i className="fa-solid fa-trash"></i>
-                                </button>
                             </td>
                         </tr>
                     ))}
@@ -193,25 +150,6 @@ export default function Account() {
                     </li>
                 </ul>
             </nav>
-
-            {/* Confirmation Modal */}
-            <div className="modal fade" id="confirmDeleteModal" tabIndex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            Bạn có chắc chắn muốn xóa tài khoản này?
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                            <button type="button" className="btn btn-danger" onClick={handleDeleteUser} data-bs-dismiss="modal">Xóa</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }

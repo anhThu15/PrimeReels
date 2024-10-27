@@ -23,7 +23,7 @@ export default function AddActor() {
             biography: Yup.string().required('Tiểu sử là bắt buộc'),
             birth_date: Yup.string()
                 .required('Ngày sinh là bắt buộc')
-                .matches(/^\d{4}\/\d{2}\/\d{2}$/, 'Định dạng ngày không hợp lệ (yyyy/mm/dd)'),
+                .matches(/^\d{4}-\d{2}-\d{2}$/, 'Định dạng ngày không hợp lệ (yyyy-mm-dd)'),
             image_url: Yup.string().url('URL không hợp lệ').required('URL hình ảnh là bắt buộc'),
             status: Yup.number().required('Trạng thái là bắt buộc').oneOf([0, 1], 'Trạng thái không hợp lệ'),
         }),
@@ -51,7 +51,29 @@ export default function AddActor() {
                 setMessage('Đã xảy ra lỗi, vui lòng thử lại!');
             }
         },
+        validateOnChange: false, // Ngăn không để validate khi nhập liệu
     });
+
+    // Xử lý định dạng ngày sinh
+    const handleDateChange = (e) => {
+        const { value } = e.target;
+        const digits = value.replace(/\D/g, '');
+        let formattedDate = '';
+
+        if (digits.length > 4) {
+            formattedDate += digits.slice(0, 4) + '-';
+            if (digits.length > 6) {
+                formattedDate += digits.slice(4, 6) + '-';
+                formattedDate += digits.slice(6, 8);
+            } else {
+                formattedDate += digits.slice(4);
+            }
+        } else {
+            formattedDate = digits;
+        }
+
+        formik.setFieldValue('birth_date', formattedDate);
+    };
 
     return (
         <div className="container-fluid">
@@ -65,7 +87,7 @@ export default function AddActor() {
             </div>
             <form className="p-4 shadow mt-2 rounded" onSubmit={formik.handleSubmit}>
                 {message && <div className="alert alert-info">{message}</div>}
-                <button type="submit" className="btn btn-primary mb-3">Lưu</button>
+                <button type="submit" className="btn btn-primary mb-3">Thêm</button>
                 <div className="row">
                     <div className="col-md-8">
                         <div className="mb-3">
@@ -123,14 +145,15 @@ export default function AddActor() {
                             ) : null}
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="birthdate" className="form-label">Ngày Sinh (yyyy-mm-dd)</label>
+                            <label htmlFor="birthdate" className="form-label">Ngày Sinh</label>
                             <input 
                                 type="text" 
                                 className={`form-control rounded ${formik.touched.birth_date && formik.errors.birth_date ? 'is-invalid' : ''}`} 
                                 id="birthdate" 
                                 name="birth_date" 
-                                placeholder="Nhập ngày sinh (yyyy-mm-dd)" 
-                                {...formik.getFieldProps('birth_date')} 
+                                placeholder="YYYY-MM-DD" 
+                                onChange={handleDateChange} 
+                                value={formik.values.birth_date} 
                             />
                             {formik.touched.birth_date && formik.errors.birth_date ? (
                                 <div className="invalid-feedback">{formik.errors.birth_date}</div>

@@ -111,7 +111,7 @@ export default function OddFilm() {
                 </select>
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="countrySelect">Chọn quốc gia:</label>
                 <select id="countrySelect" className="form-select">
                   <option value="">-- Chọn quốc gia --</option>
@@ -119,7 +119,7 @@ export default function OddFilm() {
                   <option value="2">Phim Nhật Bản</option>
                   <option value="3">Phim Trung Quốc</option>
                 </select>
-              </div>
+              </div> */}
             </div>
           </div>
           <div>

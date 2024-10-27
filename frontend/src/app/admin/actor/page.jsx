@@ -9,6 +9,8 @@ export default function AdminActor() {
     const [actorIdToDelete, setActorIdToDelete] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('A-Z');
+    const [currentPage, setCurrentPage] = useState(1);
+    const actorsPerPage = 10;
 
     const fetchActors = async () => {
         try {
@@ -80,7 +82,16 @@ export default function AdminActor() {
         }
 
         setFilteredData(filtered);
+        setCurrentPage(1); // Reset to the first page on new search or sort
     };
+
+    const totalPages = Math.ceil(filteredData.length / actorsPerPage);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const currentActors = filteredData.slice((currentPage - 1) * actorsPerPage, currentPage * actorsPerPage);
 
     useEffect(() => {
         fetchActors();
@@ -125,24 +136,13 @@ export default function AdminActor() {
                         </ul>
                     </div>
                 </div>
-                <div className="col-1">
-                    <div className="dropdown">
-                        <button className="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            10
-                        </button>
-                        <ul className="dropdown-menu">
-                            <li><a className="dropdown-item" href="#">20</a></li>
-                            <li><a className="dropdown-item" href="#">30</a></li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">
+                        {/* <th scope="col">
                             <input type="checkbox" />
-                        </th>
+                        </th> */}
                         <th scope="col">ID</th>
                         <th scope="col">AVATAR</th>
                         <th scope="col">TÊN</th>
@@ -152,11 +152,11 @@ export default function AdminActor() {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.map((actor) => (
+                    {currentActors.map((actor) => (
                         <tr key={actor.actor_id}>
-                            <th scope="row">
+                            {/* <th scope="row">
                                 <input type="checkbox" />
-                            </th>
+                            </th> */}
                             <td>{actor.actor_id}</td>
                             <td>
                                 <img src={actor.image_url} alt="" style={{ width: "50px", height: "50px", objectFit: "cover" }} className="rounded" />
@@ -181,6 +181,23 @@ export default function AdminActor() {
                     ))}
                 </tbody>
             </table>
+
+            {/* Pagination Controls */}
+            <nav>
+                <ul className="pagination" style={{ display: "flex", justifyContent: "center" }}>
+                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                        <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
+                    </li>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                            <button className="page-link" onClick={() => handlePageChange(index + 1)}>{index + 1}</button>
+                        </li>
+                    ))}
+                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                        <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+                    </li>
+                </ul>
+            </nav>
 
             {/* Modal xác nhận xóa */}
             <div className="modal fade" id="deleteConfirmModal" tabIndex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
