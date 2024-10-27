@@ -13,19 +13,21 @@ export default function FilterFilmSeries() {
     const [movieTypeId, setMovieTypeId] = useState(1);
     const [country, setCountry] = useState('');
     const [genreName, setGenreName] = useState('');
-    const [movieTypeName, setMovieTypeName] = useState('Phim Bộ'); 
-    const [genres, setGenres] = useState([]); // State for genres
+    const [movieTypeName, setMovieTypeName] = useState('Phim Bộ');
+    const [genres, setGenres] = useState([]);
 
     useEffect(() => {
         // Fetch genres from the API
-        fetch('http://127.0.0.1:8000/api/genres')
-            .then(response => response.json())
-            .then(data => {
+        const fetchGenres = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/genres');
+                const data = await response.json();
                 setGenres(data); // Assuming data is an array of genres
-            })
-            .catch(err => {
+            } catch (err) {
                 setError('Không thể tải thể loại phim');
-            });
+            }
+        };
+        fetchGenres();
     }, []);
 
     useEffect(() => {
@@ -51,11 +53,13 @@ export default function FilterFilmSeries() {
     }, []);
 
     useEffect(() => {
-        fetchMovies(genreId, movieTypeId, country);
+        if (genreId || country) {
+            fetchMovies(genreId, movieTypeId, country);
+        }
     }, [genreId, movieTypeId, country]);
 
     const getGenreName = (id) => {
-        const genre = genres.find(g => g.id === Number(id)); // Adjust based on your genre structure
+        const genre = genres.find(g => g.genre_id === Number(id));
         return genre ? genre.name : '';
     };
 
@@ -68,27 +72,22 @@ export default function FilterFilmSeries() {
         }
     };
 
-    const fetchMovies = (genreId, movieTypeId, country) => {
-        if (genreId || country) { // Check if either genreId or country is set
-            setLoading(true);
-            fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/${genreId || ''}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Không tìm thấy phim nào');
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    const filteredMovies = data.filter(movie => {
-                        return movie.movie_type_id === movieTypeId && (!country || movie.country === country);
-                    });
-                    setMovies(filteredMovies);
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    setError(err.message);
-                    setLoading(false);
-                });
+    const fetchMovies = async (genreId, movieTypeId, country) => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/${genreId || ''}`);
+            if (!response.ok) {
+                throw new Error('Không tìm thấy phim nào');
+            }
+            const data = await response.json();
+            const filteredMovies = data.filter(movie => {
+                return movie.movie_type_id === movieTypeId && (!country || movie.country === country);
+            });
+            setMovies(filteredMovies);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -163,9 +162,10 @@ export default function FilterFilmSeries() {
                                     onChange={handleCountryChange}
                                 >
                                     <option value="">-- Chọn quốc gia --</option>
-                                    <option value="Phim Mỹ">Mỹ</option>
-                                    <option value="Phim Nhật Bản">Nhật</option>
-                                    <option value="Phim Trung Quốc">Trung Quốc</option>
+                                    <option value="Phim Mỹ">Phim Mỹ</option>
+                                    <option value="Trung Quốc">Trung Quốc</option>
+                                    <option value="Hàn Quốc">Hàn Quốc</option>
+                                    <option value="Việt Nam">Việt Nam</option>
                                 </select>
                             </div>
                         </div>
