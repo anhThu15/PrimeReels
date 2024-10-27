@@ -7,13 +7,11 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export default function AddAccount() {
+export default function AddAdmin() {
     const router = useRouter();
     const [avatarUrl, setAvatarUrl] = useState('../../images/default-user.png');
-    const [userIdDelete, setUserIdDelete] = useState(null);
 
-
-    //setup formik và yup để bắt lỗi form
+    // Setup formik và yup để bắt lỗi form
     const formik = useFormik({
         initialValues: {
             user_name: '',
@@ -21,7 +19,7 @@ export default function AddAccount() {
             password: '',
             gender: '',
             avatar: avatarUrl, 
-            role: 0
+            role: 100 
         },
         validationSchema: Yup.object({
             user_name: Yup.string().required('Tên người dùng là bắt buộc'),
@@ -43,8 +41,8 @@ export default function AddAccount() {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Tạo tài khoản thành công!');
-                    router.push('/admin/account'); // Redirect to account page after creation
+                    alert('Tạo tài khoản quản trị viên thành công!');
+                    router.push('/admin/accountAdmin');
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
                     alert('Tạo tài khoản không thành công!');
@@ -55,7 +53,6 @@ export default function AddAccount() {
         },
     });
 
-
     return (
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
@@ -64,14 +61,14 @@ export default function AddAccount() {
                         <i className="fas fa-chevron-left"></i>
                     </button>
                 </Link>
-                <h3 className="align-items-center">Tạo mới tài khoản</h3>
+                <h3 className="align-items-center">Tạo mới quản trị viên</h3>
             </div>
             <form className="p-4 shadow mt-2 rounded" onSubmit={formik.handleSubmit}>
                 <button className="btn btn-primary mb-3" type="submit">Thêm</button>
                 <div className="row">
                     <div className="col-md-8">
                         <div className="mb-3">
-                            <label htmlFor="user_name" className="form-label">Tên người dùng</label>
+                            <label htmlFor="user_name" className="form-label">Tên người quản trị viên</label>
                             <input
                                 type="text"
                                 className={`form-control rounded ${formik.touched.user_name && formik.errors.user_name ? 'is-invalid' : ''}`}
@@ -165,19 +162,8 @@ export default function AddAccount() {
                                 <div className="invalid-feedback d-block">{formik.errors.gender}</div>
                             ) : null}
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="actorRole" className="form-label">Vai trò</label>
-                            <select
-                                name="role"
-                                id="actorRole"
-                                className={`form-select ${formik.touched.role && formik.errors.role ? 'is-invalid' : ''}`}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.role}
-                            >
-                                <option value="0">Khách hàng</option>
-                            </select>
-                        </div>
+                        {/* Vai trò được gán trực tiếp là 100, không cần input cho vai trò */}
+                        <input type="hidden" name="role" value={formik.values.role} />
                     </div>
 
                     <div className="col-md-4">

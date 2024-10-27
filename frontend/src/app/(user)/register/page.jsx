@@ -49,8 +49,8 @@ export default function Register() {
                 if (response.ok) {
                     toast.success(data.message);
                     console.log(response)
-                    // router.push("/login");
-                    localStorage.setItem('email_verification_token', data.email_verification_token);
+                    router.push("/login");
+                    // localStorage.setItem('email_verification_token', data.email_verification_token);
                 } else {
                     toast.error(data.message || 'Đăng ký không thành công');
                 }

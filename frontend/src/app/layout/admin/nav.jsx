@@ -22,6 +22,7 @@ export default function NavAdmin(){
             <Link style={{backgroundColor:"#213436"}} href="/admin/danhMuc" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/danhMuc' ? "text-bg-dark":"" }`}><img src="/images/dm.png" alt="" /><span> Danh Mục</span></Link>
             <Link style={{backgroundColor:"#213436"}} href="/admin/theLoai" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/theLoai' ? "text-bg-dark":"" }`}><img src="/images/tl.png" alt="" /><span> Thể Loại</span></Link>
             <Link style={{backgroundColor:"#213436"}} href="/admin/account" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/account' ? "text-bg-dark":"" }`}><img src="/images/user.png" alt="" /><span> Tài Khoản</span></Link>
+            <Link style={{backgroundColor:"#213436"}} href="/admin/accountAdmin" className={`list-group-item list-group-item-action text-white ${pathName == '/admin/accountAdmin' ? "text-bg-dark":"" }`}><img src="/images/user.png" alt="" /><span> Quản Trị Viên</span></Link>
             <Link style={{backgroundColor:"#213436"}} href="/" className="list-group-item list-group-item-action text-white" aria-disabled="true"> 
             <i className="fa-solid fa-rotate-left text-danger me-1"></i> 
              Quay về Trang Chủ

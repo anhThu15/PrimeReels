@@ -49,7 +49,7 @@ export default function Login() {
             console.log(response)
 
             if(data.user.email_verification_token != null){
-                toast("mày chưa xong đâu con");
+                toast("Bạn chưa xác định email, hãy xác minh để có thể đăng nhập");
             }else{
                 // alert("mày đã xác minh rồi")
                 toast.success('Đăng nhập thành công!');
@@ -57,6 +57,7 @@ export default function Login() {
                     router.push("/admin");
                 } else {
                     router.push("/");
+                    window.location.reload();
                 }
                 
             }

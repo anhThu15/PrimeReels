@@ -145,7 +145,7 @@ export default function Voucher() {
                 <h2 className="col fw-bold">Voucher</h2>
                 <div className="col-2">
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        + Thêm Voucher
+                        + Thêm Mới
                     </button>
                     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
@@ -185,7 +185,7 @@ export default function Voucher() {
                                             ) : null}
                                         </div>
                                         <div className="mb-3">
-                                            <label className="form-label">Ngày Hết Hạn</label>
+                                            <label className="form-label">Ngày Bắt Đầu</label>
                                             <input 
                                                 type="date" 
                                                 className="form-select" 
@@ -282,7 +282,7 @@ export default function Voucher() {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">STT</th>
+                        <th scope="col">ID</th>
                         <th scope="col">TÊN VOUCHER</th>
                         <th scope="col">SỐ LƯỢNG</th>
                         <th scope="col">NGÀY HẾT HẠN</th>
@@ -293,7 +293,7 @@ export default function Voucher() {
                 <tbody>
                     {filteredData.map((voucher, index) => (
                         <tr key={voucher.voucher_id}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">{voucher.voucher_id}</th>
                             <td>{voucher.name}</td>
                             <td>{voucher.voucher_quantity}</td>
                             <td>{new Date(voucher.expired).toLocaleDateString()}</td>

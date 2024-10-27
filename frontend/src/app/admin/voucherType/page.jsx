@@ -128,7 +128,7 @@ export default function VoucherType() {
                 <h2 className="col fw-bold">Voucher Types</h2>
                 <div className="col-2">
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#addVoucherModal">
-                        + Thêm Thể Loại Voucher
+                        + Thêm Mới
                     </button>
                 </div>
                 <div className="row mb-3">
@@ -247,7 +247,7 @@ export default function VoucherType() {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">STT</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Voucher Name</th>
                         <th scope="col">Discount</th>
                         <th scope="col">Usage Limit</th>
@@ -260,7 +260,7 @@ export default function VoucherType() {
                 <tbody>
                     {filteredData.map((voucher, index) => (
                         <tr key={voucher.voucher_type_id}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">{voucher.voucher_type_id}</th>
                             <td>{voucher.name}</td>
                             <td>{voucher.discount}</td>
                             <td>{voucher.customer_usage_limit}</td>

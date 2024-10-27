@@ -12,8 +12,10 @@ export default function TheLoai() {
   const [genreToDelete, setGenreToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('none');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [genresPerPage, setGenresPerPage] = useState(10);
 
-  // Hàm lấy danh sách thể loại
+  // Fetch genres
   const fetchGenre = async () => {
     try {
       const token = Cookies.get('token');
@@ -25,18 +27,18 @@ export default function TheLoai() {
         },
       });
       if (!res.ok) {
-        console.error('Lỗi khi lấy danh sách thể loại:', res.status);
+        console.error('Error fetching genres:', res.status);
         return;
       }
       const newData = await res.json();
       setData(newData);
-      setFilteredData(newData); // Cập nhật filteredData
+      setFilteredData(newData);
     } catch (error) {
-      console.error('Lỗi khi lấy danh sách thể loại:', error);
+      console.error('Error fetching genres:', error);
     }
   };
 
-  // Hàm xử lý xóa thể loại
+  // Handle genre deletion
   const handleDelete = async () => {
     if (!genreToDelete) return;
 
@@ -51,19 +53,19 @@ export default function TheLoai() {
       });
       if (res.ok) {
         setData(data.filter((genre) => genre.genre_id !== genreToDelete));
-        setFilteredData(filteredData.filter((genre) => genre.genre_id !== genreToDelete)); // Cập nhật filteredData
-        console.log('Xóa thể loại thành công');
+        setFilteredData(filteredData.filter((genre) => genre.genre_id !== genreToDelete));
+        console.log('Deleted genre successfully');
       } else {
-        console.error('Lỗi khi xóa thể loại:', res.status);
+        console.error('Error deleting genre:', res.status);
       }
     } catch (error) {
-      console.error('Lỗi khi xóa thể loại:', error);
+      console.error('Error deleting genre:', error);
     }
 
-    setGenreToDelete(null); // Reset lại trạng thái sau khi xóa
+    setGenreToDelete(null);
   };
 
-  // Thiết lập Formik cho việc thêm thể loại
+  // Set up Formik for adding genres
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -71,11 +73,11 @@ export default function TheLoai() {
       description: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Tên thể loại là bắt buộc'),
+      name: Yup.string().required('Genre name is required'),
       status: Yup.number()
-        .required('Trạng thái là bắt buộc')
-        .oneOf([0, 1], 'Trạng thái không hợp lệ'),
-      description: Yup.string().required("Mô tả là bắt buộc"),
+        .required('Status is required')
+        .oneOf([0, 1], 'Invalid status'),
+      description: Yup.string().required("Description is required"),
     }),
     onSubmit: async (values) => {
       try {
@@ -91,8 +93,8 @@ export default function TheLoai() {
         if (res.ok) {
           const genre = await res.json();
           setData([...data, genre]);
-          setFilteredData([...filteredData, genre]); // Cập nhật filteredData
-          formik.resetForm(); // Reset form sau khi thêm thành công
+          setFilteredData([...filteredData, genre]);
+          formik.resetForm();
 
           const modalElement = document.getElementById('exampleModal');
           if (modalElement) {
@@ -100,16 +102,16 @@ export default function TheLoai() {
             modal.hide();
           }
         } else {
-          console.error('Lỗi khi thêm thể loại:', res.status);
+          console.error('Error adding genre:', res.status);
         }
       } catch (error) {
-        console.error('Lỗi khi thêm thể loại:', error);
+        console.error('Error adding genre:', error);
       }
     },
   });
 
   useEffect(() => {
-    fetchGenre(); // Lấy dữ liệu khi component được mount
+    fetchGenre();
   }, []);
 
   useEffect(() => {
@@ -117,6 +119,7 @@ export default function TheLoai() {
       genre.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredData(filtered);
+    setCurrentPage(1); // Reset to the first page on search
   }, [searchTerm, data]);
 
   useEffect(() => {
@@ -129,13 +132,19 @@ export default function TheLoai() {
     setFilteredData(sortedData);
   }, [sortOrder]);
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredData.length / genresPerPage);
+  const indexOfLastGenre = currentPage * genresPerPage;
+  const indexOfFirstGenre = indexOfLastGenre - genresPerPage;
+  const currentGenres = filteredData.slice(indexOfFirstGenre, indexOfLastGenre);
+
   return (
     <div className="container-fluid">
       <div className="row">
         <h2 className="col fw-bold">Thể Loại</h2>
         <div className="col-2">
-          <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            + Thêm Thể Loại
+          <button type="button" className="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            + Thêm Mới
           </button>
         </div>
       </div>
@@ -167,18 +176,16 @@ export default function TheLoai() {
           <tr>
             <th scope="col">ID</th>
             <th scope="col">TÊN THỂ LOẠI</th>
-            <th scope="col">SỐ LƯỢNG PHIM</th>
             <th scope="col" className="text-center">TRẠNG THÁI</th>
             <th scope="col">MÔ TẢ</th>
             <th scope="col">TÁC VỤ</th>
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((genre) => (
+          {currentGenres.map((genre) => (
             <tr key={genre.genre_id}>
               <th scope="row">{genre.genre_id}</th>
               <td>{genre.name}</td>
-              <td>39</td>
               <td>
                 <div className={`bg-${genre.status ? 'success' : 'danger'} text-white rounded-pill text-center`}>
                   {genre.status ? 'Công Khai' : 'Không Công Khai'}
@@ -203,7 +210,26 @@ export default function TheLoai() {
         </tbody>
       </table>
 
-      {/* Modal xác nhận xóa */}
+      {/* Pagination */}
+      <nav>
+        <ul className="pagination justify-content-center">
+          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+            <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
+          </li>
+          {[...Array(totalPages)].map((_, index) => (
+            <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => setCurrentPage(index + 1)}>
+                {index + 1}
+              </button>
+            </li>
+          ))}
+          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+            <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+          </li>
+        </ul>
+      </nav>
+
+      {/* Modal confirm delete */}
       <div className="modal fade" id="confirmDeleteModal" tabIndex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -222,7 +248,7 @@ export default function TheLoai() {
         </div>
       </div>
 
-      {/* Modal thêm thể loại */}
+      {/* Modal add genre */}
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">

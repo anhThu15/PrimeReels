@@ -35,7 +35,7 @@ export default function UpdateActor({ params }) {
             const data = await res.json();
             setActor({
                 ...data,
-                birth_date: data.birth_date.split(' ')[0] // Chỉ lấy phần ngày
+                birth_date: data.birth_date.split(' ')[0]
             });
         } else {
             console.error('Lỗi khi lấy thông tin diễn viên:', res.status);
@@ -45,7 +45,31 @@ export default function UpdateActor({ params }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setActor({ ...actor, [name]: value });
+
+        // Format date for birth_date input
+        if (name === 'birth_date') {
+            // Remove all non-digit characters
+            const digits = value.replace(/\D/g, '');
+            
+            // Format the input as YYYY-MM-DD
+            let formattedDate = '';
+            if (digits.length > 4) {
+                formattedDate += digits.slice(0, 4) + '-';
+                if (digits.length > 6) {
+                    formattedDate += digits.slice(4, 6) + '-';
+                    formattedDate += digits.slice(6, 8);
+                } else {
+                    formattedDate += digits.slice(4);
+                }
+            } else {
+                formattedDate = digits;
+            }
+            
+            // Set the formatted date in the state
+            setActor({ ...actor, [name]: formattedDate });
+        } else {
+            setActor({ ...actor, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
