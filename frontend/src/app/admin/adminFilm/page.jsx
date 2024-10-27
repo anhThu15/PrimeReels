@@ -152,7 +152,7 @@ export default function AdminFilm() {
                             </th>
                             <th scope="row">{indexOfFirstFilm + i + 1}</th>
                             <td className="d-flex align-items-center gap-2">
-                                <img src={film.poster} alt="" style={{ width: "70px", height: "100%", objectFit: "cover" }} />
+                                <img src={film.poster} alt="" style={{ width: "120px", height: "150px", objectFit: "cover" }} />
                                 <div className="d-flex flex-column">
                                     <p>{film.title}</p>
                                 </div>

@@ -12,62 +12,84 @@ export default function Home() {
     const [genres, setGenres] = useState([])
     const [users, setUsers] = useState([])
     const [satistical, setSatistical] = useState([])
+    const [chartData, setChartData] = useState(null);
+    const [chartData2, setChartData2] = useState(null);
     
     useEffect(() => {
-      const getFilms = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-        setFilms(res)
-      }
-      const getTypes = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`,{ revalidate: 3600 }).then((res) => res.data)
-        setTypes(res)
-      }
-      const getGenres = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`,{ revalidate: 3600 }).then((res) => res.data)
-        setGenres(res)
-      }
-      const getUsers = async () => {
-        const token = localStorage.getItem('token');
-        try {
-          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            }
-          })
-          if(res.data.email_verification_token == null){
-            setUsers(res.data);
-          }
-          // console.log(data);
+      // const getFilms = async () => {
+      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+      //   setFilms(res)
+      // }
+      // const getTypes = async () => {
+      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`,{ revalidate: 3600 }).then((res) => res.data)
+      //   setTypes(res)
+      // }
+      // const getGenres = async () => {
+      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`,{ revalidate: 3600 }).then((res) => res.data)
+      //   setGenres(res)
+      // }
+      // const getUsers = async () => {
+      //   const token = localStorage.getItem('token');
+      //   try {
+      //     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+      //       headers: {
+      //         'Authorization': `Bearer ${token}`,
+      //       }
+      //     })
+      //     if(res.data.email_verification_token == null){
+      //       setUsers(res.data);
+      //     }
+      //     // console.log(data);
           
-        } catch (error) {
-          console.error("Error fetching users:", error);
-        }
-      };
+      //   } catch (error) {
+      //     console.error("Error fetching users:", error);
+      //   }
+      // };
 
       const getStatistical = async () => {
         try {
           const token = localStorage.getItem('token');
-          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`,{ revalidate: 3600 },{
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`, {
             headers: {
               'Authorization': `Bearer ${token}`,
-            }
-          }).then((res) => res.data)
+            },
+            revalidate: 3600
+          }).then((res) => res.data);
           setSatistical(res)
+
+        const labels = res.monthly_revenue.map(item => `${item.month} ${item.year}`);
+        const values = res.monthly_revenue.map(item => parseFloat(item.total.replace(" VND", "").replace(".", "")));
+        setChartData({
+          labels: labels,
+          values: values
+        });
+
+
+        const labels2 = res.monthly_Voucherused.map(item => `${item.month} ${item.year}`);
+        const values2 = res.monthly_Voucherused.map(item => item.invoice);
+        setChartData2({
+          labels: labels2,
+          datasets: [{
+            backgroundColor: ["#F3FEB8", "#FFDE4D", "#FF4C4C"], // Màu nền cho các phần trong biểu đồ
+            data: values2 // Dữ liệu cho biểu đồ
+          }]
+        });
+
         } catch (error) {
           console.log(); 
         }
       }
 
   
-      getFilms() 
-      getTypes() 
-      getGenres()
-      getUsers();
+      // getFilms() 
+      // getTypes() 
+      // getGenres()
+      // getUsers();
       getStatistical();
     
     },[])
 
-      console.log(satistical);
+      console.log(chartData);
 
 
   return (
@@ -80,7 +102,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                       <h5 className="card-title text-start col">Tổng Phim
-                        <div className="text-start mt-3 fs-1 fw-bold ">{films.length}</div>
+                        <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_Movie}</div>
                       </h5>
                       <img className="col-3" height={45} src="/images/Group 324.png"></img>
                     </div>
@@ -93,7 +115,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                         <h5 className="card-title col text-start">Tổng Danh Mục
-                          <div className="text-start mt-3 fs-1 fw-bold ">{types.length}</div>
+                          <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_MovieType}</div>
                         </h5>
                         <img className="col-3" height={45} src="/images/Group 325.png"></img>
                     </div>
@@ -106,7 +128,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                         <h5 className="card-title col text-start">Tổng Thể Loại
-                          <div className="text-start mt-3 fs-1 fw-bold ">{genres.length}</div>
+                          <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_Genre}</div>
                         </h5>
                         <img className="col-3" height={45} src="/images/Group 326.png"></img>
                     </div>
@@ -119,7 +141,7 @@ export default function Home() {
                   <div className="card-body">
                     <div className="row">
                         <h5 className="card-title col text-start">Tổng Tài Khoản
-                          <div className="text-start mt-3 fs-1 fw-bold ">{users.length}</div>
+                          <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_User}</div>
                         </h5>
                         <img className="col-3" height={45} src="/images/Group 327.png"></img>
                     </div>
@@ -131,23 +153,19 @@ export default function Home() {
               <div className="col-md-6 pt-3"  data-aos="fade-up-right" data-aos-duration="3000">
                 <div className="card text-center ">
                   <div className="card-body">
-                  {/* <Table data={satistical}></Table> */}
+                  <Table data={chartData}></Table>
                   </div>
                 </div>
-                {/* <OrderAdmin data={data}></OrderAdmin> */}
               </div>
               
-{/* 
+
               <div className="col-md-6 pt-3"  data-aos="fade-up-left" data-aos-duration="3000">
                 <div className="card text-start">
-                  <div className="card-header">
-                    <b>Thông Tin Tổng Quan</b>
-                  </div>
                   <div className="card-body">
-                        <Table2></Table2>
+                        <Table2 data={chartData2}></Table2>
                   </div>
                 </div>
-              </div> */}
+              </div>
 
               {/* <!--  thêm trc đây  --> */}
 

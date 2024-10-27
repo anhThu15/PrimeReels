@@ -130,10 +130,12 @@ export default function film({params}){
             {/* quốc gia & diễn viên, đạo diển  */}
 
             {/* tập phim */}
-            <div style={{backgroundColor:"#808080"}}>
-            <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim</div>
-                  <Episodes data={episodes}></Episodes>
-            </div>
+            
+              {film.movie_type_id == 2 ? (<></>):(
+                <div style={{backgroundColor:"#808080"}}>
+                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim</div>
+                  <Episodes data={episodes}></Episodes></div>)}
+
             {/* tập phim */}
 
             {/* cmt */}
