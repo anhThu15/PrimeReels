@@ -625,9 +625,9 @@ export default function AddNewFilm({params}) {
                                     <th scope="col">ID</th>
                                     <th scope="col">AVATAR</th>
                                     <th scope="col">TÊN</th>
-                                    <th scope="col">Ngày sinh Nhật</th>
-                                    <th scope="col">NỘI DUNG</th>
-                                    <th scope="col">ẨN HIỆN</th>
+                                    <th scope="col">NGÀY SINH NHẬT</th>
+                                    <th scope="col">TIỂU SỬ</th>
+                                    <th scope="col">TÁC VỤ</th>
                                 </tr>
                             </thead>
                             <tbody>

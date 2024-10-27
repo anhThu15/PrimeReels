@@ -34,8 +34,10 @@ export default function Home() {
               'Authorization': `Bearer ${token}`,
             }
           })
-          setUsers(res.data);
-          console.log(data);
+          if(res.data.email_verification_token == null){
+            setUsers(res.data);
+          }
+          // console.log(data);
           
         } catch (error) {
           console.error("Error fetching users:", error);
@@ -44,7 +46,12 @@ export default function Home() {
 
       const getStatistical = async () => {
         try {
-          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`,{ revalidate: 3600 }).then((res) => res.data)
+          const token = localStorage.getItem('token');
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`,{ revalidate: 3600 },{
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            }
+          }).then((res) => res.data)
           setSatistical(res)
         } catch (error) {
           console.log(); 
@@ -60,7 +67,7 @@ export default function Home() {
     
     },[])
 
-      console.log(users);
+      console.log(satistical);
 
 
   return (

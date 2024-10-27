@@ -204,7 +204,7 @@ export default function goiVip(){
                             <th scope="row">{i+1}</th>
                             <td>{goi.name}</td>
                             <td>{goi.price.toLocaleString()}đ</td>
-                            <td> {goi.duration} phút</td>
+                            <td> {goi.duration} Ngày</td>
                             <td>{goi.created_at}</td>
                             <td>
                               <Link href={`/admin/goiVip/${goi.package_id}`} className="btn btn-secondary">

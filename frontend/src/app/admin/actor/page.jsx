@@ -91,7 +91,7 @@ export default function AdminActor() {
             <div className="row">
                 <h2 className="col fw-bold">Diễn viên</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/actor/addActor" className="btn btn-danger">
+                    <Link href="/admin/actor/addActor" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>

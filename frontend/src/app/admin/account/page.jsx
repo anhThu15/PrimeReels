@@ -85,7 +85,7 @@ export default function Account() {
             <div className="row">
                 <h2 className="col fw-bold">Tài khoản</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/account/addAccount" className="btn btn-danger">
+                    <Link href="/admin/account/addAccount" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>

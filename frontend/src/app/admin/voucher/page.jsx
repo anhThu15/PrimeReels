@@ -46,6 +46,7 @@ export default function Voucher() {
                     alert('Tạo mới voucher thành công!');
                     fetchVouchers();
                     formik.resetForm(); // Reset form
+                    window.location.reload()
                 } else {
                     console.error('Lỗi khi tạo mới voucher:', res.status);
                     alert('Tạo mới voucher không thành công!');

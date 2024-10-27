@@ -102,7 +102,7 @@ export default function AdminFilm() {
             <div className="row">
                 <h2 className=" col fw-bold">Danh Sách Phim</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/adminFilm/addNewFilm" className="btn btn-danger">
+                    <Link href="/admin/adminFilm/addNewFilm" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>
