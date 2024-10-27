@@ -132,6 +132,11 @@ class InvoiceController extends Controller
         ]);
     }
 
+
+
+
+    // // CONTROLLER HÓA ĐƠN // //
+
     // Lấy tất cả hóa đơn
     public function index(Request $request)
     {
@@ -156,7 +161,7 @@ class InvoiceController extends Controller
     // Lấy chi tiết hóa đơn theo ID
     public function show($id)
     {
-        $invoice = Invoice::with(['user', 'voucher', 'package'])->find($id); 
+        $invoice = Invoice::with(['user', 'voucher', 'voucher.voucherType','package'])->find($id); 
         if ($invoice) {
             return response()->json($invoice);
         }
