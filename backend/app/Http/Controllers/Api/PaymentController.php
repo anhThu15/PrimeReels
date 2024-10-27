@@ -29,7 +29,8 @@ class PaymentController extends Controller
         }
 
         $userId = auth()->user()->user_id; // Lấy ID người dùng đã đăng nhập
-        $package = Package::find($request->package_id);
+        $packageId = $request->package_id; // Lấy package_id từ input
+        $package = Package::find($packageId); // Tìm package bằng packageId
 
         // Tạo mã hóa đơn với một số ngẫu nhiên
         $invoiceCode = 'INV-' . mt_rand(10000000, 99999999); // Tạo số ngẫu nhiên từ 8 chữ số
@@ -93,6 +94,7 @@ class PaymentController extends Controller
             'end_date' => now()->addDays($package->duration),
             'voucher_id' => $voucherId, // Lưu voucher_id nếu có
             'status' => 'pending', // Trạng thái ban đầu
+            'package_id' => $packageId
         ]);
 
         // Thông tin kết nối VNPay
