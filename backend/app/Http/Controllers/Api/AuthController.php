@@ -51,7 +51,6 @@ class AuthController extends Controller
             'user_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            // 'gender' => 'required|in:nam,nu',
         ]);
 
         if ($validator->fails()) {
@@ -63,7 +62,7 @@ class AuthController extends Controller
             'user_name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'gender' => null,
+            'gender' => $request->gender,
             'role' => 3, // Người dùng chưa xác minh email
             'email_verified_at' => null,
             'email_verification_token' => Str::random(60),
@@ -92,12 +91,8 @@ class AuthController extends Controller
 
         // Xác minh email thành công duyệt đăng nhập
         $token = JWTAuth::fromUser($user);
-        return response()->json([
-            'status' => 'success',
-            'masssage' => 'Xác minh email thành công. Bạn đã được đăng nhập.',
-            'token' => $token,
-            'user' => $user
-        ]);
+        return redirect('http://localhost:3000/login')->with('status', 'Xác minh email thành công. Bạn có thể đăng nhập.');
+
     }
 
     // Phương thức logout

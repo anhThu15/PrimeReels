@@ -150,7 +150,7 @@
                             <td style="text-align:center;vertical-align:top;direction:ltr;font-size:0px;padding:57px;">
                                 <div
                                     style="cursor:auto;color:white;font-family:Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:36px;font-weight:600;line-height:36px;text-align:center;">
-                                    Chào mừng các bạn đến với web xem phim lậu lớn nhất Đông Nam Á!</div>
+                                    Chào mừng các bạn đến với trang xem phim PrimeReels!</div>
                             </td>
                         </tr>
                     </tbody>
@@ -181,9 +181,8 @@
                                                         <h2
                                                             style="font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-weight: 500;font-size: 20px;color: #4F545C;letter-spacing: 0.27px;">
                                                             Hey {{ $user->user_name }},</h2>
-                                                        <p>Ôi chao! Cảm ơn bạn đã đăng ký tài khoản với <a>Web xem phim
-                                                                Lậu lớn nhất Đông Nam Á!</a> Bạn là người tuyệt vời nhất
-                                                            trên trái đất.</p>
+                                                        <p>Ôi chao! Cảm ơn bạn đã đăng ký tài khoản với <a>trang xem phim
+                                                        PrimeReels!</a></p>
                                                         <p>Trước khi bắt đầu, chúng tôi cần xác minh email của bạn.</p>
 
                                                     </div>
@@ -253,24 +252,13 @@
                                 <table role="presentation" cellpadding="0" cellspacing="0" width="100%"
                                     border="0">
                                     <tbody>
+                                       
                                         <tr>
                                             <td style="word-break:break-word;font-size:0px;padding:0px;"
                                                 align="center">
                                                 <div
                                                     style="cursor:auto;color:#99AAB5;font-family:Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:12px;line-height:24px;text-align:center;">
-                                                    Sent by Jin Huynh • <a
-                                                        href="https://www.facebook.com/HuynhNgocTaidz"
-                                                        style="color:#1EB0F4;text-decoration:none;"
-                                                        target="_blank">facebook</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="word-break:break-word;font-size:0px;padding:0px;"
-                                                align="center">
-                                                <div
-                                                    style="cursor:auto;color:#99AAB5;font-family:Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:12px;line-height:24px;text-align:center;">
-                                                    Copyright @ 2024 Jin Huynh • Email: taihn81@gmail.com
+                                                    Copyright @ 2024 PrimeReels 
                                                 </div>
                                             </td>
                                         </tr>
