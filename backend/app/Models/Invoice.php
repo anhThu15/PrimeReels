@@ -26,6 +26,7 @@ class Invoice extends Model
         'end_date',
         'voucher_id',
         'status',
+        'package_id',
     ];
 
     // Quan hệ với model User
