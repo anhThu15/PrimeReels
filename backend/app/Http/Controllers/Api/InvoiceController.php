@@ -139,7 +139,7 @@ class InvoiceController extends Controller
         $keyword = $request->input('keyword');
 
         // Lấy tất cả hóa đơn
-        $invoices = Invoice::with(['user', 'voucher']);
+        $invoices = Invoice::with(['user', 'voucher', 'package']);
 
         if ($keyword) {
             // Tìm kiếm theo invoice_code, payment_method, và status
@@ -156,10 +156,10 @@ class InvoiceController extends Controller
     // Lấy chi tiết hóa đơn theo ID
     public function show($id)
     {
-        $invoice = Invoice::with(['user', 'voucher'])->find($id); 
+        $invoice = Invoice::with(['user', 'voucher', 'package'])->find($id); 
         if ($invoice) {
             return response()->json($invoice);
         }
-        return response()->json(['message' => 'Invoice not found!'], 404);
+        return response()->json(['message' => 'Không tìm thấy hóa đơn!'], 404);
     }
 }
