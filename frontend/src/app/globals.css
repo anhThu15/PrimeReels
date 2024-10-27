@@ -371,11 +371,6 @@
   border-radius: 30px;
 }
 
-
-input.form-control {
-  border-radius: 30px;
-}
-
 .u-button {
   float: right;
 }
@@ -550,7 +545,6 @@ input.form-control {
 
 .filter .fc-title {
   font-size: 18px;
-  font-family: monospace;
   margin-bottom: 5px;
   display: block;
   color: #0397d6;
@@ -584,7 +578,6 @@ input.form-control {
 .filter .cs10-top .fc-genre .fc-release {
   clear: both;
   display: block;
-  /* font-family: monospace; */
 }
 
 .filter li {
@@ -605,7 +598,6 @@ input.form-control {
 
 .filter .fc-main-list a {
   text-decoration: none;
-  font-family: monospace;
 }
 
 .filter .cs10-top .fc-filmtype {
@@ -621,7 +613,6 @@ input.form-control {
 
 .filter .fc-filter {
   font-size: 18px;
-  font-family: monospace;
   margin-bottom: 5px;
   display: block;
   color: #0397d6;
@@ -1224,3 +1215,8 @@ ul.ranking-movie li:first-child {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 10); /* Bóng chữ tối */
 }
 
+.group-select-box{
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}

@@ -16,28 +16,42 @@ export default function film({params}){
 
   useEffect(() => {
     const getFilm = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
-      setFilm(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+        setFilm(res)
+      } catch (error) {
+        console.log(error);
+        
+      }
     }
 
     const getEpisodes = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`,{ revalidate: 3600 }).then((res) => res.data)
-      setEpisodes(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`,{ revalidate: 3600 }).then((res) => res.data)
+        setEpisodes(res)
+      } catch (error) {
+        console.log(error);
+        
+      }
     }
 
     const getRandom = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-      // Hàm xáo trộn mảng
-      const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        // Chọn chỉ số ngẫu nhiên
-        const j = Math.floor(Math.random() * (i + 1));
-        // Hoán đổi các phần tử
-        [array[i], array[j]] = [array[j], array[i]];
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+        // Hàm xáo trộn mảng
+        const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          // Chọn chỉ số ngẫu nhiên
+          const j = Math.floor(Math.random() * (i + 1));
+          // Hoán đổi các phần tử
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+        };
+        setRandom(shuffleArray(res))
+      } catch (error) {
+        console.log(error);
       }
-      return array;
-      };
-      setRandom(shuffleArray(res))
     }
 
     getFilm()
@@ -45,12 +59,12 @@ export default function film({params}){
     getRandom()
     
   },[])
-
+  
 
 
     return(
         <>
-          <div className="container-fluid bg-black p-0 font-monospace text-white">
+          <div className="container-fluid bg-black p-0 text-white">
 
             {/*  banner */}
               <div className="row container-fluid p-0 m-0 position-relative" >
@@ -93,38 +107,40 @@ export default function film({params}){
                 <div className="col-4 fw-bold">
                   <p className="text-secondary">Diễn Viên:</p> 
                   <div className="row">
-                    {/* {film.actors.map((actor) => {
+                    {film?.actors?.map((actor) => {
                       return (
                         <>
                             <div key={actor.actor_id} className="col-3">{actor.name}</div>
                         </>
                       ) 
-                    })} */}
+                    })}
 
                   </div>
                 </div>
                   <div className=" col d-flex flex-wrap mt-4">
-                  {/* {film.actors.map((actor) => {
+                  {film?.actors?.map((actor) => {
                       return (
                         <>
                           <img className="rounded-circle ms-3 mt-3" width={100} height={100} src={actor.image_url} alt="" />
                       </>
                       ) 
-                    })} */}
+                    })}
                   </div>
               </div>
             {/* quốc gia & diễn viên, đạo diển  */}
 
             {/* tập phim */}
-            <div style={{backgroundColor:"#808080"}}>
-            <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim</div>
-                  <Episodes data={episodes}></Episodes>
-            </div>
+            
+              {film.movie_type_id == 2 ? (<></>):(
+                <div style={{backgroundColor:"#808080"}}>
+                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim</div>
+                  <Episodes data={episodes}></Episodes></div>)}
+
             {/* tập phim */}
 
             {/* cmt */}
             <div className=" mt-5 container " style={{marginLeft:"90px" }}>
-                {/* <Comment></Comment> */}
+                <Comment data={film.comments}></Comment>
             </div>
             {/* cmt */}
 

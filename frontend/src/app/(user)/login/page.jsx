@@ -1,22 +1,27 @@
 "use client"
 import { useEffect, useState } from "react";
-import ListChoie from "@/app/layout/user/listchoie";
-import "../../globals.css";
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import "../../globals.css";
+
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const router = useRouter();
 
-    useEffect(()=>{
-        let token = localStorage.getItem("token");
-        if(token){
-            router.push("/")
+    useEffect(() => {
+        const getCookie = (name) => {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        };
+
+        const token = getCookie("token");
+        if (token) {
+            router.push("/");
         }
-    },[router])
+    }, [router]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -30,23 +35,33 @@ export default function Login() {
         });
 
         const data = await response.json();
-        console.log(data)
+        console.log(data);
 
         if (response.ok) {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user)); 
-            toast.success('Đăng nhập thành công!');
-
-            const user = JSON.parse(localStorage.getItem('user'));
-
-            if(user.role === 100) {
-                router.push("/admin"); 
-            }else {
-                router.push("/"); 
-            }
             
+            document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
+            document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite=strict; secure`;
+            
+
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
+            console.log(response)
+
+            if(data.user.email_verification_token != null){
+                toast("Bạn chưa xác định email, hãy xác minh để có thể đăng nhập");
+            }else{
+                // alert("mày đã xác minh rồi")
+                toast.success('Đăng nhập thành công!');
+                if (data.user.role === 100) {
+                    router.push("/admin");
+                } else {
+                    router.push("/");
+                    window.location.reload();
+                }
+                
+            }
         } else {
-            // setError(data.error || 'Email hoặc mật khẩu đã bị sai');
             toast.error(data.error || 'Email hoặc mật khẩu đã bị sai');
         }
     };
@@ -55,22 +70,9 @@ export default function Login() {
         <div className="modal-login">
             <div className="modal-dialog">
                 <div className="modal-content">
-                    <div className="modal-header">
+                    <div className="modal-header mb-3">
                         <h3>ĐĂNG NHẬP</h3>
                     </div>
-                    <div className="login-by d-flex justify-content-center mb-3">
-                        <div className="icon-fb me-2">
-                            <a href="#" className="btn btn-primary">
-                                <span className="fa fa-facebook"></span> Đăng nhập bằng Facebook
-                            </a>
-                        </div>
-                        <div className="icon-google">
-                            <a href="#" className="btn d-flex align-items-center">
-                                <img src="images/google-icon.png" alt="Google" className="google-icon" /> Đăng nhập bằng Google
-                            </a>
-                        </div>
-                    </div>
-
                     <div className="bor-form">
                         <form className="form-login" onSubmit={handleSubmit}>
                             <div className="mb-3 form-group">
@@ -84,7 +86,7 @@ export default function Login() {
                                 />
                             </div>
 
-                            <div className="mb-3 form-group">
+                            <div className="mb-5 form-group">
                                 <input
                                     type="password"
                                     placeholder="Mật khẩu"
@@ -96,14 +98,7 @@ export default function Login() {
                                 <Link href="/forgot-password" className="forgot-password">Quên mật khẩu</Link>
                             </div>
 
-                            {/* {error && <div className="alert alert-danger">{error}</div>} */}
-
-                            <div className="mb-3 form-check">
-                                <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                <label className="form-check-label text-white" htmlFor="exampleCheck1">Lưu mật khẩu</label>
-                            </div>
-
-                            <div className="button-submit">
+                            <div className="button-submit mb-5">
                                 <button type="submit" name="submit">Đăng nhập</button>
                             </div>
 

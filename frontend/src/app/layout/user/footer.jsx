@@ -4,7 +4,7 @@ import "../../../app/globals.css"
 export default function FooterUser(){
     return(
         <>
-        <div className="container-fluid pt-3 bg-black font-monospace text-white" data-bs-theme="dark" >
+        <div className="container-fluid pt-3 bg-black  text-white" data-bs-theme="dark" >
           <div className="row w-100 mt-3">
              <div className="col-3 text-center">
               <div className="w-100">
@@ -20,7 +20,7 @@ export default function FooterUser(){
              <div className="col">
                 <nav className="navbar navbar-expand-lg w-100">
                   <div className="container-fluid">
-                      <a className="nav-link" href="/introduce">Giới Thiệu</a>
+                      <a className="nav-link" href="/introduce">GIỚI THIỆU</a>
                       <Link href="/user-buy-package" className="nav-link">
                         GÓI COMBO
                       </Link>
@@ -48,7 +48,7 @@ export default function FooterUser(){
                 </div>
                 <div className="row" style={{width:"150px"}}>
                   <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
-                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i className="fa-solid fa-phone"></i>Hotline</Link> 
+                       <Link href="/contact" className=" nav-link pt-3 ms-4"> <i className="fa-solid fa-phone"></i> Hotline</Link> 
                   </div>
                   <div className="rounded-pill bg-danger font-monospace text-white me-3 mt-2" style={{height:"60px"}}>
                        <Link href="/contact" className=" nav-link pt-3 ms-4"> <i className="fa-solid fa-comment"></i> Hỗ Trợ </Link> 

@@ -10,21 +10,29 @@ export default function HeaderUser() {
   const pathName = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState(null);
+  const [userAvatar, setUserAvatar] = useState('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png'); 
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
-      const user = JSON.parse(localStorage.getItem('user')); //lấy user đã được lưu là một object trong localStorage ra
-      if (user) { 
-        setUserName(user.user_name);  //và setUsername là user_name trong object
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        setUserName(user.user_name);
+        setUserRole(user.role);
+        if (user.avatar) {
+          setUserAvatar(user.avatar);
+        }
       }
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Xóa token
-    localStorage.removeItem("user"); // Xóa user đã đăng nhập
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
+    document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     router.push("/");
     toast.success("Đăng xuất thành công");
     setIsLoggedIn(false);
@@ -40,38 +48,42 @@ export default function HeaderUser() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className={`nav-link me-3 font-monospace ${pathName == '/' ? 'active':''}`} href="/">TRANG CHỦ</Link>
+              <Link className={`nav-link me-3 ${pathName === '/' ? 'active' : ''}`} href="/">TRANG CHỦ</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link me-3 font-monospace ${pathName == '/filmSeries' ? 'active':''}`} href="/filmSeries">PHIM BỘ</Link>
+              <Link className={`nav-link me-3 ${pathName === '/filmSeries' ? 'active' : ''}`} href="/filmSeries">PHIM BỘ</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link me-3 font-monospace ${pathName == '/oddFilm' ? 'active':''}`} href="/oddFilm">PHIM LẺ</Link>
+              <Link className={`nav-link me-3 ${pathName === '/oddFilm' ? 'active' : ''}`} href="/oddFilm">PHIM LẺ</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link me-3 font-monospace ${pathName == '/animeFilm' ? 'active':''}`}  href="/animeFilm">PHIM HOẠT HÌNH</Link>
+              <Link className={`nav-link me-3 ${pathName === '/animeFilm' ? 'active' : ''}`} href="/animeFilm">PHIM HOẠT HÌNH</Link>
             </li>
           </ul>
 
           <div><i className="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
-          <div className="rounded-pill bg-danger font-monospace text-white me-3" style={{ width: "140px", height: "30px" }}>
+          <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
             <Link href="/user-buy-package" style={{ textDecoration: 'none', color: 'white' }}>
               <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
             </Link>
           </div>
 
           {isLoggedIn ? (
-            <div className="dropdown">
-              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                {userName}
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><Link className="dropdown-item" href="/infomation">Cài đặt</Link></li>
-                <li><a className="dropdown-item" onClick={handleLogout}>Đăng xuất</a></li>
+            <li className="nav-item dropdown" style={{ listStyle: "none", color: "white" }}>
+              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li><Link className="dropdown-item" href="/infomation">Xin chào, {userName}</Link></li>
+                {userRole === 100 && (
+                  <li><Link className="dropdown-item" href="/admin">Trang quản trị</Link></li>
+                )}
+                <li><hr className="dropdown-divider" /></li>
+                <li><a className="dropdown-item" onClick={handleLogout}>Đăng Xuất</a></li>
               </ul>
-            </div>
+            </li>
           ) : (
-            <Link className="text-white nav-link font-monospace" href="/login">ĐĂNG NHẬP</Link>
+            <Link className="text-white nav-link" href="/login">ĐĂNG NHẬP</Link>
           )}
         </div>
       </div>

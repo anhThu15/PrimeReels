@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import "../../globals.css";
 import SlideShow from "../components/slideshow";
@@ -10,98 +10,129 @@ import SlideShow2 from "../components/slideshow2";
 import SlideShow3 from "../components/slideshow3";
 import SlideShow4 from "../components/slideshow4";
 import SlideShowAnother2 from "../components/slideshowAnother2";
+import { useRouter } from "next/navigation";
 
-export default function animeFilm() {
+export default function AnimeFilm() {
+  const [moviesByGenre, setMoviesByGenre] = useState({});
+  const [random, setRandom] = useState([]);
+  const [better, setBetter] = useState([]);
+  const [country, setCountry] = useState([]);
+  const [date, setDate] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [selectedGenreId, setSelectedGenre] = useState('');
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
-  const [action, setAction] = useState([])
-  const [comendy, setComendy] = useState([])
-  const [random, setRandom] = useState([])
-  const [better, setBetter] = useState([])
-  const [country, setCountry] = useState([])
-  const [date, setDate] = useState([])
-
+  const router = useRouter();
 
   useEffect(() => {
-    const getAction = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/2`,{ revalidate: 3600 }).then((res) => res.data)
-      setAction(res.movies)
-    }
-    const getComendy = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/3`,{ revalidate: 3600 }).then((res) => res.data)
-      setComendy(res.movies)
-    }
-    const getRandom = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`,{ revalidate: 3600 }).then((res) => res.data)
-      // Hàm xáo trộn mảng
+    const fetchGenres = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`);
+      setGenres(res.data);
+    };
+
+    const fetchMovies = async () => {
+      const resRandom = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`);
       const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        // Chọn chỉ số ngẫu nhiên
-        const j = Math.floor(Math.random() * (i + 1));
-        // Hoán đổi các phần tử
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
       };
-      setRandom(shuffleArray(res))
-    }
-    const getBetter = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`,{ revalidate: 3600 }).then((res) => res.data)
+      setRandom(shuffleArray(resRandom.data));
 
-      res.sort((a,b) => b.favorites_count - a.favorites_count )
+      const resBetter = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`);
+      resBetter.data.sort((a, b) => b.favorites_count - a.favorites_count);
+      setBetter(resBetter.data);
 
-      setBetter(res)
-    }
-    const getCountry = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
-      setCountry(res.movies)
-    }
-    const getDate = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`,{ revalidate: 3600 }).then((res) => res.data)
-            res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      setDate(res)
-    }
+      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/country/Phim Mỹ`);
+      setCountry(resCountry.data.movies);
 
-    getAction()
-    getComendy()
-    getRandom()
-    getBetter()
-    getCountry()
-    getDate()
-  },[])
+      const resDate = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`);
+      resDate.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      setDate(resDate.data);
 
-    return (
-        <>
-            <div className="container-fluid bg-dark p-0 font-monospace text-white">
-                <div className=" container-fluid p-0">
-                    <div>
-                        <Banner></Banner>
-                    </div>
-                  <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt Hình Đề Xuất Hôm Nay </h2>
-                    <SlideShow data={random}></SlideShow>
-                  </div>
-                  <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Cập Nhập Mới Nhất </h2>
-                    <SlideShowAnother data={date}></SlideShowAnother>
-                  </div>
-                  <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhĐược Quan Tâm Nhất  </h2>
-                    <SlideShow2 data={better}></SlideShow2>
-                  </div>
-                  <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhHành Động </h2>
-                    <SlideShow3 data={action}></SlideShow3>
-                  </div>
-                  <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhMỹ </h2>
-                    <SlideShowAnother2 data={country}></SlideShowAnother2>
-                  </div>
-                  <div>
-                    <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hoạt HìnhHài Hước</h2>
-                    <SlideShow4 data={comendy}></SlideShow4>
-                  </div>
-                </div>  
+      // Fetch movies for each genre and store them in a single state
+      const genresFetchPromises = genres.map(async (genre) => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/${genre.genre_id}`);
+        return { genreId: genre.genre_id, movies: res.data.movies };
+      });
+
+      const genresMovies = await Promise.all(genresFetchPromises);
+      const moviesMap = genresMovies.reduce((acc, { genreId, movies }) => {
+        acc[genreId] = movies;
+        return acc;
+      }, {});
+
+      setMoviesByGenre(moviesMap);
+    };
+
+    fetchGenres();
+    fetchMovies();
+  }, [genres]);
+
+  useEffect(() => {
+    let newFilteredMovies = [];
+
+    if (selectedGenreId) {
+      newFilteredMovies = moviesByGenre[selectedGenreId] || [];
+      setFilteredMovies(newFilteredMovies);
+    } else {
+      setFilteredMovies([
+        ...Object.values(moviesByGenre).flat(),
+        ...random,
+        ...better,
+        ...country,
+        ...date,
+      ]);
+    }
+  }, [selectedGenreId, moviesByGenre, random, better, country, date]);
+
+  const handleGenreChange = (event) => {
+    const selectedGenreId = event.target.value;
+    setSelectedGenre(selectedGenreId);
+
+    if (selectedGenreId) {
+      router.push(`/filterFilmSeries?genreId=${selectedGenreId}&movieTypeId=3`);
+    }
+  };
+
+  return (
+    <>
+      <div className="container-fluid bg-dark p-0 text-white">
+        <div className="container-fluid p-0">
+          <Banner />
+          <div className="container">
+            <div className="group-select-box">
+              <div className="form-group">
+                <label htmlFor="genreSelect">Chọn thể loại:</label>
+                <select id="genreSelect" value={selectedGenreId} onChange={handleGenreChange} className="form-select">
+                  <option value="">-- Chọn thể loại --</option>
+                  {genres.map((genre) => (
+                    <option key={genre.genre_id} value={genre.genre_id}>{genre.name}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-        </>
-    )
+          </div>
+          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Đề Xuất Hôm Nay</h2>
+          <SlideShow data={random} />
+          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Cập Nhập Mới Nhất</h2>
+          <SlideShowAnother data={date} />
+          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Được Quan Tâm Nhất</h2>
+          <SlideShow2 data={better} />
+          <div>
+            {Object.keys(moviesByGenre).map((genreId) => (
+              <div key={genreId}>
+                <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>{genres.find(g => g.genre_id == genreId)?.name}</h2>
+                <SlideShow3 data={moviesByGenre[genreId]} />
+              </div>
+            ))}
+          </div>
+          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Mỹ</h2>
+          <SlideShowAnother2 data={country} />
+        </div>
+      </div>
+    </>
+  );
 }

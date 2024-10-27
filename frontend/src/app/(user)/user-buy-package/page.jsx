@@ -2,7 +2,7 @@ import "../../globals.css";
 import Link from 'next/link';
 export default function UserBuyPackage() {
     return (
-        <div className="container font-monospace">
+        <div className="container">
             <div className="title-back">
                 <i className="fa-solid fa-chevron-left"></i> Trở về
             </div>

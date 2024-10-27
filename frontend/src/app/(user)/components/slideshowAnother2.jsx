@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function SlideShowAnother2(props){
     return (
         <>
-         <div className="font-monospace pb-3 mt-3"   data-bs-theme="dark" >
+         <div className="pb-3 mt-3"   data-bs-theme="dark" >
             <div id="carouselExample5" className="carousel slide">
               <div className="carousel-inner">
                 <div className="carousel-item active ms-5">

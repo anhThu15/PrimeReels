@@ -5,7 +5,7 @@ import Card from "./cards";
 export default function SlideShow(props){
     return (
         <>
-         <div className="font-monospace pb-3 mt-3"   data-bs-theme="dark" >
+         <div className="pb-3 mt-3"   data-bs-theme="dark" >
             <div id="carouselExample" className="carousel slide">
               <div className="carousel-inner">
                 <div className="carousel-item active">

@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
      
 
         <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://kit.fontawesome.com/6895c8023a.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/6895c8023a.js" crossOrigin="anonymous"></script>
       </body>
     </html>
   );

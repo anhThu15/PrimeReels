@@ -5,7 +5,7 @@ export default function Introduce() {
 
     return (
         <>
-            <div className="container-fluid bg-black p-0 font-monospace text-white">
+            <div className="container-fluid bg-black p-0 text-white">
                 <div className="container p-0">
                     <div className="pt-3">
                        <h1 className="text-danger fw-bold">1. PrimeReels LÀ GÌ?</h1> 

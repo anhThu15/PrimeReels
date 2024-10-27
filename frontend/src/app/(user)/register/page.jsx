@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 export default function Register() {
+    
     const router = useRouter();
 
     const formik = useFormik({
@@ -47,7 +48,9 @@ export default function Register() {
                 console.log(data);
                 if (response.ok) {
                     toast.success(data.message);
+                    console.log(response)
                     router.push("/login");
+                    // localStorage.setItem('email_verification_token', data.email_verification_token);
                 } else {
                     toast.error(data.message || 'Đăng ký không thành công');
                 }

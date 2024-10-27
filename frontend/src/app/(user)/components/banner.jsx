@@ -26,7 +26,7 @@ export default function Banner(){
   <div className="carousel-inner">
     <div className="carousel-item active">
 
-        <div className="font-monospace "  data-bs-theme="dark" >
+        <div className=""  data-bs-theme="dark" >
           <div className=" position-relative">
               <img src={topBanner[0].banner}   width={"100%"} style={{height:"100vh"}} alt="..."/>
               <div className=" position-absolute  " style={{top:180, left:110, width:"600px"}}>
@@ -50,7 +50,7 @@ export default function Banner(){
     </div>
     <div className="carousel-item">
       
-    <div className="font-monospace"  data-bs-theme="dark" >
+    <div className=""  data-bs-theme="dark" >
           <div className=" position-relative">
               <img src={topBanner[1].banner}   width={"100%"} style={{height:"100vh"}} alt="..."/>
               <div className=" position-absolute " style={{top:180, left:110, width:"600px"}}>
@@ -74,7 +74,7 @@ export default function Banner(){
     </div>
     <div className="carousel-item">
       
-    <div className="font-monospace "  data-bs-theme="dark" >
+    <div className=""  data-bs-theme="dark" >
           <div className=" position-relative">
               <img src={topBanner[2].banner}   width={"100%"} style={{height:"100vh"}} alt="..."/>
               <div className=" position-absolute " style={{top:180, left:110, width:"600px"}}>

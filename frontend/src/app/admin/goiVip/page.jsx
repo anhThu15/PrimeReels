@@ -1,8 +1,112 @@
+'use client'
+import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export default function goiVip(){
+  const router = useRouter();
+  const [gois, setGois] = useState([])
+  const [sorts, setSorts] = useState([])
+  const [sortOrder, setSortOrder] = useState('0'); 
+  const [filteredSorts, setFilteredSorts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');  
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
-    const id = 15;
+  useEffect(() => {
+    const getGois = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`,{ revalidate: 3600 }).then((res) => res.data)
+      setGois(res)
+    }
+
+    getGois()
+
+  },[])
+
+  const onSubmit = async (data) =>{
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/packages`, data, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then((res) => res.data);
+        if (res) {
+          alert('thành công ròi đi chữa lãnh hoy ~~~')
+          window.location.reload()
+        } else {
+          // Xử lý hiển thị lỗi
+          console.error(result.error);
+        }
+      
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+
+  const hanldeDelete = async (data) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/packages/${data}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then((res) => res.data);
+        if (res) {
+          alert('thành công ròi đi chữa lãnh hoy ~~~')
+          window.location.reload()
+        } else {
+          // Xử lý hiển thị lỗi
+          console.error(result.error);
+        }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleSort = async (sortOrder) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`, { revalidate: 3600 });
+    const data = res.data;
+
+    if (sortOrder === '0') {
+      // Mặc định - không sắp xếp
+      setSorts(data);
+    } else if (sortOrder === 'asc') {
+      // Sắp xếp tăng dần
+      const sortedData = data.sort((a, b) => a.price - b.price);
+      setSorts(sortedData);
+    } else if (sortOrder === 'des') {
+      // Sắp xếp giảm dần
+      const sortedData = data.sort((a, b) => b.price - a.price);
+      setSorts(sortedData);
+    }
+  };
+
+   // Gọi hàm `handleSort` khi component được mount
+   useEffect(() => {
+    handleSort(sortOrder);
+  }, []); // Chạy chỉ một lần khi component mount
+
+  // Xử lý khi `onChange` từ người dùng
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSortOrder(value);
+    handleSort(value);
+  };
+
+  useEffect(() => {
+    const filteredData = sorts.filter((goi) =>
+      goi.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredSorts(filteredData);
+  }, [searchTerm, sorts]); // Cập nhật khi từ khóa hoặc `sorts` thay đổi
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value); // Cập nhật từ khóa tìm kiếm
+  };
 
     return(
         <>
@@ -22,24 +126,27 @@ export default function goiVip(){
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                              <form>
+                              <form onSubmit={handleSubmit(onSubmit)}>
                                 <div class="mb-3">
                                   <label class="form-label">Tên Gói</label>
-                                  <input type="text" class="form-select" />
+                                  <input type="text" class="form-select" {...register('name', { required: 'Tên Gói là bắt buộc' })} />
+                                  {errors.name && <div className="text-danger">{errors.name.message}</div>}
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label">Giá Gói</label>
-                                  <input type="number" class="form-select" />
+                                  <input type="number" class="form-select" {...register('price', { required: 'Giá Gói là bắt buộc' })} />
+                                  {errors.price && <div className="text-danger">{errors.price.message}</div>}
                                 </div>
                                 <div class="mb-3">
                                   <label class="form-label">Thời Gian</label>
-                                  <input type="date" class="form-select" />
+                                  <input type="number" class="form-select" {...register('duration', { required: 'Thời Gian Gói là bắt buộc' })} />
+                                  {errors.duration && <div className="text-danger">{errors.duration.message}</div>}
                                 </div>
+                                <button type="submit" class="btn btn-primary">Tạo Gói</button>
                               </form>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Xác Nhận</button>
                           </div>
                         </div>
                       </div>
@@ -49,19 +156,20 @@ export default function goiVip(){
                 <div className="row">
                     <div className="col-2">
                         <form class="d-flex" role="search">
-                            <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search"/>
+                            <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search"           
+                                  onChange={handleSearch}
+                                  value={searchTerm}/>
                         </form>
                     </div>
                     <div className="col">
                         <div class="dropdown">
-                          <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-filter"></i> Lọc
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">A-Z</a></li>
-                            <li><a class="dropdown-item" href="#">Z-A</a></li>
-                            <li><a class="dropdown-item" href="#">...</a></li>
-                          </ul>
+                            <div className="mb-3 w-25">
+                              <select id="sortOrder" className="form-select" onChange={handleChange} value={sortOrder}>
+                                <option selected value={0}>Lọc Theo Giá </option>
+                                <option value="asc">Tăng dần</option>
+                                <option value="des">Giảm dần</option>
+                              </select>
+                            </div>
                         </div>
                     </div>
                     <div className="col-1">
@@ -89,19 +197,25 @@ export default function goiVip(){
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>VIP19k</td>
-                      <td>39.000đ</td>
-                      <td> 21 phút</td>
-                      <td>01 Th10 2024 vào lúc 12 giờ 21 phút</td>
-                      <td>
-                        <Link href={`/admin/goiVip/${id}`} className="btn btn-secondary">
-                            <i class="fa-solid fa-pen"></i>
-                        </Link>
-                        <button className="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
-                      </td>
-                    </tr>
+                    {filteredSorts.map((goi, i) => {
+                      return(
+                        <>
+                          <tr key={goi.package_id}>
+                            <th scope="row">{i+1}</th>
+                            <td>{goi.name}</td>
+                            <td>{goi.price.toLocaleString()}đ</td>
+                            <td> {goi.duration} Ngày</td>
+                            <td>{goi.created_at}</td>
+                            <td>
+                              <Link href={`/admin/goiVip/${goi.package_id}`} className="btn btn-secondary">
+                                  <i class="fa-solid fa-pen"></i>
+                              </Link>
+                              <button className="btn btn-danger ms-2" onClick={() => hanldeDelete(goi.package_id)}><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                          </tr>
+                        </>
+                      )
+                    })}
                   </tbody>
                 </table>
             </div>
