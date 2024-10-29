@@ -61,27 +61,29 @@ export default function HeaderUser() {
             </li>
           </ul>
 
-          <div><i className="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
-          <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
-            <Link href="/user-buy-package" style={{ textDecoration: 'none', color: 'white' }}>
-              <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
-            </Link>
-          </div>
 
+          <div><i className="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
           {isLoggedIn ? (
-            <li className="nav-item dropdown" style={{ listStyle: "none", color: "white" }}>
-              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
-              </a>
-              <ul className="dropdown-menu dropdown-menu-end">
-                <li><Link className="dropdown-item" href="/infomation">Xin chào, {userName}</Link></li>
-                {userRole === 100 && (
-                  <li><Link className="dropdown-item" href="/admin">Trang quản trị</Link></li>
-                )}
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" onClick={handleLogout}>Đăng Xuất</a></li>
-              </ul>
-            </li>
+            <>
+              <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
+                <Link href="/user-buy-package" style={{ textDecoration: 'none', color: 'white' }}>
+                  <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
+                </Link>
+              </div>
+              <li className="nav-item dropdown" style={{ listStyle: "none", color: "white" }}>
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  <li><Link className="dropdown-item" href="/infomation">Xin chào, {userName}</Link></li>
+                  {userRole === 100 && (
+                    <li><Link className="dropdown-item" href="/admin">Trang quản trị</Link></li>
+                  )}
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><a className="dropdown-item" onClick={handleLogout}>Đăng Xuất</a></li>
+                </ul>
+              </li>
+            </>
           ) : (
             <Link className="text-white nav-link" href="/login">ĐĂNG NHẬP</Link>
           )}
