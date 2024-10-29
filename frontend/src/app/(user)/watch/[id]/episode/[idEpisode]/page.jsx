@@ -1,15 +1,15 @@
 'use client'
 import ReactPlayer from 'react-player/lazy';
 import { React, useState, useEffect } from 'react'
-import SlideShowAnother from "../../components/slideshowAnother";
-import Comment from "../../components/coment";
-import SlideShow from "../../components/slideshow";
 import axios from 'axios';
-import Episodes from '../../components/episodes';
+import Episodes from '@/app/(user)/components/episodes';
+import SlideShow from '@/app/(user)/components/slideshow';
+import Comment from '@/app/(user)/components/coment';
 
 
 export default function Watch({ params }) {
   const id = params.id
+  const idEpisode = params.idEpisode
   const [isClient, setIsClient] = useState(false)
   const [watch, setWatch] = useState([])
   const [film, setFilm] = useState([])
@@ -22,8 +22,8 @@ export default function Watch({ params }) {
     setIsClient(true)
 
     const getWatch = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setWatch(res[0])
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, { revalidate: 3600 }).then((res) => res.data)
+      setWatch(res)
     }
 
     const getFilm = async () => {
@@ -78,10 +78,10 @@ export default function Watch({ params }) {
         {/* Tập Phim */}
         {film.movie_type_id == 2 ? (<></>):(
                 <div style={{backgroundColor:"#808080"}}>
-                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim</div>
-                  <Episodes data={episodes}></Episodes></div>)}
+                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim - Tập {watch.episode?.episode_number}</div>
+                  <Episodes data={episodes}></Episodes></div>)} 
         {/* <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
-        <Episodes data={episodes}></Episodes> */}
+        <Episodes data={episodes}></Episodes>
         {/* Tập Phim */}
 
         {/* Card phim */}

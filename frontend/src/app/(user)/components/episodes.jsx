@@ -22,7 +22,7 @@ export default function Episodes(props){
                                 </div>
                                 <div className="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                     <Link href={`/watch/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                     <Link href={`/watch/${episodes.movie_id}/episode/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                   </div>
                                 </div>
                             </div>
@@ -38,13 +38,14 @@ export default function Episodes(props){
                         <>
                             <div key={episodes.episode_id} className="card text-bg-dark hover-box me-5" style={{width:"450px", marginRight:"7.9px"}}>
                                 <div className="bg-black opacity-75">
-                                    <video src={episodes.video_url} height={220} className="card-img" alt="..."/>
+                                <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={episodes.video_url}/>
+                                    {/* <video src={episodes.video_url} height={220} className="card-img" alt="..."/> */}
                                 </div>
                                 <div className="card-img-overlay ">
                                 </div>
                                 <div className="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                     <Link href={`/watch/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                     <Link href={`/watch/${episodes.movie_id}/episode/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                   </div>
                                 </div>
                             </div>
@@ -60,13 +61,14 @@ export default function Episodes(props){
                         <>
                             <div key={episodes.episode_id} className="card text-bg-dark hover-box me-5" style={{width:"450px", marginRight:"7.9px"}}>
                                 <div className="bg-black opacity-75">
-                                    <video src={episodes.video_url} height={220} className="card-img" alt="..."/>
+                                <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={episodes.video_url}/>
+                                    {/* <video src={episodes.video_url} height={220} className="card-img" alt="..."/> */}
                                 </div>
                                 <div className="card-img-overlay ">
                                 </div>
                                 <div className="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                     <Link href={`/watch/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                     <Link href={`/watch/${episodes.movie_id}/episode/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                   </div>
                                 </div>
                             </div>
