@@ -8,6 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+          <title>PrimeReels</title>
+          <meta name="description" content="Xem phim online chất lượng cao tại PrimeReels. Phim bộ, phim lẻ, anime hấp dẫn." />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/images/Logo-PR-(1).png" type="image/png" />
       <body>
         <HeaderUser></HeaderUser>
 
