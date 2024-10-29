@@ -1,16 +1,15 @@
 'use client'
 import ReactPlayer from 'react-player/lazy';
 import { React, useState, useEffect } from 'react'
-import SlideShowAnother from "../../components/slideshowAnother";
 import Comment from "../../components/coment";
 import SlideShow from "../../components/slideshow";
 import axios from 'axios';
 import Episodes from '../../components/episodes';
+import Video from '../../components/video';
 
 
 export default function Watch({ params }) {
   const id = params.id
-  const [isClient, setIsClient] = useState(false)
   const [watch, setWatch] = useState([])
   const [film, setFilm] = useState([])
   const [episodes, setEpisodes] = useState([])
@@ -19,7 +18,6 @@ export default function Watch({ params }) {
 // console.log(watch);
 
   useEffect(() => {
-    setIsClient(true)
 
     const getWatch = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
@@ -65,7 +63,7 @@ export default function Watch({ params }) {
 
         {/* video phim */}
         <div className="container text-white">
-          {isClient ? <ReactPlayer className="w-100" height={550} style={{ marginTop: "-18px" }} url={watch.video_url} controls /> : 'Load...'}
+          <Video data={watch}></Video>
           <div className="mt-3 d-flex">
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>

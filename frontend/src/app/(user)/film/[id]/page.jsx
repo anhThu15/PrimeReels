@@ -92,9 +92,9 @@ export default function film({params}){
                 </div>
                 <div className="col">
                   <img width={"100%"} height={"400px"} className=" bg-black opacity-75" src={film.banner} alt="" />
-                  { localStorage.getItem("token") ? (<Link href={`/watch/${id}`} className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
+                  <Link href={`/watch/${id}`} className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
                     <i className="fa-solid fa-play fs-1 ms-1 mt-2"></i>
-                  </Link>) : (<p className="alert alert-danger position-absolute" role="alert " style={{right:"440px", top:"150px"}}>Chưa Đăng Nhập, Mời Bạn <Link href={'/login'} className="nav-link fw-bold">Đăng Nhập</Link></p>)}
+                  </Link>
 
                 </div>                 
               </div>

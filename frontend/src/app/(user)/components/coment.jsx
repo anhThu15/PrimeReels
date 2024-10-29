@@ -5,7 +5,7 @@ export default function Comment( props){
     return (
         <>
           <div className="text-white" >
-                { localStorage.getItem("token") ? (
+                {localStorage.getItem("token") ? (
                     <>
                     <p className="ms-3 pt-2">Bình luận tại đây</p>
                     <div className="col mb-3" style={{backgroundColor:"white", height:"1px"}}></div>
@@ -20,7 +20,7 @@ export default function Comment( props){
                     </div>
                     </div>
                     </>
-                ) : (<p className="alert alert-danger text-center" role="alert " >Chưa Đăng Nhập, Mời Bạn <Link href={'/login'} className="nav-link fw-bold">Đăng Nhập Để Được Bình Luận</Link></p>)}
+                ) : (<></>)}
 
 
                 
