@@ -15,15 +15,12 @@ export default function Watch({ params }) {
   const [film, setFilm] = useState([])
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
+  const [i, setI] = useState(idEpisode);
+
 
 // console.log(watch);
 
   useEffect(() => {
-    const getWatch = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, { revalidate: 3600 }).then((res) => res.data)
-      setWatch(res)
-    }
-
     const getFilm = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
       setFilm(res)
@@ -49,13 +46,26 @@ export default function Watch({ params }) {
       setRandom(shuffleArray(res))
     }
 
-    getWatch();
     getFilm();
     getEpisodes();
     getRandom()
 
   }, [])
 
+  useEffect(() => {
+    const getWatch = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${i}`, { revalidate: 3600 }).then((res) => res.data)
+      setWatch(res)
+    }
+    getWatch();
+
+  }, [i])
+
+
+  const handleNext = (ep) => {
+    alert(ep)
+    // setI( ep + 1)
+  }
 
   return (
     <>
@@ -65,7 +75,7 @@ export default function Watch({ params }) {
         <div className="container text-white">
           <Video data={watch}></Video>
           <div className="mt-3 d-flex">
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
+            <button className="me-3 btn btn-outline-light" onClick={() => handleNext(i)}><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</button>
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-comment"></i> Bình Luận</button>
@@ -76,7 +86,7 @@ export default function Watch({ params }) {
         {/* Tập Phim */}
         {film.movie_type_id == 2 ? (<></>):(
                 <div style={{backgroundColor:"#808080"}}>
-                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim - Tập {watch.episode?.episode_number}</div>
+                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim - Tập {watch.episode_number}</div>
                   <Episodes data={episodes}></Episodes></div>)} 
         {/* <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
         <Episodes data={episodes}></Episodes>

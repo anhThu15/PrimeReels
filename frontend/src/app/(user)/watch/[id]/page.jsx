@@ -57,16 +57,26 @@ export default function Watch({ params }) {
 
   }, [])
 
+  useEffect(() => {
+    const getWatch = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
+      setWatch(res[i])
+    }
+    getWatch();
+  }, [i])
+
+  const handleNext = (ep) => {
+    setI( ep + 1)
+  }
 
   return (
     <>
       <div className="container-fluid bg-black p-0 text-white">
-
         {/* video phim */}
         <div className="container text-white">
           <Video data={watch}></Video>
           <div className="mt-3 d-flex">
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
+            <button className="me-3 btn btn-outline-light" onClick={() => handleNext(i)}><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</button>
             <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-comment"></i> Bình Luận</button>

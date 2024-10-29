@@ -22,42 +22,66 @@ export default function Home() {
 
   useEffect(() => {
     const getAction = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,{ revalidate: 3600 }).then((res) => res.data)
-      setAction(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,{ revalidate: 3600 }).then((res) => res.data)
+        setAction(res)
+      } catch (error) {
+        console.log(error);
+      }
     }
     const getComendy = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,{ revalidate: 3600 }).then((res) => res.data)
-      setComendy(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,{ revalidate: 3600 }).then((res) => res.data)
+        setComendy(res)
+      } catch (error) {
+        console.log(error);
+      }
     }
     const getRandom = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-      // Hàm xáo trộn mảng
-      const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        // Chọn chỉ số ngẫu nhiên
-        const j = Math.floor(Math.random() * (i + 1));
-        // Hoán đổi các phần tử
-        [array[i], array[j]] = [array[j], array[i]];
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+        // Hàm xáo trộn mảng
+        const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          // Chọn chỉ số ngẫu nhiên
+          const j = Math.floor(Math.random() * (i + 1));
+          // Hoán đổi các phần tử
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+        };
+        setRandom(shuffleArray(res))
+      } catch (error) {
+        console.log(error);
       }
-      return array;
-      };
-      setRandom(shuffleArray(res))
     }
     const getBetter = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-
-      res.sort((a,b) => b.favorites_count - a.favorites_count )
-
-      setBetter(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+  
+        res.sort((a,b) => b.favorites_count - a.favorites_count )
+  
+        setBetter(res)
+      } catch (error) {
+        console.log(error);
+      }
     }
     const getCountry = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,{ revalidate: 3600 }).then((res) => res.data)
-      setCountry(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,{ revalidate: 3600 }).then((res) => res.data)
+        setCountry(res)
+      } catch (error) {
+        console.log(error);
+      }
     }
     const getDate = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-            res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      setDate(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+              res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+        setDate(res)
+      } catch (error) {
+        console.log(error);
+      }
     }
 
 
