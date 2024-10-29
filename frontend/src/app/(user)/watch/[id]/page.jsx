@@ -14,6 +14,7 @@ export default function Watch({ params }) {
   const [film, setFilm] = useState([])
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
+  const [i, setI] = useState(0);
 
 // console.log(watch);
 
@@ -21,7 +22,7 @@ export default function Watch({ params }) {
 
     const getWatch = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setWatch(res[0])
+      setWatch(res[i])
     }
 
     const getFilm = async () => {
