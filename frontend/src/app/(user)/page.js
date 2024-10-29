@@ -51,7 +51,7 @@ export default function Home() {
       setBetter(res)
     }
     const getCountry = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,{ revalidate: 3600 }).then((res) => res.data)
       setCountry(res)
     }
     const getDate = async () => {

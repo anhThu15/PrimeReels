@@ -156,9 +156,9 @@ export default function AdminFilm() {
                                 <i className="fa-solid fa-star mx-3" style={{ color: "gold" }}></i>
                             </td>
                             <td>
-                                <Link href={`/admin/adminFilm/${film.movie_id}`} className="btn btn-secondary">
+                                <Link href={`/admin/adminFilm/${film.movie_id}`} className="ms-2 btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
-                                </Link>
+                                </Link> 
                                 <button className="btn btn-danger ms-2" onClick={() => handleDelete(film.movie_id)}>
                                     <i className="fa-solid fa-trash"></i>
                                 </button>

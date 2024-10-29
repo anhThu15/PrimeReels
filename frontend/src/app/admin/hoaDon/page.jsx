@@ -119,7 +119,7 @@ export default function hoaDon(){
                             <th scope="row">{i+1}</th>
                             <td>{hd.invoice_code}</td>
                             <td>{hd.total.toLocaleString()}đ</td>
-                            <td>@VIP39K</td>
+                            <td>{hd?.package?.name}</td>
                             <td>{hd.user.user_name}</td>
                             <td>
                               {hd.status == 'success' ? (

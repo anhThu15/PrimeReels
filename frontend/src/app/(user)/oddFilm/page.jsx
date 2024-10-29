@@ -45,7 +45,7 @@ export default function OddFilm() {
       resBetter.data.sort((a, b) => b.favorites_count - a.favorites_count);
       setBetter(resBetter.data);
 
-      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/country/Phim Mỹ`);
+      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/country/Việt Nam`);
       setCountry(resCountry.data.movies);
 
       const resDate = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`);
@@ -136,7 +136,7 @@ export default function OddFilm() {
             ))}
           </div>
           <div>
-            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Lẻ Mỹ</h2>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Lẻ Việt Nam</h2>
             <SlideShowAnother2 data={country} />
           </div>
         </div>
