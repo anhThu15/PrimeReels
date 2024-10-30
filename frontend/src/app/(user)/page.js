@@ -24,7 +24,8 @@ export default function Home() {
     const getAction = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,{ revalidate: 3600 }).then((res) => res.data)
-        setAction(res)
+        const filteredData = res.filter(item => item.status === 1);
+        setAction(filteredData)
       } catch (error) {
         console.log(error);
       }
@@ -32,7 +33,8 @@ export default function Home() {
     const getComendy = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,{ revalidate: 3600 }).then((res) => res.data)
-        setComendy(res)
+        const filteredData = res.filter(item => item.status === 1);
+        setComendy(filteredData)
       } catch (error) {
         console.log(error);
       }
@@ -40,6 +42,7 @@ export default function Home() {
     const getRandom = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+        const filteredData = res.filter(item => item.status === 1);
         // Hàm xáo trộn mảng
         const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -50,7 +53,7 @@ export default function Home() {
         }
         return array;
         };
-        setRandom(shuffleArray(res))
+        setRandom(shuffleArray(filteredData))
       } catch (error) {
         console.log(error);
       }
@@ -60,8 +63,10 @@ export default function Home() {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
   
         res.sort((a,b) => b.favorites_count - a.favorites_count )
+
+        const filteredData = res.filter(item => item.status === 1);
   
-        setBetter(res)
+        setBetter(filteredData)
       } catch (error) {
         console.log(error);
       }
@@ -69,7 +74,8 @@ export default function Home() {
     const getCountry = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,{ revalidate: 3600 }).then((res) => res.data)
-        setCountry(res)
+        const filteredData = res.filter(item => item.status === 1);
+        setCountry(filteredData)
       } catch (error) {
         console.log(error);
       }
@@ -78,7 +84,8 @@ export default function Home() {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
               res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-        setDate(res)
+              const filteredData = res.filter(item => item.status === 1);
+        setDate(filteredData)
       } catch (error) {
         console.log(error);
       }
@@ -93,7 +100,7 @@ export default function Home() {
     getDate()
   },[])
   
-  // console.log(country);
+  console.log(country);
   
 
   return (

@@ -22,28 +22,40 @@ export default function Watch({ params }) {
 
   useEffect(() => {
     const getFilm = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
-      setFilm(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
+        setFilm(res)
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     const getEpisodes = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setEpisodes(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
+        setEpisodes(res)
+      } catch (error) {
+        console.log();
+      }
     }
 
     const getRandom = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 }).then((res) => res.data)
-      // Hàm xáo trộn mảng
-      const shuffleArray = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-          // Chọn chỉ số ngẫu nhiên
-          const j = Math.floor(Math.random() * (i + 1));
-          // Hoán đổi các phần tử
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-      };
-      setRandom(shuffleArray(res))
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 }).then((res) => res.data)
+        // Hàm xáo trộn mảng
+        const shuffleArray = (array) => {
+          for (let i = array.length - 1; i > 0; i--) {
+            // Chọn chỉ số ngẫu nhiên
+            const j = Math.floor(Math.random() * (i + 1));
+            // Hoán đổi các phần tử
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+        };
+        setRandom(shuffleArray(res))
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     getFilm();
@@ -54,8 +66,12 @@ export default function Watch({ params }) {
 
   useEffect(() => {
     const getWatch = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${i}`, { revalidate: 3600 }).then((res) => res.data)
-      setWatch(res)
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${i}`, { revalidate: 3600 }).then((res) => res.data)
+        setWatch(res)
+      } catch (error) {
+        console.log(error);
+      }
     }
     getWatch();
 
@@ -63,8 +79,7 @@ export default function Watch({ params }) {
 
 
   const handleNext = (ep) => {
-    alert(ep)
-    // setI( ep + 1)
+    setI(ep)
   }
 
   return (

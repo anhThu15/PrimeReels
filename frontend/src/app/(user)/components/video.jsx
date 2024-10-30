@@ -13,7 +13,7 @@ export default function Video(props){
         <>  
              {localStorage.getItem("token") ? (
                     <>
-                    {isClient ? <ReactPlayer className="w-100" height={550} style={{ marginTop: "-18px" }} url={props.data?.video_url} controls /> : 'Load...'}
+                    {isClient ? <ReactPlayer className="w-100" height={550} url={props.data.video_url} controls /> : 'Load...'}
                     </>
                 ) : (
                     <>
