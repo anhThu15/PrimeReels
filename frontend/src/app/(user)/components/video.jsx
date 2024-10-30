@@ -23,7 +23,7 @@ export default function Video(props){
                 // tìm vị trí trong mãng 0 là có -1 là xủi
                 const findEp = res.findIndex(episode => episode.episode_id === idEpisode);
 
-                let nextEpisodeId = -1; // Giá trị mặc định nếu không tìm thấy episode tiếp theo
+                let nextEpisodeId = idEpisode; // Giá trị mặc định nếu không tìm thấy episode tiếp theo
 
                 if (findEp !== -1 && findEp + 1 < res.length) {
                   nextEpisodeId = res[findEp + 1].episode_id; // Lấy episode_id tiếp theo
