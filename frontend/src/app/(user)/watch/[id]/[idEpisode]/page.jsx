@@ -1,28 +1,29 @@
 'use client'
 import ReactPlayer from 'react-player/lazy';
 import { React, useState, useEffect } from 'react'
-import Comment from "../../components/coment";
-import SlideShow from "../../components/slideshow";
 import axios from 'axios';
-import Episodes from '../../components/episodes';
-import Video from '../../components/video';
+import Video from '@/app/(user)/components/video';
+import Episodes from '@/app/(user)/components/episodes';
+import SlideShow from '@/app/(user)/components/slideshow';
+import Comment from '@/app/(user)/components/coment';
 
 
 export default function Watch({ params }) {
   const id = params.id
+  const idEpisode = params.idEpisode
+  // console.log(id, idEpisode);
   const [watch, setWatch] = useState([])
   const [film, setFilm] = useState([])
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
-  const [i, setI] = useState(0);
 
 // console.log(watch);
 
   useEffect(() => {
 
     const getWatch = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setWatch(res[i])
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, { revalidate: 3600 }).then((res) => res.data)
+      setWatch(res)
     }
 
     const getFilm = async () => {
@@ -56,18 +57,12 @@ export default function Watch({ params }) {
     getRandom()
 
   }, [])
+  
+  
 
-  useEffect(() => {
-    const getWatch = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setWatch(res[i])
-    }
-    getWatch();
-  }, [i])
 
-  const handleNext = (ep) => {
-    setI( ep + 1)
-  }
+  // console.log(watch);
+  
 
   return (
     <>
@@ -75,19 +70,13 @@ export default function Watch({ params }) {
         {/* video phim */}
         <div className="container text-white">
           <Video data={watch}></Video>
-          <div className="mt-3 d-flex">
-            <button className="me-3 btn btn-outline-light" onClick={() => handleNext(i)}><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</button>
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-comment"></i> Bình Luận</button>
-          </div>
         </div>
         {/* video phim */}
 
         {/* Tập Phim */}
         {film.movie_type_id == 2 ? (<></>):(
                 <div style={{backgroundColor:"#808080"}}>
-                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim</div>
+                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim - Tập {watch.episode?.episode_number} </div>
                   <Episodes data={episodes}></Episodes></div>)}
         {/* <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
         <Episodes data={episodes}></Episodes> */}

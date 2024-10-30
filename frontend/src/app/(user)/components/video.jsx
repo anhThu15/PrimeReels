@@ -2,12 +2,42 @@
 import ReactPlayer from 'react-player/lazy';
 import { React, useState, useEffect } from 'react'
 import Link from 'next/link';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Video(props){
+    const router = useRouter()
     const [isClient, setIsClient] = useState(false)
+    const [episodes, setEpisodes] = useState([])
     useEffect(() => {
         setIsClient(true)
     })
+
+    const handleNext = async () => {
+        try {
+            // console.log(props.data.episode);
+            const id = props.data.episode.movie_id
+            const idEpisode = props.data.episode.episode_id
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
+
+                // tìm vị trí trong mãng 0 là có -1 là xủi
+                const findEp = res.findIndex(episode => episode.episode_id === idEpisode);
+
+                let nextEpisodeId = -1; // Giá trị mặc định nếu không tìm thấy episode tiếp theo
+
+                if (findEp !== -1 && findEp + 1 < res.length) {
+                  nextEpisodeId = res[findEp + 1].episode_id; // Lấy episode_id tiếp theo
+                }
+
+                // console.log(nextEpisodeId);
+                
+                router.push(`/watch/${id}/${nextEpisodeId}`)
+        } catch (error) {
+            console.log(error);
+        }
+      }
+    // console.log(episodes);
+    
 
     return (
         <>  
@@ -26,6 +56,12 @@ export default function Video(props){
                         </div>
                     </>
                 )}
+            <div className="mt-3 d-flex">
+                <button className="me-3 btn btn-outline-light" onClick={() => handleNext()}><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
+                <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
+                <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</button>
+                <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-comment"></i> Bình Luận</button>
+            </div>
 
         </>
     )

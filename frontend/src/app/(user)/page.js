@@ -21,91 +21,58 @@ export default function Home() {
   const [date, setDate] = useState([])
 
   useEffect(() => {
-    const getAction = async () => {
+    const fetchMovies = async (url, filterFavorites = false, sortByDate = false) => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,{ revalidate: 3600 }).then((res) => res.data)
+        const res = await axios.get(url, { revalidate: 3600 }).then(res => res.data);
         const filteredData = res.filter(item => item.status === 1);
-        setAction(filteredData)
+        
+        if (filterFavorites) {
+          filteredData.sort((a, b) => b.favorites_count - a.favorites_count);
+        }
+        if (sortByDate) {
+          filteredData.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+        }
+        return filteredData;
       } catch (error) {
         console.log(error);
+        return [];
       }
-    }
-    const getComendy = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,{ revalidate: 3600 }).then((res) => res.data)
-        const filteredData = res.filter(item => item.status === 1);
-        setComendy(filteredData)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    const getRandom = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-        const filteredData = res.filter(item => item.status === 1);
-        // Hàm xáo trộn mảng
-        const shuffleArray = (array) => {
+    };
+  
+    const loadData = async () => {
+      const actionData = await fetchMovies(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`);
+      const comedyData = await fetchMovies(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`);
+      const randomData = await fetchMovies(`${process.env.NEXT_PUBLIC_API_URL}/movies`);
+      const betterData = await fetchMovies(`${process.env.NEXT_PUBLIC_API_URL}/movies`, true);
+      const countryData = await fetchMovies(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`);
+      const dateData = await fetchMovies(`${process.env.NEXT_PUBLIC_API_URL}/movies`, false, true);
+  
+      // Xáo trộn mảng randomData
+      const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
-          // Chọn chỉ số ngẫu nhiên
           const j = Math.floor(Math.random() * (i + 1));
-          // Hoán đổi các phần tử
           [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
-        };
-        setRandom(shuffleArray(filteredData))
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    const getBetter = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+      };
   
-        res.sort((a,b) => b.favorites_count - a.favorites_count )
-
-        const filteredData = res.filter(item => item.status === 1);
+      setAction(actionData);
+      setComendy(comedyData);
+      setRandom(shuffleArray(randomData));
+      setBetter(betterData);
+      setCountry(countryData);
+      setDate(dateData);
+    };
   
-        setBetter(filteredData)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    const getCountry = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,{ revalidate: 3600 }).then((res) => res.data)
-        const filteredData = res.filter(item => item.status === 1);
-        setCountry(filteredData)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    const getDate = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-              res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-              const filteredData = res.filter(item => item.status === 1);
-        setDate(filteredData)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-
-    getAction()
-    getComendy()
-    getRandom()
-    getBetter()
-    getCountry()
-    getDate()
-  },[])
+    loadData();
+  }, []);
   
-  console.log(country);
+  // console.log(country);
   
 
   return (
     <>
-     <div className="container-fluid bg-dark p-0 text-white">
+     <div className="container-fluid bg-black p-0 text-white">
         <div className=" container-fluid p-0">
           <div>
             <Banner></Banner> 
@@ -142,7 +109,7 @@ export default function Home() {
             />
           </div> 
           <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Mỹ</h2>
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Việt Nam</h2>
             <SlideShowAnother data={country}></SlideShowAnother>
           </div>
           <div >

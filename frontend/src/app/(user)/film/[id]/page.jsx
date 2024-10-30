@@ -1,16 +1,15 @@
 'use client'
 import Link from "next/link";
-import Comment from "../../components/coment";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SlideShowAnother from "../../components/slideshowAnother";
 import Episodes from "../../components/episodes";
+import Comment from "../../components/coment";
 import SlideShow from "../../components/slideshow";
 
 export default function film({params}){
   const id = params.id
-  const ep = 1
   const [film, setFilm] = useState([])
+   const idEpisode = film.episode?.[0].episode_id
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
 
@@ -61,6 +60,7 @@ export default function film({params}){
   },[])
   
 
+  // console.log(film.episode?.[0])
 
     return(
         <>
@@ -92,7 +92,7 @@ export default function film({params}){
                 </div>
                 <div className="col">
                   <img width={"100%"} height={"400px"} className=" bg-black opacity-75" src={film.banner} alt="" />
-                  <Link href={`/watch/${id}`} className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
+                  <Link href={`/watch/${id}/${idEpisode}`} className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
                     <i className="fa-solid fa-play fs-1 ms-1 mt-2"></i>
                   </Link>
 
