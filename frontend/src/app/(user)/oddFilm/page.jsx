@@ -31,6 +31,7 @@ export default function OddFilm() {
     };
 
     const fetchMovies = async () => {
+      // Fetch and filter random movies
       const resRandom = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`);
       const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -39,23 +40,31 @@ export default function OddFilm() {
         }
         return array;
       };
-      setRandom(shuffleArray(resRandom.data));
+      const filteredRandom = resRandom.data.filter(movie => movie.status === 1);
+      setRandom(shuffleArray(filteredRandom));
 
+      // Fetch and filter better movies
       const resBetter = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`);
-      resBetter.data.sort((a, b) => b.favorites_count - a.favorites_count);
-      setBetter(resBetter.data);
+      const filteredBetter = resBetter.data.filter(movie => movie.status === 1);
+      filteredBetter.sort((a, b) => b.favorites_count - a.favorites_count);
+      setBetter(filteredBetter);
 
-      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/country/Việt Nam`);
-      setCountry(resCountry.data.movies);
+      // Fetch and filter movies by country
+      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/country/Việt Nam`);
+      const filteredCountry = resCountry.data.movies.filter(movie => movie.status === 1);
+      setCountry(filteredCountry);
 
+      // Fetch and filter new date movies
       const resDate = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`);
-      resDate.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      setDate(resDate.data);
+      const filteredDate = resDate.data.filter(movie => movie.status === 1);
+      filteredDate.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      setDate(filteredDate);
 
-      // Fetch movies for each genre and store them in a single state
+      // Fetch movies for each genre and filter by status
       const genresFetchPromises = genres.map(async (genre) => {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/${genre.genre_id}`);
-        return { genreId: genre.genre_id, movies: res.data.movies };
+        const filteredMovies = res.data.movies.filter(movie => movie.status === 1);
+        return { genreId: genre.genre_id, movies: filteredMovies };
       });
 
       const genresMovies = await Promise.all(genresFetchPromises);
