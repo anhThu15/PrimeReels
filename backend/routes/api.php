@@ -52,7 +52,7 @@ Route::middleware(['auth:api'])->group(function () {
 });
 //______________________________________FORGOT PASSWORD_______________________________________________
 Route::post('/password/email', [AuthController::class, 'sendResetLink']); // Gửi email đặt lại mật khẩu
-Route::post('/password/reset', [AuthController::class, 'resetPassword']); // Đặt lại mật khẩu
+Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update'); // Đặt lại mật khẩu
 //______________________________________USER_______________________________________________
 Route::middleware(['jwt.verify'])->group(function () {
     //______________________________________UPDATE PROFILE_______________________________________________
