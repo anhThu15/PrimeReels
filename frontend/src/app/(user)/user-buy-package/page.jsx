@@ -1,6 +1,31 @@
+'use client'
+import { useEffect, useState } from "react";
 import "../../globals.css";
 import Link from 'next/link';
+import axios from "axios";
+
 export default function UserBuyPackage() {
+    const [packags, setPackages] = useState([])
+    const [vouchers, setVouchers] = useState([])
+
+    useEffect(() => {
+        const getPackages = async () => {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`, { revalidate: 3600 }).then((res) => res.data)
+            setPackages(res)
+        }
+
+        const getVouchers = async () => {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+            setVouchers(res)
+        }
+
+        getPackages()
+        getVouchers()
+    },[])
+
+    // console.log(packags);
+    
+
     return (
         <div className="container">
             <div className="title-back">
@@ -34,132 +59,60 @@ export default function UserBuyPackage() {
                 </div>
             </div>
             <div className="row mt-3 package mb-3">
-                <div className="col-md-4">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="img">
-                                <div className="parkage-title">
-                                    <h6>VIP19K</h6>
-                                    <p className="price">19.000đ</p>
-                                    <p className="text">Không giới hạn phim trong vòng 24h</p>
+                {packags.map((pk) =>{
+                    return(
+                        <>
+                            <div className="col-md-4">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <div className="img">
+                                            <div className="parkage-title">
+                                                <h6>{pk.name}</h6>
+                                                <p className="price">{pk.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+                                                <p className="text">Không giới hạn phim trong vòng {pk.duration}h</p>
+                                            </div>
+                                        </div>
+                                        <div className="button-vip">
+                                            <Link href="/user-payment-package">
+                                                <button className="btn btn-danger">Chọn Gói Vip</button>
+                                            </Link>
+                                        </div>
+                                        <div className="content-vip mt-2">
+                                            <div className="item">
+                                                <i className="fa-solid fa-star"></i>
+                                                Xem phim thả ga, không lo quảng cáo
+                                            </div>
+                                            <div className="item">
+                                                <i className="fa-solid fa-star"></i>
+                                                {pk.duration}h kể từ khi đăng ký
+                                            </div>
+                                            <div className="item">
+                                                <i className="fa-solid fa-star"></i>
+                                                Chất lượng phim Full HD
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <h6>Chương trình ưu đãi</h6>
+                                            {vouchers.map((vch) => {
+                                                return(
+                                                    <>
+                                                        <div className="bx-vnpay d-flex">
+                                                            <div className="icon-vnpay">
+                                                                <img src="images/icon-vnpay.webp" alt="" />
+                                                            </div>
+                                                            <div className="text-sales">
+                                                                Giảm {vch?.voucher_type?.discount}% khi thanh toán qua VNPAY với mã {vch.name}
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )
+                                            })}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="button-vip">
-                                <Link href="/user-payment-package">
-                                    <button className="btn btn-danger">Chọn Gói Vip</button>
-                                </Link>
-                            </div>
-                            <div className="content-vip mt-2">
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    Xem phim thả ga, không lo quảng cáo
-                                </div>
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    24h kể từ khi đăng ký
-                                </div>
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    Chất lượng phim Full HD
-                                </div>
-                            </div>
-                            <hr />
-                            <h6>Chương trình ưu đãi</h6>
-                            <div className="bx-vnpay d-flex">
-                                <div className="icon-vnpay">
-                                    <img src="images/icon-vnpay.webp" alt="" />
-                                </div>
-                                <div className="text-sales">
-                                    Giảm 10% khi thanh toán qua VNPAY với mã PRIMEREELS
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-4">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="img">
-                                <div className="parkage-title">
-                                    <h6>VIP39K</h6>
-                                    <p className="price">39.000đ</p>
-                                    <p className="text">Không giới hạn phim trong vòng 1 tháng</p>
-                                </div>
-                            </div>
-                            <div className="button-vip">
-                                <Link href="/user-payment-package">
-                                    <button className="btn btn-danger">Chọn Gói Vip</button>
-                                </Link>
-                            </div>
-                            <div className="content-vip mt-2">
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    Xem phim thả ga, không lo quảng cáo
-                                </div>
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    24h kể từ khi đăng ký
-                                </div>
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    Chất lượng phim Full HD
-                                </div>
-                            </div>
-                            <hr />
-                            <h6>Chương trình ưu đãi</h6>
-                            <div className="bx-vnpay d-flex">
-                                <div className="icon-vnpay">
-                                    <img src="images/icon-vnpay.webp" alt="" />
-                                </div>
-                                <div className="text-sales">
-                                    Giảm 10% khi thanh toán qua VNPAY với mã PRIMEREELS
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-4">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="img">
-                                <div className="parkage-title">
-                                    <h6>VIP299K</h6>
-                                    <p className="price">299.000đ</p>
-                                    <p className="text">Không giới hạn phim trong vòng 1 năm</p>
-                                </div>
-                            </div>
-                            <div className="button-vip">
-                                <Link href="/user-payment-package">
-                                    <button className="btn btn-danger">Chọn Gói Vip</button>
-                                </Link>
-                            </div>
-                            <div className="content-vip mt-2">
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    Xem phim thả ga, không lo quảng cáo
-                                </div>
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    24h kể từ khi đăng ký
-                                </div>
-                                <div className="item">
-                                    <i className="fa-solid fa-star"></i>
-                                    Chất lượng phim Full HD
-                                </div>
-                            </div>
-                            <hr />
-                            <h6>Chương trình ưu đãi</h6>
-                            <div className="bx-vnpay d-flex">
-                                <div className="icon-vnpay">
-                                    <img src="images/icon-vnpay.webp" alt="" />
-                                </div>
-                                <div className="text-sales">
-                                    Giảm 10% khi thanh toán qua VNPAY với mã PRIMEREELS
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        </>
+                    )
+                })}
             </div>
         </div>
     );

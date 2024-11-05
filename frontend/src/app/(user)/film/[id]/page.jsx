@@ -6,13 +6,15 @@ import Episodes from "../../components/episodes";
 import Comment from "../../components/coment";
 import SlideShow from "../../components/slideshow";
 import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
 
 export default function film({params}){
   const id = params.id
   const [film, setFilm] = useState([])
-   const idEpisode = film.episode?.[0].episode_id
+  const idEpisode = film.episode?.[0].episode_id
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
+  const token = Cookies.get('token');
 
   useEffect(() => {
     const getFilm = async () => {
@@ -64,7 +66,7 @@ export default function film({params}){
   const handleLove = async () => {
     try {
         // console.log(props.data.episode);
-        const token = localStorage.getItem('token');
+        // const token = localStorage.getItem('token');
         // console.log(id);
         const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`,{},{        
             headers: {

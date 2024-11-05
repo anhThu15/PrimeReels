@@ -7,12 +7,44 @@ import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
 
 export default function Video(props){
+    const id = props.data.episode?.movie_id
+    const idEpisode = props.data.episode?.episode_id
     const router = useRouter()
     const [isClient, setIsClient] = useState(false)
-    const [episodes, setEpisodes] = useState([])
     useEffect(() => {
         setIsClient(true)
     })
+    
+    useEffect(() => {
+        const addHistory = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const Check = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`,{        
+                    headers: {
+                    'Authorization': `Bearer ${token}`,
+                  }
+                }).then((res) => res.data)
+                
+                const CheckArr = Array.isArray(Check.data) ? Check.data : [];
+
+                const episodeIndex = CheckArr.findIndex(item => item.episode_id === idEpisode);
+                
+                if(episodeIndex === -1){
+                    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}/history`,{},{        
+                        headers: {
+                        'Authorization': `Bearer ${token}`,
+                      }
+                    }).then((res) => res.data)
+                    console.log(episodeExists);
+                    
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        addHistory();
+    }, [id, idEpisode]); 
 
     const handleNext = async () => {
         try {
