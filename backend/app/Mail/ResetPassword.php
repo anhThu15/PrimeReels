@@ -37,7 +37,8 @@ class ResetPassword extends Mailable
         return $this->view('emails.reset_password')
             ->subject('Đặt lại mật khẩu')
             ->with([
-                'url' => route('password.reset', ['token' => $this->token, 'email' => $this->user->email]),
+                // 'url' => route('password.reset', ['token' => $this->token, 'email' => $this->user->email]),
+                'url' => $url
             ]);
     }
 }
