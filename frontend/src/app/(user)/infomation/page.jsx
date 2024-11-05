@@ -22,7 +22,7 @@ export default function InfomationUser() {
 
     const showSection = (sectionId) => {
         setActiveSection(sectionId);
-        const sections = document.querySelectorAll('.user-info');
+        const sections = document.querySelectorAll('.user-info, .u-service-buy, .u-history-view, .u-favorite');
         sections.forEach(section => {
             section.style.display = 'none';
         });
@@ -119,6 +119,36 @@ export default function InfomationUser() {
                             Tài khoản
                         </a>
                         {activeSection === 'userInfo' && <span className="active-indicator" />}
+                    </li>
+                    <li style={{ position: 'relative' }}>
+                        <a
+                            href="#"
+                            onClick={() => showSection('u-service-buy')}
+                            className={activeSection === 'u-service-buy' ? 'active' : ''}
+                        >
+                            Dịch vụ đã xem
+                        </a>
+                        {activeSection === 'u-service-buy' && <span className="active-indicator" />}
+                    </li>
+                    <li style={{ position: 'relative' }}>
+                        <a
+                            href="#"
+                            onClick={() => showSection('u-history-view')}
+                            className={activeSection === 'u-history-view' ? 'active' : ''}
+                        >
+                            Lịch sử đã xem
+                        </a>
+                        {activeSection === 'u-history-view' && <span className="active-indicator" />}
+                    </li>
+                    <li style={{ position: 'relative' }}>
+                        <a
+                            href="#"
+                            onClick={() => showSection('u-favorite')}
+                            className={activeSection === 'u-favorite' ? 'active' : ''}
+                        >
+                            Danh sách yêu thích
+                        </a>
+                        {activeSection === 'u-favorite' && <span className="active-indicator" />}
                     </li>
                 </ul>
                 <div className="user-info" id="userInfo">

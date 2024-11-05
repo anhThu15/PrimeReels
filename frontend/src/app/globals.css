@@ -1,6 +1,3 @@
-/* body{
-  overflow: hidden;
-} */
 .segment {
   background-color: #bfe661;
   width: 100%;
@@ -140,7 +137,7 @@
   background-size: cover;
   display: block;
   padding-left: 15px;
-  height: 100vh;
+  height: 750px;
   position: relative;
 }
 
