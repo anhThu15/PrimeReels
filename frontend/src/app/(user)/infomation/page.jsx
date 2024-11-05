@@ -3,6 +3,8 @@ import Link from "next/link";
 import "../../globals.css"; // Import global CSS
 import { useEffect, useState } from 'react';
 import ChangePasswordModal from "../components/user-infomation/changePassword";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function InfomationUser() {
     const [activeSection, setActiveSection] = useState('userInfo');
@@ -14,6 +16,7 @@ export default function InfomationUser() {
         avatar: '' // Avatar field
     });
     const [modalOpen, setModalOpen] = useState(false);
+    const [love, setLove] = useState([]);
 
     useEffect(() => {
         showSection(activeSection);
@@ -32,6 +35,8 @@ export default function InfomationUser() {
         }
     };
 
+
+    //  xử lý cài đặt tài khoản
     const fetchUserData = async () => {
         const token = document.cookie.split('; ').find(row => row.startsWith('token='));
         if (token) {
@@ -104,6 +109,50 @@ export default function InfomationUser() {
             }
         }
     };
+    //  xử lý cài đặt tài khoản
+
+
+    //  xử lý load danh sách yêu thích
+    useEffect(() => {
+        const getLove = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                setLove(res.data); // Cập nhật love với dữ liệu trả về từ API
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        getLove();
+    }, []);
+
+    const hanldeRemoveLove = async (id) => {
+        // alert(id)
+        const token = localStorage.getItem('token');
+        try {
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            if(res){
+                toast.success('Đá Xóa Thành Công Ra Khỏi Danh Sách Yêu Thích')
+                window.location.reload()
+            }else{
+                toast.error('Thất Bại')
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+    
+    
+    //  xử lý load danh sách yêu thích
 
     return (
         <div className="first-page">
@@ -454,94 +503,39 @@ export default function InfomationUser() {
                     </div>
                 </div>
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
-                    <div className="card card-view">
+                    <div style={{backgroundColor:"#353A3F"}}>
                         <div className="card-body">
                             <div className="history-view-title d-flex align-items-center">
-                                <p className="mb-0 text-white">Bạn đã xem 5 phim gần đây</p>
-                                <button className="btn btn-danger">Xóa toàn bộ</button>
+                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã xem {love.length} phim gần đây</p>
+                                {/* <button className="btn btn-danger">Xóa toàn bộ</button> */}
                             </div>
                             <div className="row mt-3">
-
-                                <div className="col-sm-2 position-relative mt-2">
-                                    <div className="card u-card">
-                                        <div className="image-container">
-                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
-                                            <span className="episode-label">Tập 01</span>
-                                            <i className="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div className="card-body">
-                                            <h5 className="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-2 position-relative mt-2">
-                                    <div className="card u-card">
-                                        <div className="image-container">
-                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
-                                            <span className="episode-label">Tập 01</span>
-                                            <i className="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div className="card-body">
-                                            <h5 className="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-2 position-relative mt-2">
-                                    <div className="card u-card">
-                                        <div className="image-container">
-                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
-                                            <span className="episode-label">Tập 01</span>
-                                            <i className="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div className="card-body">
-                                            <h5 className="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-2 position-relative mt-2">
-                                    <div className="card u-card">
-                                        <div className="image-container">
-                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
-                                            <span className="episode-label">Tập 01</span>
-                                            <i className="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div className="card-body">
-                                            <h5 className="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-2 position-relative mt-2">
-                                    <div className="card u-card">
-                                        <div className="image-container">
-                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
-                                            <span className="episode-label">Tập 01</span>
-                                            <i className="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div className="card-body">
-                                            <h5 className="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-2 position-relative mt-2">
-                                    <div className="card u-card">
-                                        <div className="image-container">
-                                            <img src="images/cinema-4153289_640.webp" className="card-img-top" alt="Phim 1" />
-                                            <span className="episode-label">Tập 01</span>
-                                            <i className="fa-solid fa-trash icon-delete"></i>
-                                        </div>
-                                        <div className="card-body">
-                                            <h5 className="card-title">Thần thâm dật chiến</h5>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
+                                {love?.map((mv) => {
+                                    // console.log(mv);
+                                    
+                                    return(
+                                        <>
+                                            <div className="col-sm-2 position-relative mt-2">
+                                                <div className="card text-bg-dark hover-box">
+                                                  <div>
+                                                      <img src={mv.movie.poster} height={350} className="card-img" alt="..."/>
+                                                  </div>
+                                                  <div className="play-icon-overlay">
+                                                    <div className="row">
+                                                        <div className=" col rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
+                                                           <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white  mt-4"></Link>
+                                                        </div>
+                                                        <div className=" col rounded-circle bg-black opacity-50 border border-white ms-2" style={{width:"50px", height:"50px"}}>
+                                                           <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{paddingLeft:"1px"}}><i class="fa-solid fa-trash text-danger fa-xl mt-3"  ></i></button>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                })}
+                                
                             </div>
                         </div>
                     </div>

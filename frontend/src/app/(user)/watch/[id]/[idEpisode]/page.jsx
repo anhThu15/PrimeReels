@@ -38,6 +38,7 @@ export default function Watch({ params }) {
 
     const getRandom = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 }).then((res) => res.data)
+      const filteredData = res.filter(item => item.status === 1);
       // Hàm xáo trộn mảng
       const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -48,7 +49,7 @@ export default function Watch({ params }) {
         }
         return array;
       };
-      setRandom(shuffleArray(res))
+      setRandom(shuffleArray(filteredData))
     }
 
     getWatch();
@@ -107,7 +108,7 @@ export default function Watch({ params }) {
 
 
         {/* cmt */}
-        <div className="container mt-5 ">
+        <div className="container mt-5 " id='target-section'>
           <Comment data={film.comments}></Comment>
         </div>
         {/* cmt */}

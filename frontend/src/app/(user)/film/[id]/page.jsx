@@ -5,6 +5,7 @@ import axios from "axios";
 import Episodes from "../../components/episodes";
 import Comment from "../../components/coment";
 import SlideShow from "../../components/slideshow";
+import { toast } from "react-toastify";
 
 export default function film({params}){
   const id = params.id
@@ -37,6 +38,7 @@ export default function film({params}){
     const getRandom = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+        const filteredData = res.filter(item => item.status === 1);
         // Hàm xáo trộn mảng
         const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -47,7 +49,7 @@ export default function film({params}){
         }
         return array;
         };
-        setRandom(shuffleArray(res))
+        setRandom(shuffleArray(filteredData))
       } catch (error) {
         console.log(error);
       }
@@ -58,6 +60,35 @@ export default function film({params}){
     getRandom()
     
   },[])
+
+  const handleLove = async () => {
+    try {
+        // console.log(props.data.episode);
+        const token = localStorage.getItem('token');
+        // console.log(id);
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`,{},{        
+            headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        }).then((res) => res.data)
+        
+        if(!res){
+            toast.error('Đã Được Thêm Vào Danh Sách Yêu Thích');
+        }else{
+            toast.success("Thêm Thành Công Vào Danh Sách Yêu Thích");
+        }
+            
+    } catch (error) {
+        // console.log(error);
+        if (error.response && error.response.data && error.response.data.message) {
+            toast.error(error.response.data.message);
+            return error.response.data.message; // Trả về hoặc xử lý message từ lỗi
+          } else {
+            console.error('An unexpected error occurred:', error);
+            return 'An unexpected error occurred';
+          }
+    }
+  }
   
 
   // console.log(film.episode?.[0])
@@ -82,7 +113,7 @@ export default function film({params}){
                           </div>
                           <div className="row mt-2">
                               <div className="col-1">
-                                <button className="btn btn-outline-light rounded-circle">
+                                <button className="btn btn-outline-light rounded-circle" onClick={() => handleLove()}>
                                     <i className="fa-solid fa-plus"></i>
                                 </button>
                               </div>
