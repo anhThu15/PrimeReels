@@ -16,7 +16,7 @@ class FavouriteController extends Controller
         // Kiểm tra xem phim có tồn tại không
         $movie = Movie::find($movieId);
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found.'], 404);
+            return response()->json(['message' => 'Phim không tìm thấy'], 404);
         }
 
         // Kiểm tra xem phim đã có trong danh sách yêu thích chưa
@@ -25,7 +25,7 @@ class FavouriteController extends Controller
             ->first();
 
         if ($existingFavourite) {
-            return response()->json(['message' => 'Movie already in favourites.'], 400);
+            return response()->json(['message' => 'Phim yêu thích đã lưu trong danh sách'], 400);
         }
 
         // Thêm vào danh sách yêu thích
@@ -35,7 +35,7 @@ class FavouriteController extends Controller
             'movie_id' => $movieId,
         ]);
 
-        return response()->json(['message' => 'Movie added to favourites.', 'favourite' => $favourite], 201);
+        return response()->json(['message' => 'Phim yêu thích lưu thành công', 'favourite' => $favourite], 201);
     }
 
     // Xem danh sách phim yêu thích của người dùng
@@ -53,7 +53,7 @@ class FavouriteController extends Controller
         // Kiểm tra xem phim có tồn tại không
         $movie = Movie::find($movieId);
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found.'], 404);
+            return response()->json(['message' => 'Phim không tìm thấy'], 404);
         }
 
         // Tìm kiếm Favourite
@@ -62,12 +62,12 @@ class FavouriteController extends Controller
             ->first();
 
         if (!$favourite) {
-            return response()->json(['message' => 'Movie not found in favourites.'], 404);
+            return response()->json(['message' => 'Phim yêu thích không tồn tại'], 404);
         }
 
         // Xoá khỏi danh sách yêu thích
         $favourite->delete();
 
-        return response()->json(['message' => 'Movie removed from favourites.'], 200);
+        return response()->json(['message' => 'Phim yêu thích xoá thành công'], 200);
     }
 }

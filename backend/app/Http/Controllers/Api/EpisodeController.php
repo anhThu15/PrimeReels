@@ -59,7 +59,7 @@ class EpisodeController extends Controller
     public function show($movieId, $episodeId)
     {
         // Tìm tập phim theo ID và kiểm tra thuộc về phim nào
-        $episode = Episode::where('episode_id', $episodeId)
+        $episode = Episode::where('episode_number', $episodeId)
             ->where('movie_id', $movieId)
             ->firstOrFail();
 

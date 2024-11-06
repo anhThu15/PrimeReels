@@ -14,19 +14,26 @@ class HistoryController extends Controller
     public function store($movieId, $episodeId)
     {
         // Kiểm tra xem tập phim có tồn tại không
-        $episode = Episode::where('episode_id', $episodeId)->where('movie_id', $movieId)->first();
+        $episode = Episode::where('episode_number', $episodeId)->where('movie_id', $movieId)->first();
         if (!$episode) {
-            return response()->json(['message' => 'Episode not found.'], 404);
+            return response()->json(['message' => 'Phim không tồn tại'], 404);
         }
+        $history = History::where('user_id', Auth::id())
+                ->where('episode_id', $episode->episode_id)  
+                ->first();
 
-        // Tạo mới lịch sử xem
-        $history = History::create([
-            'watched_at' => now(),
-            'user_id' => Auth::id(),
-            'episode_id' => $episodeId,
-        ]);
-
-        return response()->json(['message' => 'Watch history saved successfully.', 'history' => $history], 201);
+        if ($history) {
+            $history->update([
+                'watched_at' => now(),  
+            ]);
+        } else {
+            History::create([
+                'watched_at' => now(),
+                'user_id' => Auth::id(),
+                'episode_id' => $episode->episode_id,  
+                ]);
+        }
+    return response()->json(['message' => 'Lịch sử xem đã được cập nhật'], 200);
     }
 
 
