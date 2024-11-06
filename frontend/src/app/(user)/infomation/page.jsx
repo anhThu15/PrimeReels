@@ -395,7 +395,7 @@ export default function InfomationUser() {
                 </div>
 
                 <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
-                    <div className="card card-view">
+                    <div style={{backgroundColor:"#353A3F"}}>
                         <div className="card-body">
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>

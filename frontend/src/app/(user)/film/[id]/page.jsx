@@ -173,7 +173,7 @@ export default function film({params}){
 
             {/* cmt */}
             <div className=" mt-5 container " style={{marginLeft:"90px" }}>
-                <Comment data={film.comments}></Comment>
+                <Comment data={film}></Comment>
             </div>
             {/* cmt */}
 
