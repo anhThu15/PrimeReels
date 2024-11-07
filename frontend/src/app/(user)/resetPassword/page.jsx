@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from 'next/link';
 import "../../globals.css";
-
+import Cookies from 'js-cookie';
 export default function ResetPassword() {
     
     const router = useRouter();
@@ -14,6 +14,13 @@ export default function ResetPassword() {
     const [token, setToken] = useState('');
     const [email, setEmail] = useState('');
 
+
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            router.push("/");
+        }
+    }, [router]);  //kiểm trả xem đã có token chưa => đã có thì không cho vào lại trang này
 
     useEffect(() => {
         //lấy token và email từ url

@@ -6,7 +6,7 @@ import ChangePasswordModal from "../components/user-infomation/changePassword";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player"
-
+import Cookies from 'js-cookie';
 export default function InfomationUser() {
     const [activeSection, setActiveSection] = useState('userInfo');
     const [userData, setUserData] = useState({
@@ -38,16 +38,16 @@ export default function InfomationUser() {
         }
     };
 
-
-    //  xử lý cài đặt tài khoản
     const fetchUserData = async () => {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+        // const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+        const token = Cookies.get('token');
         if (token) {
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/profile', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${token.split('=')[1]}`,
+                        // 'Authorization': `Bearer ${token.split('=')[1]}`,
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                 });
@@ -84,26 +84,37 @@ export default function InfomationUser() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+        const token = Cookies.get('token');
+        // const token = document.cookie.split('; ').find(row => row.startsWith('token='));
         if (token) {
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/profile/update', {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${token.split('=')[1]}`,
+                        // 'Authorization': `Bearer ${token.split('=')[1]}`,
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         user_name: userData.username,
                         gender: userData.gender,
-                        avatar: userData.avatar // Include avatar URL
+                        avatar: userData.avatar
                     }),
                 });
 
                 const result = await response.json();
                 if (result.status === 'success') {
                     alert('Thông tin đã được cập nhật thành công!');
+                    const updatedUser = {
+                        ...JSON.parse(document.cookie.split('; ').find(row => row.startsWith('user='))?.split('=')[1] || '{}'),
+                        user_name: userData.username,
+                        gender: userData.gender,
+                        avatar: userData.avatar
+                    };
+
+                    document.cookie = `user=${JSON.stringify(updatedUser)}; path=/;`;
+                    window.location.reload();
+                    setUserData(updatedUser);
                 } else {
                     alert('Có lỗi xảy ra: ' + result.message);
                 }

@@ -4,7 +4,7 @@ import "../../../app/globals.css";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-
+import Cookies from 'js-cookie';
 export default function HeaderUser() {
   const router = useRouter();
   const pathName = usePathname();
@@ -12,13 +12,17 @@ export default function HeaderUser() {
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState(null);
   const [userAvatar, setUserAvatar] = useState('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png'); 
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); 
+
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get('token');
     if (token) {
       setIsLoggedIn(true);
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
+      const userCookie = Cookies.get('user');
+      if (userCookie) {
+        const user = JSON.parse(userCookie);
         setUserName(user.user_name);
         setUserRole(user.role);
         if (user.avatar) {
@@ -29,14 +33,26 @@ export default function HeaderUser() {
   }, []);
 
   const handleLogout = () => {
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
-    document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
+    Cookies.remove("token", { path: '/' });
+    Cookies.remove("user", { path: '/' });
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     router.push("/");
     toast.success("Đăng xuất thành công");
     setIsLoggedIn(false);
   };
+  
+
+  const toggleSearch = () => setShowSearch(!showSearch);
+
+  const handleSearchSubmit = (e) => {
+    if (e.key === 'Enter' || e.type === 'click') {
+      if (searchQuery.trim()) {
+        router.push(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
+      }
+    }
+  };
+  
 
   return (
     <nav className="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
@@ -62,7 +78,21 @@ export default function HeaderUser() {
           </ul>
 
 
-          <div><i className="fa-solid fa-magnifying-glass me-3 text-white"></i></div>
+          {/* <div><i className="fa-solid fa-magnifying-glass me-3 text-white"></i></div> */}
+          <div onClick={toggleSearch} style={{ cursor: 'pointer' }}>
+            <i className="fa-solid fa-magnifying-glass me-3 text-white"></i>
+          </div>
+          {showSearch && (
+            <input
+              type="text"
+              className="form-control me-3"
+              style={{ width: "200px", transition: "width 0.3s" }}
+              placeholder="Tìm kiếm..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchSubmit}
+            />
+          )}
           {isLoggedIn ? (
             <>
               <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>

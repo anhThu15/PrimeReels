@@ -4,14 +4,20 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
-    // useEffect(() => {
-    //     if (localStorage.getItem('passwordResetRequested')) {
-    //         setIsHidden(true);
-    //     }
-    // }, []);
+
+    const router = useRouter()
+
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            router.push("/");
+        }
+    }, [router]);  //kiểm trả xem đã có token chưa => đã có thì không cho vào lại trang login
 
     const handleSubmit = async (e) => {
         e.preventDefault();
