@@ -33,7 +33,8 @@ export default function Watch({ params }) {
 
     const getEpisodes = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setEpisodes(res)
+      const episodes = res.filter(episode => episode.status === 1);
+      setEpisodes(episodes)
     }
 
     const getRandom = async () => {

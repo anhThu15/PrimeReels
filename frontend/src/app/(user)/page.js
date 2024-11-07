@@ -32,24 +32,25 @@ export default function Home() {
         return error.response?.status === 429 || error.response?.status >= 500; // Retry khi gặp lỗi 429 hoặc 5xx
       },
     });
-
+  
     // Cấu hình rate limit cho axios
     const http = axiosRateLimit(axios.create(), {
       maxRequests: 5, // Số lượng tối đa yêu cầu mỗi giây
       perMilliseconds: 1000, // Tính trên mỗi giây
       maxRPS: 5 // Tối đa 5 yêu cầu mỗi giây
     });
-
+  
     const fetchMovies = async (url, filterFavorites = false, sortByDate = false) => {
       try {
         const res = await http.get(url); // Sử dụng axios đã được rate-limited
         const filteredData = res.data.filter(item => item.status === 1);
-
+  
         if (filterFavorites) {
           filteredData.sort((a, b) => b.favorites_count - a.favorites_count);
         }
         if (sortByDate) {
-          filteredData.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+          // Sắp xếp theo ngày cập nhật, từ mới nhất đến cũ nhất
+          filteredData.sort((a, b) => b.movie_id - a.movie_id);
         }
         return filteredData;
       } catch (error) {
@@ -57,7 +58,7 @@ export default function Home() {
         return [];
       }
     };
-
+  
     const loadData = async () => {
       // Sử dụng Promise.all để gọi API đồng thời
       const urls = [
@@ -68,7 +69,7 @@ export default function Home() {
         `${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,
         `${process.env.NEXT_PUBLIC_API_URL}/movies`
       ];
-
+  
       try {
         const [
           actionData,
@@ -77,8 +78,8 @@ export default function Home() {
           betterData,
           countryData,
           dateData
-        ] = await Promise.all(urls.map(url => fetchMovies(url)));
-        
+        ] = await Promise.all(urls.map(url => fetchMovies(url, false, url === `${process.env.NEXT_PUBLIC_API_URL}/movies`))); // Chỉ sắp xếp theo ngày cho URL movies
+  
         // Xáo trộn mảng randomData
         const shuffleArray = (array) => {
           for (let i = array.length - 1; i > 0; i--) {
@@ -87,22 +88,23 @@ export default function Home() {
           }
           return array;
         };
-
+  
         setAction(actionData);
         setComendy(comedyData);
         setRandom(shuffleArray(randomData));
         setBetter(betterData);
         setCountry(countryData);
-        setDate(dateData);
+        setDate(dateData);  // Sử dụng dữ liệu đã được sắp xếp theo ngày
       } catch (error) {
         console.error('Error loading data:', error);
       }
     };
-
+  
     loadData();
   }, []);
   
-  // console.log(country);
+  
+  console.log(date);
   
 
   return (

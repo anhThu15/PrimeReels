@@ -30,7 +30,8 @@ export default function film({params}){
     const getEpisodes = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`,{ revalidate: 3600 }).then((res) => res.data)
-        setEpisodes(res)
+        const episodes = res.filter(episode => episode.status === 1);
+        setEpisodes(episodes)
       } catch (error) {
         console.log(error);
         

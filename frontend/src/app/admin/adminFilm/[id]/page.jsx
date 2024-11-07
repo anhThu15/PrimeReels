@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Cookies from 'js-cookie';
 
 export default function AddNewFilm({ params }) {
+    const token = Cookies.get('token');
     const id = params.id
     const router = useRouter();
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -88,7 +90,7 @@ export default function AddNewFilm({ params }) {
         try {
             console.log(data);
 
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -111,7 +113,7 @@ export default function AddNewFilm({ params }) {
     const onAddEpisode = async (data) => {
         try {
             //   console.log(data);
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
 
             const formData = new FormData(); // Tạo FormData mới
 
@@ -146,7 +148,7 @@ export default function AddNewFilm({ params }) {
 
     const deleteEpisode = async (data) => {
         try {
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${data}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -170,7 +172,7 @@ export default function AddNewFilm({ params }) {
     const onAddActors = async (data) => {
         try {
             //   console.log(data);
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
 
             // Gửi yêu cầu POST với FormData
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/actors`, data, {
@@ -197,7 +199,7 @@ export default function AddNewFilm({ params }) {
     const onAddGenres = async (data) => {
         try {
             console.log(data);
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
 
             // Gửi yêu cầu POST với FormData
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/genres`, data, {
@@ -526,7 +528,7 @@ export default function AddNewFilm({ params }) {
                                                     </div>)}
                                                 </td>
                                                 <td>
-                                                    <Link className="btn btn-secondary ms-2" href={`/admin/adminFilm/${id}/episode/${episode.episode_id}`} >
+                                                    <Link className="btn btn-secondary ms-2" href={`/admin/adminFilm/${id}/episode/${episode.episode_number}`} >
                                                         <i className="fa-solid fa-pen"></i>
                                                     </Link>
                                                     <button className="btn btn-danger ms-2" onClick={() => { deleteEpisode(episode.episode_number) }}><i class="fa-solid fa-trash"></i></button>
