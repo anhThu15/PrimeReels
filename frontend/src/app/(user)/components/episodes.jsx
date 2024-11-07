@@ -1,8 +1,10 @@
 import Link from "next/link"
 import ReactPlayer from "react-player"
+import Cookies from 'js-cookie';
 
 
 export default function Episodes(props){
+  const token = Cookies.get('token');
     return (
         <>
          <div className="pb-3 mt-3"   data-bs-theme="dark" >
@@ -22,8 +24,8 @@ export default function Episodes(props){
                                 </div>
                                 <div className="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                    {localStorage.getItem("token") ? (
-                                      <Link href={`/watch/${episodes.movie_id}/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                    {token ? (
+                                      <Link href={`/watch/${episodes.movie_id}/${episodes.episode_number}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                     ):(
                                       <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
                                     )}
@@ -50,7 +52,7 @@ export default function Episodes(props){
                                 <div className="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
                                   {localStorage.getItem("token") ? (
-                                      <Link href={`/watch/${episodes.movie_id}/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                      <Link href={`/watch/${episodes.movie_id}/${episodes.episode_number}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                     ):(
                                       <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
                                     )}
@@ -77,7 +79,7 @@ export default function Episodes(props){
                                 <div className="play-icon-overlay">
                                   <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
                                   {localStorage.getItem("token") ? (
-                                      <Link href={`/watch/${episodes.movie_id}/${episodes.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                      <Link href={`/watch/${episodes.movie_id}/${episodes.episode_number}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
                                     ):(
                                       <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
                                     )}

@@ -11,10 +11,11 @@ export default function RatingStars(props){
         <div className="col-2 mt-2">
 
             {Array(fullStars).fill().map((s, i) => (
-                <i key={i} className="fa-solid fa-star text-warning"></i>
+                <div key={i} className="star bg-warning" style={{width:"30px", height:"30px"}}></div>
             ))}
             {Array(emptyStars).fill().map((s, i) => (
-                <i key={i} className="fa-solid fa-star text-secondary"></i>
+                <div key={i} className="star bg-secondary" style={{width:"30px", height:"30px"}}></div>
+
             ))}
 
         </div>

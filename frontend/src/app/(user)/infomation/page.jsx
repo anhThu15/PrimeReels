@@ -43,7 +43,7 @@ export default function InfomationUser() {
         const token = Cookies.get('token');
         if (token) {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/profile', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
                     method: 'GET',
                     headers: {
                         // 'Authorization': `Bearer ${token.split('=')[1]}`,
@@ -88,7 +88,7 @@ export default function InfomationUser() {
         // const token = document.cookie.split('; ').find(row => row.startsWith('token='));
         if (token) {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/profile/update', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
                     method: 'PUT',
                     headers: {
                         // 'Authorization': `Bearer ${token.split('=')[1]}`,
@@ -129,7 +129,7 @@ export default function InfomationUser() {
     //  xử lý load danh sách yêu thích
     useEffect(() => {
         const getLove = async () => {
-            const token = localStorage.getItem('token');
+            const token = Cookies.get('token');
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
                     headers: {
@@ -146,7 +146,7 @@ export default function InfomationUser() {
 
     const hanldeRemoveLove = async (id) => {
         // alert(id)
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
         try {
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`, {
                 headers: {
@@ -169,7 +169,7 @@ export default function InfomationUser() {
     // xử lý load ds lịch sử đã xem 
     useEffect(() => {
         const getHistory = async () => {
-            const token = localStorage.getItem('token');
+            const token = Cookies.get('token');
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`,{        
                     headers: {

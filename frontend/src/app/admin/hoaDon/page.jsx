@@ -2,8 +2,10 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
 
 export default function hoaDon(){
+  const token = Cookies.get('token');
   const [hds, setHds] = useState([])
   const [sorts, setSorts] = useState([])
   const [sortOrder, setSortOrder] = useState('0'); 

@@ -3,8 +3,10 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 
 export default function AdminFilm() {
+    const token = Cookies.get('token');
     const router = useRouter();
     const [films, setFilms] = useState([]);
     const [sorts, setSorts] = useState([]);
@@ -26,7 +28,7 @@ export default function AdminFilm() {
 
     const handleDelete = async (data) => {
         try {
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${data}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 export default function film({params}){
   const id = params.id
   const [film, setFilm] = useState([])
-  const idEpisode = film.episode?.[0].episode_id
+  const idEpisode = film.episode?.[0].episode_number
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
   const token = Cookies.get('token');

@@ -5,8 +5,10 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
 
 export default function Video(props){
+    const token = Cookies.get('token');
     const id = props.data.episode?.movie_id
     const idEpisode = props.data.episode?.episode_id
     const router = useRouter()
@@ -17,7 +19,7 @@ export default function Video(props){
     
     useEffect(() => {
         const addHistory = async () => {
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             try {
                 const Check = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`,{        
                     headers: {
@@ -35,7 +37,7 @@ export default function Video(props){
                         'Authorization': `Bearer ${token}`,
                       }
                     }).then((res) => res.data)
-                    console.log(episodeExists);
+                    // console.log(episodeExists);
                     
                 }
             } catch (error) {
@@ -74,7 +76,7 @@ export default function Video(props){
     const handleLove = async () => {
         try {
             // console.log(props.data.episode);
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             const id = props.data.episode.movie_id
             // console.log(id);
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`,{},{        
@@ -111,9 +113,21 @@ export default function Video(props){
 
     return (
         <>  
-             {localStorage.getItem("token") ? (
+             {token ? (
                     <>
-                    {isClient ? <ReactPlayer className="w-100" height={550} url={props.data.video_url} controls /> : 'Load...'}
+                    {isClient ? 
+                    (
+                        <>
+                            <ReactPlayer className="w-100" height={550} url={props.data.video_url} controls /> 
+                            <div className="mt-3 d-flex">
+                                <button className="me-3 btn btn-outline-light" onClick={() => handleNext()}><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
+                                <button className="me-3 btn btn-outline-light" onClick={() => handleLove()}><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
+                                <Link href={'/infomation'} className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</Link>
+                                <button className="me-3 btn btn-outline-light" onClick={()=> hanldeScrooll()}><i class="fa-solid fa-comment"></i> Bình Luận</button>
+                            </div>
+                        </>
+                    )
+                    : 'Load...'}
                     </>
                 ) : (
                     <>
@@ -126,12 +140,6 @@ export default function Video(props){
                         </div>
                     </>
                 )}
-            <div className="mt-3 d-flex">
-                <button className="me-3 btn btn-outline-light" onClick={() => handleNext()}><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
-                <button className="me-3 btn btn-outline-light" onClick={() => handleLove()}><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
-                <Link href={'/infomation'} className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</Link>
-                <button className="me-3 btn btn-outline-light" onClick={()=> hanldeScrooll()}><i class="fa-solid fa-comment"></i> Bình Luận</button>
-            </div>
 
         </>
     )

@@ -4,8 +4,12 @@ import RatingStars from "./ratingStars";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
 
 export default function Comment( props){
+    const token = Cookies.get('token');
+    const userCookie = Cookies.get('user');
+    const user = JSON.parse(userCookie);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const id = props.data?.movie_id
     // console.log(id);
@@ -13,7 +17,7 @@ export default function Comment( props){
     const onComment =  async (data) => {
         // console.log(data); 
         try {
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comment`, data, {
                         headers: {
                           'Authorization': `Bearer ${token}`,
@@ -34,13 +38,13 @@ export default function Comment( props){
     return (
         <>
           <div className="text-white" >
-                {localStorage.getItem("token") ? (
+                {token ? (
                     <>
                     <p className="ms-3 pt-2">Bình luận tại đây</p>
                     <div className="col mb-3" style={{backgroundColor:"white", height:"1px"}}></div>
                     <div className="row mb-3">
                         <div className="col-2 ps-5">
-                            <img className=" rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWFHANMR9GiCp0h0TmnItAno7AkgaTJ_ZpZA&s" width={60} height={60} alt="" />
+                            <img className=" rounded-circle" src={user.avatar} width={60} height={60} alt="" />
                         </div>
                     <div className="col" style={{marginLeft:"-100px"}}>
                         <form onSubmit={handleSubmit(onComment)} >
