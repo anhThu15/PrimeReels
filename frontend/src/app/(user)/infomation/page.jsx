@@ -7,6 +7,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player"
 import Cookies from 'js-cookie';
+
+
 export default function InfomationUser() {
     const [activeSection, setActiveSection] = useState('userInfo');
     const [userData, setUserData] = useState({

@@ -73,7 +73,7 @@ export default function UserBuyPackage() {
                                             </div>
                                         </div>
                                         <div className="button-vip">
-                                            <Link href="/user-payment-package">
+                                            <Link href={`/user-buy-package/${pk.package_id }`}>
                                                 <button className="btn btn-danger">Chọn Gói Vip</button>
                                             </Link>
                                         </div>
