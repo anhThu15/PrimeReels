@@ -5,33 +5,66 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from 'js-cookie';
+import { useEffect, useState } from "react";
 
 export default function Comment( props){
     const token = Cookies.get('token');
     const userCookie = Cookies.get('user');
     const user = JSON.parse(userCookie);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const [coment, setComent] = useState([])
     const id = props.data?.movie_id
-    // console.log(id);
+    const checkUser = props.data?.comments?.find(comment => comment.user_id === user.user_id);
+    {checkUser ? (setValue('rating',checkUser?.rating)):(0)}
+
+    useEffect(() => {
+      setComent(props.data?.comments)
+    },[props.data])
     
+    console.log(coment);
+    
+
     const onComment =  async (data) => {
-        // console.log(data); 
-        try {
-            // const token = localStorage.getItem('token');
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comment`, data, {
-                        headers: {
-                          'Authorization': `Bearer ${token}`,
-                        }
-                        }).then((res) => res.data);
-                    if (res) {
-                      toast.success('Bình Luận Và Đánh Giá Thành Công');
-                      window.location.reload()
-                    } else {
-                      // Xử lý hiển thị lỗi
-                      console.error(result.error);
-                    }
+      // console.log(data); 
+      try {
+        // const token = localStorage.getItem('token');
+            if (!checkUser) {
+              const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comment`, data, {
+                          headers: {
+                            'Authorization': `Bearer ${token}`,
+                          }
+                          }).then((res) => res.data);
+                      if (res) {
+                        toast.success('Bình Luận Và Đánh Giá Thành Công');
+                        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
+                        setComent(res)
+                        // window.location.reload()
+                      } else {
+                        // Xử lý hiển thị lỗi
+                        console.error(result.error);
+                      }
+            } else {
+              // console.log( checkUser.rating);
+              const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comment`, data, {
+                          headers: {
+                            'Authorization': `Bearer ${token}`,
+                          }
+                          }).then((res) => res.data);
+                      if (res) {
+                        toast.success('Bình Luận Và Đánh Giá Thành Công');
+                        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
+                        setComent(res)
+                        console.log(res);
+                        
+                        // window.location.reload()
+                      } else {
+                        // Xử lý hiển thị lỗi
+                        console.error(result.error);
+                      }
+            }
         } catch (error) {
-          console.log(error);
+          // console.log(error.response.data.message);
+          toast.error(error.response.data.message)
         }
     }
 
@@ -71,7 +104,7 @@ export default function Comment( props){
 
                 
                 {/* load bình luận */}
-                { props.data?.comments?.map((cmt) => {
+                { coment?.map((cmt) => {
                     return(
                         <>
                             <div className="row d-flex flex-wrap rounded-pill bg-dark mt-3" style={{height:"100px"}} >

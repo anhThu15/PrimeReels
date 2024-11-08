@@ -104,7 +104,7 @@ export default function Home() {
   }, []);
   
   
-  console.log(date);
+  // console.log(date);
   
 
   return (
