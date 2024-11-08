@@ -138,17 +138,17 @@ class EpisodeController extends Controller
     {
         $movie = Movie::where('movie_id', "=", $movie_id)->first();
         if (!$movie) {
-            return response()->json(['error' => 'Movie not found'], 404);
+            return response()->json(['error' => 'Phim không tồn tại'], 404);
         }
     
         $episode = Episode::where('episode_number', '=', $episode_id)
         ->where('movie_id', '=', $movie->movie_id)
         ->first();
         if (!$episode) {
-            return response()->json(['error' => 'Episode not found'], 404);
+            return response()->json(['error' => 'Tập phim không tồn tại'], 404);
         }
         $episode->delete();
 
-        return response()->json(['message' => 'Episode deleted successfully']);
+        return response()->json(['message' => 'Tập phim đã xoá thành công']);
     }
 }
