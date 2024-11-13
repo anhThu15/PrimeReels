@@ -97,6 +97,7 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
 
 Route::get('/movies', [MovieController::class, 'index']); // Lấy danh sách phim
 Route::get('/movies/{id}', [MovieController::class, 'show']); // Lấy thông tin chi tiết một phim
+Route::get('/movies-admin/{id}', [MovieController::class, 'show_admin']); // Lấy thông tin chi tiết một phim
 Route::get('/movie-types', [MovieTypeController::class, 'index']); // Lấy danh sách thể loại phim
 Route::get('/movie-types/{id}', [MovieTypeController::class, 'show1']); // Lấy thông tin thể loại phim
 Route::get('/actors', [ActorController::class, 'index']); // Lấy danh sách diễn viên

@@ -67,7 +67,7 @@ class VoucherController extends Controller
 
             return response()->json($voucher);
         }
-        return response()->json(['message' => 'Voucher not found!'], 404);
+        return response()->json(['message' => 'Mã giảm giá không tồn tại'], 404);
     }
 
     public function destroy($id)
@@ -75,8 +75,8 @@ class VoucherController extends Controller
         $voucher = Voucher::find($id);
         if ($voucher) {
             $voucher->delete();
-            return response()->json(['message' => 'Voucher deleted!']);
+            return response()->json(['message' => 'Mã giảm giá đã xoá thành công']);
         }
-        return response()->json(['message' => 'Voucher not found!'], 404);
+        return response()->json(['message' => 'Mã giảm giá không tồn tại'], 404);
     }
 }

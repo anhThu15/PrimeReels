@@ -32,7 +32,7 @@ class VoucherTypeController extends Controller
             $voucherType->update($request->all());
             return response()->json($voucherType);
         }
-        return response()->json(['message' => 'Voucher Type not found!'], 404);
+        return response()->json(['message' => 'Loại mã giảm không tồn tại'], 404);
     }
 
     public function destroy($id)
@@ -40,8 +40,8 @@ class VoucherTypeController extends Controller
         $voucherType = VoucherType::find($id);
         if ($voucherType) {
             $voucherType->delete();
-            return response()->json(['message' => 'Voucher Type deleted!']);
+            return response()->json(['message' => 'Loại mã giảm đã xoá thành công']);
         }
-        return response()->json(['message' => 'Voucher Type not found!'], 404);
+        return response()->json(['message' => 'Loại mã giảm không tồn tại'], 404);
     }
 }

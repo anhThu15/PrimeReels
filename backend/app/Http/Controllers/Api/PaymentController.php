@@ -46,7 +46,7 @@ class PaymentController extends Controller
                 $currentDate = now();
 
                 if ($voucher->expired || $currentDate->greaterThan($voucher->enddate)) {
-                    return response()->json(['message' => 'Voucher đã hết hạn.'], 400);
+                    return response()->json(['message' => 'Mã giảm giá đã hết hạn.'], 400);
                 }
 
                 $voucherType = $voucher->voucherType;
@@ -206,7 +206,7 @@ class PaymentController extends Controller
                 return response()->json(['message' => 'Không tìm thấy hóa đơn!'], 404);
             }
         } else {
-            return response()->json(['message' => 'Invalid secure hash!'], 400);
+            return response()->json(['message' => 'Mã bảo mật không hợp lệ!'], 400);
         }
     }
 }
