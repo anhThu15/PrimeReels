@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 
-export default function Comment( props){
+export default function Comment(props){
     const token = Cookies.get('token');
     const userCookie = Cookies.get('user');
     const user = JSON.parse(userCookie);
@@ -18,10 +18,10 @@ export default function Comment( props){
     {checkUser ? (setValue('rating',checkUser?.rating)):(0)}
 
     useEffect(() => {
-      setComent(props.data?.comments)
+      setComent(props.data)
     },[props.data])
     
-    console.log(coment);
+
     
 
     const onComment =  async (data) => {
@@ -104,7 +104,7 @@ export default function Comment( props){
 
                 
                 {/* load bình luận */}
-                { coment?.map((cmt) => {
+                { coment.map((cmt) => {
                     return(
                         <>
                             <div className="row d-flex flex-wrap rounded-pill bg-dark mt-3" style={{height:"100px"}} >

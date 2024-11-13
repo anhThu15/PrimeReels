@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 export default function film({params}){
   const id = params.id
   const [film, setFilm] = useState([])
+  const [cmts, setCmts] = useState([])
   const idEpisode = film.episode?.[0].episode_number
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
@@ -58,10 +59,20 @@ export default function film({params}){
       }
     }
 
+    const getCmt = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+        setCmts(res)
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+
     getFilm()
     getEpisodes()
     getRandom()
-    
+    getCmt()
   },[])
 
   const handleLove = async () => {
@@ -94,7 +105,7 @@ export default function film({params}){
   }
   
 
-  // console.log(film.episode?.[0])
+  // console.log(cmts)
 
     return(
         <>
@@ -174,7 +185,7 @@ export default function film({params}){
 
             {/* cmt */}
             <div className=" mt-5 container " style={{marginLeft:"90px" }}>
-                <Comment data={film}></Comment>
+                <Comment data={cmts}></Comment>
             </div>
             {/* cmt */}
 

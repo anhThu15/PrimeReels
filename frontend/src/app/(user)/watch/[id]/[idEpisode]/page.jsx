@@ -16,6 +16,8 @@ export default function Watch({ params }) {
   const [film, setFilm] = useState([])
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
+  const [cmts, setCmts] = useState([])
+  
 
 // console.log(watch);
 
@@ -53,10 +55,21 @@ export default function Watch({ params }) {
       setRandom(shuffleArray(filteredData))
     }
 
+    const getCmt = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+        setCmts(res)
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+
     getWatch();
     getFilm();
     getEpisodes();
     getRandom()
+    getCmt()
 
   }, [])
   
@@ -110,7 +123,7 @@ export default function Watch({ params }) {
 
         {/* cmt */}
         <div className="container mt-5 " id='target-section'>
-          <Comment data={film}></Comment>
+          <Comment data={cmts}></Comment>
         </div>
         {/* cmt */}
 

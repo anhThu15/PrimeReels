@@ -50,7 +50,7 @@ export default function UserPayMentPackageDetail({params}){
                 
                     // Kiểm tra và hiển thị lỗi `voucher_name`
                     if (errorData.voucher_name) {
-                      toast.error(errorData.voucher_name.join(' '));
+                      toast.error('Lỗi Giao Dịch Vui Lòng Thử Lại Hoặc Kiểm Tra Voucher');
                     }
                     // Kiểm tra và hiển thị lỗi `message`
                     if (errorData.message) {
