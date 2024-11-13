@@ -18,10 +18,10 @@ export default function Comment(props){
     {checkUser ? (setValue('rating',checkUser?.rating)):(0)}
 
     useEffect(() => {
-      setComent(props.data)
+      setComent(props.data?.comments)
     },[props.data])
     
-
+    console.log(coment);
     
 
     const onComment =  async (data) => {
@@ -64,7 +64,7 @@ export default function Comment(props){
             }
         } catch (error) {
           // console.log(error.response.data.message);
-          toast.error(error.response.data.message)
+          toast.error("Bình Luận Và Đánh Giá Không Thành Công Vui Lòng Thử Lại")
         }
     }
 
@@ -104,7 +104,7 @@ export default function Comment(props){
 
                 
                 {/* load bình luận */}
-                { coment.map((cmt) => {
+                { coment?.map((cmt) => {
                     return(
                         <>
                             <div className="row d-flex flex-wrap rounded-pill bg-dark mt-3" style={{height:"100px"}} >

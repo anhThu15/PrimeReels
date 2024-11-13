@@ -118,7 +118,7 @@ export default function film({params}){
                           <h1 className=" fw-bold">{film.title}</h1>
                           <div className=" row" style={{width:400}}>
                              <div className="col"><i className="fa-regular fa-star"></i> {film.rating}</div>
-                             <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
+                             <div className="col"><i className="fa-regular fa-clock"></i> {film?.episode?.length}/{film.duration}</div>
                              <div className="col"><i className="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
                              {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                           </div>
@@ -185,7 +185,7 @@ export default function film({params}){
 
             {/* cmt */}
             <div className=" mt-5 container " style={{marginLeft:"90px" }}>
-                <Comment data={cmts}></Comment>
+                <Comment data={film}></Comment>
             </div>
             {/* cmt */}
 

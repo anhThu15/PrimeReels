@@ -144,7 +144,7 @@ export default function InfomationUser() {
             }
         };
         getLove();
-    }, []);
+    }, [love]);
 
     const hanldeRemoveLove = async (id) => {
         // alert(id)
@@ -184,7 +184,7 @@ export default function InfomationUser() {
             }
         }
         getHistory()
-    },[])
+    },[history])
     // console.log(history);
     
     // xử lý load ds lịch sử đã xem 

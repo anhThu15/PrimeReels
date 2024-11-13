@@ -123,7 +123,7 @@ export default function Watch({ params }) {
 
         {/* cmt */}
         <div className="container mt-5 " id='target-section'>
-          <Comment data={cmts}></Comment>
+          <Comment data={film}></Comment>
         </div>
         {/* cmt */}
 
