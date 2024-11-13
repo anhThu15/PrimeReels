@@ -157,7 +157,12 @@ export default function InfomationUser() {
             });
             if(res){
                 toast.success('Đá Xóa Thành Công Ra Khỏi Danh Sách Yêu Thích')
-                window.location.reload()
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                setLove(res.data);
             }else{
                 toast.error('Thất Bại')
             }
