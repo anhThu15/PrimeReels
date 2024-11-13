@@ -35,13 +35,13 @@ class MovieTypeController extends Controller
         $movieType = MovieType::find($id);
 
         if (!$movieType) {
-            return response()->json(['message' => 'Movie Type not found'], 404);
+            return response()->json(['message' => 'Danh mục không tồn tại'], 404);
         }
 
         // Kiểm tra genreId có tồn tại không
         $genre = Genre::find($genreId);
         if (!$genre) {
-            return response()->json(['message' => 'Genre not found'], 404);
+            return response()->json(['message' => 'Thể loại không tồn tại'], 404);
         }
 
         // Tìm các movie thuộc movie_type_id và genre_id
@@ -57,7 +57,7 @@ class MovieTypeController extends Controller
     {
         $movieType = MovieType::find($id);
         if (!$movieType) {
-            return response()->json(['message' => 'Movie Type not found'], 404);
+            return response()->json(['message' => 'Danh mục không tồn tại'], 404);
         }
         // Tìm các movie thuộc movie_type_id 
         $movies = Movie::where('movie_type_id', $id)->get();
@@ -75,7 +75,7 @@ class MovieTypeController extends Controller
         $movieType = MovieType::find($id);
 
         if (!$movieType) {
-            return response()->json(['message' => 'Movie Type not found'], 404);
+            return response()->json(['message' => 'Danh mục không tồn tại'], 404);
         }
 
         $movieType->update($request->all());
@@ -88,11 +88,11 @@ class MovieTypeController extends Controller
         $movieType = MovieType::find($id);
 
         if (!$movieType) {
-            return response()->json(['message' => 'Movie Type not found'], 404);
+            return response()->json(['message' => 'Danh mục không tồn tại'], 404);
         }
 
         $movieType->delete();
-        return response()->json(['message' => 'Movie Type deleted']);
+        return response()->json(['message' => 'Danh mục đã xoá thành công']);
     }
 
     // Lọc movie_types và country
@@ -102,7 +102,7 @@ class MovieTypeController extends Controller
         $movieType = MovieType::find($id);
 
         if (!$movieType) {
-            return response()->json(['message' => 'Movie Type not found'], 404);
+            return response()->json(['message' => 'Danh mục không tồn tại'], 404);
         }
 
         // Lọc các movie theo movie_type_id và country

@@ -102,7 +102,7 @@ class UserController extends Controller
         $user->save();
 
         // Trả về thông tin người dùng đã được cập nhật
-        return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
+        return response()->json(['message' => 'Tài khoản cập nhật thành công'], 200);
     }
 
 

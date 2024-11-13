@@ -15,10 +15,6 @@ class MovieController extends Controller
         $movies = Movie::with(['movieType', 'genres'])->get();
         return response()->json($movies);
     }
-    // public function index()
-    // {
-    //     return Movie::with(['movieType', 'actors', 'genres'])->get();
-    // }
 
     // Store new movie
     public function store(Request $request)
@@ -53,7 +49,18 @@ class MovieController extends Controller
         }
 
         // Tăng lượt xem
-        $movie->increment('views'); // Tăng số lượt xem lên 1
+            $movie->increment('views'); // Tăng số lượt xem lên 1
+
+        return response()->json($movie);
+    }
+
+    public function show_admin($id)
+    {
+        $movie = Movie::with(['episode','movieType', 'actors', 'genres', 'comments.user'])->find($id);
+
+        if (!$movie) {
+            return response()->json(['message' => 'Không tìm thấy phim nào'], 404);
+        }
 
         return response()->json($movie);
     }
@@ -99,7 +106,7 @@ class MovieController extends Controller
 
         $movie->delete();
 
-        return response()->json(['message' => 'Movie deleted']);
+        return response()->json(['message' => 'Phim được xoá thành công']);
     }
 
     public function attachActors($movieId, Request $request)
@@ -195,7 +202,7 @@ public function filterByType($typeId)
 
     // Kiểm tra nếu không có phim nào
     if ($movies->isEmpty()) {
-        return response()->json(['message' => 'No movies found'], 404);
+        return response()->json(['message' => 'Phim không tồn tại'], 404);
     }
 
     return response()->json($movies);

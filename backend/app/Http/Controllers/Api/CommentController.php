@@ -16,15 +16,15 @@ class CommentController extends Controller
         // Kiểm tra movie có tồn tại không
         $movie = Movie::find($movieId);
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found.'], 404);
+            return response()->json(['message' => 'Phim không tồn tại'], 404);
         }
 
         // Lấy tất cả bình luận của bộ phim
-        $comments = $movie->comments()->get();
+        $comments = $movie->comments()->with('user')->get();
 
         // Kiểm tra nếu không có bình luận
         if ($comments->isEmpty()) {
-            return response()->json(['message' => 'Không có comment nào ở movie này.'], 200);
+            return response()->json(['message' => 'Bình luận hiện đang trống'], 200);
         }
         
         return response()->json($comments);
@@ -35,13 +35,13 @@ class CommentController extends Controller
         // Kiểm tra movie có tồn tại không
         $movie = Movie::find($movieId);
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found.'], 404);
+            return response()->json(['message' => 'Phim không tồn tại'], 404);
         }
 
         // Lấy bình luận theo ID
         $comment = Comment::where('movie_id', $movieId)->find($commentId);
         if (!$comment) {
-            return response()->json(['message' => 'Comment not found.'], 404);
+            return response()->json(['message' => 'Bình luận không tồn tại'], 404);
         }
 
         return response()->json($comment);
@@ -62,7 +62,7 @@ class CommentController extends Controller
         // Kiểm tra movie có tồn tại không
         $movie = Movie::find($movieId);
         if (!$movie) {
-            return response()->json(['message' => 'Movie not found.'], 404);
+            return response()->json(['message' => 'Phim không tồn tại'], 404);
         }
 
         // Tạo comment mới
@@ -77,7 +77,7 @@ class CommentController extends Controller
         // Cập nhật rating cho movie
         $movie->updateRating();
 
-        return response()->json(['message' => 'Comment created successfully.', 'comment' => $comment], 201);
+        return response()->json(['message' => 'Bình luận được tạo thành công', 'comment' => $comment], 201);
     }
 
 
@@ -93,7 +93,7 @@ class CommentController extends Controller
         $comment = Comment::where('movie_id', $movieId)->where('comment_id', $commentId)->first();
 
         if (!$comment) {
-            return response()->json(['message' => 'Comment not found.'], 404);
+            return response()->json(['message' => 'Bình luận không tìm thấy'], 404);
         }
 
         // Cập nhật comment
@@ -107,7 +107,7 @@ class CommentController extends Controller
         $movie = Movie::find($movieId);
         $movie->updateRating();
 
-        return response()->json(['message' => 'Comment updated successfully.', 'comment' => $comment], 200);
+        return response()->json(['message' => 'Bình luận cập nhật thành công', 'comment' => $comment], 200);
     }
 
 
@@ -118,7 +118,7 @@ class CommentController extends Controller
         $comment = Comment::where('movie_id', $movieId)->where('comment_id', $commentId)->first();
 
         if (!$comment) {
-            return response()->json(['message' => 'Comment not found.'], 404);
+            return response()->json(['message' => 'Bình luận không tìm thấy'], 404);
         }
 
         // Xóa comment
@@ -128,6 +128,6 @@ class CommentController extends Controller
         $movie = Movie::find($movieId);
         $movie->updateRating();
 
-        return response()->json(['message' => 'Comment deleted successfully.']);
+        return response()->json(['message' => 'Bình luận đã xoá thành công']);
     }
 }
