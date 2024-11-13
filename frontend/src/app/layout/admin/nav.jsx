@@ -5,7 +5,7 @@ export default function NavAdmin(){
     const pathName = usePathname();
     return(
         <>
-        <div className="col-md-2 p-0 collapse collapse-horizontal show" style={{minHeight: "100vh", backgroundColor: "#213436"}} id="moMenu">
+        <div className="col-md-2 p-0 collapse collapse-horizontal show" style={{minHeight: "127vh", backgroundColor: "#213436"}} id="moMenu">
           <strong className="text-center d-block p-3" style={{color: "white"}}> 
             <img src="/images/Logo-PR-(1).png" width="80px" alt=""/>
            </strong>

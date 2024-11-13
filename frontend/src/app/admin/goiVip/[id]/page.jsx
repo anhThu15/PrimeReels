@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export default function chitietgoiVip({params}){
+  const token = Cookies.get('token');
   const id = params.id
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const router = useRouter();
@@ -28,7 +30,7 @@ export default function chitietgoiVip({params}){
 
   const onUpdate = async (data) =>{
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/packages/${id}`,data,{
         headers: {
           'Authorization': `Bearer ${token}`,

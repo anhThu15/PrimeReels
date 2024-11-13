@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Cookies from 'js-cookie';
 
 export default function Episode({params}) {
+    const token = Cookies.get('token');
     const id = params.id;
     const idEpisode = params.idEpisode
     const router = useRouter()
@@ -33,7 +35,7 @@ export default function Episode({params}) {
      const onUpdateEpisode = async (data) => {
         try {
           console.log(data);
-          const token = localStorage.getItem('token');
+        //   const token = localStorage.getItem('token');
 
         //   const formData = new FormData(); // Tạo FormData mới
 

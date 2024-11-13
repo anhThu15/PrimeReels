@@ -1,29 +1,31 @@
 'use client'
 import ReactPlayer from 'react-player/lazy';
 import { React, useState, useEffect } from 'react'
-import SlideShowAnother from "../../components/slideshowAnother";
-import Comment from "../../components/coment";
-import SlideShow from "../../components/slideshow";
 import axios from 'axios';
-import Episodes from '../../components/episodes';
+import Video from '@/app/(user)/components/video';
+import Episodes from '@/app/(user)/components/episodes';
+import SlideShow from '@/app/(user)/components/slideshow';
+import Comment from '@/app/(user)/components/coment';
 
 
 export default function Watch({ params }) {
   const id = params.id
-  const [isClient, setIsClient] = useState(false)
+  const idEpisode = params.idEpisode
+  // console.log(id, idEpisode);
   const [watch, setWatch] = useState([])
   const [film, setFilm] = useState([])
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
+  const [cmts, setCmts] = useState([])
+  
 
 // console.log(watch);
 
   useEffect(() => {
-    setIsClient(true)
 
     const getWatch = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setWatch(res[0])
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, { revalidate: 3600 }).then((res) => res.data)
+      setWatch(res)
     }
 
     const getFilm = async () => {
@@ -33,11 +35,13 @@ export default function Watch({ params }) {
 
     const getEpisodes = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-      setEpisodes(res)
+      const episodes = res.filter(episode => episode.status === 1);
+      setEpisodes(episodes)
     }
 
     const getRandom = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 }).then((res) => res.data)
+      const filteredData = res.filter(item => item.status === 1);
       // Hàm xáo trộn mảng
       const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -48,36 +52,49 @@ export default function Watch({ params }) {
         }
         return array;
       };
-      setRandom(shuffleArray(res))
+      setRandom(shuffleArray(filteredData))
+    }
+
+    const getCmt = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+        setCmts(res)
+      } catch (error) {
+        console.log(error);
+        
+      }
     }
 
     getWatch();
     getFilm();
     getEpisodes();
     getRandom()
+    getCmt()
 
   }, [])
+  
+  
 
+
+  // console.log(watch);
+  
 
   return (
     <>
       <div className="container-fluid bg-black p-0 text-white">
-
         {/* video phim */}
         <div className="container text-white">
-          {isClient ? <ReactPlayer className="w-100" height={550} style={{ marginTop: "-18px" }} url={watch.video_url} controls /> : 'Load...'}
-          <div className="mt-3 d-flex">
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</button>
-            <button className="me-3 btn btn-outline-light"><i class="fa-solid fa-comment"></i> Bình Luận</button>
-          </div>
+          <Video data={watch}></Video>
         </div>
         {/* video phim */}
 
         {/* Tập Phim */}
-        <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
-        <Episodes data={episodes}></Episodes>
+        {film.movie_type_id == 2 ? (<></>):(
+                <div style={{backgroundColor:"#808080"}}>
+                <div className=" ms-5 fs-2 mt-5">Danh Sách Tập Phim - Tập {watch.episode?.episode_number} </div>
+                  <Episodes data={episodes}></Episodes></div>)}
+        {/* <div className="fs-2 mt-5">Danh Sách Tập Phim</div>
+        <Episodes data={episodes}></Episodes> */}
         {/* Tập Phim */}
 
         {/* Card phim */}
@@ -105,8 +122,8 @@ export default function Watch({ params }) {
 
 
         {/* cmt */}
-        <div className="container mt-5 ">
-          <Comment data={film.comments}></Comment>
+        <div className="container mt-5 " id='target-section'>
+          <Comment data={film}></Comment>
         </div>
         {/* cmt */}
 

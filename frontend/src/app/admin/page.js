@@ -5,8 +5,10 @@ import Table from "./components/table";
 import Table2 from "./components/table2";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 export default function Home() {
+  const token = Cookies.get('token');
     const [films, setFilms] = useState([])
     const [types, setTypes] = useState([])
     const [genres, setGenres] = useState([])
@@ -48,7 +50,7 @@ export default function Home() {
 
       const getStatistical = async () => {
         try {
-          const token = localStorage.getItem('token');
+          // const token = localStorage.getItem('token');
           const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`, {
             headers: {
               'Authorization': `Bearer ${token}`,

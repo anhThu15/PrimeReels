@@ -31,7 +31,8 @@ export default function AnimeFilm() {
     };
 
     const fetchMovies = async () => {
-      const resRandom = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`);
+      // Fetch and filter random movies
+      const resRandom = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`);
       const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -39,23 +40,31 @@ export default function AnimeFilm() {
         }
         return array;
       };
-      setRandom(shuffleArray(resRandom.data));
+      const filteredRandom = resRandom.data.filter(movie => movie.status === 1);
+      setRandom(shuffleArray(filteredRandom));
 
-      const resBetter = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`);
-      resBetter.data.sort((a, b) => b.favorites_count - a.favorites_count);
-      setBetter(resBetter.data);
+      // Fetch and filter better movies
+      const resBetter = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`);
+      const filteredBetter = resBetter.data.filter(movie => movie.status === 1);
+      filteredBetter.sort((a, b) => b.favorites_count - a.favorites_count);
+      setBetter(filteredBetter);
 
-      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/country/Phim Mỹ`);
-      setCountry(resCountry.data.movies);
+      // Fetch and filter movies by country
+      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/country/Việt Nam`);
+      const filteredCountry = resCountry.data.movies.filter(movie => movie.status === 1);
+      setCountry(filteredCountry);
 
-      const resDate = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`);
-      resDate.data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      setDate(resDate.data);
+      // Fetch and filter new date movies
+      const resDate = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`);
+      const filteredDate = resDate.data.filter(movie => movie.status === 1);
+      filteredDate.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+      setDate(filteredDate);
 
-      // Fetch movies for each genre and store them in a single state
+      // Fetch movies for each genre and filter by status
       const genresFetchPromises = genres.map(async (genre) => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/1/${genre.genre_id}`);
-        return { genreId: genre.genre_id, movies: res.data.movies };
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/${genre.genre_id}`);
+        const filteredMovies = res.data.movies.filter(movie => movie.status === 1);
+        return { genreId: genre.genre_id, movies: filteredMovies };
       });
 
       const genresMovies = await Promise.all(genresFetchPromises);
@@ -129,7 +138,7 @@ export default function AnimeFilm() {
               </div>
             ))}
           </div>
-          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Mỹ</h2>
+          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Việt Nam</h2>
           <SlideShowAnother2 data={country} />
         </div>
       </div>

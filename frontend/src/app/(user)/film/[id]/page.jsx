@@ -1,18 +1,21 @@
 'use client'
 import Link from "next/link";
-import Comment from "../../components/coment";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SlideShowAnother from "../../components/slideshowAnother";
 import Episodes from "../../components/episodes";
+import Comment from "../../components/coment";
 import SlideShow from "../../components/slideshow";
+import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
 
 export default function film({params}){
   const id = params.id
-  const ep = 1
   const [film, setFilm] = useState([])
+  const [cmts, setCmts] = useState([])
+  const idEpisode = film.episode?.[0].episode_number
   const [episodes, setEpisodes] = useState([])
   const [random, setRandom] = useState([])
+  const token = Cookies.get('token');
 
   useEffect(() => {
     const getFilm = async () => {
@@ -28,7 +31,8 @@ export default function film({params}){
     const getEpisodes = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`,{ revalidate: 3600 }).then((res) => res.data)
-        setEpisodes(res)
+        const episodes = res.filter(episode => episode.status === 1);
+        setEpisodes(episodes)
       } catch (error) {
         console.log(error);
         
@@ -38,6 +42,7 @@ export default function film({params}){
     const getRandom = async () => {
       try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+        const filteredData = res.filter(item => item.status === 1);
         // Hàm xáo trộn mảng
         const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -48,19 +53,59 @@ export default function film({params}){
         }
         return array;
         };
-        setRandom(shuffleArray(res))
+        setRandom(shuffleArray(filteredData))
       } catch (error) {
         console.log(error);
+      }
+    }
+
+    const getCmt = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+        setCmts(res)
+      } catch (error) {
+        console.log(error);
+        
       }
     }
 
     getFilm()
     getEpisodes()
     getRandom()
-    
+    getCmt()
   },[])
+
+  const handleLove = async () => {
+    try {
+        // console.log(props.data.episode);
+        // const token = localStorage.getItem('token');
+        // console.log(id);
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`,{},{        
+            headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        }).then((res) => res.data)
+        
+        if(!res){
+            toast.error('Đã Được Thêm Vào Danh Sách Yêu Thích');
+        }else{
+            toast.success("Thêm Thành Công Vào Danh Sách Yêu Thích");
+        }
+            
+    } catch (error) {
+        // console.log(error);
+        if (error.response && error.response.data && error.response.data.message) {
+            toast.error(error.response.data.message);
+            return error.response.data.message; // Trả về hoặc xử lý message từ lỗi
+          } else {
+            console.error('An unexpected error occurred:', error);
+            return 'An unexpected error occurred';
+          }
+    }
+  }
   
 
+  // console.log(cmts)
 
     return(
         <>
@@ -73,7 +118,7 @@ export default function film({params}){
                           <h1 className=" fw-bold">{film.title}</h1>
                           <div className=" row" style={{width:400}}>
                              <div className="col"><i className="fa-regular fa-star"></i> {film.rating}</div>
-                             <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
+                             <div className="col"><i className="fa-regular fa-clock"></i> {film?.episode?.length}/{film.duration}</div>
                              <div className="col"><i className="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
                              {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                           </div>
@@ -82,7 +127,7 @@ export default function film({params}){
                           </div>
                           <div className="row mt-2">
                               <div className="col-1">
-                                <button className="btn btn-outline-light rounded-circle">
+                                <button className="btn btn-outline-light rounded-circle" onClick={() => handleLove()}>
                                     <i className="fa-solid fa-plus"></i>
                                 </button>
                               </div>
@@ -92,9 +137,9 @@ export default function film({params}){
                 </div>
                 <div className="col">
                   <img width={"100%"} height={"400px"} className=" bg-black opacity-75" src={film.banner} alt="" />
-                  { localStorage.getItem("token") ? (<Link href={`/watch/${id}`} className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
+                  <Link href={`/watch/${id}/${idEpisode}`} className=" btn btn-outline-light rounded-circle position-absolute" style={{right:"440px", top:"150px", width:"70px", height:"70px"}}>
                     <i className="fa-solid fa-play fs-1 ms-1 mt-2"></i>
-                  </Link>) : (<p className="alert alert-danger position-absolute" role="alert " style={{right:"440px", top:"150px"}}>Chưa Đăng Nhập, Mời Bạn <Link href={'/login'} className="nav-link fw-bold">Đăng Nhập</Link></p>)}
+                  </Link>
 
                 </div>                 
               </div>
@@ -140,7 +185,7 @@ export default function film({params}){
 
             {/* cmt */}
             <div className=" mt-5 container " style={{marginLeft:"90px" }}>
-                <Comment data={film.comments}></Comment>
+                <Comment data={film}></Comment>
             </div>
             {/* cmt */}
 
