@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import "../../globals.css";
 import Link from 'next/link';
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function UserBuyPackage() {
+    const router = useRouter()
     const [packags, setPackages] = useState([])
     const [vouchers, setVouchers] = useState([])
 
@@ -23,14 +25,18 @@ export default function UserBuyPackage() {
         getVouchers()
     },[])
 
+    const hanldeBack = () => {
+        router.back();
+    }
+
     // console.log(packags);
     
 
     return (
         <div className="container">
-            <div className="title-back">
+            <button onClick={hanldeBack} className=" btn btn title-back mt-2">
                 <i className="fa-solid fa-chevron-left"></i> Trở về
-            </div>
+            </button>
             <h4 className="mt-3">Đặc quyền VIP</h4>
             <div className="vip-menu">
                 <div className="vip-item">
@@ -69,7 +75,7 @@ export default function UserBuyPackage() {
                                             <div className="parkage-title">
                                                 <h6>{pk.name}</h6>
                                                 <p className="price">{pk.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
-                                                <p className="text">Không giới hạn phim trong vòng {pk.duration}h</p>
+                                                <p className="text">Không giới hạn phim trong vòng {pk.duration} Ngày</p>
                                             </div>
                                         </div>
                                         <div className="button-vip">

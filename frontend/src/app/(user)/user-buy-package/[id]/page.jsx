@@ -66,11 +66,24 @@ export default function UserPayMentPackageDetail({params}){
     const hanldeBack = () => {
         router.back();
     }
+
+    //  hàm tính ngày
+    const today = new Date();
+    const DaysLater = new Date(today);
+    DaysLater.setDate(today.getDate() + packages.duration);
+    
+    const DaysLaterString = DaysLater.toLocaleDateString("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh"
+    });
+    // console.log(DaysLaterString);
+    //  hàm tính ngày
+
+    
     
     
     return(
         <div className="container">
-            <button onClick={hanldeBack} className="title-back mt-2">
+            <button onClick={hanldeBack} className=" btn btn title-back mt-2">
                 <i className="fa-solid fa-chevron-left"></i> Trở về
             </button>
             <h4 className="mt-3">Chọn phương thức thanh toán</h4>
@@ -141,18 +154,18 @@ export default function UserPayMentPackageDetail({params}){
                             <div className="detail-date-package">
                                 <div className="effective-date">
                                     <span>Ngày hiệu lực</span>
-                                    <span>{packages.created_at}</span>
+                                    <span>{new Date()?.toLocaleDateString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"})}</span>
                                 </div>
                                 <div className="package-useto mt-2">
                                     <span>Sử dụng đến</span>
-                                    <span>{packages.updated_at}</span>
+                                    <span>{DaysLaterString}</span>
                                 </div>
                             </div>
                             <div className="divider-detail"></div>
                             <div className="package-price">
                                 <div className="price">
-                                    <span>Trị giá</span>
-                                    <span>{packages.price}đ</span>
+                                    <span>Mã Giảm Giá</span>
+                                    {/* <span>{packages.price?.toLocaleString("vi-VN", {style: "currency",currency: "VND"})}</span> */}
                                 </div>
                                 <div className="code-sales">
                                     <input type="text" {...register('voucher_name')} placeholder="Nhập mã giảm giá"  className="discount-code"/>
@@ -162,7 +175,7 @@ export default function UserPayMentPackageDetail({params}){
                             <div className="divider-detail"></div>
                             <div className="total-package">
                                 <span>Thành tiền</span>
-                                <span>{packages.price}</span>
+                                <span>{packages.price?.toLocaleString("vi-VN", {style: "currency",currency: "VND"})}</span>
                             </div>
                             <div className="button-pay">
                                 {/* <Link href="after-payment"> */}
