@@ -114,7 +114,6 @@ export default function Watch({ params }) {
         const userInvoices = res.data
                             .filter(invoice => invoice.user_id === user.user_id) 
                             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
         // hàm tính giây cho thgian dc phép xem 
         const calculateSecondsBetweenDates = (startDate, endDate) => {
                 const formatDate = (dateStr) => {
@@ -143,6 +142,7 @@ export default function Watch({ params }) {
         // hàm tính giây cho thgian dc phép xem 
 
         if(userInvoices){
+          // console.log(userInvoices[0].status === 'success');
             if(userInvoices[0].status === 'success'){
               const currentDate = new Date();
               const options = {
@@ -160,7 +160,7 @@ export default function Watch({ params }) {
               const seconds = calculateSecondsBetweenDates(startDate, endDate);
               console.log(startDate, endDate, seconds);
               // console.log('xử  lý coi theo ngày')
-              // console.log(typeof(seconds));
+              // console.log(seconds);
               
                 if(seconds > 0){
                   setCount(seconds); 
@@ -178,8 +178,12 @@ export default function Watch({ params }) {
                   setCount(429)
                 }
             }
-            else if(userInvoices[0].status === 'pending'){
-              toast.error('Bạn Chưa Thanh Toán Vui Lòng Thanh Toán')
+            if (userInvoices[0].status === 'pending') {
+              toast.error('Bạn Chưa Thanh Toán Vui Lòng Thanh Toán');
+              setCount(429);  // Đặt giá trị đếm cho trạng thái pending
+            } else if (userInvoices[0].status === 'fail') {
+              toast.error('Thanh Toán Thất Bại. Vui Lòng Thử Lại');
+              setCount(429);  // Đặt giá trị đếm cho trạng thái fail
             }
         }
 
