@@ -10,6 +10,9 @@ import Cookies from 'js-cookie';
 
 
 export default function InfomationUser() {
+    const token = Cookies.get('token');
+    const userCookie = Cookies.get('user');
+    const user = userCookie ? JSON.parse(userCookie) : null;
     const [activeSection, setActiveSection] = useState('userInfo');
     const [userData, setUserData] = useState({
         username: '',
@@ -21,6 +24,7 @@ export default function InfomationUser() {
     const [modalOpen, setModalOpen] = useState(false);
     const [love, setLove] = useState([]);
     const [history, setHistory] = useState([]);
+    const [invoice, setInvoice] = useState([]);
 
 
     useEffect(() => {
@@ -131,7 +135,6 @@ export default function InfomationUser() {
     //  xử lý load danh sách yêu thích
     useEffect(() => {
         const getLove = async () => {
-            const token = Cookies.get('token');
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
                     headers: {
@@ -145,10 +148,11 @@ export default function InfomationUser() {
         };
         getLove();
     }, [love]);
+    //  xử lý load danh sách yêu thích
 
     const hanldeRemoveLove = async (id) => {
         // alert(id)
-        const token = Cookies.get('token');
+        // const token = Cookies.get('token');
         try {
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`, {
                 headers: {
@@ -176,7 +180,7 @@ export default function InfomationUser() {
     // xử lý load ds lịch sử đã xem 
     useEffect(() => {
         const getHistory = async () => {
-            const token = Cookies.get('token');
+            // const token = Cookies.get('token');
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`,{        
                     headers: {
@@ -191,8 +195,23 @@ export default function InfomationUser() {
         getHistory()
     },[history])
     // console.log(history);
-    
     // xử lý load ds lịch sử đã xem 
+
+    // xử lý load ds dịch vụ 
+    useEffect(() => {
+        const getInvoice = async () => {
+            try {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 }).then((res) => res.data)
+                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id) 
+                setInvoice(userInvoices)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getInvoice()
+    },[invoice])
+    console.log(invoice);
+    // xử lý load ds dịch vụ 
 
 
     return (
@@ -216,7 +235,7 @@ export default function InfomationUser() {
                             onClick={() => showSection('u-service-buy')}
                             className={activeSection === 'u-service-buy' ? 'active' : ''}
                         >
-                            Dịch vụ đã xem
+                            Dịch vụ đã dùng
                         </a>
                         {activeSection === 'u-service-buy' && <span className="active-indicator" />}
                     </li>
@@ -360,55 +379,42 @@ export default function InfomationUser() {
                 <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
                 <div className="u-service-buy mt-3" id="u-service-buy" style={{ display: 'none' }}>
                     <div className="row">
-                        <div className="col-md-6 mb-4">
-                            <div className="card box-card">
-                                <div className="row g-0">
-                                    <div className="col-md-4">
-                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body">
-                                            <div>
-                                                <h5 className="u-service-buy-title">Gói VIP 39K</h5>
-                                                <button className="btn btn-sm btn-success">Đang sử dụng</button>
+                        {invoice.map((iv) => {
+                              let statusButton;
+                              // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
+                              if (iv.status === 'pending') {
+                                statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
+                              } else if (iv.status === 'success') {
+                                statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
+                              } else if (iv.status === 'fail') {
+                                statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
+                              }
+                            return(
+                                <>
+                                    <div className="col-md-6 mb-4">
+                                        <div className="card box-card">
+                                            <div className="row g-0">
+                                                <div className="col-md-4">
+                                                    <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
+                                                </div>
+                                                <div className="col-md-8">
+                                                    <div className="card-body">
+                                                        <div>
+                                                            <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
+                                                            {statusButton}
+                                                        </div>
+                                                        <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
+                                                        <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name):('Không Dùng')}</p>
+                                                        <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
+                                                        <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <p className="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
-                                            <p className="card-text text-end">
-                                                <small className="text-white">
-                                                    <i className="fa-solid fa-chevron-left"></i>
-                                                    Xem chi tiết
-                                                </small>
-                                            </p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 mb-4">
-                            <div className="card box-card">
-                                <div className="row g-0">
-                                    <div className="col-md-4">
-                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body">
-                                            <div>
-                                                <h5 className="u-service-buy-title">Gói VIP 39K</h5>
-                                                <button className="btn btn-sm btn-success">Đang sử dụng</button>
-                                            </div>
-                                            <p className="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
-                                            <p className="card-text text-end">
-                                                <small className="text-white">
-                                                    <i className="fa-solid fa-chevron-left"></i>
-                                                    Xem chi tiết
-                                                </small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                                </>
+                            )
+                        })}
                     </div>
                 </div>
 
