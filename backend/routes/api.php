@@ -39,6 +39,8 @@ Route::middleware(['jwt.verify'])->get('profile', [ProfileController::class, 'pr
 Route::post('login', [AuthController::class, 'login']); // Đăng nhập
 //______________________________________REGISTER_______________________________________________
 Route::post('register', [AuthController::class, 'register']); // Đăng ký
+//____________________________________Lấy thông tin bằng token________________________
+Route::get('user', [AuthController::class, 'getUser'])->middleware('jwt.auth');
 //______________________________________VERIFY MAIL_______________________________________________
 Route::get('verify-email/{userId}/{token}', [AuthController::class, 'verifyEmail']); // Xác thực email
 //______________________________________LOGIN MAIL_______________________________________________

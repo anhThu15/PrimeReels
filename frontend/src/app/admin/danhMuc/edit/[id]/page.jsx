@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { toast } from "react-toastify";
 export default function UpdateMovieType({ params }) {
     const router = useRouter();
     const { id } = params;
@@ -32,11 +32,14 @@ export default function UpdateMovieType({ params }) {
                 });
                 if (res.ok) {
                     console.log('Cập nhật thành công');
+                    toast.success("Cập nhật thành công")
                     router.back();
                 } else {
+                    toast.error("Thao tác thất bại hãy kiểm tra lại!")
                     console.error('Lỗi khi cập nhật thể loại:', res.status);
                 }
             } catch (error) {
+                toast.error("Thao tác thất bại hãy kiểm tra lại!")
                 console.error('Lỗi khi cập nhật thể loại:', error);
             }
         },

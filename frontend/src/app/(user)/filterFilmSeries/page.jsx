@@ -31,6 +31,7 @@ export default function FilterFilmSeries() {
     }, []);
 
     useEffect(() => {
+        // Phân tích URL để lấy genreId, movieTypeId và country
         const { searchParams } = new URL(window.location.href);
         const genreParam = searchParams.get('genreId');
         const movieTypeParam = searchParams.get('movieTypeId');
@@ -38,7 +39,6 @@ export default function FilterFilmSeries() {
 
         if (genreParam) {
             setGenreId(genreParam);
-            setGenreName(getGenreName(genreParam));
         }
 
         if (movieTypeParam) {
@@ -53,16 +53,26 @@ export default function FilterFilmSeries() {
     }, []);
 
     useEffect(() => {
+        // Cập nhật genreName khi genreId và genres được chọn 
+        if (genreId && genres.length > 0) {
+            setGenreName(getGenreName(genreId));
+        }
+    }, [genreId, genres]);
+
+    useEffect(() => {
+        // Lấy danh sách phim dựa trên genreId, movieTypeId và country
         if (genreId || country) {
             fetchMovies(genreId, movieTypeId, country);
         }
     }, [genreId, movieTypeId, country]);
 
+    //dùng để lấy tên thể loại từ genres dựa trên genreId
     const getGenreName = (id) => {
         const genre = genres.find(g => g.genre_id === Number(id));
         return genre ? genre.name : '';
     };
 
+    //dùng để lấy tên loại phim từ movieTypeId
     const getMovieTypeName = (id) => {
         switch (id) {
             case 1: return 'Phim Bộ';
@@ -72,6 +82,7 @@ export default function FilterFilmSeries() {
         }
     };
 
+    //Sau khi lấy dữ liệu, danh sách phim sẽ được lọc dựa trên movieTypeId và country
     const fetchMovies = async (genreId, movieTypeId, country) => {
         setLoading(true);
         try {
@@ -91,6 +102,7 @@ export default function FilterFilmSeries() {
         }
     };
 
+    //dùng để cập nhật genreId và genreName khi người dùng chọn thể loại mới từ dropdown
     const handleGenreChange = (event) => {
         const selectedGenreId = event.target.value;
         setGenreId(selectedGenreId);
@@ -99,22 +111,24 @@ export default function FilterFilmSeries() {
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.set('genreId', selectedGenreId);
         newUrl.searchParams.set('movieTypeId', movieTypeId);
+        // URL sẽ được cập nhật với giá trị genreId mới và điều hướng đến URL mới.
 
         if (country) {
             newUrl.searchParams.set('country', country);
         } else {
             newUrl.searchParams.delete('country');
         }
-        
+
         router.push(newUrl.toString());
     };
 
+    // Hàm handleCountryChange dùng để cập nhật country khi người dùng chọn quốc gia mới từ dropdown.
     const handleCountryChange = (event) => {
         const selectedCountry = event.target.value;
         setCountry(selectedCountry);
 
         const newUrl = new URL(window.location.href);
-        
+        //URL sẽ được cập nhật với quốc gia mới và điều hướng đến URL đó.
         if (selectedCountry) {
             newUrl.searchParams.set('country', selectedCountry);
         } else {
@@ -124,6 +138,7 @@ export default function FilterFilmSeries() {
         router.push(newUrl.toString());
     };
 
+    // dùng để tạo tiêu đề động cho trang dựa trên loại phim, quốc gia, và thể loại.
     const getTitle = () => {
         const movieType = getMovieTypeName(movieTypeId);
         const genre = genreName;
@@ -147,6 +162,7 @@ export default function FilterFilmSeries() {
                                     id="genreSelect"
                                     className="form-select"
                                     onChange={handleGenreChange}
+                                    value={genreId}
                                 >
                                     <option value="">-- Chọn thể loại --</option>
                                     {genres.map(genre => (
@@ -160,12 +176,14 @@ export default function FilterFilmSeries() {
                                     id="countrySelect"
                                     className="form-select"
                                     onChange={handleCountryChange}
+                                    value={country}
                                 >
                                     <option value="">-- Chọn quốc gia --</option>
-                                    <option value="Phim Mỹ">Phim Mỹ</option>
+                                    <option value="Hoa Kỳ">Hoa Kỳ</option>
                                     <option value="Trung Quốc">Trung Quốc</option>
                                     <option value="Hàn Quốc">Hàn Quốc</option>
                                     <option value="Việt Nam">Việt Nam</option>
+                                    <option value="Pháp">Pháp</option>
                                 </select>
                             </div>
                         </div>
@@ -202,7 +220,7 @@ export default function FilterFilmSeries() {
                         ) : (
                             !loading && (
                                 <div className="alert alert-danger no-movies" role="alert">
-                                    Không có thể loại phim này trong phim lẻ
+                                    Không có thể loại phim này trong {movieTypeName}
                                 </div>
                             )
                         )}

@@ -10,9 +10,6 @@ import Cookies from 'js-cookie';
 
 
 export default function InfomationUser() {
-    const token = Cookies.get('token');
-    const userCookie = Cookies.get('user');
-    const user = userCookie ? JSON.parse(userCookie) : null;
     const [activeSection, setActiveSection] = useState('userInfo');
     const [userData, setUserData] = useState({
         username: '',
@@ -24,13 +21,17 @@ export default function InfomationUser() {
     const [modalOpen, setModalOpen] = useState(false);
     const [love, setLove] = useState([]);
     const [history, setHistory] = useState([]);
-    const [invoice, setInvoice] = useState([]);
+    const [isUpdated, setIsUpdated] = useState(false);
 
 
     useEffect(() => {
         showSection(activeSection);
         fetchUserData();
     }, [activeSection]);
+
+    useEffect(() => {
+        fetchUserData();
+    }, [isUpdated]);
 
     const showSection = (sectionId) => {
         setActiveSection(sectionId);
@@ -45,14 +46,12 @@ export default function InfomationUser() {
     };
 
     const fetchUserData = async () => {
-        // const token = document.cookie.split('; ').find(row => row.startsWith('token='));
         const token = Cookies.get('token');
         if (token) {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
                     method: 'GET',
                     headers: {
-                        // 'Authorization': `Bearer ${token.split('=')[1]}`,
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
@@ -64,7 +63,7 @@ export default function InfomationUser() {
                         gender: data.user.gender,
                         email: data.user.email,
                         password: '',
-                        avatar: data.user.avatar || '' // Initialize avatar
+                        avatar: data.user.avatar || ''
                     });
                 }
             } catch (error) {
@@ -78,7 +77,7 @@ export default function InfomationUser() {
         if (type === 'radio') {
             setUserData(prevData => ({
                 ...prevData,
-                gender: value // Update gender
+                gender: value
             }));
         } else {
             setUserData(prevData => ({
@@ -88,16 +87,16 @@ export default function InfomationUser() {
         }
     };
 
+    //xử lý cài đặt tài khoản
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = Cookies.get('token');
-        // const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+    
         if (token) {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
                     method: 'PUT',
                     headers: {
-                        // 'Authorization': `Bearer ${token.split('=')[1]}`,
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
@@ -107,26 +106,30 @@ export default function InfomationUser() {
                         avatar: userData.avatar
                     }),
                 });
-
+    
                 const result = await response.json();
-                if (result.status === 'success') {
-                    alert('Thông tin đã được cập nhật thành công!');
-                    const updatedUser = {
-                        ...JSON.parse(document.cookie.split('; ').find(row => row.startsWith('user='))?.split('=')[1] || '{}'),
-                        user_name: userData.username,
+                if (response.status === 200) {
+                    // Thông báo thành công
+                    window.location.reload();
+                    toast.success('Thông tin đã được cập nhật thành công!');
+                    // Cập nhật lại state với thông tin đã nhập
+                    setUserData(prevData => ({
+                        ...prevData,
+                        username: userData.username,
                         gender: userData.gender,
                         avatar: userData.avatar
-                    };
-
-                    document.cookie = `user=${JSON.stringify(updatedUser)}; path=/;`;
-                    window.location.reload();
-                    setUserData(updatedUser);
+                    }));
+                    setIsUpdated(!isUpdated);
                 } else {
-                    alert('Có lỗi xảy ra: ' + result.message);
+                    // Xử lý lỗi nếu cập nhật không thành công
+                    toast.error('Có lỗi xảy ra: ' + (result.message || 'Không thể cập nhật thông tin.'));
                 }
             } catch (error) {
-                console.error('Error updating user data:', error);
+                console.error('Lỗi khi cập nhật thông tin người dùng:', error);
+                toast.error('Đã xảy ra lỗi trong quá trình cập nhật thông tin.');
             }
+        } else {
+            toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
         }
     };
     //  xử lý cài đặt tài khoản
@@ -135,6 +138,7 @@ export default function InfomationUser() {
     //  xử lý load danh sách yêu thích
     useEffect(() => {
         const getLove = async () => {
+            const token = Cookies.get('token');
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
                     headers: {
@@ -147,12 +151,11 @@ export default function InfomationUser() {
             }
         };
         getLove();
-    }, [love]);
-    //  xử lý load danh sách yêu thích
+    },[isUpdated]); // Chỉ chạy khi có cập nhật
 
     const hanldeRemoveLove = async (id) => {
         // alert(id)
-        // const token = Cookies.get('token');
+        const token = Cookies.get('token');
         try {
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`, {
                 headers: {
@@ -161,12 +164,7 @@ export default function InfomationUser() {
             });
             if(res){
                 toast.success('Đá Xóa Thành Công Ra Khỏi Danh Sách Yêu Thích')
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-                setLove(res.data);
+                window.location.reload()
             }else{
                 toast.error('Thất Bại')
             }
@@ -180,7 +178,7 @@ export default function InfomationUser() {
     // xử lý load ds lịch sử đã xem 
     useEffect(() => {
         const getHistory = async () => {
-            // const token = Cookies.get('token');
+            const token = Cookies.get('token');
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`,{        
                     headers: {
@@ -193,25 +191,10 @@ export default function InfomationUser() {
             }
         }
         getHistory()
-    },[history])
+    },[isUpdated]) // Chỉ chạy khi có cập nhật
     // console.log(history);
+    
     // xử lý load ds lịch sử đã xem 
-
-    // xử lý load ds dịch vụ 
-    useEffect(() => {
-        const getInvoice = async () => {
-            try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 }).then((res) => res.data)
-                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id) 
-                setInvoice(userInvoices)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getInvoice()
-    },[invoice])
-    console.log(invoice);
-    // xử lý load ds dịch vụ 
 
 
     return (
@@ -235,7 +218,7 @@ export default function InfomationUser() {
                             onClick={() => showSection('u-service-buy')}
                             className={activeSection === 'u-service-buy' ? 'active' : ''}
                         >
-                            Dịch vụ đã dùng
+                            Dịch vụ đã xem
                         </a>
                         {activeSection === 'u-service-buy' && <span className="active-indicator" />}
                     </li>
@@ -379,42 +362,55 @@ export default function InfomationUser() {
                 <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
                 <div className="u-service-buy mt-3" id="u-service-buy" style={{ display: 'none' }}>
                     <div className="row">
-                        {invoice.map((iv) => {
-                              let statusButton;
-                              // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
-                              if (iv.status === 'pending') {
-                                statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
-                              } else if (iv.status === 'success') {
-                                statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
-                              } else if (iv.status === 'fail') {
-                                statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
-                              }
-                            return(
-                                <>
-                                    <div className="col-md-6 mb-4">
-                                        <div className="card box-card">
-                                            <div className="row g-0">
-                                                <div className="col-md-4">
-                                                    <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
-                                                </div>
-                                                <div className="col-md-8">
-                                                    <div className="card-body">
-                                                        <div>
-                                                            <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
-                                                            {statusButton}
-                                                        </div>
-                                                        <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
-                                                        <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name):('Không Dùng')}</p>
-                                                        <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
-                                                        <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
-                                                    </div>
-                                                </div>
+                        <div className="col-md-6 mb-4">
+                            <div className="card box-card">
+                                <div className="row g-0">
+                                    <div className="col-md-4">
+                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-body">
+                                            <div>
+                                                <h5 className="u-service-buy-title">Gói VIP 39K</h5>
+                                                <button className="btn btn-sm btn-success">Đang sử dụng</button>
                                             </div>
+                                            <p className="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
+                                            <p className="card-text text-end">
+                                                <small className="text-white">
+                                                    <i className="fa-solid fa-chevron-left"></i>
+                                                    Xem chi tiết
+                                                </small>
+                                            </p>
                                         </div>
                                     </div>
-                                </>
-                            )
-                        })}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6 mb-4">
+                            <div className="card box-card">
+                                <div className="row g-0">
+                                    <div className="col-md-4">
+                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-body">
+                                            <div>
+                                                <h5 className="u-service-buy-title">Gói VIP 39K</h5>
+                                                <button className="btn btn-sm btn-success">Đang sử dụng</button>
+                                            </div>
+                                            <p className="card-text">Thông tin mô tả về dịch vụ 1. Đây là nơi bạn có thể thêm một số chi tiết.</p>
+                                            <p className="card-text text-end">
+                                                <small className="text-white">
+                                                    <i className="fa-solid fa-chevron-left"></i>
+                                                    Xem chi tiết
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

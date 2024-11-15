@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 export default function AddAccount() {
     const router = useRouter();
@@ -43,11 +44,12 @@ export default function AddAccount() {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Tạo tài khoản thành công!');
+                    toast.success('Tạo tài khoản thành công!')
                     router.push('/admin/account'); // Redirect to account page after creation
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
                     alert('Tạo tài khoản không thành công!');
+                    toast.error('Tạo tài khoản không thành công!');
                 }
             } catch (error) {
                 console.error('Lỗi khi tạo tài khoản:', error);

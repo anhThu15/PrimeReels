@@ -8,109 +8,114 @@ import axios from "axios";
 import Banner from "../components/banner";
 import SlideShow2 from "../components/slideshow2";
 import SlideShow3 from "../components/slideshow3";
-import SlideShow4 from "../components/slideshow4";
 import SlideShowAnother2 from "../components/slideshowAnother2";
 import { useRouter } from "next/navigation";
 
-export default function AnimeFilm() {
-  const [moviesByGenre, setMoviesByGenre] = useState({});
-  const [random, setRandom] = useState([]);
-  const [better, setBetter] = useState([]);
-  const [country, setCountry] = useState([]);
-  const [date, setDate] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const [selectedGenreId, setSelectedGenre] = useState('');
-  const [filteredMovies, setFilteredMovies] = useState([]);
-
+export default function FilmSeries() {
+  // Tạo state để lưu trữ dữ liệu phim cho các danh mục khác nhau
+  const [moviesData, setMoviesData] = useState({
+    random: [],
+    better: [],
+    country: [],
+    date: [],
+    moviesByGenre: {},
+  });
+  const [genres, setGenres] = useState([]); // Tạo state để lưu danh sách thể loại phim
+  const [selectedGenreId, setSelectedGenre] = useState(''); // Lưu thể loại được chọn
+  const [filteredMovies, setFilteredMovies] = useState([]); // Lưu danh sách phim được lọc theo thể loại
   const router = useRouter();
 
   useEffect(() => {
-    const fetchGenres = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`);
-      setGenres(res.data);
-    };
+    const fetchGenresAndMovies = async () => {
+      try {
+        // Gọi API để lấy thông tin về thể loại và phim cùng lúc bằng Promise.all
+        const [resGenres, resMovies] = await Promise.all([
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`), // Lấy danh sách thể loại phim
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`) // Lấy danh sách phim
+        ]);
 
-    const fetchMovies = async () => {
-      // Fetch and filter random movies
-      const resRandom = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`);
-      const shuffleArray = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+        const genresData = resGenres.data; // Lưu thể loại phim
+        setGenres(genresData); // Cập nhật state cho danh sách thể loại
+
+        const moviesData = resMovies.data.filter(movie => movie.status === 1); // Lọc các phim có trạng thái là 1 (hoạt động)
+
+        // Hàm để xáo trộn danh sách phim cho phần phim ngẫu nhiên
+        const shuffleArray = (array) => {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+        };
+
+        // Chuẩn bị dữ liệu cho các phần danh sách phim khác nhau
+        const randomMovies = shuffleArray([...moviesData]); // Phim ngẫu nhiên
+        const betterMovies = [...moviesData].sort((a, b) => b.favorites_count - a.favorites_count); // Phim được yêu thích nhất
+        const dateMovies = [...moviesData].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)); // Phim mới nhất
+        const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/country/Việt Nam`);
+        const countryMovies = resCountry.data.movies.filter(movie => movie.status === 1); // Lấy danh sách phim theo quốc gia (Việt Nam)
+
+        // Phân loại phim theo từng thể loại (để hiển thị mục Phim theo thể loại)
+        const genresMovies = {};
+        for (let genre of genresData) {
+          const genreMovies = moviesData.filter(movie => movie.genre_id === genre.genre_id);
+          if (genreMovies.length > 0) { // Chỉ thêm thể loại nếu có phim
+            genresMovies[genre.genre_id] = genreMovies;
+          }
         }
-        return array;
-      };
-      const filteredRandom = resRandom.data.filter(movie => movie.status === 1);
-      setRandom(shuffleArray(filteredRandom));
 
-      // Fetch and filter better movies
-      const resBetter = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`);
-      const filteredBetter = resBetter.data.filter(movie => movie.status === 1);
-      filteredBetter.sort((a, b) => b.favorites_count - a.favorites_count);
-      setBetter(filteredBetter);
-
-      // Fetch and filter movies by country
-      const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/country/Việt Nam`);
-      const filteredCountry = resCountry.data.movies.filter(movie => movie.status === 1);
-      setCountry(filteredCountry);
-
-      // Fetch and filter new date movies
-      const resDate = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`);
-      const filteredDate = resDate.data.filter(movie => movie.status === 1);
-      filteredDate.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      setDate(filteredDate);
-
-      // Fetch movies for each genre and filter by status
-      const genresFetchPromises = genres.map(async (genre) => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/${genre.genre_id}`);
-        const filteredMovies = res.data.movies.filter(movie => movie.status === 1);
-        return { genreId: genre.genre_id, movies: filteredMovies };
-      });
-
-      const genresMovies = await Promise.all(genresFetchPromises);
-      const moviesMap = genresMovies.reduce((acc, { genreId, movies }) => {
-        acc[genreId] = movies;
-        return acc;
-      }, {});
-
-      setMoviesByGenre(moviesMap);
+        // Cập nhật state với các dữ liệu đã xử lý
+        setMoviesData({
+          random: randomMovies,
+          better: betterMovies,
+          country: countryMovies,
+          date: dateMovies,
+          moviesByGenre: genresMovies,
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error); // Xử lý lỗi khi gọi API
+      }
     };
 
-    fetchGenres();
-    fetchMovies();
-  }, [genres]);
+    // Gọi hàm để lấy thông tin thể loại và phim
+    fetchGenresAndMovies();
+  }, []);
 
   useEffect(() => {
     let newFilteredMovies = [];
 
     if (selectedGenreId) {
-      newFilteredMovies = moviesByGenre[selectedGenreId] || [];
+      // Nếu người dùng chọn một thể loại, lọc danh sách phim theo thể loại
+      newFilteredMovies = moviesData.moviesByGenre[selectedGenreId] || [];
       setFilteredMovies(newFilteredMovies);
     } else {
+      // Nếu không chọn thể loại, hiển thị tất cả phim từ các danh mục
       setFilteredMovies([
-        ...Object.values(moviesByGenre).flat(),
-        ...random,
-        ...better,
-        ...country,
-        ...date,
+        ...Object.values(moviesData.moviesByGenre).flat(), // Tất cả phim theo thể loại
+        ...moviesData.random, // Phim ngẫu nhiên
+        ...moviesData.better, // Phim được yêu thích nhất
+        ...moviesData.country, // Phim theo quốc gia (Việt Nam)
+        ...moviesData.date, // Phim mới cập nhật
       ]);
     }
-  }, [selectedGenreId, moviesByGenre, random, better, country, date]);
+  }, [selectedGenreId, moviesData]);
 
+  // Hàm xử lý khi người dùng thay đổi thể loại phim (trên giao diện)
   const handleGenreChange = (event) => {
     const selectedGenreId = event.target.value;
     setSelectedGenre(selectedGenreId);
 
     if (selectedGenreId) {
-      router.push(`/filterFilmSeries?genreId=${selectedGenreId}&movieTypeId=3`);
+      router.push(`/filterFilmSeries?genreId=${selectedGenreId}&movieTypeId=3`); // Điều hướng đến trang lọc phim theo thể loại
     }
   };
 
+  // Giao diện trang
   return (
     <>
       <div className="container-fluid bg-dark p-0 text-white">
         <div className="container-fluid p-0">
-          <Banner />
+          <Banner /> {/* Hiển thị banner */}
           <div className="container">
             <div className="group-select-box">
               <div className="form-group">
@@ -124,22 +129,33 @@ export default function AnimeFilm() {
               </div>
             </div>
           </div>
-          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Đề Xuất Hôm Nay</h2>
-          <SlideShow data={random} />
-          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Cập Nhập Mới Nhất</h2>
-          <SlideShowAnother data={date} />
-          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Được Quan Tâm Nhất</h2>
-          <SlideShow2 data={better} />
+          {/* Hiển thị các danh mục phim */}
           <div>
-            {Object.keys(moviesByGenre).map((genreId) => (
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Đề Xuất Hôm Nay</h2>
+            <SlideShow data={moviesData.random} />
+          </div>
+          <div>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Cập Nhập Mới Nhất</h2>
+            <SlideShowAnother data={moviesData.date} />
+          </div>
+          <div>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Được Quan Tâm Nhất</h2>
+            <SlideShow2 data={moviesData.better} />
+          </div>
+          <div>
+            {Object.keys(moviesData.moviesByGenre).map((genreId) => (
               <div key={genreId}>
-                <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>{genres.find(g => g.genre_id == genreId)?.name}</h2>
-                <SlideShow3 data={moviesByGenre[genreId]} />
+                <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>
+                  {genres.find(g => g.genre_id == genreId)?.name}
+                </h2>
+                <SlideShow3 data={moviesData.moviesByGenre[genreId]} />
               </div>
             ))}
           </div>
-          <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Việt Nam</h2>
-          <SlideShowAnother2 data={country} />
+          <div>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Việt Nam</h2>
+            <SlideShowAnother2 data={moviesData.country} />
+          </div>
         </div>
       </div>
     </>

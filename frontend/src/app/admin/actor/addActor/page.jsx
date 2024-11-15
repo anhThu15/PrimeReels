@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 export default function AddActor() {
     const router = useRouter();
@@ -41,11 +42,13 @@ export default function AddActor() {
                 });
 
                 if (response.ok) {
-                    setMessage('Thêm diễn viên thành công!');
+                    // setMessage('Thêm diễn viên thành công!');
+                    toast.success('Thêm diễn viên thành công!')
                     router.back();
                 } else {
                     const errorData = await response.json();
-                    setMessage(`Lỗi: ${errorData.message}`);
+                    // setMessage(`Lỗi: ${errorData.message}`);
+                    toast.error("Lỗi khi thêm diễn viên!")
                 }
             } catch (error) {
                 setMessage('Đã xảy ra lỗi, vui lòng thử lại!');
@@ -86,7 +89,7 @@ export default function AddActor() {
                 <h3 className="align-items-center">Tạo mới diễn viên</h3>
             </div>
             <form className="p-4 shadow mt-2 rounded" onSubmit={formik.handleSubmit}>
-                {message && <div className="alert alert-info">{message}</div>}
+                {/* {message && <div className="alert alert-info">{message}</div>} */}
                 <button type="submit" className="btn btn-primary mb-3">Thêm</button>
                 <div className="row">
                     <div className="col-md-8">

@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
+import axios from "axios";
 export default function HeaderUser() {
   const router = useRouter();
   const pathName = usePathname();
@@ -15,22 +16,34 @@ export default function HeaderUser() {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); 
 
-
   useEffect(() => {
     const token = Cookies.get('token');
     if (token) {
-      setIsLoggedIn(true);
-      const userCookie = Cookies.get('user');
-      if (userCookie) {
-        const user = JSON.parse(userCookie);
-        setUserName(user.user_name);
-        setUserRole(user.role);
-        if (user.avatar) {
-          setUserAvatar(user.avatar);
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          const user = response.data.user;
+          setUserName(user.user_name);
+          setUserRole(user.role);
+          setIsLoggedIn(true);
+          const avatarUrl = user.avatar ? user.avatar : '';
+          if (avatarUrl) {
+            setUserAvatar(avatarUrl);
+          } else {
+            setUserAvatar('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
+          }
+          }
+      })
+      .catch(error => {
+        console.error("Error fetching user data:", error);
+        setIsLoggedIn(false);
+      });
     }
-  }, []);
+  }, [router]);
 
   const handleLogout = () => {
     Cookies.remove("token", { path: '/' });
@@ -43,8 +56,9 @@ export default function HeaderUser() {
   };
   
 
-  const toggleSearch = () => setShowSearch(!showSearch);
+  const toggleSearch = () => setShowSearch(!showSearch); //mở input search
 
+  //xử lý search theo query
   const handleSearchSubmit = (e) => {
     if (e.key === 'Enter' || e.type === 'click') {
       if (searchQuery.trim()) {

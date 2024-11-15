@@ -5,9 +5,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 export default function Register() {
-    
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
     const formik = useFormik({
@@ -30,6 +31,7 @@ export default function Register() {
                 .required('Vui lòng nhập lại mật khẩu')
         }),
         onSubmit: async (values) => {
+            setIsLoading(true);
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
                     method: 'POST',
@@ -50,13 +52,13 @@ export default function Register() {
                     toast.success(data.message);
                     console.log(response)
                     router.push("/login");
-                    // localStorage.setItem('email_verification_token', data.email_verification_token);
                 } else {
                     toast.error(data.message || 'Đăng ký không thành công');
                 }
             } catch (error) {
                 toast.error('Có lỗi xảy ra. Vui lòng thử lại.');
             }
+            setIsLoading(false);
         },
     });
 
@@ -119,7 +121,15 @@ export default function Register() {
                             </div>
 
                             <div className="button-submit">
-                                <button type="submit" name="submit">Đăng ký</button>
+                                <button type="submit" name="submit" disabled={isLoading}>
+                                    {isLoading ? (
+                                        <div className="spinner-border text-dark" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div>
+                                    ) : (
+                                        'Đăng ký'
+                                    )}
+                                </button>
                             </div>
 
                             <div className="mt-2 text-white text-center">

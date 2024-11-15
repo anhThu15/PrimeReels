@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
-
+import { toast } from "react-toastify";
 export default function VoucherType() {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -68,11 +68,13 @@ export default function VoucherType() {
                 });
                 if (res.ok) {
                     alert('Thể loại voucher đã được thêm thành công!');
+                    toast.success('Thể loại voucher đã được thêm thành công!');
                     fetchVoucherTypes();  // Refresh the list
                     formik.resetForm();   // Reset the form
                 } else {
                     console.error('Lỗi khi thêm thể loại voucher:', res.status);
-                    alert('Lỗi khi thêm thể loại voucher');
+                    // alert('Lỗi khi thêm thể loại voucher');
+                    toast.error('Lỗi khi thêm thể loại voucher');
                 }
             } catch (error) {
                 console.error('Lỗi Post request:', error);

@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { toast } from "react-toastify";
 export default function UpdateAccountAdmin({ params }) {
     const { id } = params; // Get the ID from the params
     const router = useRouter();
@@ -40,11 +40,11 @@ export default function UpdateAccountAdmin({ params }) {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Cập nhật tài khoản thành công!');
+                    toast.success('Cập nhật tài khoản thành công!')
                     router.back();
                 } else {
                     console.error('Lỗi khi cập nhật tài khoản:', res.status);
-                    alert('Cập nhật không thành công!');
+                    toast.error('Cập nhật không thành công!')
                 }
             } catch (error) {
                 console.error('Lỗi khi cập nhật tài khoản:', error);

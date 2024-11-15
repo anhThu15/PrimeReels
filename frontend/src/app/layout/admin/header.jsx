@@ -1,9 +1,12 @@
+//headerAdmin updated similar to HeaderUser
 "use client";
 import Link from "next/link";
 import "../../../app/globals.css";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
+import axios from "axios";
 
 export default function HeaderAdmin() {
   const router = useRouter();
@@ -14,23 +17,37 @@ export default function HeaderAdmin() {
   const [userAvatar, setUserAvatar] = useState('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get('token');
     if (token) {
-      setIsLoggedIn(true);
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        setUserName(user.user_name);
-        setUserRole(user.role);
-        if (user.avatar) {
-          setUserAvatar(user.avatar);
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          const user = response.data.user;
+          setUserName(user.user_name);
+          setUserRole(user.role);
+          setIsLoggedIn(true);
+          const avatarUrl = user.avatar ? user.avatar : '';
+          if (avatarUrl) {
+            setUserAvatar(avatarUrl);
+          } else {
+            setUserAvatar('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
+          }
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching user data:", error);
+        setIsLoggedIn(false);
+      });
     }
-  }, []);
+  }, [router]);
 
   const handleLogout = () => {
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
-    document.cookie = "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=strict; secure";
+    Cookies.remove("token", { path: '/' });
+    Cookies.remove("user", { path: '/' });
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     router.push("/login");
@@ -56,9 +73,6 @@ export default function HeaderAdmin() {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li><Link className="dropdown-item" href="/infomation">Xin chào admin, {userName}</Link></li>
-                  {userRole === 100 && (
-                    <li><Link className="dropdown-item" href="/admin">Trang quản trị</Link></li>
-                  )}
                   <li><hr className="dropdown-divider" /></li>
                   <li><a className="dropdown-item" onClick={handleLogout}>Đăng Xuất</a></li>
                 </ul>
