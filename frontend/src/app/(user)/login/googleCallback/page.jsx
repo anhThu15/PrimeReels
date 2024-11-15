@@ -16,7 +16,7 @@ export default function GoogleCallback() {
             try {
                 // Lưu token vào cookies
                 Cookies.set('token', token, { secure: true, sameSite: 'strict', path: '/' });
-
+                
                 // Hiển thị thông báo đăng nhập thành công
                 toast.success('Đăng nhập Google thành công!');
 

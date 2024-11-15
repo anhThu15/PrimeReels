@@ -15,7 +15,6 @@ export default function RatingStars(props){
             ))}
             {Array(emptyStars).fill().map((s, i) => (
                 <div key={i} className="star bg-secondary" style={{width:"30px", height:"30px"}}></div>
-
             ))}
 
         </div>
