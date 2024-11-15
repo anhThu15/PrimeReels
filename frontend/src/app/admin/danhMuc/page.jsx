@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Cookies from 'js-cookie';
-
+import { toast } from "react-toastify";
 export default function danhMuc() {
   const [data, setData] = useState([]);
   const [movieTypeDelete, setMovieTypeDelete] = useState(null);
@@ -58,6 +58,7 @@ export default function danhMuc() {
           const movieType = await res.json();
           setData([...data, movieType]);
           setFilteredData([...filteredData, movieType]); // Update filtered data
+          toast.success("Thêm danh mục thành công")
           formik.resetForm();
 
           const modalElement = document.getElementById('exampleModal');
@@ -66,6 +67,7 @@ export default function danhMuc() {
             modal.hide();
           }
         } else {
+          toast.error("Thao tác thất bại hãy kiểm tra lại!")
           console.error('Lỗi khi thêm danh mục:', res.status);
         }
       } catch (error) {
@@ -90,7 +92,9 @@ export default function danhMuc() {
         setData(data.filter((movieType) => movieType.movie_type_id !== movieTypeDelete));
         setFilteredData(filteredData.filter((movieType) => movieType.movie_type_id !== movieTypeDelete)); // Update filtered data
         console.log('Xóa thể loại thành công');
+        toast.success("Xóa thể loại thành công")
       } else {
+        toast.error("Thao tác thất bại!")
         console.error('Lỗi khi xóa thể loại:', res.status);
       }
     } catch (error) {

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Cookies from 'js-cookie';
-
+import { toast } from "react-toastify";
 export default function TheLoai() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -55,7 +55,9 @@ export default function TheLoai() {
         setData(data.filter((genre) => genre.genre_id !== genreToDelete));
         setFilteredData(filteredData.filter((genre) => genre.genre_id !== genreToDelete));
         console.log('Deleted genre successfully');
+        toast.success("Xóa thể loại thành công")
       } else {
+        toast.error("Thao tác thất bại hãy kiểm tra lại!")
         console.error('Error deleting genre:', res.status);
       }
     } catch (error) {
@@ -94,6 +96,7 @@ export default function TheLoai() {
           const genre = await res.json();
           setData([...data, genre]);
           setFilteredData([...filteredData, genre]);
+          toast.success("Thêm thể loại thành công");
           formik.resetForm();
 
           const modalElement = document.getElementById('exampleModal');
@@ -102,6 +105,7 @@ export default function TheLoai() {
             modal.hide();
           }
         } else {
+          toast.error("Thao tác thất bại hãy kiểm tra lại!")
           console.error('Error adding genre:', res.status);
         }
       } catch (error) {

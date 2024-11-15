@@ -56,7 +56,7 @@ export default function chitiethoaDon({params}){
                         <tbody>
                           <tr>
                             <th scope="row">{hds.invoice_id}</th>
-                            <td>{hds.invoice_code}</td>
+                            <td>{hds?.package?.name}</td>
                             <td>{hds.total?.toLocaleString()}đ</td>
                             {/* <td>1 ngày</td> */}
                             <td>{hds.start_date}</td>
@@ -70,11 +70,11 @@ export default function chitiethoaDon({params}){
                           </tr>
                           <tr>
                             <th colSpan={5}></th>
-                            <td className="fw-bold">Giảm giá: 9999999 </td>
+                            <td className="fw-bold">Mã Giảm giá: {hds?.voucher?.name} </td>
                           </tr>
                           <tr>
                             <th colSpan={5}></th>
-                            <td className="fw-bold">Tổng cộng: 9999999 </td>
+                            <td className="fw-bold">Tổng cộng: {(hds.total * (1 - 0.10)).toLocaleString()}đ </td>
                           </tr>
                         </tfoot>
                       </table>

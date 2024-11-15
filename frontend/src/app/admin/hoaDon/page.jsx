@@ -2,8 +2,10 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
 
 export default function hoaDon(){
+  const token = Cookies.get('token');
   const [hds, setHds] = useState([])
   const [sorts, setSorts] = useState([])
   const [sortOrder, setSortOrder] = useState('0'); 
@@ -119,7 +121,7 @@ export default function hoaDon(){
                             <th scope="row">{i+1}</th>
                             <td>{hd.invoice_code}</td>
                             <td>{hd.total.toLocaleString()}đ</td>
-                            <td>@VIP39K</td>
+                            <td>{hd?.package?.name}</td>
                             <td>{hd.user.user_name}</td>
                             <td>
                               {hd.status == 'success' ? (

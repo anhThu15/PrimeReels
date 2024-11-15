@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 export default function AddAdmin() {
     const router = useRouter();
@@ -42,10 +43,11 @@ export default function AddAdmin() {
                 });
                 if (res.ok) {
                     alert('Tạo tài khoản quản trị viên thành công!');
+                    toast.success('Tạo tài khoản quản trị viên thành công!')
                     router.push('/admin/accountAdmin');
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
-                    alert('Tạo tài khoản không thành công!');
+                    toast.error('Tạo tài khoản không thành công!');
                 }
             } catch (error) {
                 console.error('Lỗi khi tạo tài khoản:', error);

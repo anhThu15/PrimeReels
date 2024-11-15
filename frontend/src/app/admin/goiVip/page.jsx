@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-
+import Cookies from 'js-cookie';
+import { toast } from "react-toastify";
 export default function goiVip(){
+  const token = Cookies.get('token');
   const router = useRouter();
   const [gois, setGois] = useState([])
   const [sorts, setSorts] = useState([])
@@ -26,16 +28,18 @@ export default function goiVip(){
 
   const onSubmit = async (data) =>{
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/packages`, data, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then((res) => res.data);
         if (res) {
-          alert('thành công ròi đi chữa lãnh hoy ~~~')
+          // alert('thành công ròi đi chữa lãnh hoy ~~~')
+          toast.success("Thao tác thành công")
           window.location.reload()
         } else {
+          toast.error("Thao tác thất bại hãy kiểm tra lại!")
           // Xử lý hiển thị lỗi
           console.error(result.error);
         }
@@ -48,16 +52,18 @@ export default function goiVip(){
 
   const hanldeDelete = async (data) => {
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/packages/${data}`,{
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then((res) => res.data);
         if (res) {
-          alert('thành công ròi đi chữa lãnh hoy ~~~')
+          // alert('thành công ròi đi chữa lãnh hoy ~~~')
+          toast.success("Thao tác thành công")
           window.location.reload()
         } else {
+          toast.error("Thao tác thất bại hãy kiểm tra lại!")
           // Xử lý hiển thị lỗi
           console.error(result.error);
         }

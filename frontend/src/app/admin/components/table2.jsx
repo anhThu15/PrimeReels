@@ -40,7 +40,7 @@ export default function Table2(props) {
 
   return (
     <div>
-      <canvas ref={chartRef} style={{ width: "100%", maxWidth: "800px", height:"340px" }}></canvas>
+      <canvas ref={chartRef} style={{ width: "100%", height:"350px" }}></canvas>
     </div>
   );
 }

@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-
+import Cookies from 'js-cookie';
+import { toast } from "react-toastify";
 export default function AddNewFilm() {
+    const token = Cookies.get('token');
     const [types, setTypes] = useState([])
     const router = useRouter()
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -22,17 +24,19 @@ export default function AddNewFilm() {
         try {
             console.log(data);
             
-          const token = localStorage.getItem('token');
+        //   const token = localStorage.getItem('token');
           const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies`, data, {
             headers: {
               'Authorization': `Bearer ${token}`,
             }
           }).then((res) => res.data);
             if (res) {
-              alert('thành công ròi đi chữa lãnh hoy ~~~')
+            //   alert('thành công ròi đi chữa lãnh hoy ~~~')
+              toast.success("Thêm phim thành công")
               router.push('/admin/adminFilm')
             } else {
               // Xử lý hiển thị lỗi
+              toast.error("Thêm thất bại hãy kiểm tra lại thao tác")
               console.error(result.error);
             }
           

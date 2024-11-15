@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "../../globals.css";
+import Cookies from 'js-cookie';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -11,17 +12,11 @@ export default function Login() {
     const router = useRouter();
 
     useEffect(() => {
-        const getCookie = (name) => {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        };
-
-        const token = getCookie("token");
+        const token = Cookies.get('token');
         if (token) {
             router.push("/");
         }
-    }, [router]);
+    }, [router]);  //kiểm trả xem đã có token chưa => đã có thì không cho vào lại trang login
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -75,6 +70,10 @@ export default function Login() {
                     </div>
                     <div className="bor-form">
                         <form className="form-login" onSubmit={handleSubmit}>
+                            <Link href={`${process.env.NEXT_PUBLIC_API_URL}/login/google`} className="google-login-btn mb-3">
+                                <img src="images/google-icon.png" alt="Login With Google" width={25} />
+                                Google Login
+                            </Link>
                             <div className="mb-3 form-group">
                                 <input
                                     type="email"

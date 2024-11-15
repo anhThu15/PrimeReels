@@ -3,8 +3,10 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import Cookies from 'js-cookie';
+import { toast } from "react-toastify";
 export default function AdminFilm() {
+    const token = Cookies.get('token');
     const router = useRouter();
     const [films, setFilms] = useState([]);
     const [sorts, setSorts] = useState([]);
@@ -26,13 +28,14 @@ export default function AdminFilm() {
 
     const handleDelete = async (data) => {
         try {
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${data}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            alert('Thành công ròi đi chữa lãnh hoy ~~~');
+            // alert('Thành công ròi đi chữa lãnh hoy ~~~');
+            toast.success("Xóa phim thành công")
             window.location.reload();
         } catch (error) {
             console.log(error);
@@ -156,9 +159,9 @@ export default function AdminFilm() {
                                 <i className="fa-solid fa-star mx-3" style={{ color: "gold" }}></i>
                             </td>
                             <td>
-                                <Link href={`/admin/adminFilm/${film.movie_id}`} className="btn btn-secondary">
+                                <Link href={`/admin/adminFilm/${film.movie_id}`} className="ms-2 btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
-                                </Link>
+                                </Link> 
                                 <button className="btn btn-danger ms-2" onClick={() => handleDelete(film.movie_id)}>
                                     <i className="fa-solid fa-trash"></i>
                                 </button>

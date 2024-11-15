@@ -32,10 +32,13 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
+        $url = "http://localhost:3000/resetPassword?token={$this->token}&email={$this->user->email}";
+
         return $this->view('emails.reset_password')
             ->subject('Đặt lại mật khẩu')
             ->with([
-                'url' => route('password.update', ['token' => $this->token, 'email' => $this->user->email]),
+                // 'url' => route('password.reset', ['token' => $this->token, 'email' => $this->user->email]),
+                'url' => $url
             ]);
     }
 }

@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { toast } from "react-toastify";
 export default function ChitietVoucher({ params }) {
     const [voucher, setVoucher] = useState(null);
     const [voucherTypes, setVoucherTypes] = useState([]);
@@ -92,12 +92,14 @@ export default function ChitietVoucher({ params }) {
                 });
 
                 if (res.ok) {
-                    alert('Cập nhật voucher thành công!');
+                    // alert('Cập nhật voucher thành công!');
+                    toast.success('Cập nhật voucher thành công!')
                     router.back();
                 } else {
                     const errorData = await res.json();
                     console.error('Error updating voucher:', res.status, errorData);
-                    alert('Cập nhật voucher không thành công!');
+                    // alert('Cập nhật voucher không thành công!');
+                    toast.error("Cập nhật voucher thất bại!")
                 }
             } catch (error) {
                 console.error('Error updating voucher:', error);

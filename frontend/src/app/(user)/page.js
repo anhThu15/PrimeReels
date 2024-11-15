@@ -6,75 +6,110 @@ import CardSlide from "./components/cardslide";
 import SlideShow from "./components/slideshow";
 import SlideShowAnother from "./components/slideshowAnother";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import SlideShow2 from "./components/slideshow2";
 import SlideShow3 from "./components/slideshow3";
 import SlideShow4 from "./components/slideshow4";
 import SlideShowAnother2 from "./components/slideshowAnother2";
+import axios from "axios";
+import axiosRetry from "axios-retry";
+import axiosRateLimit from 'axios-rate-limit';
+
 
 export default function Home() {
-  const [action, setAction] = useState([])
-  const [comendy, setComendy] = useState([])
-  const [random, setRandom] = useState([])
-  const [better, setBetter] = useState([])
-  const [country, setCountry] = useState([])
-  const [date, setDate] = useState([])
+  const [action, setAction] = useState([]);
+  const [comendy, setComendy] = useState([]);
+  const [random, setRandom] = useState([]);
+  const [better, setBetter] = useState([]);
+  const [country, setCountry] = useState([]);
+  const [date, setDate] = useState([]);
 
   useEffect(() => {
-    const getAction = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,{ revalidate: 3600 }).then((res) => res.data)
-      setAction(res)
-    }
-    const getComendy = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,{ revalidate: 3600 }).then((res) => res.data)
-      setComendy(res)
-    }
-    const getRandom = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-      // Hàm xáo trộn mảng
-      const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        // Chọn chỉ số ngẫu nhiên
-        const j = Math.floor(Math.random() * (i + 1));
-        // Hoán đổi các phần tử
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-      };
-      setRandom(shuffleArray(res))
-    }
-    const getBetter = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-
-      res.sort((a,b) => b.favorites_count - a.favorites_count )
-
-      setBetter(res)
-    }
-    const getCountry = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Phim Mỹ`,{ revalidate: 3600 }).then((res) => res.data)
-      setCountry(res)
-    }
-    const getDate = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-            res.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-      setDate(res)
-    }
-
-
-    getAction()
-    getComendy()
-    getRandom()
-    getBetter()
-    getCountry()
-    getDate()
-  },[])
+    // Cấu hình retry cho axios
+    axiosRetry(axios, {
+      retries: 3, // Retry tối đa 3 lần
+      retryDelay: axiosRetry.exponentialDelay, // Delay theo số mũ
+      retryCondition: (error) => {
+        return error.response?.status === 429 || error.response?.status >= 500; // Retry khi gặp lỗi 429 hoặc 5xx
+      },
+    });
   
-  // console.log(country);
+    // Cấu hình rate limit cho axios
+    const http = axiosRateLimit(axios.create(), {
+      maxRequests: 5, // Số lượng tối đa yêu cầu mỗi giây
+      perMilliseconds: 1000, // Tính trên mỗi giây
+      maxRPS: 5 // Tối đa 5 yêu cầu mỗi giây
+    });
+  
+    const fetchMovies = async (url, filterFavorites = false, sortByDate = false) => {
+      try {
+        const res = await http.get(url); // Sử dụng axios đã được rate-limited
+        const filteredData = res.data.filter(item => item.status === 1);
+  
+        if (filterFavorites) {
+          filteredData.sort((a, b) => b.favorites_count - a.favorites_count);
+        }
+        if (sortByDate) {
+          // Sắp xếp theo ngày cập nhật, từ mới nhất đến cũ nhất
+          filteredData.sort((a, b) => b.movie_id - a.movie_id);
+        }
+        return filteredData;
+      } catch (error) {
+        console.log('Error fetching movies:', error);
+        return [];
+      }
+    };
+  
+    const loadData = async () => {
+      // Sử dụng Promise.all để gọi API đồng thời
+      const urls = [
+        `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,
+        `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,
+        `${process.env.NEXT_PUBLIC_API_URL}/movies`,
+        `${process.env.NEXT_PUBLIC_API_URL}/movies`,
+        `${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,
+        `${process.env.NEXT_PUBLIC_API_URL}/movies`
+      ];
+  
+      try {
+        const [
+          actionData,
+          comedyData,
+          randomData,
+          betterData,
+          countryData,
+          dateData
+        ] = await Promise.all(urls.map(url => fetchMovies(url, false, url === `${process.env.NEXT_PUBLIC_API_URL}/movies`))); // Chỉ sắp xếp theo ngày cho URL movies
+  
+        // Xáo trộn mảng randomData
+        const shuffleArray = (array) => {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+        };
+  
+        setAction(actionData);
+        setComendy(comedyData);
+        setRandom(shuffleArray(randomData));
+        setBetter(betterData);
+        setCountry(countryData);
+        setDate(dateData);  // Sử dụng dữ liệu đã được sắp xếp theo ngày
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+  
+    loadData();
+  }, []);
+  
+  
+  // console.log(date);
   
 
   return (
     <>
-     <div className="container-fluid bg-dark p-0 text-white">
+     <div className="container-fluid bg-black p-0 text-white">
         <div className=" container-fluid p-0">
           <div>
             <Banner></Banner> 
@@ -111,7 +146,7 @@ export default function Home() {
             />
           </div> 
           <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Mỹ</h2>
+            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Việt Nam</h2>
             <SlideShowAnother data={country}></SlideShowAnother>
           </div>
           <div >
