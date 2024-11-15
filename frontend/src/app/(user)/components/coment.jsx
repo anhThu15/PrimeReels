@@ -8,25 +8,45 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 
 export default function Comment(props){
+    // const userCookie = Cookies.get('user');
+    // const user = userCookie ? JSON.parse(userCookie) : null;
     const token = Cookies.get('token');
-    const userCookie = Cookies.get('user');
-    const user = JSON.parse(userCookie);
+    const [user, setUser] = useState([])
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [coment, setComent] = useState([])
     const id = props.data?.movie_id
-    const checkUser = props.data?.comments?.find(comment => comment.user_id === user.user_id);
+    const checkUser = props.data?.comments?.find(comment => comment.user_id === user?.user_id);
     {checkUser ? (setValue('rating',checkUser?.rating)):(0)}
+
 
     useEffect(() => {
       setComent(props.data?.comments)
     },[props.data])
     
-    console.log(coment);
+    // console.log(coment);
+    useEffect(() => {
+      if (token) {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then(res => setUser(res.data.user))
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
+      }
+    }, [token]);
+
+    // console.log(user);
+    
     
 
     const onComment =  async (data) => {
       // console.log(data); 
       try {
+        // console.log(checkUser.rating);
+        
         // const token = localStorage.getItem('token');
             if (!checkUser) {
               const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comment`, data, {
@@ -54,8 +74,7 @@ export default function Comment(props){
                         toast.success('Bình Luận Và Đánh Giá Thành Công');
                         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
                         setComent(res)
-                        console.log(res);
-                        
+                        // console.log(res);
                         // window.location.reload()
                       } else {
                         // Xử lý hiển thị lỗi
@@ -113,7 +132,7 @@ export default function Comment(props){
                                 </div>
                                 <div className="col"  >
                                     <div className="fs-4 text-danger fw-bold">{cmt.user.user_name}</div>
-                                    <p style={{fontSize:"12px"}}>{cmt.updated_at}</p>
+                                    <p style={{fontSize:"12px"}}>{new Date(cmt.updated_at)?.toLocaleDateString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"})}</p>
                                     <div>{cmt.content}</div>
                                 </div>
                                 {/* <div className="col-2 text-warning mt-2"> */}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { toast } from "react-toastify";
 export default function Voucher() {
     const [data, setData] = useState([]);
     const [voucherTypes, setVoucherTypes] = useState([]);
@@ -43,13 +43,15 @@ export default function Voucher() {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Tạo mới voucher thành công!');
+                    // alert('Tạo mới voucher thành công!');
+                    toast.success("Tạo mới voucher thành công")
                     fetchVouchers();
                     formik.resetForm(); // Reset form
                     window.location.reload()
                 } else {
                     console.error('Lỗi khi tạo mới voucher:', res.status);
-                    alert('Tạo mới voucher không thành công!');
+                    // alert('Tạo mới voucher không thành công!');
+                    toast.error("Tạo mới voucher không thành công!")
                 }
             } catch (error) {
                 console.error('Lỗi khi gửi yêu cầu tạo mới voucher:', error);

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { toast } from "react-toastify";
 export default function UpdateGenre({ params }) {
     const router = useRouter();
     const { id } = params; // Lấy genre_id từ params
@@ -61,8 +61,10 @@ export default function UpdateGenre({ params }) {
                 });
                 if (res.ok) {
                     router.back();
+                    toast.success("Cập nhật thành công")
                     console.log('Cập nhật thành công');
                 } else {
+                    toast.error("Thao tác thất bại hãy kiểm tra lại!")
                     console.error('Lỗi khi cập nhật thể loại:', res.status);
                 }
             } catch (error) {

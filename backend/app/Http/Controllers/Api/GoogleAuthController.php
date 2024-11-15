@@ -55,11 +55,12 @@ class GoogleAuthController extends Controller
             $token = JWTAuth::fromUser($user);
 
             // Trả về token và thông tin người dùng
-            return response()->json([
-                'status' => 'success',
-                'token' => $token,
-                'user' => $user
-            ]);
+            // return response()->json([
+            //     'status' => 'success',
+            //     'token' => $token,
+            //     'user' => $user
+            // ]);
+            return redirect()->away("http://localhost:3000/login/googleCallback?token={$token}&user=" . urlencode(json_encode($user)));
         } catch (\Exception $e) {
             // dd($e->getMessage());
             return response()->json(['error' => 'Đăng nhập Google thất bại.'], 500);

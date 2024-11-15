@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
-
+import { toast } from "react-toastify";
 export default function AdminFilm() {
     const token = Cookies.get('token');
     const router = useRouter();
@@ -34,7 +34,8 @@ export default function AdminFilm() {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            alert('Thành công ròi đi chữa lãnh hoy ~~~');
+            // alert('Thành công ròi đi chữa lãnh hoy ~~~');
+            toast.success("Xóa phim thành công")
             window.location.reload();
         } catch (error) {
             console.log(error);

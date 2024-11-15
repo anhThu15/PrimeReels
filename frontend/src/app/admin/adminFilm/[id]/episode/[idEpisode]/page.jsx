@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
-
+import { toast } from "react-toastify";
 export default function Episode({params}) {
     const token = Cookies.get('token');
     const id = params.id;
@@ -54,10 +54,12 @@ export default function Episode({params}) {
             }
         }).then((res) => res.data);
             if (res) {
-              alert('thành công ròi đi chữa lãnh hoy ~~~')
+            //   alert('thành công ròi đi chữa lãnh hoy ~~~')
+              toast.success("Thao tác thành công!")
               router.push(`/admin/adminFilm/${id}`)
             } else {
               // Xử lý hiển thị lỗi
+              toast.error("Thao tác thất bại hãy kiểm tra lại !")
               console.error(result.error);
             }
           

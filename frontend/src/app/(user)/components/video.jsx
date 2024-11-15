@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 export default function Video(props){
     const token = Cookies.get('token');
     const id = props.data.episode?.movie_id
-    const idEpisode = props.data.episode?.episode_id
+    const idEpisode = props.data.episode?.episode_number
     const router = useRouter()
     const [isClient, setIsClient] = useState(false)
     useEffect(() => {
@@ -51,22 +51,25 @@ export default function Video(props){
     const handleNext = async () => {
         try {
             // console.log(props.data.episode);
-            const id = props.data.episode.movie_id
-            const idEpisode = props.data.episode.episode_id
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
+            // const id = props.data.episode.movie_id
+            // const idEpisode = props.data.episode.episode_id
+                // const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
 
                 // tìm vị trí trong mãng 0 là có -1 là xủi
-                const findEp = res.findIndex(episode => episode.episode_id === idEpisode);
+                // const findEp = res.findIndex(episode => episode.episode_id === idEpisode);
 
-                let nextEpisodeId = idEpisode; // Giá trị mặc định nếu không tìm thấy episode tiếp theo
+                let nextEpisodeId = idEpisode +1; // Giá trị mặc định nếu không tìm thấy episode tiếp theo
+                console.log(nextEpisodeId);
+                
+                    
+                router.push(`/watch/${id}/${nextEpisodeId}`)
 
-                if (findEp !== -1 && findEp + 1 < res.length) {
-                  nextEpisodeId = res[findEp + 1].episode_id; // Lấy episode_id tiếp theo
-                }
+                // if (findEp !== -1 && findEp + 1 < res.length) {
+                //   nextEpisodeId = res[findEp + 1].episode_id; // Lấy episode_id tiếp theo
+                // }
 
                 // console.log(nextEpisodeId);
                 
-                router.push(`/watch/${id}/${nextEpisodeId}`)
         } catch (error) {
             console.log(error);
         }

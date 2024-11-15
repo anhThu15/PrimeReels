@@ -43,6 +43,17 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
+        //API lấy thông tin người dùng theo token
+        public function getUser(Request $request)
+        {
+            try {
+                // Xác thực và lấy người dùng từ token
+                $user = Auth::user(); // Auth::user() hoạt động nhờ middleware JWT
+                return response()->json(['user' => $user], 200);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        }
     // Đăng ký người dùng
     public function register(Request $request)
     {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
+import { toast } from "react-toastify";
 
 export default function Account() {
     const [data, setData] = useState([]);
@@ -48,12 +49,13 @@ export default function Account() {
                 },
             });
             if (res.ok) {
-                alert('User account deleted successfully!');
+                // alert('User account deleted successfully!');
+                toast.success("Đã xóa tài khoản khách hàng thành công")
                 setUserIdToDelete(null);
                 fetchDataUser();
             } else {
                 console.error('Error deleting account:', res.status);
-                alert('Failed to delete account!');
+                toast.error("Có lỗi xảy ra khi thực hiện việc xóa")
             }
         } catch (error) {
             console.error('Error deleting account:', error);

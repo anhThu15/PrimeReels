@@ -11,13 +11,30 @@ import { useRouter } from 'next/navigation';
 export default function UserPayMentPackageDetail({params}){
     const id = params.id
     const token = Cookies.get('token');
-    const userCookie = Cookies.get('user');
-    const user = JSON.parse(userCookie);
+    const [user, setUser] = useState([])
+    // const userCookie = Cookies.get('user');
+    // const user = JSON.parse(userCookie);
     const router = useRouter()
     // console.log(user);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
     const [packages , setPackages] = useState([])
+
+    useEffect(() => {
+        if (token) {
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          .then(res => setUser(res.data.user))
+          .catch(error => {
+            console.error("Error fetching user data:", error);
+          });
+        }
+      }, [token]);
+  
+      console.log(user);
 
     useEffect(() => {
         const getPackages = async () => {

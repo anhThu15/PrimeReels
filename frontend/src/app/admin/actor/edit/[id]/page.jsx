@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function UpdateActor({ params }) {
     const router = useRouter();
@@ -86,11 +87,11 @@ export default function UpdateActor({ params }) {
         });
 
         if (res.ok) {
-            alert('Cập nhật diễn viên thành công!');
+            toast.success('Cập nhật diễn viên thành công!')
             router.push('/admin/actor');
         } else {
             console.error('Lỗi khi cập nhật diễn viên:', res.status);
-            alert('Cập nhật không thành công!');
+            toast.error('Cập nhật không thành công!')
         }
     };
 

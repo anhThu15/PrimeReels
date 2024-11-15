@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
-
+import { toast } from "react-toastify";
 export default function goiVip(){
   const token = Cookies.get('token');
   const router = useRouter();
@@ -35,9 +35,11 @@ export default function goiVip(){
         }
       }).then((res) => res.data);
         if (res) {
-          alert('thành công ròi đi chữa lãnh hoy ~~~')
+          // alert('thành công ròi đi chữa lãnh hoy ~~~')
+          toast.success("Thao tác thành công")
           window.location.reload()
         } else {
+          toast.error("Thao tác thất bại hãy kiểm tra lại!")
           // Xử lý hiển thị lỗi
           console.error(result.error);
         }
@@ -57,9 +59,11 @@ export default function goiVip(){
         }
       }).then((res) => res.data);
         if (res) {
-          alert('thành công ròi đi chữa lãnh hoy ~~~')
+          // alert('thành công ròi đi chữa lãnh hoy ~~~')
+          toast.success("Thao tác thành công")
           window.location.reload()
         } else {
+          toast.error("Thao tác thất bại hãy kiểm tra lại!")
           // Xử lý hiển thị lỗi
           console.error(result.error);
         }

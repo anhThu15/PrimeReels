@@ -70,6 +70,10 @@ export default function Login() {
                     </div>
                     <div className="bor-form">
                         <form className="form-login" onSubmit={handleSubmit}>
+                            <Link href={`${process.env.NEXT_PUBLIC_API_URL}/login/google`} className="google-login-btn mb-3">
+                                <img src="images/google-icon.png" alt="Login With Google" width={25} />
+                                Google Login
+                            </Link>
                             <div className="mb-3 form-group">
                                 <input
                                     type="email"

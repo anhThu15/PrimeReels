@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { toast } from "react-toastify";
 export default function DetailVoucherType({ params }) {
     const [voucher, setVoucher] = useState(null);
     const router = useRouter();
@@ -66,11 +66,13 @@ export default function DetailVoucherType({ params }) {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Cập nhật thể loại voucher thành công');
+                    // alert('Cập nhật thể loại voucher thành công');
+                    toast.success('Cập nhật thể loại voucher thành công')
                     router.back();
                 } else {
                     console.error('Lỗi khi cập nhật:', res.status);
-                    alert('Lỗi khi cập nhật.');
+                    // alert('Lỗi khi cập nhật.');
+                    toast.error('Lỗi khi cập nhật.')
                 }
             } catch (error) {
                 console.error('Lỗi PUT request:', error);
