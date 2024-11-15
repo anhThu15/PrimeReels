@@ -19,7 +19,7 @@ export default function HeaderAdmin() {
   useEffect(() => {
     const token = Cookies.get('token');
     if (token) {
-      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

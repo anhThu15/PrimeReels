@@ -11,7 +11,7 @@ export async function middleware(request) {
     }
 
     try {
-        const res = await fetch(`http://localhost:8000/api/user`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token.value}`,
