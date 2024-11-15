@@ -19,6 +19,8 @@ export default function InfomationUser() {
         avatar: '' // Avatar field
     });
     const [modalOpen, setModalOpen] = useState(false);
+    const token = Cookies.get('token');
+    const [user, setUser] = useState([])
     const [love, setLove] = useState([]);
     const [history, setHistory] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
@@ -45,6 +47,22 @@ export default function InfomationUser() {
             selectedSection.style.display = 'block';
         }
     };
+
+    useEffect(() => {
+        if (token) {
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          .then(res => setUser(res.data.user))
+          .catch(error => {
+            console.error("Error fetching user data:", error);
+          });
+        }
+    }, [token]);
+  
+      console.log(user);
 
     const fetchUserData = async () => {
         const token = Cookies.get('token');
@@ -91,7 +109,6 @@ export default function InfomationUser() {
     //xử lý cài đặt tài khoản
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = Cookies.get('token');
     
         if (token) {
             try {
@@ -198,8 +215,8 @@ export default function InfomationUser() {
     // xử lý load ds lịch sử đã xem 
 
     useEffect(() => {
-        const userCookie = Cookies.get('user');
-        const user = JSON.parse(userCookie);
+        // const userCookie = Cookies.get('user');
+        // const user = JSON.parse(userCookie);
         const getInvoice = async () => {
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 }).then((res) => res.data)

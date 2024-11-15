@@ -8,9 +8,10 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 
 export default function Comment(props){
-    const userCookie = Cookies.get('user');
+    // const userCookie = Cookies.get('user');
+    // const user = userCookie ? JSON.parse(userCookie) : null;
     const token = Cookies.get('token');
-    const user = userCookie ? JSON.parse(userCookie) : null;
+    const [user, setUser] = useState([])
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [coment, setComent] = useState([])
     const id = props.data?.movie_id
@@ -23,6 +24,22 @@ export default function Comment(props){
     },[props.data])
     
     // console.log(coment);
+    useEffect(() => {
+      if (token) {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then(res => setUser(res.data.user))
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
+      }
+    }, [token]);
+
+    // console.log(user);
+    
     
 
     const onComment =  async (data) => {

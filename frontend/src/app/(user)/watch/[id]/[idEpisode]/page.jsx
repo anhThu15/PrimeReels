@@ -13,8 +13,9 @@ import Cookies from 'js-cookie';
 
 export default function Watch({ params }) {
   const token = Cookies.get('token');
-  const userCookie = Cookies.get('user');
-  const user = userCookie ? JSON.parse(userCookie) : null;
+  const [user, setUser] = useState([])
+  // const userCookie = Cookies.get('user');
+  // const user = userCookie ? JSON.parse(userCookie) : null;
   const id = params.id
   const idEpisode = params.idEpisode
   // console.log(id, idEpisode);
@@ -92,6 +93,22 @@ export default function Watch({ params }) {
     getCmt()
 
   }, [])
+
+  useEffect(() => {
+    if (token) {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => setUser(res.data.user))
+      .catch(error => {
+        console.error("Error fetching user data:", error);
+      });
+    }
+  }, [token]);
+
+  // console.log(user);
 
   const {
     seconds,
@@ -195,7 +212,7 @@ export default function Watch({ params }) {
 
     checkUserInvoice();
 
-  }, [userCookie]);
+  }, [user]);
   
 
   useEffect(() => {

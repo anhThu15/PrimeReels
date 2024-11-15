@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import axios from "axios";
 export default function HeaderUser() {
+  const token = Cookies.get('token');
   const router = useRouter();
   const pathName = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,7 +18,6 @@ export default function HeaderUser() {
   const [searchQuery, setSearchQuery] = useState(''); 
 
   useEffect(() => {
-    const token = Cookies.get('token');
     if (token) {
       axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
         headers: {
@@ -32,10 +32,10 @@ export default function HeaderUser() {
           setIsLoggedIn(true);
           const avatarUrl = user.avatar ? user.avatar : '';
           if (avatarUrl) {
-            setUserAvatar(avatarUrl);
-          } else {
-            setUserAvatar('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
-          }
+              setUserAvatar(avatarUrl);
+            } else {
+              setUserAvatar('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
+            }
           }
       })
       .catch(error => {
@@ -43,7 +43,7 @@ export default function HeaderUser() {
         setIsLoggedIn(false);
       });
     }
-  }, [router]);
+  }, [token]);
 
   const handleLogout = () => {
     Cookies.remove("token", { path: '/' });
