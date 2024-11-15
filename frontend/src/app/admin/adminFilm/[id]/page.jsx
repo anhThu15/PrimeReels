@@ -245,6 +245,21 @@ export default function AddNewFilm({ params }) {
     };
     // tempelate
 
+    const handleDeleteCmt = async (data) => {
+        try {
+            // const token = localStorage.getItem('token');http://127.0.0.1:8000/api/movies/{movieId}/comments/{commentId}
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comments/${data}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            alert('Thành công ròi đi chữa lãnh hoy ~~~');
+            // toast.success("Xóa phim thành công",data)
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         if (episodes.length > 0) {
@@ -634,7 +649,9 @@ export default function AddNewFilm({ params }) {
                                             {cmt.updated_at}
                                         </td>
                                         <td>
-                                            <i className="fa-solid fa-eye"></i>
+                                            <button className="btn btn-danger ms-2" onClick={() => handleDeleteCmt(cmt.comment_id)}>
+                                                <i className="fa-solid fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
