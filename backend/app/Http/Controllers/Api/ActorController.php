@@ -22,7 +22,7 @@ class ActorController extends Controller
             'status' => 'required|integer',
             'biography' => 'nullable|string',
             'birth_date' => 'nullable|date',
-            'image_url' => 'nullable|string|max:1000',
+            'image_url' => 'nullable|file|max:1000',
         ]);
 
         $actor = Actor::create($validated);
@@ -45,7 +45,7 @@ class ActorController extends Controller
             'status' => 'required|integer',
             'biography' => 'nullable|string',
             'birth_date' => 'nullable|date',
-            'image_url' => 'nullable|string|max:1000',
+            'image_url' => 'nullable|file|max:1000',
         ]);
 
         $actor->update($validated);
