@@ -192,8 +192,13 @@ class MovieController extends Controller
         $movie->genres()->detach($validatedData['genre_id']);
 
         return response()->json(['message' => 'Phim đã xoá thể loại!'], 200);
+// <<<<<<< backend1
+    }   
+     // Phương thức lọc quốc gia
+// =======
     }
     // Phương thức lọc quốc gia
+// >>>>>>> main
     public function filterByCountry($country)
     {
         // Lấy danh sách phim theo quốc gia
