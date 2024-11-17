@@ -205,7 +205,7 @@ export default function Watch({ params }) {
         }
 
       } catch (error) {
-        setCount(3); 
+        setCount(600); 
         console.log(error);
       }
     }
@@ -284,7 +284,7 @@ export default function Watch({ params }) {
           {count === 429 ? (<div className="w-100 d-flex justify-content-around " style={{height:"550px"}} >
                             <div className='text-center fw-bold' style={{marginTop:"200px"}} >
                                 Hết Lượt Hạn Xem Phim Mời Bạn Gia Hạn <br />
-                                <Link href="/user-buy-package" style={{ textDecoration: 'underline' }}>
+                                <Link href="/user-buy-package" style={{ textDecoration: 'underline', color:"red",  fontSize:"25px"}}>
                                     Gia Hạn
                                 </Link>
                             </div>

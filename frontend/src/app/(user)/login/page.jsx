@@ -70,10 +70,6 @@ export default function Login() {
                     </div>
                     <div className="bor-form">
                         <form className="form-login" onSubmit={handleSubmit}>
-                            <Link href={`${process.env.NEXT_PUBLIC_API_URL}/login/google`} className="google-login-btn mb-3">
-                                <img src="images/google-icon.png" alt="Login With Google" width={25} />
-                                Google Login
-                            </Link>
                             <div className="mb-3 form-group">
                                 <input
                                     type="email"
@@ -96,11 +92,16 @@ export default function Login() {
                                 />
                                 <Link href="/forgot-password" className="forgot-password">Quên mật khẩu</Link>
                             </div>
+                            
+                                <div className="button-submit mb-2">
+                                    <button type="submit" name="submit" >Đăng nhập</button> 
+                                </div>
 
-                            <div className="button-submit mb-5">
-                                <button type="submit" name="submit">Đăng nhập</button>
-                            </div>
-
+                                <Link href={`${process.env.NEXT_PUBLIC_API_URL}/login/google`} className="google-login-btn" style={{marginLeft:"170px"}}>
+                                    <img src="images/google-icon.png" alt="Login With Google" width={25} />
+                                    Google Login
+                                </Link>
+                            
                             <div className="mt-2 text-white text-center">
                                 Chưa có tài khoản?
                                 <Link href="/register" className="btn-register">Đăng ký</Link> ngay!
