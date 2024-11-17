@@ -130,7 +130,9 @@ Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::delete('/genres/{id}', [GenreController::class, 'destroy']); // Xóa một thể loại
     //______________________________________ATTACH ACTOR AND GENRE_______________________________________________
     Route::post('movies/{id}/actors', [MovieController::class, 'attachActors']); // Thêm diễn viên vào phim
+    Route::delete('movies/{id}/actors', [MovieController::class, 'detachActors']); // Xoá diễn viên vào phim
     Route::post('movies/{id}/genres', [MovieController::class, 'attachGenres']); // Thêm thể loại vào phim
+    Route::delete('movies/{id}/genres', [MovieController::class, 'detachGenres']); // Xoá thể loại vào phim
 });
 //______________________________________EPISODE_______________________________________________
 Route::middleware(['jwt.verify', 'admin'])->group(function () {

@@ -130,6 +130,27 @@ class MovieController extends Controller
 
         return response()->json(['message' => 'Phim đã được thêm diễn viên!'], 200);
     }
+    public function detachActors($movieId, Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'actor_id' => 'required|array',
+            'actor_id.*' => 'exists:actors,actor_id',
+        ]);
+
+        // Kiểm tra xem mảng Actor_id có trống sau khi xác thực không
+        if (empty($validatedData['actor_id'])) {
+            return response()->json(['error' => 'Không có diễn viên nào được tìm thấy.'], 404);
+        }
+
+        // Tìm phim theo ID
+        $movie = Movie::findOrFail($movieId);
+
+        // Xoá diễn viên vào phim
+        $movie->actors()->detach($validatedData['actor_id']);
+
+        return response()->json(['message' => 'Diễn viên đã được xoá khỏi phim!'], 200);
+    }
     public function attachGenres($movieId, Request $request)
     {
         // Validate the request data
@@ -150,6 +171,27 @@ class MovieController extends Controller
         $movie->genres()->attach($validatedData['genre_id']);
 
         return response()->json(['message' => 'Phim đã được thêm thể loại!'], 200);
+    }
+    public function detachGenres($movieId, Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'genre_id' => 'required|array',
+            'genre_id.*' => 'exists:genres,genre_id',
+        ]);
+
+        // Check if the genre_id array is empty after validation
+        if (empty($validatedData['genre_id'])) {
+            return response()->json(['error' => 'Không có thể loại nào được tìm thấy.'], 404);
+        }
+
+        // Find the movie by ID
+        $movie = Movie::findOrFail($movieId);
+
+        // Attach genres to the movie
+        $movie->genres()->detach($validatedData['genre_id']);
+
+        return response()->json(['message' => 'Phim đã xoá thể loại!'], 200);
     }
     // Phương thức lọc quốc gia
     public function filterByCountry($country)
