@@ -62,7 +62,7 @@ export default function InfomationUser() {
         }
     }, [token]);
   
-      console.log(user);
+    //   console.log(user);
 
     const fetchUserData = async () => {
         const token = Cookies.get('token');
@@ -228,7 +228,7 @@ export default function InfomationUser() {
         }
         getInvoice()
     },[invoice])
-    console.log(invoice);
+    // console.log(invoice);
 
     return (
         <div className="first-page">
