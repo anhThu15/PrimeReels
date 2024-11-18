@@ -261,6 +261,42 @@ export default function AddNewFilm({ params }) {
         }
     }
 
+    const handleDeleteActors = async (data) => {
+        // console.log([data]);
+        const actor_id = [data]
+        // http://127.0.0.1:8000/api/movies/{movieId}/actors
+        try {
+            const query = actor_id.map(id => `actor_id[]=${id}`).join('&');
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/actors?${query}` ,{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            // alert('Thành công ròi đi chữa lãnh hoy ~~~');
+            toast.success("Xóa phim thành công")
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleDeleteGenre = async (data) => {
+        const genre_id= [data]
+        try {
+            const query = genre_id.map(id => `genre_id[]=${id}`).join('&');
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/genres?${query}` ,{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            // alert('Thành công ròi đi chữa lãnh hoy ~~~' + data);
+            toast.success("Xóa phim thành công")
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         if (episodes.length > 0) {
             let filtered = episodes.filter(episode => {
@@ -414,7 +450,7 @@ export default function AddNewFilm({ params }) {
                 return (
                     <div className="container-fluid">
                         <div className="row">
-                            <h2 className=" col fw-bold">Diễn Sách Phim</h2>
+                            <h2 className=" col fw-bold">Danh Sách Phim</h2>
                             <div className="col-2 mb-3">
 
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -659,7 +695,6 @@ export default function AddNewFilm({ params }) {
                         </table>
                     </div>
                 );
-
             case 'actors':
                 return (
                     <div className="container-fluid">
@@ -754,7 +789,7 @@ export default function AddNewFilm({ params }) {
                                     <th scope="col">TÊN</th>
                                     <th scope="col">Ngày sinh Nhật</th>
                                     <th scope="col">NỘI DUNG</th>
-                                    <th scope="col">ẨN HIỆN</th>
+                                    <th scope="col"> </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -778,7 +813,9 @@ export default function AddNewFilm({ params }) {
                                                     {cmt.biography}
                                                 </td>
                                                 <td>
-                                                    <i class="fa-solid fa-eye"></i>
+                                                    <button className="btn btn-danger ms-2" onClick={() => handleDeleteActors(cmt.actor_id)}>
+                                                        <i className="fa-solid fa-trash"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </>
@@ -883,7 +920,7 @@ export default function AddNewFilm({ params }) {
                                     <th scope="col">ID</th>
                                     <th scope="col">TÊN</th>
                                     <th scope="col">NỘI DUNG</th>
-                                    <th scope="col">ẨN HIỆN</th>
+                                    <th scope="col"> </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -900,7 +937,9 @@ export default function AddNewFilm({ params }) {
                                                     {cmt.description}
                                                 </td>
                                                 <td>
-                                                    <i class="fa-solid fa-eye"></i>
+                                                    <button className="btn btn-danger ms-2" onClick={() => handleDeleteGenre(cmt.genre_id)}>
+                                                        <i className="fa-solid fa-trash"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </>
