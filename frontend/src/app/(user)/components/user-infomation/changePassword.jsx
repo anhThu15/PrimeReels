@@ -2,6 +2,7 @@
 // components/user-infomation/ChangePasswordModal.js
 import React, { useState } from 'react';
 import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
 const ChangePasswordModal = ({ isOpen, onClose }) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -20,13 +21,13 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         }
         
         // Logic gửi yêu cầu đến API
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+        const token = Cookies.get('token');
         if (token) {
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/profile/change-password', {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${token.split('=')[1]}`,
+                        Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
