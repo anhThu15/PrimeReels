@@ -9,7 +9,7 @@ import ReactPlayer from "react-player"
 import Cookies from 'js-cookie';
 
 
-export default function infomation() {
+export default function InfomationUser() {
     const [activeSection, setActiveSection] = useState('userInfo');
     const [userData, setUserData] = useState({
         username: '',
