@@ -1,22 +1,45 @@
 'use client'
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
 
 export default function Banner(){
-  const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
   
-  const {data,error,isLoading} = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/movies`, fetcher)
-  if (error) return <div>Lỗi tải dữ liệu</div>
-  if (isLoading) return (
-  <>
-      <div className="spinner-border text-danger" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-  </>
+  const { data, error, isLoading } = useSWR(
+      `${process.env.NEXT_PUBLIC_API_URL}/movies`,
+      fetcher
   );
-
-  const topBanner = data.sort((a,b) => b.favorites_count - a.favorites_count ).slice(0,3)
-  const filteredData = topBanner.filter(item => item.status === 1);
+  
+  const [filteredData, setFilteredData] = useState(null);
+  
+  useEffect(() => {
+      if (data) {
+          // Thêm độ trễ 2 giây
+          const timeout = setTimeout(() => {
+              const topBanner = data
+                  .sort((a, b) => b.favorites_count - a.favorites_count)
+                  .slice(0, 3)
+                  .filter((item) => item.status === 1);
+              setFilteredData(topBanner);
+          }, 2000); // Độ trễ 2 giây
+  
+          // Dọn dẹp timeout khi component unmount
+          return () => clearTimeout(timeout);
+      }
+  }, [data]);
+  
+  if (error) return <div>Lỗi tải dữ liệu</div>;
+  
+  if (isLoading || !filteredData) {
+      return (
+          <>
+              <div className="spinner-border text-danger" role="status">
+                  <span className="visually-hidden">Loading...</span>
+              </div>
+          </>
+      );
+  }
 
   // console.log(topBanner);
 
