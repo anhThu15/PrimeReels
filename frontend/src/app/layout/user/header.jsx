@@ -119,7 +119,7 @@ export default function HeaderUser() {
                   <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
-                  <li><Link className="dropdown-item" href="/infomation">Xin chào, {userName}</Link></li>
+                  <li><Link className="dropdown-item" href="/in4">Xin chào, {userName}</Link></li>
                   {userRole === 100 && (
                     <li><Link className="dropdown-item" href="/admin">Trang quản trị</Link></li>
                   )}
