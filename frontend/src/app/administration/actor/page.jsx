@@ -102,7 +102,7 @@ export default function AdminActor() {
             <div className="row">
                 <h2 className="col fw-bold">Diễn viên</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/actor/addActor" className="btn btn-success">
+                    <Link href="/administration/actor/addActor" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>
@@ -165,7 +165,7 @@ export default function AdminActor() {
                             <td style={{ width: "30%" }}>{actor.biography}</td>
                             <td>{actor.birth_date}</td>
                             <td>
-                                <Link className="btn btn-secondary" href={`/admin/actor/edit/${actor.actor_id}`}>
+                                <Link className="btn btn-secondary" href={`/administration/actor/edit/${actor.actor_id}`}>
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
                                 <button

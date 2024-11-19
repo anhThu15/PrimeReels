@@ -38,7 +38,7 @@ export default function chitietgoiVip({params}){
       }).then((res) => res.data);
       if (res) {
         alert('thành công ròi đi chữa lãnh hoy ~~~')
-        router.push('/admin/goiVip');
+        router.push('/administration/goiVip');
       } else {
         // Xử lý hiển thị lỗi
         console.error(result.error);
@@ -52,7 +52,7 @@ export default function chitietgoiVip({params}){
         <>
             <div className=" container-fluid">
                 <div className=" fw-bold"> 
-                  <Link className="btn btn-danger mb-2 me-2" href='/admin/goiVip'><i class="fa-solid fa-chevron-left"></i></Link> 
+                  <Link className="btn btn-danger mb-2 me-2" href='/administration/goiVip'><i class="fa-solid fa-chevron-left"></i></Link> 
                   <span className="fs-4 ">Chi Tiết Gói Vip</span> 
                 </div>
                 <div class="modal-body">

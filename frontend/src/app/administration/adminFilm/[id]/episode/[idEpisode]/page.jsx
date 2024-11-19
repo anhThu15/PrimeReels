@@ -56,7 +56,7 @@ export default function Episode({params}) {
             if (res) {
             //   alert('thành công ròi đi chữa lãnh hoy ~~~')
               toast.success("Thao tác thành công!")
-              router.push(`/admin/adminFilm/${id}`)
+              router.push(`/administration/adminFilm/${id}`)
             } else {
               // Xử lý hiển thị lỗi
               toast.error("Thao tác thất bại hãy kiểm tra lại !")
@@ -75,7 +75,7 @@ export default function Episode({params}) {
         <>
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
-                <Link href="/admin/adminFilm">
+                <Link href="/administration/adminFilm">
                     <button className="btn btn-danger">
                         <i className="fas fa-chevron-left"></i>
                     </button>

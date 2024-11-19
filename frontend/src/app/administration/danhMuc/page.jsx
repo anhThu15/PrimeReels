@@ -205,7 +205,7 @@ export default function danhMuc() {
                 <td>{movieType.name}</td>
                 {/* <td>39</td> */}
                 <td>
-                  <Link href={`/admin/danhMuc/edit/${movieType.movie_type_id}`} className="btn btn-secondary">
+                  <Link href={`/administration/danhMuc/edit/${movieType.movie_type_id}`} className="btn btn-secondary">
                     <i className="fa-solid fa-pen"></i>
                   </Link>
                   <button 

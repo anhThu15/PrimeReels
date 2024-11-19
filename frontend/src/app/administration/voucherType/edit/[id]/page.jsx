@@ -99,7 +99,7 @@ export default function DetailVoucherType({ params }) {
     return (
         <div className="container-fluid">
             <div className="fw-bold">
-                <Link className="btn btn-danger mb-2 me-2" href="/admin/voucherType">
+                <Link className="btn btn-danger mb-2 me-2" href="/administration/voucherType">
                     <i className="fa-solid fa-chevron-left"></i>
                 </Link>
                 <span className="fs-4">Chi Tiết Thể Loại Voucher</span>

@@ -97,7 +97,7 @@ export default function Account() {
             <div className="row">
                 <h2 className="col fw-bold">Tài khoản</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/account/addAccount" className="btn btn-success">
+                    <Link href="/administration/account/addAccount" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>
@@ -160,7 +160,7 @@ export default function Account() {
                                 </div>
                             </td>
                             <td>
-                                <Link href={`/admin/account/edit/${user.user_id}`} className="btn btn-secondary">
+                                <Link href={`/administration/account/edit/${user.user_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
                                 <button

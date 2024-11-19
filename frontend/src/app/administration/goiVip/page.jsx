@@ -213,7 +213,7 @@ export default function goiVip(){
                             <td> {goi.duration} Ngày</td>
                             <td>{goi.created_at}</td>
                             <td>
-                              <Link href={`/admin/goiVip/${goi.package_id}`} className="btn btn-secondary">
+                              <Link href={`/administration/goiVip/${goi.package_id}`} className="btn btn-secondary">
                                   <i class="fa-solid fa-pen"></i>
                               </Link>
                               <button className="btn btn-danger ms-2" onClick={() => hanldeDelete(goi.package_id)}><i class="fa-solid fa-trash"></i></button>

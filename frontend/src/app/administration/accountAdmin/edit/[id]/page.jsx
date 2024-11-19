@@ -84,7 +84,7 @@ export default function UpdateAccountAdmin({ params }) {
     return (
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
-                <Link href="/admin/accountAdmin">
+                <Link href="/administration/accountAdmin">
                     <button className="btn btn-danger">
                         <i className="fas fa-chevron-left"></i>
                     </button>

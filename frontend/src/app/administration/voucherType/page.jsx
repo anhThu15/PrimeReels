@@ -270,7 +270,7 @@ export default function VoucherType() {
                             <td>{new Date(voucher.created_at).toLocaleDateString()}</td>
                             <td>{new Date(voucher.updated_at).toLocaleDateString()}</td>
                             <td>
-                                <Link href={`/admin/voucherType/edit/${voucher.voucher_type_id}`} className="btn btn-secondary">
+                                <Link href={`/administration/voucherType/edit/${voucher.voucher_type_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
                                 <button className="btn btn-danger ms-2" onClick={() => {

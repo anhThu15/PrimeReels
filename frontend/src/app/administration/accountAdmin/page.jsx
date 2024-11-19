@@ -60,7 +60,7 @@ export default function AccountAdmin() {
             <div className="row">
                 <h2 className="col fw-bold">Quản Trị Viên</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/accountAdmin/addAdmin" className="btn btn-success">
+                    <Link href="/administration/accountAdmin/addAdmin" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>
@@ -123,7 +123,7 @@ export default function AccountAdmin() {
                                 </div>
                             </td>
                             <td>
-                                <Link href={`/admin/accountAdmin/edit/${user.user_id}`} className="btn btn-secondary">
+                                <Link href={`/administration/accountAdmin/edit/${user.user_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
                             </td>

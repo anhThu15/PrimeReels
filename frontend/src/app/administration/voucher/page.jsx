@@ -301,7 +301,7 @@ export default function Voucher() {
                             <td>{new Date(voucher.expired).toLocaleDateString()}</td>
                             <td>{new Date(voucher.enddate).toLocaleDateString()}</td>
                             <td>
-                                <Link href={`/admin/voucher/edit/${voucher.voucher_id}`} className="btn btn-secondary">
+                                <Link href={`/administration/voucher/edit/${voucher.voucher_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
                                 <button 

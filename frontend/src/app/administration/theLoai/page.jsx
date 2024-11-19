@@ -197,7 +197,7 @@ export default function TheLoai() {
               </td>
               <td>{genre.description}</td>
               <td>
-                <Link className="btn btn-secondary" href={`/admin/theLoai/edit/${genre.genre_id}`}>
+                <Link className="btn btn-secondary" href={`/administration/theLoai/edit/${genre.genre_id}`}>
                   <i className="fa-solid fa-pen"></i>
                 </Link>
                 <button 

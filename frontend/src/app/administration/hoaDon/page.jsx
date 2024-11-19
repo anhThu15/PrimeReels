@@ -135,7 +135,7 @@ export default function hoaDon(){
                             <td>{hd.payment_method}</td>
                             <td>{hd.created_at}</td>
                             <td>
-                              <Link href={`/admin/hoaDon/${hd.invoice_id}`} className="btn btn-primary">
+                              <Link href={`/administration/hoaDon/${hd.invoice_id}`} className="btn btn-primary">
                                   <i class="fa-solid fa-eye"></i>
                               </Link>
                             </td>

@@ -99,7 +99,7 @@ export default function AddNewFilm({ params }) {
             if (res) {
                 // alert('thành công ròi đi chữa lãnh hoy ~~~')
                 toast.success("Thao tác thành công")
-                router.push('/admin/adminFilm')
+                router.push('/administration/adminFilm')
             } else {
                 // Xử lý hiển thị lỗi
                 toast.error("Thao tác thất bại hãy kiểm tra lại!")
@@ -588,7 +588,7 @@ export default function AddNewFilm({ params }) {
                                                     </div>)}
                                                 </td>
                                                 <td>
-                                                    <Link className="btn btn-secondary ms-2" href={`/admin/adminFilm/${id}/episode/${episode.episode_number}`} >
+                                                    <Link className="btn btn-secondary ms-2" href={`/administration/adminFilm/${id}/episode/${episode.episode_number}`} >
                                                         <i className="fa-solid fa-pen"></i>
                                                     </Link>
                                                     <button className="btn btn-danger ms-2" onClick={() => { deleteEpisode(episode.episode_number) }}><i class="fa-solid fa-trash"></i></button>
@@ -958,7 +958,7 @@ export default function AddNewFilm({ params }) {
         <>
             <div className="container-fluid">
                 <div className="d-flex gap-3 align-items-center mt-2">
-                    <Link href="/admin/adminFilm">
+                    <Link href="/administration/adminFilm">
                         <button className="btn btn-danger">
                             <i className="fas fa-chevron-left"></i>
                         </button>

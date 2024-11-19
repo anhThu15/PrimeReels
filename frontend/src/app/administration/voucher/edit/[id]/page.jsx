@@ -124,7 +124,7 @@ export default function ChitietVoucher({ params }) {
     return (
         <div className="container-fluid">
             <div className="fw-bold">
-                <Link className="btn btn-danger mb-2 me-2" href='/admin/voucher'>
+                <Link className="btn btn-danger mb-2 me-2" href='/administration/voucher'>
                     <i className="fa-solid fa-chevron-left"></i>
                 </Link>
                 <span className="fs-4">Chi Tiết Voucher</span>

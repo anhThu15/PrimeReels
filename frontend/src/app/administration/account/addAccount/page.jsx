@@ -45,7 +45,7 @@ export default function AddAccount() {
                 });
                 if (res.ok) {
                     toast.success('Tạo tài khoản thành công!')
-                    router.push('/admin/account'); // Redirect to account page after creation
+                    router.push('/administration/account'); // Redirect to account page after creation
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
                     alert('Tạo tài khoản không thành công!');
@@ -61,7 +61,7 @@ export default function AddAccount() {
     return (
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
-                <Link href="/admin/account">
+                <Link href="/administration/account">
                     <button className="btn btn-danger">
                         <i className="fas fa-chevron-left"></i>
                     </button>

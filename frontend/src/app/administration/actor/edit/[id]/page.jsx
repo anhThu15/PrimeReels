@@ -88,7 +88,7 @@ export default function UpdateActor({ params }) {
 
         if (res.ok) {
             toast.success('Cập nhật diễn viên thành công!')
-            router.push('/admin/actor');
+            router.push('/administration/actor');
         } else {
             console.error('Lỗi khi cập nhật diễn viên:', res.status);
             toast.error('Cập nhật không thành công!')
@@ -100,7 +100,7 @@ export default function UpdateActor({ params }) {
     return (
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
-                <Link href="/admin/actor">
+                <Link href="/administration/actor">
                     <button className="btn btn-danger">
                         <i className="fas fa-chevron-left"></i>
                     </button>

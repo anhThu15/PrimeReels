@@ -82,7 +82,7 @@ export default function AdminFilm() {
             <div className="row">
                 <h2 className="col fw-bold">Danh Sách Phim</h2>
                 <div className="col-2 mt-2">
-                    <Link href="/admin/adminFilm/addNewFilm" className="btn btn-success">
+                    <Link href="/administration/adminFilm/addNewFilm" className="btn btn-success">
                         + Thêm Mới
                     </Link>
                 </div>
@@ -159,7 +159,7 @@ export default function AdminFilm() {
                                 <i className="fa-solid fa-star mx-3" style={{ color: "gold" }}></i>
                             </td>
                             <td>
-                                <Link href={`/admin/adminFilm/${film.movie_id}`} className="ms-2 btn btn-secondary">
+                                <Link href={`/administration/adminFilm/${film.movie_id}`} className="ms-2 btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link> 
                                 <button className="btn btn-danger ms-2" onClick={() => handleDelete(film.movie_id)}>

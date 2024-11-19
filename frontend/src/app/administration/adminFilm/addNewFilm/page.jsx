@@ -33,7 +33,7 @@ export default function AddNewFilm() {
             if (res) {
             //   alert('thành công ròi đi chữa lãnh hoy ~~~')
               toast.success("Thêm phim thành công")
-              router.push('/admin/adminFilm')
+              router.push('/administration/adminFilm')
             } else {
               // Xử lý hiển thị lỗi
               toast.error("Thêm thất bại hãy kiểm tra lại thao tác")
@@ -50,7 +50,7 @@ export default function AddNewFilm() {
     return (
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
-                <Link href="/admin/adminFilm">
+                <Link href="/administration/adminFilm">
                     <button className="btn btn-danger">
                         <i className="fas fa-chevron-left"></i>
                     </button>
