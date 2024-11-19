@@ -392,8 +392,8 @@ export default function InfomationUser() {
                 </div>
 
                 {/* Modal for changing password */}
-                <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-                <div className="u-service-buy mt-3" id="u-service-buy" style={{ display: 'none' }}>
+                {/* <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} /> */}
+                <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
                     <div className="row">
                         {invoice.map((iv) => {
                               let statusButton;
