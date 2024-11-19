@@ -121,7 +121,7 @@ export default function HeaderUser() {
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li><Link className="dropdown-item" href="/in4">Xin chào, {userName}</Link></li>
                   {userRole === 100 && (
-                    <li><Link className="dropdown-item" href="/admin">Trang quản trị</Link></li>
+                    <li><Link className="dropdown-item" href="/administration">Trang quản trị</Link></li>
                   )}
                   <li><hr className="dropdown-divider" /></li>
                   <li><a className="dropdown-item" onClick={handleLogout}>Đăng Xuất</a></li>
