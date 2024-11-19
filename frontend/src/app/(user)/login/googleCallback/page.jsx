@@ -39,7 +39,7 @@ export default function GoogleCallback() {
         </div>
     );
 }
-=======
+// =======
 //FE googlecallback
 "use client";
 import { useEffect } from "react";
