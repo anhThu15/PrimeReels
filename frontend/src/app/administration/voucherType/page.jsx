@@ -127,7 +127,7 @@ export default function VoucherType() {
     return (
         <div className="container-fluid">
             <div className="row">
-                <h2 className="col fw-bold">Voucher Types</h2>
+                <h2 className="col fw-bold">Thể Loại Voucher</h2>
                 <div className="col-2">
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#addVoucherModal">
                         + Thêm Mới
