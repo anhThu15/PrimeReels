@@ -1,11 +1,12 @@
 'use client'
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
 
 export default function Banner(){
-  
+  const router = useRouter()
   const { data, error, isLoading } = useSWR(
       `${process.env.NEXT_PUBLIC_API_URL}/movies`,
       fetcher
@@ -29,7 +30,7 @@ export default function Banner(){
       }
   }, [data]);
   
-  if (error) return <div>Lỗi tải dữ liệu</div>;
+  if (error) return router.push('/404');
   
   if (isLoading || !filteredData) {
       return (
