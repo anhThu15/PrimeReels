@@ -1,11 +1,12 @@
 'use client'
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
 
 export default function Banner(){
-  
+  const router = useRouter()
   const { data, error, isLoading } = useSWR(
       `${process.env.NEXT_PUBLIC_API_URL}/movies`,
       fetcher
@@ -22,14 +23,14 @@ export default function Banner(){
                   .slice(0, 3)
                   .filter((item) => item.status === 1);
               setFilteredData(topBanner);
-          }, 2000); // Độ trễ 2 giây
+          }, 1000); // Độ trễ 2 giây
   
           // Dọn dẹp timeout khi component unmount
           return () => clearTimeout(timeout);
       }
   }, [data]);
   
-  if (error) return <div>Lỗi tải dữ liệu</div>;
+  if (error) return router.push('/404');
   
   if (isLoading || !filteredData) {
       return (
@@ -56,9 +57,9 @@ export default function Banner(){
               <div className=" position-absolute  " style={{top:180, left:110, width:"600px"}}>
                     <h1 className=" fw-bold text-with-shadow">{filteredData[0].title}</h1>
                     <div className=" row text-with-shadow" style={{width:400}}>
-                       <div className="col"><i className="fa-regular fa-star"></i>{filteredData[0].rating}</div>
+                       <div className="col"><i className="fa-regular fa-star"></i> {filteredData[0].rating}</div>
                        <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
-                       <div className="col"><i className="fa-solid fa-calendar-days"></i> {filteredData[0].updated_at}</div>
+                       <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(filteredData[0].updated_at).toLocaleString()}</div>
                        {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                     </div>
                     <div className="col mt-2 text-with-shadow overflow-auto" style={{height:"200px"}} >
@@ -80,9 +81,9 @@ export default function Banner(){
               <div className=" position-absolute " style={{top:180, left:110, width:"600px"}}>
                     <h1 className=" fw-bold  text-with-shadow">{filteredData[1].title}</h1>
                     <div className=" row  text-with-shadow" style={{width:400}}>
-                       <div className="col"><i className="fa-regular fa-star"></i>{filteredData[1].rating}</div>
+                       <div className="col"><i className="fa-regular fa-star"></i> {filteredData[1].rating}</div>
                        <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
-                       <div className="col"><i className="fa-solid fa-calendar-days"></i> {filteredData[1].updated_at}</div>
+                       <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(filteredData[1].updated_at).toLocaleString()}</div>
                        {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                     </div>
                     <div className="col mt-2  text-with-shadow overflow-auto" style={{height:"200px"}} >
@@ -102,11 +103,11 @@ export default function Banner(){
           <div className=" position-relative">
               <img src={filteredData[2].banner}   width={"100%"} style={{height:"100vh"}} alt="..."/>
               <div className=" position-absolute " style={{top:180, left:110, width:"600px"}}>
-                    <h1 className=" fw-bold text-with-shadow">{filteredData[2].title}</h1>
+                    <h1 className=" fw-bold text-with-shadow"> {filteredData[2].title}</h1>
                     <div className=" row text-with-shadow" style={{width:400}}>
                        <div className="col"><i className="fa-regular fa-star"></i>{filteredData[2].rating}</div>
                        <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
-                       <div className="col"><i className="fa-solid fa-calendar-days"></i> {filteredData[2].updated_at}</div>
+                       <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(filteredData[2].updated_at).toLocaleString()}</div>
                        {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                     </div>
                     <div className="col mt-2 text-with-shadow overflow-auto" style={{height:"200px"}} >

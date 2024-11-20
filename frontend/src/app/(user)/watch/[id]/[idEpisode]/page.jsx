@@ -10,6 +10,7 @@ import { useTimer } from 'react-timer-hook';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function Watch({ params }) {
   const token = Cookies.get('token');
@@ -25,74 +26,141 @@ export default function Watch({ params }) {
   const [random, setRandom] = useState([])
   const [cmts, setCmts] = useState([])
   const [count, setCount] = useState(0)
+  const router = useRouter()
+
+  // console.log(idEpisode);
+  
+  // useEffect(() => {
+  //   const getWatch = async () => {
+  //     try {
+  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, { revalidate: 3600 }).then((res) => res.data)
+  //       setWatch(res)
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  //   const getFilm = async () => {
+  //     try {
+  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
+  //       setFilm(res)
+  //     } catch (error) {
+  //       console.log(error);
+        
+  //     }
+  //   }
+
+  //   const getEpisodes = async () => {
+  //     try {
+  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
+  //       const episodes = res.filter(episode => episode.status === 1);
+  //       setEpisodes(episodes)
+  //     } catch (error) {
+  //       console.log(error);
+        
+  //     }
+  //   }
+
+  //   const getRandom = async () => {
+  //     try {
+  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 }).then((res) => res.data)
+  //       const filteredData = res.filter(item => item.status === 1);
+  //       // Hàm xáo trộn mảng
+  //       const shuffleArray = (array) => {
+  //         for (let i = array.length - 1; i > 0; i--) {
+  //           // Chọn chỉ số ngẫu nhiên
+  //           const j = Math.floor(Math.random() * (i + 1));
+  //           // Hoán đổi các phần tử
+  //           [array[i], array[j]] = [array[j], array[i]];
+  //         }
+  //         return array;
+  //       };
+  //       setRandom(shuffleArray(filteredData))
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  //   const getCmt = async () => {
+  //     try {
+  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+  //       setCmts(res)
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  //   getWatch();
+  //   getFilm();
+  //   getEpisodes();
+  //   getRandom()
+  //   getCmt()
+
+  // }, [])
 
   useEffect(() => {
-    const getWatch = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, { revalidate: 3600 }).then((res) => res.data)
-        setWatch(res)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    const getFilm = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
-        setFilm(res)
-      } catch (error) {
-        console.log(error);
-        
-      }
-    }
-
-    const getEpisodes = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-        const episodes = res.filter(episode => episode.status === 1);
-        setEpisodes(episodes)
-      } catch (error) {
-        console.log(error);
-        
-      }
-    }
-
-    const getRandom = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 }).then((res) => res.data)
-        const filteredData = res.filter(item => item.status === 1);
-        // Hàm xáo trộn mảng
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  
+        // Hàm gọi API với xử lý lỗi cụ thể
+        const fetchWithRetry = async (url, retries = 3, delayMs = 2000) => {
+          try {
+            const response = await axios.get(url, { revalidate: 3600 });
+            return response.data;
+          } catch (error) {
+            if (retries > 0) {
+              if (error.response?.status === 429) { // Rate limit
+                // console.warn(`Rate limit hit. Retrying after ${delayMs}ms...`);
+                router.push('/404')
+                await delay(delayMs);
+                return fetchWithRetry(url, retries - 1, delayMs);
+              }
+            }
+            throw error; // Ném lỗi ra ngoài nếu hết lượt thử
+          }
+        };
+  
+        // Thực hiện các API song song
+        const [watchRes, filmRes, episodesRes, randomRes, cmtRes] = await Promise.all([
+          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`),
+          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`),
+          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`),
+          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies`),
+          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`),
+        ]);
+  
+        // Xử lý dữ liệu
+        setWatch(watchRes);
+        setFilm(filmRes);
+  
+        const episodes = episodesRes.filter((episode) => episode.status === 1);
+        setEpisodes(episodes);
+  
+        const filteredData = randomRes.filter((item) => item.status === 1);
         const shuffleArray = (array) => {
           for (let i = array.length - 1; i > 0; i--) {
-            // Chọn chỉ số ngẫu nhiên
             const j = Math.floor(Math.random() * (i + 1));
-            // Hoán đổi các phần tử
             [array[i], array[j]] = [array[j], array[i]];
           }
           return array;
         };
-        setRandom(shuffleArray(filteredData))
+        setRandom(shuffleArray(filteredData));
+  
+        setCmts(cmtRes);
       } catch (error) {
-        console.log(error);
+        console.error("Error loading data:", error);
+        if (error.response?.status === 429) {
+          alert("API rate limit exceeded. Please try again later.");
+        } else {
+          alert("Failed to load data. Please try again.");
+        }
       }
-    }
-
-    const getCmt = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
-        setCmts(res)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    getWatch();
-    getFilm();
-    getEpisodes();
-    getRandom()
-    getCmt()
-
-  }, [])
+    };
+  
+    fetchData();
+  }, [id, idEpisode]);
+  
 
   useEffect(() => {
     if (token) {
@@ -310,8 +378,8 @@ export default function Watch({ params }) {
             <h1 className=" fw-bold text-danger">{film.title}</h1>
             <div className=" row " style={{ width: 380 }}>
               <div className="col"><i class="fa-regular fa-star"></i> {film.rating}</div>
-              <div className="col"><i class="fa-regular fa-clock"></i> <span className=" text-secondary">20</span>/25</div>
-              <div className="col"><i class="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
+              <div className="col"><i class="fa-regular fa-clock"></i> <span className=" text-secondary">{film?.episode?.length}</span>/{film.duration}</div>
+              <div className="col"><i class="fa-solid fa-calendar-days"></i>  {new Date(film.updated_at).toLocaleString()}</div>
               {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
             </div>
             <div className="col"> <span className=" text-secondary">Thể Loại: </span>{film?.genres?.map((g) => { return (<>{g.name}, </>) })}</div>
