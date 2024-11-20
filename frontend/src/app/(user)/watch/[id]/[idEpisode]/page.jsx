@@ -378,8 +378,8 @@ export default function Watch({ params }) {
             <h1 className=" fw-bold text-danger">{film.title}</h1>
             <div className=" row " style={{ width: 380 }}>
               <div className="col"><i class="fa-regular fa-star"></i> {film.rating}</div>
-              <div className="col"><i class="fa-regular fa-clock"></i> <span className=" text-secondary">20</span>/25</div>
-              <div className="col"><i class="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
+              <div className="col"><i class="fa-regular fa-clock"></i> <span className=" text-secondary">{film?.episode?.length}</span>/{film.duration}</div>
+              <div className="col"><i class="fa-solid fa-calendar-days"></i>  {new Date(film.updated_at).toLocaleString()}</div>
               {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
             </div>
             <div className="col"> <span className=" text-secondary">Thể Loại: </span>{film?.genres?.map((g) => { return (<>{g.name}, </>) })}</div>

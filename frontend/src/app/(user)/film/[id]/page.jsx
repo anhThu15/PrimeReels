@@ -188,7 +188,7 @@ export default function film({params}){
                           <div className=" row" style={{width:400}}>
                              <div className="col"><i className="fa-regular fa-star"></i> {film.rating}</div>
                              <div className="col"><i className="fa-regular fa-clock"></i> {film?.episode?.length}/{film.duration}</div>
-                             <div className="col"><i className="fa-solid fa-calendar-days"></i> {film.updated_at}</div>
+                             <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(film.updated_at).toLocaleString()}</div>
                              {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                           </div>
                           <div className="col mt-2 overflow-auto" style={{height:"100px"}}>
