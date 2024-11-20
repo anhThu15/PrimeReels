@@ -1,7 +1,9 @@
 'use client'
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 const Error404 = () => {
+  const router = useRouter()
   useEffect(() => {
     // Hàm vẽ visor
     function drawVisor() {
@@ -81,7 +83,10 @@ const Error404 = () => {
       
       drawVisor();
       animate();
-  }, []); // useEffect sẽ chạy một lần khi component được mount
+      setTimeout(() => {
+          router.back()
+      }, 3000);
+  }, []);
 
   return (
     <>

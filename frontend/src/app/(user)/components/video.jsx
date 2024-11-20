@@ -125,7 +125,7 @@ export default function Video(props){
                             <div className="mt-3 d-flex">
                                 <button className="me-3 btn btn-outline-light" onClick={() => handleNext()}><i class="fa-solid fa-forward"></i> Tập Tiếp Theo</button>
                                 <button className="me-3 btn btn-outline-light" onClick={() => handleLove()}><i class="fa-solid fa-bookmark"></i> Thêm Vào Thư Viện</button>
-                                <Link href={'/infomation'} className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</Link>
+                                <Link href={'/in4'} className="me-3 btn btn-outline-light"><i class="fa-solid fa-rotate-left"></i> Lịch Sử Xem</Link>
                                 <button className="me-3 btn btn-outline-light" onClick={()=> hanldeScrooll()}><i class="fa-solid fa-comment"></i> Bình Luận</button>
                             </div>
                         </>
