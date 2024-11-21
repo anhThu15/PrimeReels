@@ -5,13 +5,31 @@ import HeaderUser from "../layout/user/header";
 import FooterUser from "../layout/user/footer";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+export const metadata = {
+  title: 'PrimeReels - Xem phim online chất lượng cao',
+  description: 'Xem phim online chất lượng cao tại PrimeReels. Phim bộ, phim lẻ, anime hấp dẫn.',
+  icons: {
+    icon: '/images/Logo-PR-(1).png',
+  },
+  openGraph: {
+    title: 'PrimeReels - Xem phim online chất lượng cao',
+    description: 'Xem phim bộ, phim lẻ và anime hấp dẫn tại PrimeReels. Thưởng thức ngay!',
+    url: 'https://primereels.online', 
+    images: [
+      {
+        url: '/images/Logo-PR-(1).png', 
+        width: 1200,
+        height: 630,
+        alt: 'PrimeReels Logo',
+      },
+    ],
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-          <title>PrimeReels</title>
-          <meta name="description" content="Xem phim online chất lượng cao tại PrimeReels. Phim bộ, phim lẻ, anime hấp dẫn." />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/images/Logo-PR-(1).png" type="image/png" />
       <body>
         <HeaderUser></HeaderUser>
 

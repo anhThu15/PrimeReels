@@ -19,63 +19,6 @@ export default function film({params}){
   const token = Cookies.get('token');
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const getFilm = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
-  //       setFilm(res)
-  //     } catch (error) {
-  //       console.log(error);
-        
-  //     }
-  //   }
-
-  //   const getEpisodes = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`,{ revalidate: 3600 }).then((res) => res.data)
-  //       const episodes = res.filter(episode => episode.status === 1);
-  //       setEpisodes(episodes)
-  //     } catch (error) {
-  //       console.log(error);
-        
-  //     }
-  //   }
-
-  //   const getRandom = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
-  //       const filteredData = res.filter(item => item.status === 1);
-  //       // Hàm xáo trộn mảng
-  //       const shuffleArray = (array) => {
-  //       for (let i = array.length - 1; i > 0; i--) {
-  //         // Chọn chỉ số ngẫu nhiên
-  //         const j = Math.floor(Math.random() * (i + 1));
-  //         // Hoán đổi các phần tử
-  //         [array[i], array[j]] = [array[j], array[i]];
-  //       }
-  //       return array;
-  //       };
-  //       setRandom(shuffleArray(filteredData))
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   const getCmt = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
-  //       setCmts(res)
-  //     } catch (error) {
-  //       console.log(error);
-        
-  //     }
-  //   }
-
-  //   getFilm()
-  //   getEpisodes()
-  //   getRandom()
-  //   getCmt()
-  // },[])
 
   useEffect(() => {
     const fetchData = async () => {
