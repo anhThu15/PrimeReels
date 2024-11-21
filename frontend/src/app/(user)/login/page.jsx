@@ -14,7 +14,8 @@ export default function Login() {
     useEffect(() => {
         const token = Cookies.get('token');
         if (token) {
-            router.push("/");
+            // router.push("/");
+            window.location.pathname = '/'
         }
     }, [router]);  //kiểm trả xem đã có token chưa => đã có thì không cho vào lại trang login
 
@@ -49,9 +50,11 @@ export default function Login() {
                 // alert("mày đã xác minh rồi")
                 toast.success('Đăng nhập thành công!');
                 if (data.user.role === 100) {
-                    router.push("/administration");
+                    // router.push("/administration");
+                    window.location.pathname = '/administration'
                 } else {
-                    router.push("/");
+                    // router.push("/");
+                    window.location.pathname = '/'
                     window.location.reload();
                 }
                 
