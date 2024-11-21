@@ -82,31 +82,24 @@ export default function film({params}){
       try {
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   
-        const fetchWithRetry = async (url, retries = 3, delayMs = 2000) => {
-          try {
-            const response = await axios.get(url, { revalidate: 3600 });
-            return response.data;
-          } catch (error) {
-            if (retries > 0) {
-              if (error.response?.status === 429) {
-                router.push('/404')
-                await delay(delayMs);
-                return fetchWithRetry(url, retries - 1, delayMs);
-              }
-            }
-            throw error; // Nếu hết lượt thử lại, ném lỗi ra ngoài
-          }
+        // Hàm gọi API đơn giản
+        const fetchAPI = async (url) => {
+          const response = await axios.get(url, { revalidate: 3600 });
+          return response.data;
         };
   
+        // Gọi tất cả API song song
         const [filmRes, episodesRes, randomRes, cmtRes] = await Promise.all([
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`),
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`),
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies`),
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/movies`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`),
         ]);
   
+        // Thêm delay trước khi xử lý dữ liệu
         await delay(2000);
   
+        // Xử lý dữ liệu
         setFilm(filmRes);
   
         const episodes = episodesRes.filter((episode) => episode.status === 1);
@@ -125,16 +118,13 @@ export default function film({params}){
         setCmts(cmtRes);
       } catch (error) {
         console.error("Error loading data:", error);
-        if (error.response?.status === 429) {
-          alert("API rate limit exceeded. Please try again later.");
-        } else {
-          alert("Failed to load data. Please try again" );
-        }
+        alert("Failed to load data. Please try again.");
       }
     };
   
     fetchData();
   }, [id]);
+  
   
 
   const handleLove = async () => {

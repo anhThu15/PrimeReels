@@ -103,31 +103,22 @@ export default function Watch({ params }) {
       try {
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   
-        // Hàm gọi API với xử lý lỗi cụ thể
-        const fetchWithRetry = async (url, retries = 3, delayMs = 2000) => {
-          try {
-            const response = await axios.get(url, { revalidate: 3600 });
-            return response.data;
-          } catch (error) {
-            if (retries > 0) {
-              if (error.response?.status === 429) { // Rate limit
-                // console.warn(`Rate limit hit. Retrying after ${delayMs}ms...`);
-                router.push('/404')
-                await delay(delayMs);
-                return fetchWithRetry(url, retries - 1, delayMs);
-              }
-            }
-            throw error; // Ném lỗi ra ngoài nếu hết lượt thử
-          }
+        // Hàm gọi API cơ bản
+        const fetchAPI = async (url) => {
+          const response = await axios.get(url, { revalidate: 3600 });
+          return response.data;
         };
+  
+        // Thêm thời gian delay
+        await delay(2000);
   
         // Thực hiện các API song song
         const [watchRes, filmRes, episodesRes, randomRes, cmtRes] = await Promise.all([
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`),
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`),
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`),
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/movies`),
-          fetchWithRetry(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/movies`),
+          fetchAPI(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`),
         ]);
   
         // Xử lý dữ liệu
@@ -150,16 +141,14 @@ export default function Watch({ params }) {
         setCmts(cmtRes);
       } catch (error) {
         console.error("Error loading data:", error);
-        if (error.response?.status === 429) {
-          alert("API rate limit exceeded. Please try again later.");
-        } else {
-          alert("Failed to load data. Please try again.");
-        }
+        router.push('/404')
+        // alert("Failed to load data. Please try again.");
       }
     };
   
     fetchData();
   }, [id, idEpisode]);
+  
   
 
   useEffect(() => {
