@@ -261,15 +261,18 @@ export default function Home() {
           </div>
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Đề Xuất Hôm Nay</h2>
-            <SlideShow3 data={random}></SlideShow3>
+            {/* <SlideShow3 data={random}></SlideShow3> */}
+            <SlideShow data={random}></SlideShow>
           </div>
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Cập Nhập Mới Nhất </h2>
-            <SlideShowAnother2 data={date}></SlideShowAnother2>
+            {/* <SlideShowAnother2 data={date}></SlideShowAnother2> */}
+            <SlideShowAnother data={date}></SlideShowAnother>
           </div>
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>PrimeReels Phim hay mỗi ngày</h2>
-            <SlideShow4 data={better}></SlideShow4>
+            {/* <SlideShow4 data={better}></SlideShow4> */}
+            <SlideShow data={better}></SlideShow>
           </div>
           <div>
             <BannerAnother></BannerAnother>
@@ -293,7 +296,8 @@ export default function Home() {
           </div>
           <div >
             <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hài Hước</h2>
-            <SlideShow2 data={comendy}></SlideShow2>
+            {/* <SlideShow2 data={comendy}></SlideShow2> */}
+            <SlideShow data={comendy}></SlideShow>
           </div>
         </div>
 

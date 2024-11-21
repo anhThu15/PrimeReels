@@ -15,7 +15,7 @@ export default function danhMuc() {
   const fetchMovieTypes = async () => {
     try {
       const token = Cookies.get('token');
-      const res = await fetch('http://127.0.0.1:8000/api/movie-types', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export default function danhMuc() {
     onSubmit: async (values) => {
       try {
         const token = Cookies.get('token');
-        const res = await fetch('http://127.0.0.1:8000/api/movie-types', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default function danhMuc() {
 
     try {
       const token = Cookies.get('token');
-      const res = await fetch(`http://127.0.0.1:8000/api/movie-types/${movieTypeDelete}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/${movieTypeDelete}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

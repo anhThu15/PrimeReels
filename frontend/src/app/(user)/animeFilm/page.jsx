@@ -19,6 +19,7 @@ export default function FilmSeries() {
     country: [],
     date: [],
     moviesByGenre: {},
+    comedy: [],
   });
   const [genres, setGenres] = useState([]); // Tạo state để lưu danh sách thể loại phim
   const [selectedGenreId, setSelectedGenre] = useState(''); // Lưu thể loại được chọn
@@ -31,14 +32,17 @@ export default function FilmSeries() {
         // Gọi API để lấy thông tin về thể loại và phim cùng lúc bằng Promise.all
         const [resGenres, resMovies] = await Promise.all([
           axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`), // Lấy danh sách thể loại phim
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`) // Lấy danh sách phim
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`), // Lấy danh sách phim
+          
+          
         ]);
-
+        // console.log(resMovies)
         const genresData = resGenres.data; // Lưu thể loại phim
         setGenres(genresData); // Cập nhật state cho danh sách thể loại
-
         const moviesData = resMovies.data.filter(movie => movie.status === 1); // Lọc các phim có trạng thái là 1 (hoạt động)
 
+        const comedyMovies = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/4`);
+        console.log("comedy data",comedyMovies)
         // Hàm để xáo trộn danh sách phim cho phần phim ngẫu nhiên
         const shuffleArray = (array) => {
           for (let i = array.length - 1; i > 0; i--) {
@@ -52,10 +56,10 @@ export default function FilmSeries() {
         const randomMovies = shuffleArray([...moviesData]); // Phim ngẫu nhiên
         const betterMovies = [...moviesData].sort((a, b) => b.favorites_count - a.favorites_count); // Phim được yêu thích nhất
         const dateMovies = [...moviesData].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)); // Phim mới nhất
-        const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/country/Việt Nam`);
+        const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/country/Hoa Kỳ`);
         const countryMovies = resCountry.data.movies.filter(movie => movie.status === 1); // Lấy danh sách phim theo quốc gia (Việt Nam)
-
         // Phân loại phim theo từng thể loại (để hiển thị mục Phim theo thể loại)
+        const comedyMoviesData = comedyMovies.data.movies.filter(movie => movie.status === 1); // Lọc phim hoạt động
         const genresMovies = {};
         for (let genre of genresData) {
           const genreMovies = moviesData.filter(movie => movie.genre_id === genre.genre_id);
@@ -71,6 +75,7 @@ export default function FilmSeries() {
           country: countryMovies,
           date: dateMovies,
           moviesByGenre: genresMovies,
+          comedy: comedyMoviesData,
         });
       } catch (error) {
         console.error("Error fetching data:", error); // Xử lý lỗi khi gọi API
@@ -140,9 +145,9 @@ export default function FilmSeries() {
           </div>
           <div>
             <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Được Quan Tâm Nhất</h2>
-            <SlideShow2 data={moviesData.better} />
+            <SlideShow data={moviesData.better} />
           </div>
-          <div>
+          {/* <div>
             {Object.keys(moviesData.moviesByGenre).map((genreId) => (
               <div key={genreId}>
                 <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>
@@ -151,10 +156,15 @@ export default function FilmSeries() {
                 <SlideShow3 data={moviesData.moviesByGenre[genreId]} />
               </div>
             ))}
+          </div> */}
+          <div>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Mỹ</h2>
+            {/* <SlideShowAnother2 data={moviesData.country} /> */}
+            <SlideShowAnother data={moviesData.country}></SlideShowAnother>
           </div>
           <div>
-            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Việt Nam</h2>
-            <SlideShowAnother2 data={moviesData.country} />
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Hoạt Hình Hài Hước</h2>
+            <SlideShow data={moviesData.comedy} />
           </div>
         </div>
       </div>

@@ -4,7 +4,8 @@ import "../../../public/bootstrap/css/bootstrap.min.css";
 import Link from "next/link";
 import NavAdmin from "../layout/admin/nav";
 import HeaderAdmin from "../layout/admin/header";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function RootLayout({ children }) {
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
           <HeaderAdmin></HeaderAdmin>
 
             {children}
+            <ToastContainer />
 
         </div>
       </div>

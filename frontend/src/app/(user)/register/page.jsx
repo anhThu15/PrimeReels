@@ -53,7 +53,7 @@ export default function Register() {
                     console.log(response)
                     router.push("/login");
                 } else {
-                    toast.error(data.message || 'Đăng ký không thành công');
+                    toast.error(data.message || 'Email đã tồn tại bạn không thể đăng ký với email này');
                 }
             } catch (error) {
                 toast.error('Có lỗi xảy ra. Vui lòng thử lại.');

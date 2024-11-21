@@ -1355,7 +1355,7 @@ html,body {
   transform: rotate(250deg);
 }
 
-.star {
+/* .star {
   background: grey;
   position: absolute;
   width: 5px;
@@ -1368,7 +1368,7 @@ html,body {
   animation-duration: 1.5s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-}
+} */
 
 @keyframes shimmer {
   from {opacity: 0;}
@@ -1684,3 +1684,56 @@ html,body {
   border-top-right-radius: 8em;
   border-bottom: 4px solid #e67e22;
 }
+
+/* Ensure the slider buttons are positioned correctly */
+.box-slider3 .slick-prev,
+.box-slider3 .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  transition: background 1s;
+}
+
+.box-slider3 .slick-prev {
+  left: 0;
+  height: 100%;
+  width: 50px;
+}
+
+.box-slider3 .slick-next {
+  right: 0;
+  height: 100%;
+  width: 50px;
+}
+
+.box-slider3 .slick-slider {
+  margin: 10px;
+}
+
+.box-slider3 .slick-next:hover {
+  background: rgba(255, 99, 71, 0.444);
+}
+
+.box-slider3 .slick-prev:hover {
+  background: rgba(255, 99, 71, 0.444);
+}
+
+.box-slider3 .slick-arrow {
+  font-size: 25px;
+  color: white;
+  font-weight: 600;
+}
+
+.box-slider3 .slick-arrow::before {
+  content: "" !important
+}
+
+.slick-prev::before,
+.slick-next::before {
+  display: none !important;
+  /* Loại bỏ nội dung mặc định */
+}
+

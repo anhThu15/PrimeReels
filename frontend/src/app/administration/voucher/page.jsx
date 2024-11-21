@@ -34,7 +34,7 @@ export default function Voucher() {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch('http://127.0.0.1:8000/api/vouchers', {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export default function Voucher() {
     const fetchVouchers = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch('http://127.0.0.1:8000/api/vouchers', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export default function Voucher() {
     const fetchVoucherTypes = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch('http://127.0.0.1:8000/api/voucher-types', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ export default function Voucher() {
     const handleDelete = async (id) => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`http://127.0.0.1:8000/api/vouchers/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

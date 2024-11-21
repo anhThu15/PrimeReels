@@ -154,7 +154,8 @@ export default function FilmSeries() {
           </div>
           <div>
             <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Việt Nam</h2>
-            <SlideShowAnother2 data={moviesData.country} />
+            {/* <SlideShowAnother2 data={moviesData.country} /> */}
+            <SlideShowAnother data={moviesData.country}></SlideShowAnother>
           </div>
         </div>
       </div>

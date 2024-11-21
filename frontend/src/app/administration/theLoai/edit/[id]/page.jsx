@@ -18,7 +18,7 @@ export default function UpdateGenre({ params }) {
     const fetchGenreById = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`http://127.0.0.1:8000/api/genres/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export default function UpdateGenre({ params }) {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`http://127.0.0.1:8000/api/genres/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres/${id}`, {
                     method: 'PUT', // Sử dụng PUT để cập nhật
                     headers: {
                         'Content-Type': 'application/json',

@@ -20,14 +20,26 @@ export default function contact() {
                       </div>
                       <div className="col-8">
                         <div className="tab-content" id="nav-tabContent">
-                          <div className="tab-pane fade show active bg-light text-black fs-1" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                                    Liên Hệ:
-                                    <br />
-                                    Tổng đài hỗ trợ: 9090 (24/7, 200đ/phút) <br />
-                                    (hỗ trợ 24/24h) <br />
-                                    Địa chỉ: Quận 12. <br />
+                        <div className="tab-pane fade show active bg-light text-black fs-6 p-4 rounded" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                          <h3 className="fw-bold mb-4 text-primary">
+                            <i className="fa-solid fa-phone-volume"></i> Liên Hệ Hỗ Trợ
+                          </h3>
+                          <div className="mb-4">
+                            <h5 className="fw-bold text-dark"><i className="fa-solid fa-phone"></i> Tổng đài hỗ trợ:</h5>
+                            <p className="mb-1">9090 (24/7, 200đ/phút)</p>
+                            <small className="text-muted">(Hỗ trợ 24/24h)</small>
                           </div>
-                          <div className="tab-pane fade bg-light text-black" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">                                   
+                          <div className="mb-4">
+                            <h5 className="fw-bold text-dark"><i className="fa-solid fa-map-marker-alt"></i> Địa chỉ:</h5>
+                            <p>Quận 12, Thành phố Hồ Chí Minh.</p>
+                          </div>
+                          <div>
+                            <h5 className="fw-bold text-dark"><i className="fa-solid fa-envelope"></i> Email hỗ trợ:</h5>
+                            <p>support@primereels.com</p>
+                          </div>
+                        </div>
+
+                          {/* <div className="tab-pane fade bg-light text-black" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">                                   
                                     <h3 className="pt-3">Chúng tôi có thể giúp gì cho bạn ?</h3>
                                     <hr />
                                 <div className="accordion" id="accordionExample">
@@ -116,7 +128,92 @@ export default function contact() {
                                     </div>
                                   </div>
                                 </div>
-                          </div>
+                          </div> */}
+                          <div className="tab-pane fade bg-light text-black p-4 rounded" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+  <h3 className="fw-bold text-primary mb-4">
+    <i className="fa-solid fa-question-circle"></i> Hỏi Đáp
+  </h3>
+  <div className="accordion" id="accordionExample">
+    <div className="accordion-item">
+      <h2 className="accordion-header">
+        <button className="accordion-button text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <i className="fa-solid fa-info-circle me-2"></i> PrimeReels là dịch vụ gì?
+        </button>
+      </h2>
+      <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div className="accordion-body">
+          PrimeReels là dịch vụ truyền hình trên mạng Internet đem đến cho khách hàng trải nghiệm đặc sắc với các kênh truyền hình trong nước và quốc tế, hàng ngàn bộ phim bom tấn có bản quyền, kho nội dung VOD phong phú, đa dạng về thể thao, âm nhạc, gameshow, golf, chứng khoán, giáo dục… Khách hàng có thể sử dụng dịch vụ PrimeReels trên các thiết bị khác nhau có kết nối Internet như điện thoại, máy tính, SmartTV…
+        </div>
+      </div>
+    </div>
+
+    <div className="accordion-item">
+      <h2 className="accordion-header">
+        <button className="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <i className="fa-solid fa-star me-2"></i> Nội dung dịch vụ PrimeReels có gì nổi bật không?
+        </button>
+      </h2>
+      <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div className="accordion-body">
+          Nội dung dịch vụ PrimeReels 100% bản quyền các kênh truyền hình trong nước quốc tế, kho phim đặc sắc nhiều thể loại khác nhau, tổng hợp nhiều chương trình truyền hình, giải trí, thể thao chất lượng Video HD, 4K đáp ứng mọi lứa tuổi.
+        </div>
+      </div>
+    </div>
+
+    <div className="accordion-item">
+      <h2 className="accordion-header">
+        <button className="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <i className="fa-solid fa-expand me-2"></i> Làm thế nào để thu nhỏ màn hình khi xem phim?
+        </button>
+      </h2>
+      <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div className="accordion-body">
+          Hiện tại, dịch vụ PrimeReels thiết kế tính năng chuyển FullScreen để khách hàng có thể trải nghiệm nội dung trực tiếp trên màn hình lớn. Để thuận tiện cho khách hàng trong việc lựa chọn, tìm kiếm nội dung, trong thời gian tới PrimeReels sẽ bổ sung thêm tính năng xem ở màn hình thu nhỏ.
+        </div>
+      </div>
+    </div>
+
+    <div className="accordion-item">
+      <h2 className="accordion-header">
+        <button className="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          <i className="fa-solid fa-globe me-2"></i> Tôi ở nước ngoài, có thể mua VIP xem phim trên PrimeReels?
+        </button>
+      </h2>
+      <div id="collapseFour" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div className="accordion-body">
+          Hiện các phim trên PrimeReels chỉ có bản quyền trên lãnh thổ Việt Nam nên chúng tôi không hỗ trợ xem tại nước ngoài. Để xem nội dung, bạn cần sử dụng IP của Việt Nam.
+        </div>
+      </div>
+    </div>
+
+    <div className="accordion-item">
+      <h2 className="accordion-header">
+        <button className="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          <i className="fa-solid fa-download me-2"></i> Cài đặt ứng dụng PrimeReels có mất tiền không?
+        </button>
+      </h2>
+      <div id="collapseFive" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div className="accordion-body">
+          Bạn có thể cài đặt ứng dụng PrimeReels hoàn toàn miễn phí trên các nền tảng: Điện thoại, Smart TV, Android Box.
+        </div>
+      </div>
+    </div>
+
+    <div className="accordion-item">
+      <h2 className="accordion-header">
+        <button className="accordion-button collapsed text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+          <i className="fa-solid fa-chrome me-2"></i> Tôi không xem được phim trên trình duyệt Chrome, phải làm gì?
+        </button>
+      </h2>
+      <div id="collapseSix" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div className="accordion-body">
+          Hãy thử các bước sau: Đóng trình duyệt, xóa cache WidevineCDM trong thư mục Google, cập nhật Widevine, và kiểm tra lại cài đặt plugin.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
                         </div>
                       </div>
                     </div>
