@@ -50,8 +50,12 @@ export default function Login() {
                 // alert("mày đã xác minh rồi")
                 toast.success('Đăng nhập thành công!');
                 if (data.user.role === 100) {
+// <<<<<<< feature_frontEnd
                     // router.push("/administration");
                     window.location.pathname = '/administration'
+// =======
+                    router.push("/administration");
+//  >>>>>>> main
                 } else {
                     // router.push("/");
                     window.location.pathname = '/'
