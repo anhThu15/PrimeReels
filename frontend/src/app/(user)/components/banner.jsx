@@ -16,17 +16,11 @@ export default function Banner(){
   
   useEffect(() => {
       if (data) {
-          // Thêm độ trễ 2 giây
-          const timeout = setTimeout(() => {
-              const topBanner = data
-                  .sort((a, b) => b.favorites_count - a.favorites_count)
-                  .slice(0, 3)
-                  .filter((item) => item.status === 1);
-              setFilteredData(topBanner);
-          }, 1000); // Độ trễ 2 giây
-  
-          // Dọn dẹp timeout khi component unmount
-          return () => clearTimeout(timeout);
+        const topBanner = data
+            .sort((a, b) => b.favorites_count - a.favorites_count)
+            .slice(0, 3)
+            .filter((item) => item.status === 1);
+        setFilteredData(topBanner);
       }
   }, [data]);
   
