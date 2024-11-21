@@ -17,7 +17,7 @@ export default function VoucherType() {
     const fetchVoucherTypes = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch('http://127.0.0.1:8000/api/voucher-types', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function VoucherType() {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch('http://127.0.0.1:8000/api/voucher-types', {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -67,14 +67,13 @@ export default function VoucherType() {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Thể loại voucher đã được thêm thành công!');
                     toast.success('Thể loại voucher đã được thêm thành công!');
                     fetchVoucherTypes();  // Refresh the list
                     formik.resetForm();   // Reset the form
                 } else {
                     console.error('Lỗi khi thêm thể loại voucher:', res.status);
                     // alert('Lỗi khi thêm thể loại voucher');
-                    toast.error('Lỗi khi thêm thể loại voucher');
+                    toast.error(`Lỗi khi thêm: ${errorData.message || 'Vui lòng kiểm tra lại'}`);
                 }
             } catch (error) {
                 console.error('Lỗi Post request:', error);
@@ -86,7 +85,7 @@ export default function VoucherType() {
     const handleDelete = async (voucherId) => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`http://127.0.0.1:8000/api/voucher-types/${voucherId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types/${voucherId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,11 +93,13 @@ export default function VoucherType() {
                 },
             });
             if (res.ok) {
-                alert('Thể loại voucher đã được xóa thành công!');
+                // alert('Thể loại voucher đã được xóa thành công!');
+                toast.success('Xóa thể loại voucher đã thành công!');
                 fetchVoucherTypes(); // Refresh the list
             } else {
                 console.error('Lỗi khi xóa thể loại voucher:', res.status);
-                alert('Lỗi khi xóa thể loại voucher');
+                // alert('Lỗi khi xóa thể loại voucher');
+                toast.error('Lỗi khi xóa thể loại voucher')
             }
         } catch (error) {
             console.error('Lỗi Delete request:', error);
@@ -129,7 +130,7 @@ export default function VoucherType() {
             <div className="row">
                 <h2 className="col fw-bold">Thể Loại Voucher</h2>
                 <div className="col-2">
-                    <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#addVoucherModal">
+                    <button type="button" className="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#addVoucherModal">
                         + Thêm Mới
                     </button>
                 </div>

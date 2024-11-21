@@ -49,7 +49,7 @@ export default function Login() {
                 // alert("mày đã xác minh rồi")
                 toast.success('Đăng nhập thành công!');
                 if (data.user.role === 100) {
-                    router.push("/admin");
+                    router.push("/administration");
                 } else {
                     router.push("/");
                     window.location.reload();

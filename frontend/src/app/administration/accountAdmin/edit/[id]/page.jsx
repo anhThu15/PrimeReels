@@ -31,7 +31,7 @@ export default function UpdateAccountAdmin({ params }) {
             console.log("Submitting values:", values);
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default function UpdateAccountAdmin({ params }) {
         const fetchAccount = async () => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

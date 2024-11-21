@@ -24,7 +24,7 @@ export default function UpdateActor({ params }) {
 
     const fetchActor = async () => {
         const token = Cookies.get('token');
-        const res = await fetch(`http://127.0.0.1:8000/api/actors/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/actors/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
