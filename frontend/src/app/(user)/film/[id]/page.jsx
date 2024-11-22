@@ -105,8 +105,6 @@ export default function film({params}){
           }
     }
   }
-  
-
   // console.log(cmts)
 
     return(
