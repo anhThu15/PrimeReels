@@ -187,12 +187,7 @@ class PaymentController extends Controller
                     if ($user) {
                         // Gửi email hóa đơn
                         Mail::to($user->email)->send(new InvoiceMail($invoice)); // Giả sử bạn đã tạo mail InvoiceMail
-
-                        return response()->json([
-                            'message' => 'Trạng thái hóa đơn được cập nhật thành công và gửi email!',
-                            'invoice_code' => $invoiceCode,
-                            'user_email' => $user->email
-                        ]);
+                        return redirect('https://primereels.online/after-payment')->with('success', 'Thanh toán thành công, hoá đơn đã được gửi qua email!');
                     } else {
                         return response()->json(['message' => 'Không tìm thấy người dùng cho hóa đơn này!'], 404);
                     }
