@@ -90,6 +90,9 @@ class UserController extends Controller
             'provider' => 'nullable|in:local,google',
         ]);
 
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $request->file('avatar')->store('images', 'public');
+        }
         // Cập nhật các trường nếu có trong request
         $user->update(array_filter($request->except('password')));
 

@@ -25,6 +25,9 @@ class ActorController extends Controller
             'image_url' => 'nullable|file|max:1000',
         ]);
 
+        if ($request->hasFile('image_url')) {
+            $validated['image_url'] = $request->file('image_url')->store('images', 'public');
+        }
         $actor = Actor::create($validated);
         return response()->json($actor, 201);
     }
@@ -47,7 +50,9 @@ class ActorController extends Controller
             'birth_date' => 'nullable|date',
             'image_url' => 'nullable|file|max:1000',
         ]);
-
+        if ($request->hasFile('image_url')) {
+            $validated['image_url'] = $request->file('image_url')->store('images', 'public');
+        }
         $actor->update($validated);
         return response()->json($actor, 200);
     }
