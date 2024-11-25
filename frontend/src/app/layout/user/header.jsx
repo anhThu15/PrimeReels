@@ -6,44 +6,47 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import axios from "axios";
-export default function HeaderUser() {
+export default function HeaderUser({ hasBanner }) {
   const token = Cookies.get('token');
   const router = useRouter();
   const pathName = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState(null);
-  const [userAvatar, setUserAvatar] = useState('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png'); 
+  const [userAvatar, setUserAvatar] = useState('/images/userAvatar.png');
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); 
 
   useEffect(() => {
     if (token) {
-      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        if (response.status === 200) {
-          const user = response.data.user;
-          setUserName(user.user_name);
-          setUserRole(user.role);
-          setIsLoggedIn(true);
-          const avatarUrl = user.avatar ? user.avatar : '';
-          if (avatarUrl) {
-              setUserAvatar(avatarUrl);
-            } else {
-              setUserAvatar('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
-            }
-          }
-      })
-      .catch(error => {
-        console.error("Error fetching user data:", error);
-        setIsLoggedIn(false);
-      });
+        axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    const user = response.data.user;
+                    setUserName(user.user_name);
+                    setUserRole(user.role);
+                    setIsLoggedIn(true);
+
+                    // Kiểm tra role và đặt avatar
+                    if (user.role === 100) {
+                        setUserAvatar('/images/adminAvatar.jpg'); // Avatar admin
+                    } else {
+                        const avatarUrl = user.avatar ? user.avatar : '';
+                        setUserAvatar(avatarUrl || '/images/userAvatar.png'); // Avatar user
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching user data:", error);
+                setIsLoggedIn(false);
+            });
     }
-  }, [token]);
+}, [token]);
 
   const handleLogout = () => {
     Cookies.remove("token", { path: '/' });
@@ -66,12 +69,30 @@ export default function HeaderUser() {
       }
     }
   };
-  
 
+  const handleClickCheck = (e) => {
+    e.preventDefault(); 
+    if (!isLoggedIn) {
+      toast.error("Chưa Đăng Nhập Mời Bạn Đăng Nhập Để Mua Gói");
+      router.push("/login");
+    } else {
+      router.push("/user-buy-package");
+    }
+  };
+  
+  const isTransparentPage = ["/", "/filmSeries", "/oddFilm", "/animeFilm","/login", "/register"].includes(pathName);  
+  //dùng để xác định các trang như trang chủ, phim bộ, phim lẻ, phim hoạt hình để phần header có thể position và ngược lại
+  
   return (
-    <nav className="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
+    // <nav className="navbar navbar-expand-lg nav-menu-header" data-bs-theme="dark">
+    <nav
+      className={`navbar navbar-expand-lg nav-menu-header ${isTransparentPage ? "transparent-header" : "solid-header"}`}
+      data-bs-theme="dark"
+    >
       <div className="container">
+        <Link href="/">
         <img className="navbar-brand me-5" src="/images/Logo-PR-(1).png" width={100} alt="Logo" />
+        </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -107,24 +128,26 @@ export default function HeaderUser() {
               onKeyDown={handleSearchSubmit}
             />
           )}
+          
+          <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
+            <Link href='#' onClick={handleClickCheck}  style={{ textDecoration: 'none', color: 'white' }}>
+              <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
+            </Link>
+          </div>
           {isLoggedIn ? (
             <>
-              <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
-                <Link href="/user-buy-package" style={{ textDecoration: 'none', color: 'white' }}>
-                  <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
-                </Link>
-              </div>
               <li className="nav-item dropdown" style={{ listStyle: "none", color: "white" }}>
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
-                  <li><Link className="dropdown-item" href="/in4">Xin chào, {userName}</Link></li>
+                  <li className="dropdown-item">Xin chào, {userName}</li>
+                  <li><Link className="dropdown-item" href="/in4">Trang tài khoản</Link></li>
                   {userRole === 100 && (
                     <li><Link className="dropdown-item" href="/administration">Trang quản trị</Link></li>
                   )}
                   <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" onClick={handleLogout}>Đăng Xuất</a></li>
+                  <li><a className="dropdown-item" onClick={handleLogout} style={{cursor:"pointer"}}>Đăng Xuất</a></li>
                 </ul>
               </li>
             </>

@@ -28,75 +28,6 @@ export default function Watch({ params }) {
   const [count, setCount] = useState(0)
   const router = useRouter()
 
-  // console.log(idEpisode);
-  
-  // useEffect(() => {
-  //   const getWatch = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`, { revalidate: 3600 }).then((res) => res.data)
-  //       setWatch(res)
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   const getFilm = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
-  //       setFilm(res)
-  //     } catch (error) {
-  //       console.log(error);
-        
-  //     }
-  //   }
-
-  //   const getEpisodes = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
-  //       const episodes = res.filter(episode => episode.status === 1);
-  //       setEpisodes(episodes)
-  //     } catch (error) {
-  //       console.log(error);
-        
-  //     }
-  //   }
-
-  //   const getRandom = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 }).then((res) => res.data)
-  //       const filteredData = res.filter(item => item.status === 1);
-  //       // Hàm xáo trộn mảng
-  //       const shuffleArray = (array) => {
-  //         for (let i = array.length - 1; i > 0; i--) {
-  //           // Chọn chỉ số ngẫu nhiên
-  //           const j = Math.floor(Math.random() * (i + 1));
-  //           // Hoán đổi các phần tử
-  //           [array[i], array[j]] = [array[j], array[i]];
-  //         }
-  //         return array;
-  //       };
-  //       setRandom(shuffleArray(filteredData))
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   const getCmt = async () => {
-  //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`,{ revalidate: 3600 }).then((res) => res.data)
-  //       setCmts(res)
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   getWatch();
-  //   getFilm();
-  //   getEpisodes();
-  //   getRandom()
-  //   getCmt()
-
-  // }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -188,6 +119,10 @@ export default function Watch({ params }) {
         const userInvoices = res.data
                             .filter(invoice => invoice.user_id === user.user_id) 
                             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+              // console.log(userInvoices);
+          // console.log(userInvoices[0].status === 'success');
+
+              
         // hàm tính giây cho thgian dc phép xem 
         const calculateSecondsBetweenDates = (startDate, endDate) => {
                 const formatDate = (dateStr) => {
@@ -215,8 +150,8 @@ export default function Watch({ params }) {
         };
         // hàm tính giây cho thgian dc phép xem 
 
-        if(userInvoices){
-          // console.log(userInvoices[0].status === 'success');
+        if(userInvoices && userInvoices[0] && userInvoices[0].status){
+          console.log(userInvoices[0].status === 'success');
             if(userInvoices[0].status === 'success'){
               const currentDate = new Date();
               const options = {
@@ -232,12 +167,12 @@ export default function Watch({ params }) {
               const startDate = formattedDateTimeVN;
               const endDate = userInvoices[0].end_date;
               const seconds = calculateSecondsBetweenDates(startDate, endDate);
-              console.log(startDate, endDate, seconds);
+              // console.log(startDate, endDate, seconds);
               // console.log('xử  lý coi theo ngày')
               // console.log(seconds);
               
                 if(seconds > 0){
-                  setCount(seconds); 
+                  setCount(seconds + 86400 ); 
                 }else if(seconds < 0 ){
                   toast.error(
                     <div>
@@ -262,7 +197,7 @@ export default function Watch({ params }) {
         }
 
       } catch (error) {
-        setCount(600); 
+        setCount(5); 
         console.log(error);
       }
     }
@@ -319,7 +254,7 @@ export default function Watch({ params }) {
     if (count === 429) {
       toast.error(
         <div>
-          Đã hết <strong>Thời Gian Trãi Nghiệm</strong> trên{' '}
+          Đã hết <strong>Thời Gian Trải Nghiệm</strong> trên{' '}
           <em>PrimeReels</em>. Mời Bạn{' '}
           <Link href="/user-buy-package" style={{ textDecoration: 'underline' }}>
             Mua Gói

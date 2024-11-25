@@ -14,7 +14,7 @@ export default function HeaderAdmin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState(null);
-  const [userAvatar, setUserAvatar] = useState('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
+  const [userAvatar, setUserAvatar] = useState('/images/adminAvatar.jpg');
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -34,7 +34,7 @@ export default function HeaderAdmin() {
           if (avatarUrl) {
             setUserAvatar(avatarUrl);
           } else {
-            setUserAvatar('https://chontruong.edu.vn/wp-content/uploads/2024/09/meo-meme-8WUtRYq.png');
+            setUserAvatar('/images/adminAvatar.jpg');
           }
         }
       })

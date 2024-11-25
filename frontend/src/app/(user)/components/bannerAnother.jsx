@@ -45,7 +45,6 @@ export default function BannerAnother() {
   return (
     <>
       <div className="banner-container text-center position-relative">
-        {/* Hình nền chính */}
         <div className="background-image">
           <img
             src="/images/image 22.png"
@@ -55,10 +54,10 @@ export default function BannerAnother() {
           />
         </div>
 
-        {/* Nội dung trên hình nền */}
+
         <div className="content-overlay container text-light py-4">
           <div className="row align-items-center">
-            {/* Cột hình ảnh */}
+
             <div className="col-lg-6 col-md-6 col-12 mb-3 mb-lg-0 text-center">
               <img
                 src="/images/image 21.png"
@@ -67,7 +66,7 @@ export default function BannerAnother() {
               />
             </div>
 
-            {/* Cột thông tin */}
+
             <div className="col-lg-6 col-md-6 col-12 text-start">
               <div className="mb-3">
                 <img
@@ -78,7 +77,7 @@ export default function BannerAnother() {
                 />
               </div>
 
-              {/* Thông tin chi tiết */}
+
               <div className="d-flex align-items-center gap-3 mb-3">
                 <div>
                   <i className="fa-regular fa-star"></i> 5.2
@@ -114,7 +113,7 @@ export default function BannerAnother() {
         </div>
       </div>
 
-      {/* CSS */}
+
       <style jsx>{`
         .banner-container {
           position: relative;
@@ -127,12 +126,12 @@ export default function BannerAnother() {
           left: 0;
           width: 100%;
           height: 100%;
-          z-index: 1; /* Đẩy hình nền ra sau */
+          z-index: 1;
         }
 
         .content-overlay {
           position: relative;
-          z-index: 2; /* Đặt nội dung phía trên hình nền */
+          z-index: 2;
         }
 
         @media (max-width: 768px) {

@@ -4,11 +4,101 @@ import "../../globals.css";
 import Link from 'next/link';
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 export default function UserBuyPackage() {
+    const token = Cookies.get('token');
+    const [user, setUser] = useState([])
+    const [check, setCheck] = useState(0)
     const router = useRouter()
     const [packags, setPackages] = useState([])
     const [vouchers, setVouchers] = useState([])
+
+    useEffect(() => {
+        if (token) {
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          .then(res => setUser(res.data.user))
+          .catch(error => {
+            console.error("Error fetching user data:", error);
+          });
+        }
+      }, [token]);
+
+    useEffect(() => {
+        const checkUserInvoice = async () => {
+            try {
+              const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 });
+            //   console.log(res.data);
+              const userInvoices = res.data
+                                  .filter(invoice => invoice.user_id === user.user_id) 
+                                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                                  console.log(user);
+                                  
+              const calculateSecondsBetweenDates = (startDate, endDate) => {
+                      const formatDate = (dateStr) => {
+                          if (dateStr.includes("/")) {
+                              const [time, date] = dateStr.split(" ");
+                              const [day, month, year] = date.split("/");
+                              return new Date(`${year}-${month}-${day}T${time}`);
+                          } else {
+                              const [date, time] = dateStr.split(" ");
+                              return new Date(`${date}T${time}`);
+                          }
+                      };
+                    
+                      const start = formatDate(startDate);
+                      const end = formatDate(endDate);
+                    
+                      if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                          return NaN;
+                      }
+                    
+                      const differenceInMilliseconds = end - start;
+                      const differenceInSeconds = differenceInMilliseconds / 1000;
+                    
+                      return differenceInSeconds;
+              };
+              // hàm tính giây cho thgian dc phép xem 
+      
+              if(userInvoices && userInvoices[0] && userInvoices[0].status){
+                console.log(userInvoices[0].status === 'success');
+                  if(userInvoices[0].status === 'success'){
+                    const currentDate = new Date();
+                    const options = {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                      hour12: false, // Định dạng 24 giờ
+                    };
+                    const formattedDateTimeVN = currentDate.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', ...options })
+                    const startDate = formattedDateTimeVN;
+                    const endDate = userInvoices[0].end_date;
+                    const seconds = calculateSecondsBetweenDates(startDate, endDate);
+                    console.log(startDate, endDate, seconds);
+                    // console.log('xử  lý coi theo ngày')
+                    // console.log(seconds);
+                    setCheck(seconds)
+                  //   console.log(check);
+                    
+                  }
+                  
+              }
+      
+            } catch (error) {
+              console.log(error);
+            }
+          }
+
+          checkUserInvoice();
+    },[user])
 
     useEffect(() => {
         const getPackages = async () => {
@@ -20,16 +110,19 @@ export default function UserBuyPackage() {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, { revalidate: 3600 }).then((res) => res.data)
             setVouchers(res)
         }
-
-        getPackages()
-        getVouchers()
+       
+          getPackages()
+          getVouchers()
     },[])
+    
+
+      console.log(check);
+      
 
     const hanldeBack = () => {
         router.back();
     }
 
-    // console.log(packags);
     
 
     return (
@@ -79,9 +172,13 @@ export default function UserBuyPackage() {
                                             </div>
                                         </div>
                                         <div className="button-vip">
-                                            <Link href={`/user-buy-package/${pk.package_id }`}>
-                                                <button className="btn btn-danger">Chọn Gói Vip</button>
-                                            </Link>
+                                            {check > 0 ? (
+                                                <p className="text-danger">Còn hạn sử dụng gói, vui lòng sử dụng hết trước khi mua gói mới.</p>
+                                            ) : (
+                                                <Link href={`/user-buy-package/${pk.package_id}`}>
+                                                    <button className="btn btn-danger">Chọn Gói Vip</button>
+                                                </Link>
+                                            )}
                                         </div>
                                         <div className="content-vip mt-2">
                                             <div className="item">

@@ -24,6 +24,7 @@ export default function FilmSeries() {
   const [genres, setGenres] = useState([]); // Tạo state để lưu danh sách thể loại phim
   const [selectedGenreId, setSelectedGenre] = useState(''); // Lưu thể loại được chọn
   const [filteredMovies, setFilteredMovies] = useState([]); // Lưu danh sách phim được lọc theo thể loại
+  const [bannerData, setMovieType3] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,16 +34,19 @@ export default function FilmSeries() {
         const [resGenres, resMovies] = await Promise.all([
           axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`), // Lấy danh sách thể loại phim
           axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`), // Lấy danh sách phim
-          
-          
+
+
         ]);
         // console.log(resMovies)
+        const bannerData = resMovies.data;
+        setMovieType3(bannerData)
+
         const genresData = resGenres.data; // Lưu thể loại phim
         setGenres(genresData); // Cập nhật state cho danh sách thể loại
         const moviesData = resMovies.data.filter(movie => movie.status === 1); // Lọc các phim có trạng thái là 1 (hoạt động)
 
         const comedyMovies = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/4`);
-        console.log("comedy data",comedyMovies)
+        console.log("comedy data", comedyMovies)
         // Hàm để xáo trộn danh sách phim cho phần phim ngẫu nhiên
         const shuffleArray = (array) => {
           for (let i = array.length - 1; i > 0; i--) {
@@ -120,8 +124,16 @@ export default function FilmSeries() {
     <>
       <div className="container-fluid bg-dark p-0 text-white">
         <div className="container-fluid p-0">
-          <Banner /> {/* Hiển thị banner */}
-          <div className="container">
+          <Banner bannerData={bannerData}
+            genres={genres}
+            onGenreChange={(genreId) => {
+              setSelectedGenre(genreId); // Cập nhật state thể loại
+              if (genreId) {
+                router.push(`/filterFilmSeries?genreId=${genreId}&movieTypeId=3`); // Điều hướng
+              }
+            }}
+          /> {/* Hiển thị banner */}
+          {/* <div className="container">
             <div className="group-select-box">
               <div className="form-group">
                 <label htmlFor="genreSelect">Chọn thể loại:</label>
@@ -133,7 +145,7 @@ export default function FilmSeries() {
                 </select>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Hiển thị các danh mục phim */}
           <div>
             <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Đề Xuất Hôm Nay</h2>

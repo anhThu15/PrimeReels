@@ -147,7 +147,7 @@ export default function Comment(props) {
       <div className="text-white">
         {token ? (
           <>
-            <h4 className="ms-3 pt-2 text-primary">
+            <h4 className="ms-3 pt-2 text-danger">
               <i className="fa-solid fa-comment-dots"></i> Bình luận tại đây
             </h4>
             <hr className="border-light" />
@@ -166,7 +166,7 @@ export default function Comment(props) {
                   <label className="form-label fw-bold">Đánh giá bộ phim:</label>
                   <select
                     className="form-select form-select-sm mb-2"
-                    {...register('rating', { required: 'Đánh giá là bắt buộc' })}
+                    {...register('rating', { required: 'Bạn chưa chọn đánh giá!' })}
                   >
                     <option value={0}>Chọn số sao</option>
                     <option value={1}>⭐</option>
@@ -182,7 +182,7 @@ export default function Comment(props) {
                     className="form-control mb-2"
                     placeholder="Viết bình luận..."
                     rows="2"
-                    {...register('content', { required: 'Bình luận là bắt buộc' })}
+                    {...register('content', { required: 'Bạn chưa viết nội dung bình luận!' })}
                   ></textarea>
                   {errors.content && <small className="text-danger">{errors.content.message}</small>}
 
@@ -198,7 +198,7 @@ export default function Comment(props) {
         ) : null}
 
         <div className="text-white">
-          <h4 className="text-primary mb-4">
+          <h4 className="text-danger mb-4">
             <i className="fa-solid fa-comments"></i> Các bình luận
           </h4>
           {coment?.map((cmt, index) => (
