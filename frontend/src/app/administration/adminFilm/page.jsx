@@ -20,7 +20,7 @@ export default function AdminFilm() {
         const getFilms = async () => {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 });
             setFilms(res.data);
-            setSorts(res.data); // Set initial sort data
+            setSorts(res.data);
         }
 
         getFilms();
@@ -36,33 +36,36 @@ export default function AdminFilm() {
             });
             // alert('Thành công ròi đi chữa lãnh hoy ~~~');
             toast.success("Xóa phim thành công")
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+            
         } catch (error) {
             console.log(error);
         }
     }
 
     const handleSort = (sortOrder) => {
-        let sortedData = [...films]; // Create a copy of the films array
+        let sortedData = [...films]; 
         if (sortOrder === 'asc') {
             sortedData.sort((a, b) => a.views - b.views);
         } else if (sortOrder === 'des') {
             sortedData.sort((a, b) => b.views - a.views);
         }
         setSorts(sortedData);
-        setCurrentPage(1); // Reset to the first page on sort
+        setCurrentPage(1); 
     };
 
     useEffect(() => {
         handleSort(sortOrder);
-    }, [sortOrder]); // Call handleSort when sortOrder changes
+    }, [sortOrder]); 
 
     useEffect(() => {
         const filteredData = sorts.filter((film) =>
             film.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredSorts(filteredData);
-    }, [searchTerm, sorts]); // Update filtered data when search term or sorts change
+    }, [searchTerm, sorts]);
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -99,7 +102,7 @@ export default function AdminFilm() {
                     <div className="dropdown">
                         <div className="mb-3 w-25">
                             <select id="sortOrder" className="form-select" onChange={(e) => handleSort(e.target.value)} value={sortOrder}>
-                                <option value="0">Lọc Theo Đánh Giá</option>
+                                <option value="0">Lọc Theo Lượt Xem</option>
                                 <option value="asc">Tăng dần</option>
                                 <option value="des">Giảm dần</option>
                             </select>

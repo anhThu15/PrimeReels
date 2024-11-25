@@ -61,7 +61,7 @@ export default function film({params}){
         setCmts(cmtRes);
       } catch (error) {
         console.error("Error loading data:", error);
-        alert("Failed to load data. Please try again.");
+        // alert("Failed to load data. Please try again.");
       }
     };
   

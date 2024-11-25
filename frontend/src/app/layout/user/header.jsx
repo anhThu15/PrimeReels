@@ -66,6 +66,16 @@ export default function HeaderUser() {
       }
     }
   };
+
+  const handleClickCheck = (e) => {
+    e.preventDefault(); 
+    if (!isLoggedIn) {
+      toast.error("Chưa Đăng Nhập Mời Bạn Đăng Nhập Để Mua Gói");
+      router.push("/login");
+    } else {
+      router.push("/user-buy-package");
+    }
+  };
   
 
   return (
@@ -107,13 +117,14 @@ export default function HeaderUser() {
               onKeyDown={handleSearchSubmit}
             />
           )}
+          
+          <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
+            <Link href='#' onClick={handleClickCheck}  style={{ textDecoration: 'none', color: 'white' }}>
+              <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
+            </Link>
+          </div>
           {isLoggedIn ? (
             <>
-              <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
-                <Link href="/user-buy-package" style={{ textDecoration: 'none', color: 'white' }}>
-                  <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
-                </Link>
-              </div>
               <li className="nav-item dropdown" style={{ listStyle: "none", color: "white" }}>
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />

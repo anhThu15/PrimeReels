@@ -161,7 +161,10 @@ export default function AddNewFilm({ params }) {
             if (res) {
                 // alert('thành công ròi đi chữa lãnh hoy ~~~')
                 toast.success("Thao tác thành công")
-                window.location.reload()
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+                
             } else {
                 // Xử lý hiển thị lỗi
                 toast.error("Thao tác thất bại hãy kiểm tra lại")
@@ -170,6 +173,7 @@ export default function AddNewFilm({ params }) {
 
         } catch (error) {
             console.log(error);
+            toast.error("Thao tác đã xảy ra lỗi")
         }
     }
     //  xử lý tập phim 
