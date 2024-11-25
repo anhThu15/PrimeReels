@@ -16,7 +16,9 @@ export default function InfomationUser() {
         gender: '',
         email: '',
         password: '',
-        avatar: '' // Avatar field
+        avatar: '', // Avatar field
+        file: null,
+        
     });
     const [modalOpen, setModalOpen] = useState(false);
     const token = Cookies.get('token');
@@ -107,22 +109,68 @@ export default function InfomationUser() {
     };
 
     //xử lý cài đặt tài khoản
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    
+    //     if (token) {
+    //         try {
+    //             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
+    //                 method: 'PUT',
+    //                 headers: {
+    //                     'Authorization': `Bearer ${token}`,
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify({
+    //                     user_name: userData.username,
+    //                     gender: userData.gender,
+    //                     avatar: userData.avatar
+    //                 }),
+    //             });
+    
+    //             const result = await response.json();
+    //             if (response.status === 200) {
+
+    //                 window.location.reload();
+    //                 toast.success('Thông tin đã được cập nhật thành công!');
+
+    //                 setUserData(prevData => ({
+    //                     ...prevData,
+    //                     username: userData.username,
+    //                     gender: userData.gender,
+    //                     avatar: userData.avatar
+    //                 }));
+    //                 setIsUpdated(!isUpdated);
+    //             } else {
+
+    //                 toast.error('Có lỗi xảy ra: ' + (result.message || 'Không thể cập nhật thông tin.'));
+    //             }
+    //         } catch (error) {
+    //             console.error('Lỗi khi cập nhật thông tin người dùng:', error);
+    //             toast.error('Đã xảy ra lỗi trong quá trình cập nhật thông tin.');
+    //         }
+    //     } else {
+    //         toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
+    //     }
+    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
     
         if (token) {
             try {
+                // Tạo FormData để gửi dữ liệu file
+                const formData = new FormData();
+                formData.append('user_name', userData.username);
+                formData.append('gender', userData.gender);
+                if (userData.file) { // Nếu có file mới được chọn
+                    formData.append('avatar', userData.file);
+                }
+    
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Không thêm Content-Type (Fetch tự động thêm)
                     },
-                    body: JSON.stringify({
-                        user_name: userData.username,
-                        gender: userData.gender,
-                        avatar: userData.avatar
-                    }),
+                    body: formData,
                 });
     
                 const result = await response.json();
@@ -131,11 +179,10 @@ export default function InfomationUser() {
                     window.location.reload();
                     toast.success('Thông tin đã được cập nhật thành công!');
                     // Cập nhật lại state với thông tin đã nhập
-                    setUserData(prevData => ({
+                    setUserData((prevData) => ({
                         ...prevData,
                         username: userData.username,
                         gender: userData.gender,
-                        avatar: userData.avatar
                     }));
                     setIsUpdated(!isUpdated);
                 } else {
@@ -150,6 +197,7 @@ export default function InfomationUser() {
             toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
         }
     };
+    
     //  xử lý cài đặt tài khoản
 
 
@@ -350,7 +398,7 @@ export default function InfomationUser() {
                                             readOnly
                                         />
                                     </div>
-                                    <div className="col-sm-6">
+                                    {/* <div className="col-sm-6">
                                         <label htmlFor="avatar" className="form-label text-white">Avatar URL:</label>
                                         <input
                                             type="text"
@@ -360,6 +408,16 @@ export default function InfomationUser() {
                                             value={userData.avatar}
                                             onChange={handleChange}
                                             required
+                                        />
+                                    </div> */}
+                                    <div className="col-sm-6">
+                                        <label htmlFor="avatar" className="form-label text-white">Chọn avatar:</label>
+                                        <input
+                                            type="file"
+                                            className="form-control"
+                                            id="avatar" 
+                                            accept="image/*"
+                                            onChange={(e) => setUserData({ ...userData, file: e.target.files[0] })}
                                         />
                                     </div>
                                 </div>

@@ -174,9 +174,12 @@ export default function FooterUser() {
                 <Link href="/user-buy-package" className="nav-link">
                   GÓI COMBO
                 </Link>
-                <a className="nav-link" href="#">CHÍNH SÁCH</a>
+                {/* <a className="nav-link" href="#">CHÍNH SÁCH</a>
                 <a className="nav-link" href="#">ĐIỀU KHOẢN</a>
-                <a className="nav-link" href="contact">LIÊN HỆ</a>
+                <a className="nav-link" href="contact">LIÊN HỆ</a> */}
+                <a className="nav-link" href="/infoPage?tab=policy">CHÍNH SÁCH</a>
+                <a className="nav-link" href="/infoPage?tab=terms">ĐIỀU KHOẢN</a>
+                <a className="nav-link" href="/infoPage?tab=contact">LIÊN HỆ</a>
               </div>
             </nav>
             <p className=" bg-white" style={{ height: "1px" }}></p>

@@ -9,9 +9,10 @@ import Cookies from 'js-cookie';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const router = useRouter();
+    const router = useRouter(); 
+    const [emailError, setEmailError] = useState('');
 
-    useEffect(() => {
+    useEffect(() => {   
         const token = Cookies.get('token');
         if (token) {
             // router.push("/");
@@ -19,31 +20,60 @@ export default function Login() {
         }
     }, [router]);  //kiểm trả xem đã có token chưa => đã có thì không cho vào lại trang login
 
+    const handleEmailChange = (e) => {
+        const value = e.target.value.trim(); // Loại bỏ khoảng trắng thừa
+        setEmail(value);
+    
+        // Regex kiểm tra định dạng email chỉ cho phép đuôi @gmail.com và đuôi @example.com
+        const emailRegex = /^[^\s@]+@(gmail\.com|example\.com)$/;
+    
+        if (!emailRegex.test(value)) {
+            setEmailError("Email phải có định dạng đúng và đuôi là @gmail.com hoặc @example.com");
+        } else {
+            setEmailError('');
+        }
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value.trim()); // Loại bỏ khoảng trắng thừa
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+            // Loại bỏ khoảng trắng thừa trước khi gửi
+            const trimmedEmail = email.trim();
+            const trimmedPassword = password.trim();
+
+        if (emailError || email.trim() === '') {
+            toast.error("Vui lòng nhập email đúng định dạng và đuôi @gmail.com.");
+            return;
+        }
+
+        if (password.trim() === '') {
+            toast.error("Vui lòng nhập mật khẩu.");
+            return;
+        }
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
             method: 'POST',
-            header: {
+            headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email: trimmedEmail, password: trimmedPassword }), // Sử dụng email và mật khẩu đã xử lý
         });
 
-        console.log(response);
-        
         const data = await response.json();
         console.log(data);
 
         if (response.ok) {
             
             document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
-            document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite=strict; secure`;
+            // document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite=strict; secure`;
             
 
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            // localStorage.setItem('token', data.token);
+            // localStorage.setItem('user', JSON.stringify(data.user));
 
             console.log(response)
 
@@ -73,7 +103,7 @@ export default function Login() {
 
     return (
         <div className="modal-login">
-            <div className="modal-dialog">
+            <div className="modal-dialog mt-5">
                 <div className="modal-content">
                     <div className="modal-header mb-3">
                         <h3>ĐĂNG NHẬP</h3>
@@ -86,9 +116,10 @@ export default function Login() {
                                     placeholder="Email đăng nhập"
                                     className="lg-email"
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={handleEmailChange}
                                     required
                                 />
+                                 {emailError && <p className="text-danger">{emailError}</p>}
                             </div>
 
                             <div className="mb-5 form-group">
@@ -97,9 +128,11 @@ export default function Login() {
                                     placeholder="Mật khẩu"
                                     className="lg-password"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
+                                    // onChange={(e) => setPassword(e.target.value)}
+                                    onChange={handlePasswordChange}
+                                    // required
                                 />
+                                
                                 <Link href="/forgot-password" className="forgot-password">Quên mật khẩu</Link>
                             </div>
                             
@@ -107,12 +140,19 @@ export default function Login() {
                                     <button type="submit" name="submit" >Đăng nhập</button> 
                                 </div>
 
-                                <Link href={`${process.env.NEXT_PUBLIC_API_URL}/login/google`} className="google-login-btn" style={{marginLeft:"170px"}}>
+                                {/* <Link href={`${process.env.NEXT_PUBLIC_API_URL}/login/google`} className="google-login-btn" style={{marginLeft:"170px"}}>
                                     <img src="images/google-icon.png" alt="Login With Google" width={25} />
                                     Google Login
+                                </Link> */}
+                                <div>
+                                    <p>Hoặc đăng nhập bằng :</p>
+                                </div>
+                                <Link href={`${process.env.NEXT_PUBLIC_API_URL}/login/google`} style={{display:"block", textAlign:"center"}} className="mb-3">
+                                    <img src="images/google-icon.png" alt="Login With Google" width={35} style={{ cursor: "pointer" }} />
                                 </Link>
+
                             
-                            <div className="mt-2 text-white text-center">
+                            <div className="text-white text-center mb-3">
                                 Chưa có tài khoản?
                                 <Link href="/register" className="btn-register">Đăng ký</Link> ngay!
                             </div>
