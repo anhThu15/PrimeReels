@@ -84,7 +84,7 @@ const Error404 = () => {
       drawVisor();
       animate();
       setTimeout(() => {
-          router.back()
+          // router.back()
       }, 3000);
   }, []);
 

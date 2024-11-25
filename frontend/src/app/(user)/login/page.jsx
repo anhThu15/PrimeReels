@@ -24,12 +24,15 @@ export default function Login() {
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
             method: 'POST',
-            headers: {
+            header: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({ email, password }),
         });
 
+        console.log(response);
+        
         const data = await response.json();
         console.log(data);
 

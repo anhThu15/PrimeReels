@@ -216,7 +216,7 @@ export default function Watch({ params }) {
         // hàm tính giây cho thgian dc phép xem 
 
         if(userInvoices){
-          // console.log(userInvoices[0].status === 'success');
+          console.log(userInvoices[0].status === 'success');
             if(userInvoices[0].status === 'success'){
               const currentDate = new Date();
               const options = {
@@ -237,7 +237,7 @@ export default function Watch({ params }) {
               // console.log(seconds);
               
                 if(seconds > 0){
-                  setCount(seconds); 
+                  setCount(seconds + 86400 ); 
                 }else if(seconds < 0 ){
                   toast.error(
                     <div>
@@ -262,7 +262,7 @@ export default function Watch({ params }) {
         }
 
       } catch (error) {
-        setCount(600); 
+        setCount(5); 
         console.log(error);
       }
     }
