@@ -146,10 +146,19 @@
 //         </>
 //     )
 // }   
+
+'use client'
+
 import Link from "next/link";
 import "../../../app/globals.css";
 
 export default function FooterUser() {
+  const onTop = () =>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  }
   return (
     <>
       <div className="container-fluid pt-4 pb-4 bg-black text-white" data-bs-theme="dark">
@@ -202,6 +211,9 @@ export default function FooterUser() {
 
           {/* Right Section (Contact and Social Media) */}
           <div className="col-lg-3 col-md-12 col-sm-12 d-flex flex-column align-items-center">
+              <button className=" btn btn-light rounded-pill bg-white font-monospace text-center mb-3 p-2" onClick={onTop}>
+                  <i class="fa-solid fa-arrow-up text-dark fa-2xl"></i>
+              </button>
             <div className="d-flex flex-column align-items-center">
               <div className="rounded-pill bg-danger font-monospace text-white text-center mb-3 p-2" style={{ width: "150px" }}>
                 <Link href="/contact" className="nav-link text-white">
