@@ -1,313 +1,178 @@
 'use client'
-import Image from "next/image";
-import Banner from "./components/banner";
-import BannerAnother from "./components/bannerAnother";
-import CardSlide from "./components/cardslide";
-import SlideShow from "./components/slideshow";
-import SlideShowAnother from "./components/slideshowAnother";
+import Link from "next/link";
+import "../globals.css";
+import Table from "./components/table";
+import Table2 from "./components/table2";
 import { useEffect, useState } from "react";
-import SlideShow2 from "./components/slideshow2";
-import SlideShow3 from "./components/slideshow3";
-import SlideShow4 from "./components/slideshow4";
-import SlideShowAnother2 from "./components/slideshowAnother2";
 import axios from "axios";
-import axiosRetry from "axios-retry";
-import axiosRateLimit from 'axios-rate-limit';
-
+import Cookies from 'js-cookie';
 
 export default function Home() {
-  const [action, setAction] = useState([]);
-  const [comendy, setComendy] = useState([]);
-  const [random, setRandom] = useState([]);
-  const [better, setBetter] = useState([]);
-  const [country, setCountry] = useState([]);
-  const [date, setDate] = useState([]);
-  const [bannerData, setBannerData] = useState([]);
+  const token = Cookies.get('token');
+    const [films, setFilms] = useState([])
+    const [types, setTypes] = useState([])
+    const [genres, setGenres] = useState([])
+    const [users, setUsers] = useState([])
+    const [satistical, setSatistical] = useState([])
+    const [chartData, setChartData] = useState(null);
+    const [chartData2, setChartData2] = useState(null);
+    
+    useEffect(() => {
+      // const getFilms = async () => {
+      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`,{ revalidate: 3600 }).then((res) => res.data)
+      //   setFilms(res)
+      // }
+      // const getTypes = async () => {
+      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`,{ revalidate: 3600 }).then((res) => res.data)
+      //   setTypes(res)
+      // }
+      // const getGenres = async () => {
+      //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`,{ revalidate: 3600 }).then((res) => res.data)
+      //   setGenres(res)
+      // }
+      // const getUsers = async () => {
+      //   const token = localStorage.getItem('token');
+      //   try {
+      //     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+      //       headers: {
+      //         'Authorization': `Bearer ${token}`,
+      //       }
+      //     })
+      //     if(res.data.email_verification_token == null){
+      //       setUsers(res.data);
+      //     }
+      //     // console.log(data);
+          
+      //   } catch (error) {
+      //     console.error("Error fetching users:", error);
+      //   }
+      // };
+
+      const getStatistical = async () => {
+        try {
+          // const token = localStorage.getItem('token');
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/statistics`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+            revalidate: 3600
+          }).then((res) => res.data);
+          setSatistical(res)
+
+        const labels = res.monthly_revenue.map(item => `${item.month} ${item.year}`);
+        const values = res.monthly_revenue.map(item => parseFloat(item.total.replace(" VND", "").replace(".", "")));
+        setChartData({
+          labels: labels,
+          values: values
+        });
+
+
+        const labels2 = res.monthly_Voucherused.map(item => `${item.month} ${item.year}`);
+        const values2 = res.monthly_Voucherused.map(item => item.invoice);
+        setChartData2({
+          labels: labels2,
+          datasets: [{
+            backgroundColor: ["#F3FEB8", "#FFDE4D", "#FF4C4C"], // Màu nền cho các phần trong biểu đồ
+            data: values2 // Dữ liệu cho biểu đồ
+          }]
+        });
+
+        } catch (error) {
+          console.log(); 
+        }
+      }
+
   
+      // getFilms() 
+      // getTypes() 
+      // getGenres()
+      // getUsers();
+      getStatistical();
+    
+    },[])
 
-  useEffect(() => {
-  const fetchMovies = async (url, filterFavorites = false, sortByDate = false) => {
-    try {
-      const res = await axios.get(url);
-      const filteredData = res.data.filter(item => item.status === 1);
-
-      if (filterFavorites) {
-        filteredData.sort((a, b) => b.favorites_count - a.favorites_count);
-      }
-      if (sortByDate) {
-        filteredData.sort((a, b) => b.movie_id - a.movie_id);
-      }
-      return filteredData;
-    } catch (error) {
-      console.log('Error fetching movies:', error);
-      return [];
-    }
-  };
-
-  const loadData = async () => {
-    const urls = [
-      `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,
-      `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,
-      `${process.env.NEXT_PUBLIC_API_URL}/movies`,
-      `${process.env.NEXT_PUBLIC_API_URL}/movies`,
-      `${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,
-      `${process.env.NEXT_PUBLIC_API_URL}/movies`
-    ];
-
-    try {
-      // Gửi tất cả API cùng lúc
-      const results = await Promise.all(
-        urls.map((url) =>
-          fetchMovies(
-            url,
-            false,
-            url === `${process.env.NEXT_PUBLIC_API_URL}/movies`
-          )
-        )
-      );
-
-      // Đợi 2 giây trước khi xử lý dữ liệu
-      setTimeout(() => {
-        const [actionData, comedyData, randomData, betterData, countryData, dateData] = results;
-        console.log("Better Data:", betterData);
-        // Xáo trộn randomData
-        const shuffleArray = (array) => {
-          for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-          }
-          return array;
-        };
-
-        setAction(actionData);
-        setComendy(comedyData);
-        setRandom(shuffleArray(randomData));
-        setBetter(betterData);
-        setCountry(countryData);
-        setDate(dateData);
-
-        setBannerData(actionData.slice(0, 3));
-
-      }, 2000); // Trì hoãn 2 giây
-    } catch (error) {
-      console.error('Error loading data:', error);
-    }
-  };
-
-  loadData();
-}, []);
+      console.log(chartData);
 
 
   return (
     <>
-     <div className="container-fluid bg-black p-0 text-white">
-        <div className="container-fluid p-0">
-          <div>
-          <Banner bannerData={bannerData} />
-          </div>
-          <div className=" position-relative" style={{bottom:40,zIndex:"11"}}>
-              <CardSlide></CardSlide>
-          </div>
-          <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Đề Xuất Hôm Nay</h2>
-            {/* <SlideShow3 data={random}></SlideShow3> */}
-            <SlideShow data={random}></SlideShow>
-          </div>
-          <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Cập Nhập Mới Nhất </h2>
-            {/* <SlideShowAnother2 data={date}></SlideShowAnother2> */}
-            <SlideShowAnother data={date}></SlideShowAnother>
-          </div>
-          <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>PrimeReels Phim hay mỗi ngày</h2>
-            {/* <SlideShow4 data={better}></SlideShow4> */}
-            <SlideShow data={better}></SlideShow>
-          </div>
-          <div>
-            <BannerAnother></BannerAnother>
-          </div>
-          <div >
-            <h2 className="fw-bold mb-3" style={{marginLeft:"50px"}}>Phim Hành Động</h2>
-            <SlideShow data={action}></SlideShow>
-          </div>
-          <div className="mt-5 img-banner">
-            <Image 
-                src="/images/image 23.png" 
-                layout="responsive"
-                width={1920} 
-                height={1080} 
-                alt="Description of the image" 
-            />
-          </div> 
-          <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Việt Nam</h2>
-            <SlideShowAnother data={country}></SlideShowAnother>
-          </div>
-          <div >
-            <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Phim Hài Hước</h2>
-            {/* <SlideShow2 data={comendy}></SlideShow2> */}
-            <SlideShow data={comendy}></SlideShow>
-          </div>
-        </div>
+        <div className="container-fluid">
+            <div className="row pb-3 bg-primary position-relative" style={{ height:"200px"}} >
+              <h3> <strong className=" text-white">Báo Cáo Thống Kê</strong> </h3>
+              <div className="col-3 mt-5" data-aos="flip-left" data-aos-duration="3000">
+                <div className="card text-start">
+                  <div className="card-body">
+                    <div className="row">
+                      <h5 className="card-title text-start col">Tổng Phim
+                        <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_Movie}</div>
+                      </h5>
+                      <img className="col-3" height={45} src="/images/Group 324.png"></img>
+                    </div>
+                    <div>Bộ phim đang được công chiếu</div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-3 mt-5">
+                <div className="card text-start" data-aos="flip-left" data-aos-duration="3000">
+                  <div className="card-body">
+                    <div className="row">
+                        <h5 className="card-title col text-start">Tổng Danh Mục
+                          <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_MovieType}</div>
+                        </h5>
+                        <img className="col-3" height={45} src="/images/Group 325.png"></img>
+                    </div>
+                    <div>Danh mục đang tồn tại</div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-3 mt-5">
+                <div className="card text-start" data-aos="flip-left" data-aos-duration="3000">
+                  <div className="card-body">
+                    <div className="row">
+                        <h5 className="card-title col text-start">Tổng Thể Loại
+                          <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_Genre}</div>
+                        </h5>
+                        <img className="col-3" height={45} src="/images/Group 326.png"></img>
+                    </div>
+                    <div>Thể loại đang tồn tại</div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-3 mt-5">
+                <div className="card text-start" data-aos="flip-left" data-aos-duration="3000">
+                  <div className="card-body">
+                    <div className="row">
+                        <h5 className="card-title col text-start">Tổng Tài Khoản
+                          <div className="text-start mt-3 fs-1 fw-bold ">{satistical.total_User}</div>
+                        </h5>
+                        <img className="col-3" height={45} src="/images/Group 327.png"></img>
+                    </div>
+                    <div>Tài khoản đang hoạt động</div>
+                  </div>
+                </div>
+              </div>
 
-     </div>
+              <div className="col-md-6 pt-3"  data-aos="fade-up-right" data-aos-duration="3000">
+                <div className="card text-center ">
+                  <div className="card-body">
+                  <Table data={chartData}></Table>
+                  </div>
+                </div>
+              </div>
+              
+
+              <div className="col-md-6 pt-3"  data-aos="fade-up-left" data-aos-duration="3000">
+                <div className="card text-start">
+                  <div className="card-body">
+                        <Table2 data={chartData2}></Table2>
+                  </div>
+                </div>
+              </div>
+
+              {/* <!--  thêm trc đây  --> */}
+
+            </div>
+          </div>
     </>
   );
 }
-
-  // useEffect(() => {
-  //   // Cấu hình retry cho axios
-  //   axiosRetry(axios, {
-  //     retries: 3, // Retry tối đa 3 lần
-  //     retryDelay: axiosRetry.exponentialDelay, // Delay theo số mũ
-  //     retryCondition: (error) => {
-  //       return error.response?.status === 429 || error.response?.status >= 500; // Retry khi gặp lỗi 429 hoặc 5xx
-  //     },
-  //   });
-  
-  //   // Cấu hình rate limit cho axios
-  //   const http = axiosRateLimit(axios.create(), {
-  //     maxRequests: 5, // Số lượng tối đa yêu cầu mỗi giây
-  //     perMilliseconds: 1000, // Tính trên mỗi giây
-  //     maxRPS: 5 // Tối đa 5 yêu cầu mỗi giây
-  //   });
-  
-  //   const fetchMovies = async (url, filterFavorites = false, sortByDate = false) => {
-  //     try {
-  //       const res = await http.get(url); // Sử dụng axios đã được rate-limited
-  //       const filteredData = res.data.filter(item => item.status === 1);
-  
-  //       if (filterFavorites) {
-  //         filteredData.sort((a, b) => b.favorites_count - a.favorites_count);
-  //       }
-  //       if (sortByDate) {
-  //         // Sắp xếp theo ngày cập nhật, từ mới nhất đến cũ nhất
-  //         filteredData.sort((a, b) => b.movie_id - a.movie_id);
-  //       }
-  //       return filteredData;
-  //     } catch (error) {
-  //       console.log('Error fetching movies:', error);
-  //       return [];
-  //     }
-  //   };
-  
-  //   const loadData = async () => {
-  //     // Sử dụng Promise.all để gọi API đồng thời
-  //     const urls = [
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies`
-  //     ];
-  
-  //     try {
-  //       const [
-  //         actionData,
-  //         comedyData,
-  //         randomData,
-  //         betterData,
-  //         countryData,
-  //         dateData
-  //       ] = await Promise.all(urls.map(url => fetchMovies(url, false, url === `${process.env.NEXT_PUBLIC_API_URL}/movies`))); // Chỉ sắp xếp theo ngày cho URL movies
-  
-  //       // Xáo trộn mảng randomData
-  //       const shuffleArray = (array) => {
-  //         for (let i = array.length - 1; i > 0; i--) {
-  //           const j = Math.floor(Math.random() * (i + 1));
-  //           [array[i], array[j]] = [array[j], array[i]];
-  //         }
-  //         return array;
-  //       };
-  
-  //       setAction(actionData);
-  //       setComendy(comedyData);
-  //       setRandom(shuffleArray(randomData));
-  //       setBetter(betterData);
-  //       setCountry(countryData);
-  //       setDate(dateData);  // Sử dụng dữ liệu đã được sắp xếp theo ngày
-  //     } catch (error) {
-  //       console.error('Error loading data:', error);
-  //     }
-  //   };
-  
-  //   loadData();
-  // }, []);
-  
-  
-  // console.log(date);
-
-  
-  // useEffect(() => {
-  //   axiosRetry(axios, {
-  //     retries: 3,
-  //     retryDelay: axiosRetry.exponentialDelay,
-  //     retryCondition: (error) => {
-  //       return error.response?.status === 429 || error.response?.status >= 500;
-  //     },
-  //   });
-  
-  //   const http = axiosRateLimit(axios.create(), {
-  //     maxRequests: 5,
-  //     perMilliseconds: 1000,
-  //     maxRPS: 5,
-  //   });
-  
-  //   const fetchMovies = async (url, filterFavorites = false, sortByDate = false) => {
-  //     try {
-  //       const res = await http.get(url);
-  //       const filteredData = res.data.filter(item => item.status === 1);
-  
-  //       if (filterFavorites) {
-  //         filteredData.sort((a, b) => b.favorites_count - a.favorites_count);
-  //       }
-  //       if (sortByDate) {
-  //         filteredData.sort((a, b) => b.movie_id - a.movie_id);
-  //       }
-  //       return filteredData;
-  //     } catch (error) {
-  //       console.log('Error fetching movies:', error);
-  //       return [];
-  //     }
-  //   };
-  
-  //   const loadDataWithDelay = async () => {
-  //     const urls = [
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/1`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies-genre/3`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies/filter/country/Việt Nam`,
-  //       `${process.env.NEXT_PUBLIC_API_URL}/movies`
-  //     ];
-  
-  //     const dataResults = [];
-  //     for (let i = 0; i < urls.length; i++) {
-  //       await new Promise(resolve => setTimeout(resolve, 1000 * i)); // Trì hoãn mỗi yêu cầu 1 giây
-  //       const data = await fetchMovies(urls[i], false, urls[i] === `${process.env.NEXT_PUBLIC_API_URL}/movies`);
-  //       dataResults.push(data);
-  //     }
-  
-  //     // Cập nhật dữ liệu sau khi lấy
-  //     const [actionData, comedyData, randomData, betterData, countryData, dateData] = dataResults;
-  
-  //     // Xáo trộn mảng randomData
-  //     const shuffleArray = (array) => {
-  //       for (let i = array.length - 1; i > 0; i--) {
-  //         const j = Math.floor(Math.random() * (i + 1));
-  //         [array[i], array[j]] = [array[j], array[i]];
-  //       }
-  //       return array;
-  //     };
-  
-  //     setAction(actionData);
-  //     setComendy(comedyData);
-  //     setRandom(shuffleArray(randomData));
-  //     setBetter(betterData);
-  //     setCountry(countryData);
-  //     setDate(dateData);
-  //   };
-  
-  //   loadDataWithDelay();
-  // }, []);
