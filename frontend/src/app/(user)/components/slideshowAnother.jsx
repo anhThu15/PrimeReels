@@ -150,17 +150,18 @@ export default function SlideShowAnother(props) {
         <div className="container-fluid px-3 box-slider3">
           <Slider {...settings}>
             {props.data.map((country, index) => (
-              <div key={index} style={{ margin: "0 10px" }}>
+              <div key={index} style={{}}>
                 <div
                   className="card text-bg-dark hover-box me-5"
-                  // style={{ width: "450px" }}
+                  style={{ width: "480px"}}
                 >
                   <div className="bg-black opacity-75">
                     <img
-                      src={country.banner}
-                      height={220}
-                      className="card-img"
+                      src={country.poster}
+                      height={300}
+                      className="card-img w-full"
                       alt={`Banner of ${country.title}`}
+                      style={{objectFit:"fill"}}
                     />
                   </div>
                   <div className="card-img-overlay"></div>

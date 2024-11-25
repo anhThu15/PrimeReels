@@ -23,6 +23,7 @@ export default function FilmSeries() {
   const [genres, setGenres] = useState([]); // Tạo state để lưu danh sách thể loại phim
   const [selectedGenreId, setSelectedGenre] = useState(''); // Lưu thể loại được chọn
   const [filteredMovies, setFilteredMovies] = useState([]); // Lưu danh sách phim được lọc theo thể loại
+  const [bannerData, setMovieType1] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -34,6 +35,8 @@ export default function FilmSeries() {
           axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/1`) // Lấy danh sách phim
         ]);
 
+        const bannerData = resMovies.data;
+        setMovieType1(bannerData)
         const genresData = resGenres.data; // Lưu thể loại phim
         setGenres(genresData); // Cập nhật state cho danh sách thể loại
 
@@ -112,8 +115,16 @@ export default function FilmSeries() {
     <>
       <div className="container-fluid bg-dark p-0 text-white">
         <div className="container-fluid p-0">
-          <Banner /> {/* Hiển thị banner */}
-          <div className="container">
+          <Banner bannerData={bannerData}
+            genres={genres}
+            onGenreChange={(genreId) => {
+              setSelectedGenre(genreId); // Cập nhật state thể loại
+              if (genreId) {
+                router.push(`/filterFilmSeries?genreId=${genreId}&movieTypeId=1`); // Điều hướng
+              }
+            }}
+          /> 
+          {/* <div className="container">
             <div className="group-select-box">
               <div className="form-group">
                 <label htmlFor="genreSelect">Chọn thể loại:</label>
@@ -125,7 +136,7 @@ export default function FilmSeries() {
                 </select>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Hiển thị các danh mục phim */}
           <div>
             <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Đề Xuất Hôm Nay</h2>

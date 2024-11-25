@@ -319,7 +319,7 @@ export default function Watch({ params }) {
     if (count === 429) {
       toast.error(
         <div>
-          Đã hết <strong>Thời Gian Trãi Nghiệm</strong> trên{' '}
+          Đã hết <strong>Thời Gian Trải Nghiệm</strong> trên{' '}
           <em>PrimeReels</em>. Mời Bạn{' '}
           <Link href="/user-buy-package" style={{ textDecoration: 'underline' }}>
             Mua Gói

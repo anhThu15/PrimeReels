@@ -19,7 +19,8 @@ export default function Register() {
             rePassword: '',
         },
         validationSchema: Yup.object({
-            user_name: Yup.string().required('Họ và tên không được để trống'),
+            user_name: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Họ và tên không được chứa ký tự đặc biệt hoặc số')
+            .required('Họ và tên không được để trống'),
             email: Yup.string()
                 .matches(/^\S+@\S+\.\S+$/, "Email phải đúng định dạng example@gmail.com")
                 .required("Email không được để trống"),
@@ -64,7 +65,7 @@ export default function Register() {
 
     return (
         <div className="modal-login modal-register">
-            <div className="modal-dialog">
+            <div className="modal-dialog mt-5">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h3>ĐĂNG KÝ</h3>

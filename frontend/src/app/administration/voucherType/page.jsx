@@ -251,13 +251,13 @@ export default function VoucherType() {
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Voucher Name</th>
-                        <th scope="col">Discount</th>
-                        <th scope="col">Usage Limit</th>
-                        <th scope="col">Min Spend</th>
-                        <th scope="col">Created At</th>
-                        <th scope="col">Updated At</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">THỂ LOẠI VOUCHER</th>
+                        <th scope="col">GIẢM GIÁ</th>
+                        <th scope="col">GIỚI HẠN SỬ DỤNG</th>
+                        <th scope="col">CHI TIÊU TỐI THIỂU</th>
+                        <th scope="col">NGÀY TẠO</th>
+                        <th scope="col">NGÀY CẬP NHẬT</th>
+                        <th scope="col">TÁC VỤ</th>
                     </tr>
                 </thead>
                 <tbody>
