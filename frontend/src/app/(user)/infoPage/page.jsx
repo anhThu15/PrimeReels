@@ -6,25 +6,31 @@ import "../../globals.css";
 export default function InfoPage() {
     const router = useRouter();
     const tabParam = router.query?.tab;
-
     // Default active tab and sub-tab
-    const [activeTab, setActiveTab] = useState("contact");
+    const [activeTab, setActiveTab] = useState(null); // Khởi tạo là null
     const [contactSubTab, setContactSubTab] = useState("support"); // Default sub-tab for Contact
 
     // Update active tab when query changes
+    // useEffect(() => {
+    //     if (tabParam) setActiveTab(tabParam);
+    // }, [tabParam]);
+    
     useEffect(() => {
-        if (tabParam) setActiveTab(tabParam);
+        if (tabParam) {
+            setActiveTab(tabParam);
+        } else {
+            setActiveTab("contact"); // Nếu không có tabParam, dùng giá trị mặc định là "contact"
+        }
     }, [tabParam]);
 
     // Handle tab change
     const handleTabChange = (newTab) => {
         setActiveTab(newTab);
         if (newTab !== "contact") {
-            setContactSubTab("support"); // Reset sub-tab when switching away
+            setContactSubTab("support"); // Reset sub-tab khi chuyển sang tab khác
         }
         router.push(`/infoPage?tab=${newTab}`, undefined, { shallow: true });
     };
-
     // Handle sub-tab change for Contact
     const handleContactSubTabChange = (newSubTab) => {
         setContactSubTab(newSubTab);
@@ -37,32 +43,32 @@ export default function InfoPage() {
                     <div className="row pt-5">
                         {/* Sidebar Menu */}
                         <div className="col-12 col-md-3 mb-4 mb-md-0">
-                            <div className="list-group" id="list-tab" role="tablist">
-                                <button
-                                    className={`btn btn-outline-light text-start ms-2 ps-3 ${activeTab === "contact" ? "active" : ""}`}
-                                    onClick={() => handleTabChange("contact")}
-                                >
-                                    <p className="fs-6 mt-2">
-                                        <i className="fa-solid fa-headphones"></i> Liên Hệ
-                                    </p>
-                                </button>
-                                <button
-                                    className={`btn btn-outline-light text-start ms-2 ps-3 mt-3 ${activeTab === "policy" ? "active" : ""}`}
-                                    onClick={() => handleTabChange("policy")}
-                                >
-                                    <p className="fs-6 mt-2">
-                                        <i className="fa-solid fa-file-alt"></i> Chính Sách
-                                    </p>
-                                </button>
-                                <button
-                                    className={`btn btn-outline-light text-start ms-2 ps-3 mt-3 ${activeTab === "terms" ? "active" : ""}`}
-                                    onClick={() => handleTabChange("terms")}
-                                >
-                                    <p className="fs-6 mt-2">
-                                        <i className="fa-solid fa-gavel"></i> Điều Khoản
-                                    </p>
-                                </button>
-                            </div>
+                        <div className="list-group" id="list-tab" role="tablist">
+                            <button
+                                className={`btn btn-outline-light text-start ms-2 ps-3 ${activeTab === "contact" ? "active" : ""}`}
+                                onClick={() => handleTabChange("contact")}
+                            >
+                                <p className="fs-6 mt-2">
+                                    <i className="fa-solid fa-headphones"></i> Liên Hệ
+                                </p>
+                            </button>
+                            <button
+                                className={`btn btn-outline-light text-start ms-2 ps-3 mt-3 ${activeTab === "policy" ? "active" : ""}`}
+                                onClick={() => handleTabChange("policy")}
+                            >
+                                <p className="fs-6 mt-2">
+                                    <i className="fa-solid fa-file-alt"></i> Chính Sách
+                                </p>
+                            </button>
+                            <button
+                                className={`btn btn-outline-light text-start ms-2 ps-3 mt-3 ${activeTab === "terms" ? "active" : ""}`}
+                                onClick={() => handleTabChange("terms")}
+                            >
+                                <p className="fs-6 mt-2">
+                                    <i className="fa-solid fa-gavel"></i> Điều Khoản
+                                </p>
+                            </button>
+                        </div>
                         </div>
 
                         {/* Main Content */}
