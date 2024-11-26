@@ -69,7 +69,7 @@ export default function Home() {
       // Đợi 2 giây trước khi xử lý dữ liệu
       setTimeout(() => {
         const [actionData, comedyData, randomData, betterData, countryData, dateData] = results;
-        console.log("Better Data:", betterData);
+        // console.log("Better Data:", betterData);
         // Xáo trộn randomData
         const shuffleArray = (array) => {
           for (let i = array.length - 1; i > 0; i--) {

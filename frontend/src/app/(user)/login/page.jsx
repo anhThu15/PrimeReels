@@ -56,6 +56,7 @@ export default function Login() {
         }
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+            // mode: 'no-cors',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

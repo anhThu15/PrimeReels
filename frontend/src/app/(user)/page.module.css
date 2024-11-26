@@ -163,3 +163,32 @@ a.secondary {
     filter: invert();
   }
 }
+
+
+/* page.module.css */
+.navMenuHeader {
+  position: absolute;
+  z-index: 2;
+  /* opacity: 0.7; */
+  width: 100%;
+  /* background-color: red; */
+}
+
+.solidHeader {
+  position: relative;
+  background-color: black;
+  z-index: 2;
+  width: 100%;
+}
+
+.navMenuHeader .navLink {
+  color: white;
+  font-weight: 450;
+}
+
+@media (max-width: 992px) {
+  .navMenuHeader {
+    background: black;
+    position: relative;
+  }
+}

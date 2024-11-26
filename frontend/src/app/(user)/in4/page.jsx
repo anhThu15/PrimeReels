@@ -18,7 +18,7 @@ export default function InfomationUser() {
         password: '',
         avatar: '', // Avatar field
         file: null,
-        
+
     });
     const [modalOpen, setModalOpen] = useState(false);
     const token = Cookies.get('token');
@@ -52,18 +52,18 @@ export default function InfomationUser() {
 
     useEffect(() => {
         if (token) {
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          .then(res => setUser(res.data.user))
-          .catch(error => {
-            console.error("Error fetching user data:", error);
-          });
+            axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(res => setUser(res.data.user))
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                });
         }
     }, [token]);
-  
+
     //   console.log(user);
 
     const fetchUserData = async () => {
@@ -111,7 +111,7 @@ export default function InfomationUser() {
     //xử lý cài đặt tài khoản
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
-    
+
     //     if (token) {
     //         try {
     //             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
@@ -126,7 +126,7 @@ export default function InfomationUser() {
     //                     avatar: userData.avatar
     //                 }),
     //             });
-    
+
     //             const result = await response.json();
     //             if (response.status === 200) {
 
@@ -154,7 +154,7 @@ export default function InfomationUser() {
     // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (token) {
             try {
                 // Tạo FormData để gửi dữ liệu file
@@ -164,7 +164,7 @@ export default function InfomationUser() {
                 if (userData.file) { // Nếu có file mới được chọn
                     formData.append('avatar', userData.file);
                 }
-    
+
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
                     method: 'PUT',
                     headers: {
@@ -172,7 +172,7 @@ export default function InfomationUser() {
                     },
                     body: formData,
                 });
-    
+
                 const result = await response.json();
                 if (response.status === 200) {
                     // Thông báo thành công
@@ -197,7 +197,7 @@ export default function InfomationUser() {
             toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
         }
     };
-    
+
     //  xử lý cài đặt tài khoản
 
 
@@ -217,7 +217,7 @@ export default function InfomationUser() {
             }
         };
         getLove();
-    },[isUpdated]); // Chỉ chạy khi có cập nhật
+    }, [isUpdated]); // Chỉ chạy khi có cập nhật
 
     const hanldeRemoveLove = async (id) => {
         // alert(id)
@@ -228,10 +228,10 @@ export default function InfomationUser() {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-            if(res){
+            if (res) {
                 toast.success('Đá Xóa Thành Công Ra Khỏi Danh Sách Yêu Thích')
                 window.location.reload()
-            }else{
+            } else {
                 toast.error('Thất Bại')
             }
         } catch (error) {
@@ -246,10 +246,10 @@ export default function InfomationUser() {
         const getHistory = async () => {
             const token = Cookies.get('token');
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`,{        
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`, {
                     headers: {
-                    'Authorization': `Bearer ${token}`,
-                  }
+                        'Authorization': `Bearer ${token}`,
+                    }
                 }).then((res) => res.data)
                 setHistory(res.history)
             } catch (error) {
@@ -257,9 +257,9 @@ export default function InfomationUser() {
             }
         }
         getHistory()
-    },[isUpdated]) // Chỉ chạy khi có cập nhật
+    }, [isUpdated]) // Chỉ chạy khi có cập nhật
     // console.log(history);
-    
+
     // xử lý load ds lịch sử đã xem 
 
     useEffect(() => {
@@ -268,14 +268,14 @@ export default function InfomationUser() {
         const getInvoice = async () => {
             try {
                 const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 }).then((res) => res.data)
-                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id) 
+                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id)
                 setInvoice(userInvoices)
             } catch (error) {
                 console.log(error);
             }
         }
         getInvoice()
-    },[invoice])
+    }, [invoice])
     // console.log(invoice);
 
     return (
@@ -415,7 +415,7 @@ export default function InfomationUser() {
                                         <input
                                             type="file"
                                             className="form-control"
-                                            id="avatar" 
+                                            id="avatar"
                                             accept="image/*"
                                             onChange={(e) => setUserData({ ...userData, file: e.target.files[0] })}
                                         />
@@ -454,16 +454,16 @@ export default function InfomationUser() {
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
                     <div className="row">
                         {invoice.map((iv) => {
-                              let statusButton;
-                              // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
-                              if (iv.status === 'pending') {
+                            let statusButton;
+                            // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
+                            if (iv.status === 'pending') {
                                 statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
-                              } else if (iv.status === 'success') {
+                            } else if (iv.status === 'success') {
                                 statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
-                              } else if (iv.status === 'fail') {
+                            } else if (iv.status === 'fail') {
                                 statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
-                              }
-                            return(
+                            }
+                            return (
                                 <>
                                     <div className="col-md-6 mb-4">
                                         <div className="card box-card">
@@ -478,7 +478,7 @@ export default function InfomationUser() {
                                                             {statusButton}
                                                         </div>
                                                         <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
-                                                        <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name):('Không Dùng')}</p>
+                                                        <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name) : ('Không Dùng')}</p>
                                                         <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
                                                         <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
                                                     </div>
@@ -493,7 +493,7 @@ export default function InfomationUser() {
                 </div>
 
                 <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
-                    <div style={{backgroundColor:"#353A3F"}}>
+                    <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
@@ -501,25 +501,25 @@ export default function InfomationUser() {
                             <div className="row mt-3">
 
                                 {history.map((ht) => {
-                                    return(
+                                    return (
                                         <>
-                                <div key={ht.episode?.episode_id} className="card text-bg-dark hover-box me-5 ms-2 mt-3 " style={{width:"350px", }}>
-                                <div className="bg-black opacity-75">
-                                <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={ht.episode?.video_url} light={true}/>
-                                    {/* <video src={episodes.video_url} height={220} className="card-img" alt="..."/> */}
-                                </div>
-                                <div className="card-img-overlay ">
-                                </div>
-                                <div className="play-icon-overlay">
-                                  <div className=" rounded-circle bg-black opacity-50 border border-white"  style={{width:"50px", height:"50px"}}>
-                                  {localStorage.getItem("token") ? (
-                                      <Link href={`/watch/${ht.episode?.movie_id}/${ht.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
-                                    ):(
-                                      <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
-                                    )}
-                                  </div>
-                                </div>
-                            </div>
+                                            <div key={ht.episode?.episode_id} className="card text-bg-dark hover-box me-5 ms-2 mt-3 " style={{ width: "350px", }}>
+                                                <div className="bg-black opacity-75">
+                                                    <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={ht.episode?.video_url} light={true} />
+                                                    {/* <video src={episodes.video_url} height={220} className="card-img" alt="..."/> */}
+                                                </div>
+                                                <div className="card-img-overlay ">
+                                                </div>
+                                                <div className="play-icon-overlay">
+                                                    <div className=" rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px" }}>
+                                                        {localStorage.getItem("token") ? (
+                                                            <Link href={`/watch/${ht.episode?.movie_id}/${ht.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                                        ) : (
+                                                            <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </>
                                     )
                                 })}
@@ -532,7 +532,7 @@ export default function InfomationUser() {
                     </div>
                 </div>
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
-                    <div style={{backgroundColor:"#353A3F"}}>
+                    <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã xem {love.length} phim gần đây</p>
@@ -541,30 +541,30 @@ export default function InfomationUser() {
                             <div className="row mt-3">
                                 {love?.map((mv) => {
                                     // console.log(mv);
-                                    
-                                    return(
+
+                                    return (
                                         <>
                                             <div className="col-sm-2 position-relative mt-2">
                                                 <div className="card text-bg-dark hover-box">
-                                                  <div>
-                                                      <img src={mv.movie.poster} height={350} className="card-img" alt="..."/>
-                                                  </div>
-                                                  <div className="play-icon-overlay">
-                                                    <div className="row">
-                                                        <div className=" col rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                                                           <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white  mt-4"></Link>
-                                                        </div>
-                                                        <div className=" col rounded-circle bg-black opacity-50 border border-white ms-2" style={{width:"50px", height:"50px"}}>
-                                                           <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{paddingLeft:"1px"}}><i class="fa-solid fa-trash text-danger fa-xl mt-3"  ></i></button>
+                                                    <div>
+                                                        <img src={mv.movie.poster} height={350} className="card-img" alt="..." />
+                                                    </div>
+                                                    <div className="play-icon-overlay">
+                                                        <div className="row">
+                                                            <div className=" col rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px" }}>
+                                                                <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white  mt-4"></Link>
+                                                            </div>
+                                                            <div className=" col rounded-circle bg-black opacity-50 border border-white ms-2" style={{ width: "50px", height: "50px" }}>
+                                                                <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{ paddingLeft: "1px" }}><i class="fa-solid fa-trash text-danger fa-xl mt-3"  ></i></button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                  </div>
                                                 </div>
                                             </div>
                                         </>
                                     )
                                 })}
-                                
+
                             </div>
                         </div>
                     </div>
