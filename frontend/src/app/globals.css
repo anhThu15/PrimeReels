@@ -1,9 +1,7 @@
-.nav-menu-header{
+/* .nav-menu-header{
   position: absolute;
   z-index: 2;
-  /* opacity: 0.7; */
   width: 100%;
-  /* background-color: red; */
 }
 
 .solid-header {
@@ -23,7 +21,7 @@
     background: black;
     position: relative;
   }
-}
+} */
 
 .gradient-overlay {
   position: absolute;
