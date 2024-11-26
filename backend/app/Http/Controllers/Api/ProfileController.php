@@ -36,20 +36,21 @@ class ProfileController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Người dùng không tìm thấy'], 404);
         }
+
         // dd($user);
-        $validator = Validator::make($request->all(), [
-            'user_name' => 'string|max:255',
-            'avatar' => 'string',
-            'gender' => 'sometimes|string|in:nam,nu',
+        $validated = $request->validate([
+            'user_name' => 'nullable|string|max:255',
+            'password' => 'nullable|string|max:255',
+            'avatar' => 'nullable|file',
+            'gender' => 'nullable|string|in:nam,nu',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $request->file('avatar')->store('images', 'public');
         }
 
         // Cập nhật thông tin người dùng
-        $user->update($request->only('user_name', 'avatar', 'gender'));
-
+        $user->update($validated);
 
         return response()->json(['status' => 'success', 'message' => 'Cập nhật thông tin cá nhân thành công']);
     }
