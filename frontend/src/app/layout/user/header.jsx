@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import axios from "axios";
+import styles from "../../(user)/page.module.css"
 export default function HeaderUser({ hasBanner }) {
   const token = Cookies.get('token');
   const router = useRouter();
@@ -84,9 +85,8 @@ export default function HeaderUser({ hasBanner }) {
   //dùng để xác định các trang như trang chủ, phim bộ, phim lẻ, phim hoạt hình để phần header có thể position và ngược lại
   
   return (
-    // <nav className="navbar navbar-expand-lg nav-menu-header" data-bs-theme="dark">
     <nav
-      className={`navbar navbar-expand-lg nav-menu-header ${isTransparentPage ? "transparent-header" : "solid-header"}`}
+      className={`navbar navbar-expand-lg ${styles.navMenuHeader} ${isTransparentPage ? styles.transparentHeader : styles.solidHeader}`}
       data-bs-theme="dark"
     >
       <div className="container">
@@ -112,8 +112,6 @@ export default function HeaderUser({ hasBanner }) {
             </li>
           </ul>
 
-
-          {/* <div><i className="fa-solid fa-magnifying-glass me-3 text-white"></i></div> */}
           <div onClick={toggleSearch} style={{ cursor: 'pointer' }}>
             <i className="fa-solid fa-magnifying-glass me-3 text-white"></i>
           </div>
