@@ -63,6 +63,7 @@ export default function Login() {
             },
             body: JSON.stringify({ email: trimmedEmail, password: trimmedPassword }), // Sử dụng email và mật khẩu đã xử lý
         });
+        
 
         const data = await response.json();
         console.log(data);
@@ -70,7 +71,7 @@ export default function Login() {
         if (response.ok) {
             
             document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
-            // document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite=strict; secure`;
+            // document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite= strict; secure`;
             
 
             // localStorage.setItem('token', data.token);
