@@ -29,8 +29,11 @@ export default function VoucherType() {
                 return;
             }
             const types = await res.json();
-            setData(types);
-            setFilteredData(types); // Set filtered data initially
+            // Sắp xếp theo ID từ lớn đến nhỏ
+            const sortedData = types.sort((a, b) => b.voucher_type_id - a.voucher_type_id);
+
+            setData(sortedData);
+            setFilteredData(sortedData); // Đồng bộ dữ liệu đã sắp xếp
         } catch (error) {
             console.error('Error fetching voucher types:', error);
         }
@@ -116,14 +119,22 @@ export default function VoucherType() {
 
 
     useEffect(() => {
-        let sortedData = [...filteredData];
+        let sortedData = [...data];
+    
         if (sortOrder === 'asc') {
+            // Sắp xếp tên A-Z
             sortedData.sort((a, b) => a.name.localeCompare(b.name));
         } else if (sortOrder === 'desc') {
+            // Sắp xếp tên Z-A
             sortedData.sort((a, b) => b.name.localeCompare(a.name));
+        } else {
+            // Mặc định: sắp xếp theo ID từ lớn đến nhỏ (hoặc ngày kết thúc mới nhất)
+            sortedData.sort((a, b) => b.voucher_type_id - a.voucher_type_id); // Hoặc thay bằng end_date
         }
+    
         setFilteredData(sortedData);
-    }, [sortOrder]);
+    }, [sortOrder, data]);
+    
 
     return (
         <div className="container-fluid">
@@ -151,6 +162,7 @@ export default function VoucherType() {
                             <ul className="dropdown-menu">
                                 <li><a className="dropdown-item" onClick={() => setSortOrder('asc')}>A-Z</a></li>
                                 <li><a className="dropdown-item" onClick={() => setSortOrder('desc')}>Z-A</a></li>
+                                <li><a className="dropdown-item" onClick={() => setSortOrder('default')}>Mặc định (Mới nhất)</a></li>
                             </ul>
                         </div>
                     </div>

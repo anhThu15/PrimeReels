@@ -27,8 +27,9 @@ export default function danhMuc() {
         return;
       }
       const newData = await res.json();
-      setData(newData);
-      setFilteredData(newData); // Initialize filtered data
+      const sortedData = newData.sort((a, b) => b.movie_type_id - a.movie_type_id);
+      setData(sortedData);
+      setFilteredData(sortedData);
     } catch (error) {
       console.error('Lỗi khi lấy danh sách thể loại:', error);
     }
@@ -113,14 +114,20 @@ export default function danhMuc() {
     const filtered = data.filter((movieType) =>
       movieType.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  
+    // Sắp xếp lại dữ liệu nếu cần theo sortOrder
     if (sortOrder === 'asc') {
       filtered.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortOrder === 'des') {
       filtered.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortOrder === '0') {
+      // Giữ nguyên thứ tự mặc định (mới nhất đến cũ nhất)
+      filtered.sort((a, b) => b.movie_type_id - a.movie_type_id);
     }
-
+  
     setFilteredData(filtered);
   }, [searchTerm, sortOrder, data]);
+  
 
   return (
     <>
@@ -186,6 +193,7 @@ export default function danhMuc() {
                 <li><a className="dropdown-item" onClick={() => setSortOrder('des')}>Z-A</a></li>
                 <li><a className="dropdown-item" onClick={() => setSortOrder('0')}>Mặc định</a></li>
               </ul>
+
             </div>
           </div>
         </div>

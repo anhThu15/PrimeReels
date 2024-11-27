@@ -30,7 +30,12 @@ export default function Account() {
                 return;
             }
             const newData = await res.json();
-            setData(newData);
+    
+            const sortedData = newData.sort((a, b) => b.user_id - a.user_id);
+
+            // Lưu dữ liệu đã sắp xếp vào state
+            setData(sortedData);
+            setFilteredData(sortedData); // Đồng bộ với filteredData
         } catch (error) {
             console.error('Error fetching user list:', error);
         }
@@ -82,7 +87,7 @@ export default function Account() {
             }
         });
 
-        setFilteredData(sortedData);
+        setFilteredData(filtered);
         setCurrentPage(1); // Reset to first page when the filter changes
     }, [searchTerm, data, sortOrder]);
 
@@ -147,7 +152,7 @@ export default function Account() {
                             {/* <th scope="row">
                                 <input type="checkbox" />
                             </th> */}
-                            <th scope="row">{user.user_id}</th>
+                            <th scope="row">{(currentPage - 1) * usersPerPage + user.user_id}</th>
                             <td>
                                 <img src={user.avatar || "../images/default-avatar.jpg"} alt="" style={{ width: "40px", height: "40px", objectFit: "cover" }} className="rounded-circle" />
                             </td>

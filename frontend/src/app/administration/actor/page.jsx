@@ -27,8 +27,11 @@ export default function AdminActor() {
                 return;
             }
             const newData = await res.json();
-            setData(newData);
-            setFilteredData(newData); // Set filtered data initially to all actors
+            // Sắp xếp mặc định từ mới nhất đến cũ nhất dựa vào actor_id
+            const sortedData = newData.sort((a, b) => b.actor_id - a.actor_id);
+
+            setData(sortedData); // Lưu dữ liệu đã sắp xếp
+            setFilteredData(sortedData); // Đồng bộ filteredData
         } catch (error) {
             console.error('Error fetching actors:', error);
         }
@@ -74,16 +77,20 @@ export default function AdminActor() {
         let filtered = data.filter(actor =>
             actor.name.toLowerCase().includes(search.toLowerCase())
         );
-
+    
+        // Logic sắp xếp
         if (sort === 'A-Z') {
             filtered.sort((a, b) => a.name.localeCompare(b.name));
-        } else {
+        } else if (sort === 'Z-A') {
             filtered.sort((a, b) => b.name.localeCompare(a.name));
+        } else if (sort === 'default') {
+            filtered.sort((a, b) => b.actor_id - a.actor_id); // Mặc định: mới nhất -> cũ nhất
         }
-
+    
         setFilteredData(filtered);
-        setCurrentPage(1); // Reset to the first page on new search or sort
+        setCurrentPage(1); // Reset về trang đầu tiên khi có thay đổi
     };
+    
 
     const totalPages = Math.ceil(filteredData.length / actorsPerPage);
 
@@ -96,6 +103,8 @@ export default function AdminActor() {
     useEffect(() => {
         fetchActors();
     }, []);
+
+    
 
     return (
         <div className="container-fluid">
@@ -133,6 +142,7 @@ export default function AdminActor() {
                         <ul className="dropdown-menu">
                             <li><a className="dropdown-item" onClick={() => handleSort('A-Z')}>A-Z</a></li>
                             <li><a className="dropdown-item" onClick={() => handleSort('Z-A')}>Z-A</a></li>
+                            <li><a className="dropdown-item" onClick={() => handleSort('default')}>Mặc định (Mới nhất)</a></li>
                         </ul>
                     </div>
                 </div>
@@ -146,7 +156,7 @@ export default function AdminActor() {
                         <th scope="col">ID</th>
                         <th scope="col">AVATAR</th>
                         <th scope="col">TÊN</th>
-                        <th scope="col">TIỂU SỬ</th>
+                        <th scope="col" style={{width:"20%"}}>TIỂU SỬ</th>
                         <th scope="col">SINH NHẬT</th>
                         <th scope="col">TÁC VỤ</th>
                     </tr>
@@ -159,10 +169,25 @@ export default function AdminActor() {
                             </th> */}
                             <td>{actor.actor_id}</td>
                             <td>
-                                <img src={actor.image_url} alt="" style={{ width: "50px", height: "50px", objectFit: "cover" }} className="rounded" />
+                                {/* <img src={actor.image_url} alt="" style={{ width: "50px", height: "50px", objectFit: "cover" }} className="rounded" /> */}
+                                <td>
+                                <img
+                                    src={actor.image_url || "/images/default-avatar.png"} // Sử dụng URL hoặc ảnh mặc định
+                                    alt="Actor Avatar"
+                                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                                    className="rounded"
+                                />
+                            </td>
                             </td>
                             <td>{actor.name}</td>
-                            <td style={{ width: "30%" }}>{actor.biography}</td>
+                            <td style={{ 
+                                maxWidth: "300px", 
+                                whiteSpace: "normal", 
+                                wordBreak: "break-word", 
+                                overflowWrap: "break-word" 
+                            }}>
+                                {actor.biography}
+                            </td>
                             <td>{actor.birth_date}</td>
                             <td>
                                 <Link className="btn btn-secondary" href={`/administration/actor/edit/${actor.actor_id}`}>
