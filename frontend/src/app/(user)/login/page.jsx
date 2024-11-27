@@ -146,8 +146,8 @@ const handleSubmit = async (event) => {
                 if (data.user.role === 100) {
                     window.location.pathname = '/administration';
                 } else {
-                    // window.location.pathname = '/';
-                    // window.location.reload();
+                    window.location.pathname = '/';
+                    window.location.reload();
                     console.log(data.user)
                 }
             }
