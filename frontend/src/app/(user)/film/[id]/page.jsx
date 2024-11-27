@@ -81,7 +81,7 @@ export default function film({params}){
           </div>           
         );
       }else{
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`,{},{        
+        const res = await axios.post(`/api/movies/${id}/favourites`,{},{        
             headers: {
             'Authorization': `Bearer ${token}`,
           }
