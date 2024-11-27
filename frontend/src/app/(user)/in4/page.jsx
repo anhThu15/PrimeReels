@@ -52,17 +52,17 @@ export default function InfomationUser() {
 
     useEffect(() => {
         if (token) {
-            axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then(res => setUser(res.data.user))
-                .catch(error => {
-                    console.error("Error fetching user data:", error);
-                });
+          axios.get(`/api/profile`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          .then(res => setUser(res.data.user))
+          .catch(error => {
+            console.error("Error fetching user data:", error);
+          });
         }
-    }, [token]);
+      }, [token]);
 
     //   console.log(user);
 
@@ -206,7 +206,7 @@ export default function InfomationUser() {
         const getLove = async () => {
             const token = Cookies.get('token');
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
+                const res = await axios.get(`/api/favourites`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -223,7 +223,7 @@ export default function InfomationUser() {
         // alert(id)
         const token = Cookies.get('token');
         try {
-            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`, {
+            const res = await axios.delete(`/api/movies/${id}/favourites`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -246,7 +246,7 @@ export default function InfomationUser() {
         const getHistory = async () => {
             const token = Cookies.get('token');
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`, {
+                const res = await axios.get(`/api/history`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     }
@@ -263,11 +263,9 @@ export default function InfomationUser() {
     // xử lý load ds lịch sử đã xem 
 
     useEffect(() => {
-        // const userCookie = Cookies.get('user');
-        // const user = JSON.parse(userCookie);
         const getInvoice = async () => {
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 }).then((res) => res.data)
+                const res = await axios.get(`/api/invoices`, { revalidate: 3600 }).then((res) => res.data)
                 const userInvoices = res.filter(invoice => invoice.user_id === user.user_id)
                 setInvoice(userInvoices)
             } catch (error) {

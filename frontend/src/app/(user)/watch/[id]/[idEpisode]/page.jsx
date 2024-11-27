@@ -84,7 +84,7 @@ export default function Watch({ params }) {
 
   useEffect(() => {
     if (token) {
-      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+      axios.get(`/api/profile`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -114,7 +114,7 @@ export default function Watch({ params }) {
   useEffect(() => {
     const checkUserInvoice = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 });
+        const res = await axios.get(`/api/invoices`, { revalidate: 3600 });
         // console.log(res.data);
         const userInvoices = res.data
                             .filter(invoice => invoice.user_id === user.user_id) 
