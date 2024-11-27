@@ -35,7 +35,7 @@ export default function AddAccount() {
             console.log("Submitting values:", values);
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+                const res = await fetch(`/api/users`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

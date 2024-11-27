@@ -18,7 +18,7 @@ export default function goiVip(){
 
   useEffect(() => {
     const getGois = async () => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`,{ revalidate: 3600 }).then((res) => res.data)
+      const res = await axios.get(`/api/packages`,{ revalidate: 3600 }).then((res) => res.data)
       setGois(res)
     }
 
@@ -29,7 +29,7 @@ export default function goiVip(){
   const onSubmit = async (data) =>{
     try {
       // const token = localStorage.getItem('token');
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/packages`, data, {
+      const res = await axios.post(`/api/packages`, data, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
@@ -53,7 +53,7 @@ export default function goiVip(){
   const hanldeDelete = async (data) => {
     try {
       // const token = localStorage.getItem('token');
-      const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/packages/${data}`,{
+      const res = await axios.delete(`/api/packages/${data}`,{
         headers: {
           'Authorization': `Bearer ${token}`,
         }
@@ -74,7 +74,7 @@ export default function goiVip(){
   }
 
   const handleSort = async (sortOrder) => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`, { revalidate: 3600 });
+    const res = await axios.get(`/api/packages`, { revalidate: 3600 });
     const data = res.data;
 
     if (sortOrder === '0') {

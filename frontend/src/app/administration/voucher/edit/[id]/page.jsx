@@ -18,7 +18,7 @@ export default function ChitietVoucher({ params }) {
     const fetchVoucherDetails = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`http://127.0.0.1:8000/api/vouchers/${voucherId}`, {
+            const res = await fetch(`/api/vouchers/${voucherId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export default function ChitietVoucher({ params }) {
     const fetchVoucherTypes = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch('http://127.0.0.1:8000/api/voucher-types', {
+            const res = await fetch('/api/voucher-types', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export default function ChitietVoucher({ params }) {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`http://127.0.0.1:8000/api/vouchers/${voucherId}`, {
+                const res = await fetch(`/api/vouchers/${voucherId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

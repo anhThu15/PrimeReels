@@ -22,7 +22,7 @@ export default function UpdateMovieType({ params }) {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/${id}`, {
+                const res = await fetch(`/api/movie-types/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export default function UpdateMovieType({ params }) {
         const fetchMovieType = async () => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/${id}`, {
+                const res = await fetch(`/api/movie-types/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

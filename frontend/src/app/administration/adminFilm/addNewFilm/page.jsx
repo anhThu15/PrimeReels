@@ -14,7 +14,7 @@ export default function AddNewFilm() {
 
     useEffect(() => {
         const getTypes = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`).then((res) => res.data)
+            const res = await axios.get(`/api/movie-types`).then((res) => res.data)
             setTypes(res)
         }
         getTypes()
@@ -25,7 +25,7 @@ export default function AddNewFilm() {
             console.log(data);
             
         //   const token = localStorage.getItem('token');
-          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies`, data, {
+          const res = await axios.post(`/api/movies`, data, {
             headers: {
               'Authorization': `Bearer ${token}`,
             }

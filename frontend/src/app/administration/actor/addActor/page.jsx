@@ -32,7 +32,7 @@ export default function AddActor() {
             const token = Cookies.get('token');
 
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/actors`, {
+                const response = await fetch(`/api/actors`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

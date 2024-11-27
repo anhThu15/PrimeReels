@@ -15,7 +15,7 @@ export default function hoaDon(){
   // useEffect(() => {
   //   const getHds = async () => {
   //     try {
-  //       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`,{ revalidate: 3600 }).then((res) => res.data)
+  //       const res = await axios.get(`/api/invoices`,{ revalidate: 3600 }).then((res) => res.data)
   //       setHds(res)
   //     } catch (error) {
   //       console.log(error);
@@ -26,7 +26,7 @@ export default function hoaDon(){
   // },[])
 
   const handleSort = async (sortOrder) => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, { revalidate: 3600 });
+    const res = await axios.get(`/api/invoices`, { revalidate: 3600 });
     const data = res.data;
 
     if (sortOrder === '0') {

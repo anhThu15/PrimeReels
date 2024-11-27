@@ -16,7 +16,7 @@ export default function Episode({params}) {
 
     useEffect(() =>{
         const getEpisodes = async () => {
-           const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}`)
+           const res = await axios.get(`/api/movies/${id}/episodes/${idEpisode}`)
                                   .then((res) => res.data)
            setEpisodes(res.episode)
            setValue('episode_number', res.episode.episode_number)
@@ -46,7 +46,7 @@ export default function Episode({params}) {
         // formData.append('status', data.status); 
 
         // Gửi yêu cầu POST với FormData
-        const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${episodes.episode_number}`, data, {
+        const res = await axios.put(`/api/movies/${id}/episodes/${episodes.episode_number}`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 // 'Content-Type': 'multipart/form-data', // Đảm bảo kiểu nội dung là multipart/form-data

@@ -18,7 +18,7 @@ export default function Account() {
     const fetchDataUser = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users?role=customer`, {
+            const res = await fetch(`/api/users?role=customer`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export default function Account() {
         if (!userIdToDelete) return;
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userIdToDelete}`, {
+            const res = await fetch(`/api/users/${userIdToDelete}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ export default function AdminActor() {
     const fetchActors = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/actors`, {
+            const res = await fetch(`/api/actors`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export default function AdminActor() {
 
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/actors/${actorIdToDelete}`, {
+            const res = await fetch(`/api/actors/${actorIdToDelete}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

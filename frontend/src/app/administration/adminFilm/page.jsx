@@ -18,7 +18,7 @@ export default function AdminFilm() {
 
     useEffect(() => {
         const getFilms = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 });
+            const res = await axios.get(`/api/movies`, { revalidate: 3600 });
             setFilms(res.data);
             setSorts(res.data);
         }
@@ -29,7 +29,7 @@ export default function AdminFilm() {
     const handleDelete = async (data) => {
         try {
             // const token = localStorage.getItem('token');
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${data}`, {
+            await axios.delete(`/api/movies/${data}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }

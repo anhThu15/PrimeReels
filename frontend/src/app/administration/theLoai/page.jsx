@@ -19,7 +19,7 @@ export default function TheLoai() {
   const fetchGenre = async () => {
     try {
       const token = Cookies.get('token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`, {
+      const res = await fetch(`/api/genres`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default function TheLoai() {
 
     try {
       const token = Cookies.get('token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres/${genreToDelete}`, {
+      const res = await fetch(`/api/genres/${genreToDelete}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export default function TheLoai() {
     onSubmit: async (values) => {
       try {
         const token = Cookies.get('token');
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`, {
+        const res = await fetch(`/api/genres`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

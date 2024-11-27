@@ -17,7 +17,7 @@ export default function VoucherType() {
     const fetchVoucherTypes = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types`, {
+            const res = await fetch(`/api/voucher-types`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function VoucherType() {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types`, {
+                const res = await fetch(`/api/voucher-types`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export default function VoucherType() {
     const handleDelete = async (voucherId) => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types/${voucherId}`, {
+            const res = await fetch(`/api/voucher-types/${voucherId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

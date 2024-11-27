@@ -15,7 +15,7 @@ export default function chitietgoiVip({params}){
 
   useEffect(() =>{
     const getGoi = async () => {
-       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages/${id}`)
+       const res = await axios.get(`/api/packages/${id}`)
                               .then((res) => res.data)
        setGoi(res)
        setValue('name', res.name);
@@ -31,7 +31,7 @@ export default function chitietgoiVip({params}){
   const onUpdate = async (data) =>{
     try {
       // const token = localStorage.getItem('token');
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/packages/${id}`,data,{
+      const res = await axios.put(`/api/packages/${id}`,data,{
         headers: {
           'Authorization': `Bearer ${token}`,
         }
