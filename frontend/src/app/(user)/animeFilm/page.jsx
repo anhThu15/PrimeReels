@@ -32,8 +32,8 @@ export default function FilmSeries() {
       try {
         // Gọi API để lấy thông tin về thể loại và phim cùng lúc bằng Promise.all
         const [resGenres, resMovies] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`), // Lấy danh sách thể loại phim
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/3`), // Lấy danh sách phim
+          axios.get(`/api/genres`), // Lấy danh sách thể loại phim
+          axios.get(`/api/movies-type/3`), // Lấy danh sách phim
 
 
         ]);
@@ -45,7 +45,7 @@ export default function FilmSeries() {
         setGenres(genresData); // Cập nhật state cho danh sách thể loại
         const moviesData = resMovies.data.filter(movie => movie.status === 1); // Lọc các phim có trạng thái là 1 (hoạt động)
 
-        const comedyMovies = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/4`);
+        const comedyMovies = await axios.get(`/api/movie-types/3/4`);
         console.log("comedy data", comedyMovies)
         // Hàm để xáo trộn danh sách phim cho phần phim ngẫu nhiên
         const shuffleArray = (array) => {
@@ -60,7 +60,7 @@ export default function FilmSeries() {
         const randomMovies = shuffleArray([...moviesData]); // Phim ngẫu nhiên
         const betterMovies = [...moviesData].sort((a, b) => b.favorites_count - a.favorites_count); // Phim được yêu thích nhất
         const dateMovies = [...moviesData].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)); // Phim mới nhất
-        const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/3/country/Hoa Kỳ`);
+        const resCountry = await axios.get(`/api/movie-types/3/country/Hoa Kỳ`);
         const countryMovies = resCountry.data.movies.filter(movie => movie.status === 1); // Lấy danh sách phim theo quốc gia (Việt Nam)
         // Phân loại phim theo từng thể loại (để hiển thị mục Phim theo thể loại)
         const comedyMoviesData = comedyMovies.data.movies.filter(movie => movie.status === 1); // Lọc phim hoạt động

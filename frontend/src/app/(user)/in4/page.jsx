@@ -70,7 +70,7 @@ export default function InfomationUser() {
         const token = Cookies.get('token');
         if (token) {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+                const response = await fetch(`/api/profile`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -165,7 +165,7 @@ export default function InfomationUser() {
                     formData.append('avatar', userData.file);
                 }
 
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
+                const response = await fetch(`/api/profile/update`, {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${token}`, // Không thêm Content-Type (Fetch tự động thêm)

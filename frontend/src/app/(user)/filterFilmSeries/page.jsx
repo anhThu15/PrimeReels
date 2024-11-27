@@ -20,7 +20,7 @@ export default function FilterFilmSeries() {
         // Fetch genres from the API
         const fetchGenres = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/genres');
+                const response = await fetch('/api/genres');
                 const data = await response.json();
                 setGenres(data); // Assuming data is an array of genres
             } catch (err) {
@@ -86,7 +86,7 @@ export default function FilterFilmSeries() {
     const fetchMovies = async (genreId, movieTypeId, country) => {
         setLoading(true);
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies-genre/${genreId || ''}`);
+            const response = await fetch(`/api/movies-genre/${genreId || ''}`);
             if (!response.ok) {
                 throw new Error('Không tìm thấy phim nào');
             }
