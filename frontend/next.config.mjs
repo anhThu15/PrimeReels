@@ -5,8 +5,7 @@ const nextConfig = {
         config.cache = false;
       }
       return config;
-    }
-
+    },
   };
 
 export default nextConfig;
