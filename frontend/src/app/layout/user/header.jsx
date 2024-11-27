@@ -21,7 +21,7 @@ export default function HeaderUser({ hasBanner }) {
   useEffect(() => {
     if (token) {
         axios
-            .get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+            .get(`/api/profile`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

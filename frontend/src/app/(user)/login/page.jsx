@@ -38,70 +38,130 @@ export default function Login() {
         setPassword(e.target.value.trim()); // Loại bỏ khoảng trắng thừa
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+//     const handleSubmit = async (event) => {
+//         event.preventDefault();
 
-            // Loại bỏ khoảng trắng thừa trước khi gửi
-            const trimmedEmail = email.trim();
-            const trimmedPassword = password.trim();
+//             // Loại bỏ khoảng trắng thừa trước khi gửi
+//             const trimmedEmail = email.trim();
+//             const trimmedPassword = password.trim();
 
-        if (emailError || email.trim() === '') {
-            toast.error("Vui lòng nhập email đúng định dạng và đuôi @gmail.com.");
-            return;
-        }
+//         if (emailError || email.trim() === '') {
+//             toast.error("Vui lòng nhập email đúng định dạng và đuôi @gmail.com.");
+//             return;
+//         }
 
-        if (password.trim() === '') {
-            toast.error("Vui lòng nhập mật khẩu.");
-            return;
-        }
+//         if (password.trim() === '') {
+//             toast.error("Vui lòng nhập mật khẩu.");
+//             return;
+//         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-            // mode: 'no-cors',
+//         const response = await fetch(`/api/login`, {
+//             // mode: 'no-cors',
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ email: trimmedEmail, password: trimmedPassword }), // Sử dụng email và mật khẩu đã xử lý
+//         });
+        
+
+//         const data = await response.json();
+//         console.log(data);
+
+//         if (response.ok) {
+            
+//             document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
+//             // document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite= strict; secure`;
+            
+
+//             // localStorage.setItem('token', data.token);
+//             // localStorage.setItem('user', JSON.stringify(data.user));
+
+//             console.log(response)
+
+//             if(data.user.email_verification_token != null){
+//                 toast("Bạn chưa xác định email, hãy xác minh để có thể đăng nhập");
+//             }else{
+//                 // alert("mày đã xác minh rồi")
+//                 toast.success('Đăng nhập thành công!');
+//                 if (data.user.role === 100) {
+// // <<<<<<< feature_frontEnd
+//                     // router.push("/administration");
+//                     window.location.pathname = '/administration'
+// // =======
+//                     router.push("/administration");
+// //  >>>>>>> main
+//                 } else {
+//                     // router.push("/");
+//                     window.location.pathname = '/'
+//                     window.location.reload();
+//                 }
+                
+//             }
+//         } else {
+//             toast.error(data.error || 'Email hoặc mật khẩu đã bị sai');
+//         }
+//     };
+
+const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Trim whitespace before sending
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+
+    if (emailError || trimmedEmail === '') {
+        toast.error("Vui lòng nhập email đúng định dạng và đuôi @gmail.com.");
+        return;
+    }
+
+    if (trimmedPassword === '') {
+        toast.error("Vui lòng nhập mật khẩu.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: trimmedEmail, password: trimmedPassword }), // Sử dụng email và mật khẩu đã xử lý
+            body: JSON.stringify({ email: trimmedEmail, password: trimmedPassword }), 
         });
         
-
         const data = await response.json();
+
         console.log(data);
 
-        if (response.ok) {
-            
-            document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
-            // document.cookie = `user=${JSON.stringify(data.user)}; path=/; samesite= strict; secure`;
-            
-
-            // localStorage.setItem('token', data.token);
-            // localStorage.setItem('user', JSON.stringify(data.user));
-
-            console.log(response)
-
-            if(data.user.email_verification_token != null){
-                toast("Bạn chưa xác định email, hãy xác minh để có thể đăng nhập");
-            }else{
-                // alert("mày đã xác minh rồi")
+        // Check if response is successful and user attribute exists
+        if (response.status === 200 && data && data.user) {
+            console.log(response.data);
+            if (data.user.email_verification_token != null) {
+                toast.error("Bạn chưa xác định email, hãy xác minh để có thể đăng nhập");
+            } else {
                 toast.success('Đăng nhập thành công!');
-                if (data.user.role === 100) {
-// <<<<<<< feature_frontEnd
-                    // router.push("/administration");
-                    window.location.pathname = '/administration'
-// =======
-                    router.push("/administration");
-//  >>>>>>> main
-                } else {
-                    // router.push("/");
-                    window.location.pathname = '/'
-                    window.location.reload();
-                }
+                // Save token to cookies only after successful login and verification
+                document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
                 
+                if (data.user.role === 100) {
+                    window.location.pathname = '/administration';
+                } else {
+                    // window.location.pathname = '/';
+                    // window.location.reload();
+                    console.log(data.user)
+                }
             }
         } else {
+            // Display error if user is not found
             toast.error(data.error || 'Email hoặc mật khẩu đã bị sai');
         }
-    };
+
+    } catch (error) {
+        console.error('Lỗi đăng nhập:', error);
+        toast.error('Đã xảy ra lỗi khi kết nối tới máy chủ. Vui lòng kiểm tra lại kết nối mạng của bạn và thử lại.');
+    }
+};
+
 
     return (
         <div className="modal-login">
