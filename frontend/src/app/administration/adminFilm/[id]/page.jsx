@@ -668,12 +668,12 @@ export default function AddNewFilm({ params }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredCmt.map((cmt) => (
+                                {filteredCmt.map((cmt, i) => (
                                     <tr key={cmt.comment_id}>
                                         <th scope="row">
                                             <input type="checkbox" />
                                         </th>
-                                        <th scope="row">{cmt.comment_id}</th>
+                                        <th scope="row">{i+1}</th>
                                         <td>
                                             <img src={cmt.user.avatar} alt="" style={{ width: "50px", height: "100%", objectFit: "cover" }} className="rounded-circle" />
                                         </td>
@@ -797,7 +797,7 @@ export default function AddNewFilm({ params }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredActors.map((cmt) => {
+                                {filteredActors.map((cmt,i) => {
                                     // console.log(cmt)
                                     return (
                                         <>
@@ -805,7 +805,7 @@ export default function AddNewFilm({ params }) {
                                                 <th scope="row">
                                                     <input type="checkbox" />
                                                 </th>
-                                                <th scope="row">{cmt.actor_id}</th>
+                                                <th scope="row">{i+1}</th>
                                                 <td>
                                                     <img src={cmt.image_url} alt="" style={{ width: "50px", height: "100%", objectFit: "cover" }} className="rounded-circle" />
                                                 </td>
@@ -928,14 +928,14 @@ export default function AddNewFilm({ params }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredGenres.map((cmt) => {
+                                {filteredGenres.map((cmt,i) => {
                                     return (
                                         <>
                                             <tr key={cmt.genre_id}>
                                                 <th scope="row">
                                                     <input type="checkbox" />
                                                 </th>
-                                                <th scope="row">{cmt.genre_id}</th>
+                                                <th scope="row">{i+1}</th>
                                                 <td>{cmt.name}</td>
                                                 <td>
                                                     {cmt.description}

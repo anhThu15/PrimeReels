@@ -327,7 +327,7 @@ export default function Voucher() {
                 <tbody>
                     {filteredData.map((voucher, index) => (
                         <tr key={voucher.voucher_id}>
-                            <th scope="row">{voucher.voucher_id}</th>
+                            <th scope="row">{index+1}</th>
                             <td>{voucher.name}</td>
                             <td>{voucher.voucher_quantity}</td>
                             <td>{new Date(voucher.expired).toLocaleDateString()}</td>

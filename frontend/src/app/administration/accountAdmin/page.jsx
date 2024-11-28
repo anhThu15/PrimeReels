@@ -110,7 +110,7 @@ export default function AccountAdmin() {
                             {/* <th scope="row">
                                 <input type="checkbox" />
                             </th> */}
-                            <th scope="row">{user.user_id}</th>
+                            <th scope="row">{index+1}</th>
                             <td>
                                 <img src={user.avatar || "../images/default-avatar.jpg"} alt="" style={{ width: "40px", height: "40px", objectFit: "cover" }} className="rounded-circle" />
                             </td>

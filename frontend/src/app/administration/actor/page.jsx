@@ -162,12 +162,12 @@ export default function AdminActor() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentActors.map((actor) => (
+                    {currentActors.map((actor,i) => (
                         <tr key={actor.actor_id}>
                             {/* <th scope="row">
                                 <input type="checkbox" />
                             </th> */}
-                            <td>{actor.actor_id}</td>
+                            <td>{i+1}</td>
                             <td>
                                 {/* <img src={actor.image_url} alt="" style={{ width: "50px", height: "50px", objectFit: "cover" }} className="rounded" /> */}
                                 <td>
