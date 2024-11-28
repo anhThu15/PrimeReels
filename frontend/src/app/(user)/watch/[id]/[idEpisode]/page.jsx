@@ -120,7 +120,7 @@ export default function Watch({ params }) {
                             .filter(invoice => invoice.user_id === user.user_id) 
                             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
               // console.log(userInvoices);
-          // console.log(userInvoices[0].status === 'success');
+          console.log(userInvoices[0].status === 'success');
 
               
         // hàm tính giây cho thgian dc phép xem 
@@ -167,7 +167,7 @@ export default function Watch({ params }) {
               const startDate = formattedDateTimeVN;
               const endDate = userInvoices[0].end_date;
               const seconds = calculateSecondsBetweenDates(startDate, endDate);
-              // console.log(startDate, endDate, seconds);
+              console.log(startDate, endDate, seconds);
               // console.log('xử  lý coi theo ngày')
               // console.log(seconds);
               
