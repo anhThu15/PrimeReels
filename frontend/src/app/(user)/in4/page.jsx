@@ -7,6 +7,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player"
 import Cookies from 'js-cookie';
+import DVDX from "../components/dvdx";
+import LSDX from "../components/lsdx";
+import DSYT from "../components/dsyt";
 
 
 export default function InfomationUser() {
@@ -450,6 +453,12 @@ export default function InfomationUser() {
                 {/* Modal for changing password */}
                 {/* <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} /> */}
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
+                    {invoice.length === 0 ? (
+                        <>
+                            <DVDX></DVDX>
+                        </>
+                    ):(
+                        <>
                     <div className="row">
                         {invoice.map((iv) => {
                             let statusButton;
@@ -488,6 +497,8 @@ export default function InfomationUser() {
                             )
                         })}
                     </div>
+                        </>
+                    )}
                 </div>
 
                 <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
@@ -496,6 +507,13 @@ export default function InfomationUser() {
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
                             </div>
+                            {history.length === 0 ? (
+                                <>
+                                <LSDX></LSDX>
+                                </>
+                            ):
+                            (
+                                <>
                             <div className="row mt-3">
 
                                 {history.map((ht) => {
@@ -526,14 +544,23 @@ export default function InfomationUser() {
 
 
                             </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
+                            {love.length === 0 ? (
+                                <>
+                                <DSYT></DSYT>
+                                </>
+                            ):
+                            (
+                                <>
                             <div className="history-view-title d-flex align-items-center">
-                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã xem {love.length} phim gần đây</p>
+                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã thích {love.length} phim gần đây</p>
                                 {/* <button className="btn btn-danger">Xóa toàn bộ</button> */}
                             </div>
                             <div className="row mt-3">
@@ -564,6 +591,8 @@ export default function InfomationUser() {
                                 })}
 
                             </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
