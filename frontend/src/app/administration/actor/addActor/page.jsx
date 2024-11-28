@@ -10,13 +10,15 @@ import { toast } from "react-toastify";
 export default function AddActor() {
     const router = useRouter();
     const [message, setMessage] = useState('');
+    const [previewImage, setPreviewImage] = useState('../../images/default-user.png'); // Avatar preview
+    const [uploadedFile, setUploadedFile] = useState(null); // Tệp tải lên
 
     const formik = useFormik({
         initialValues: {
             name: '',
             biography: '',
             birth_date: '',
-            image_url: '',
+            image_url: '', // Không còn cần dùng, nhưng giữ để xử lý fallback
             status: 1 // Trạng thái mặc định
         },
         validationSchema: Yup.object({
@@ -25,57 +27,51 @@ export default function AddActor() {
             birth_date: Yup.string()
                 .required('Ngày sinh là bắt buộc')
                 .matches(/^\d{4}-\d{2}-\d{2}$/, 'Định dạng ngày không hợp lệ (yyyy-mm-dd)'),
-            image_url: Yup.string().url('URL không hợp lệ').required('URL hình ảnh là bắt buộc'),
             status: Yup.number().required('Trạng thái là bắt buộc').oneOf([0, 1], 'Trạng thái không hợp lệ'),
         }),
         onSubmit: async (values) => {
             const token = Cookies.get('token');
+            const formData = new FormData();
+            formData.append('name', values.name);
+            formData.append('biography', values.biography);
+            formData.append('birth_date', values.birth_date);
+            formData.append('status', values.status);
+            if (uploadedFile) {
+                formData.append('image', uploadedFile); // Thêm tệp ảnh vào FormData
+            }
 
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/actors`, {
+                const response = await fetch(`/api/actors`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`,
                     },
-                    body: JSON.stringify(values),
+                    body: formData, // Gửi FormData thay vì JSON
                 });
 
                 if (response.ok) {
-                    // setMessage('Thêm diễn viên thành công!');
-                    toast.success('Thêm diễn viên thành công!')
+                    toast.success('Thêm diễn viên thành công!');
                     router.back();
                 } else {
                     const errorData = await response.json();
-                    // setMessage(`Lỗi: ${errorData.message}`);
-                    toast.error("Lỗi khi thêm diễn viên!")
+                    toast.error(errorData.message || "Lỗi khi thêm diễn viên!");
                 }
             } catch (error) {
-                setMessage('Đã xảy ra lỗi, vui lòng thử lại!');
+                toast.error('Đã xảy ra lỗi, vui lòng thử lại!');
             }
         },
-        validateOnChange: false, // Ngăn không để validate khi nhập liệu
     });
 
-    // Xử lý định dạng ngày sinh
-    const handleDateChange = (e) => {
-        const { value } = e.target;
-        const digits = value.replace(/\D/g, '');
-        let formattedDate = '';
-
-        if (digits.length > 4) {
-            formattedDate += digits.slice(0, 4) + '-';
-            if (digits.length > 6) {
-                formattedDate += digits.slice(4, 6) + '-';
-                formattedDate += digits.slice(6, 8);
-            } else {
-                formattedDate += digits.slice(4);
-            }
-        } else {
-            formattedDate = digits;
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setUploadedFile(file); // Lưu tệp vào state
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreviewImage(reader.result); // Hiển thị ảnh xem trước
+            };
+            reader.readAsDataURL(file);
         }
-
-        formik.setFieldValue('birth_date', formattedDate);
     };
 
     return (
@@ -88,8 +84,7 @@ export default function AddActor() {
                 </Link>
                 <h3 className="align-items-center">Tạo mới diễn viên</h3>
             </div>
-            <form className="p-4 shadow mt-2 rounded" onSubmit={formik.handleSubmit}>
-                {/* {message && <div className="alert alert-info">{message}</div>} */}
+            <form className="p-4 shadow mt-2 rounded" onSubmit={formik.handleSubmit} encType="multipart/form-data">
                 <button type="submit" className="btn btn-primary mb-3">Thêm</button>
                 <div className="row">
                     <div className="col-md-8">
@@ -127,25 +122,22 @@ export default function AddActor() {
                         <h2>Avatar</h2>
                         <div className="text-center mb-3">
                             <img 
-                                src={formik.values.image_url || "../../images/default-user.png"} 
+                                src={previewImage} 
                                 alt="Avatar" 
                                 style={{ width: "100%", objectFit: "cover", height: "100%" }} 
                                 className="rounded mb-3" 
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="image_url" className="form-label">URL Hình Ảnh</label>
+                            <label htmlFor="image" className="form-label">Tải Lên Hình Ảnh</label>
                             <input 
-                                type="text" 
-                                className={`form-control rounded ${formik.touched.image_url && formik.errors.image_url ? 'is-invalid' : ''}`} 
-                                id="image_url" 
-                                name="image_url" 
-                                placeholder="Nhập URL hình ảnh" 
-                                {...formik.getFieldProps('image_url')} 
+                                type="file" 
+                                className="form-control" 
+                                id="image" 
+                                name="image" 
+                                accept="image/*" 
+                                onChange={handleFileChange} 
                             />
-                            {formik.touched.image_url && formik.errors.image_url ? (
-                                <div className="invalid-feedback">{formik.errors.image_url}</div>
-                            ) : null}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="birthdate" className="form-label">Ngày Sinh</label>
@@ -155,7 +147,7 @@ export default function AddActor() {
                                 id="birthdate" 
                                 name="birth_date" 
                                 placeholder="YYYY-MM-DD" 
-                                onChange={handleDateChange} 
+                                onChange={(e) => formik.setFieldValue('birth_date', e.target.value)} 
                                 value={formik.values.birth_date} 
                             />
                             {formik.touched.birth_date && formik.errors.birth_date ? (

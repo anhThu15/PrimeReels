@@ -31,8 +31,8 @@ export default function FilmSeries() {
       try {
         // Gọi API để lấy thông tin về thể loại và phim cùng lúc bằng Promise.all
         const [resGenres, resMovies] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`), // Lấy danh sách thể loại phim
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies-type/2`) // Lấy danh sách phim
+          axios.get(`/api/genres`), // Lấy danh sách thể loại phim
+          axios.get(`/api/movies-type/2`) // Lấy danh sách phim
         ]);
         const bannerData = resMovies.data;
         setMovieType2(bannerData)
@@ -54,7 +54,7 @@ export default function FilmSeries() {
         const randomMovies = shuffleArray([...moviesData]); // Phim ngẫu nhiên
         const betterMovies = [...moviesData].sort((a, b) => b.favorites_count - a.favorites_count); // Phim được yêu thích nhất
         const dateMovies = [...moviesData].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)); // Phim mới nhất
-        const resCountry = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types/2/country/Việt Nam`);
+        const resCountry = await axios.get(`/api/movie-types/2/country/Việt Nam`);
         const countryMovies = resCountry.data.movies.filter(movie => movie.status === 1); // Lấy danh sách phim theo quốc gia (Việt Nam)
 
         // Phân loại phim theo từng thể loại (để hiển thị mục Phim theo thể loại)

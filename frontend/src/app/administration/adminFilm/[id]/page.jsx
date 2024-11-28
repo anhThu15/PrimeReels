@@ -38,7 +38,7 @@ export default function AddNewFilm({ params }) {
 
     useEffect(() => {
         const getFilm = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`)
+            const res = await axios.get(`/api/movies/${id}`)
                 .then((res) => res.data)
             setFilm(res)
             setValue('title', res.title);
@@ -61,20 +61,20 @@ export default function AddNewFilm({ params }) {
 
     useEffect(() => {
         const getTypes = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movie-types`).then((res) => res.data)
+            const res = await axios.get(`/api/movie-types`).then((res) => res.data)
             setTypes(res)
         }
         const getEpisodes = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`).then((res) => res.data)
+            const res = await axios.get(`/api/movies/${id}/episodes`).then((res) => res.data)
             setEpisodes(res);
             setFilteredEpisodes(res);
         }
         const getActors = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/actors`).then((res) => res.data)
+            const res = await axios.get(`/api/actors`).then((res) => res.data)
             setActors(res)
         }
         const getGenres = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres`).then((res) => res.data)
+            const res = await axios.get(`/api/genres`).then((res) => res.data)
             setTLS(res)
         }
 
@@ -91,7 +91,7 @@ export default function AddNewFilm({ params }) {
             console.log(data);
 
             // const token = localStorage.getItem('token');
-            const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`, data, {
+            const res = await axios.put(`/api/movies/${id}`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
@@ -126,7 +126,7 @@ export default function AddNewFilm({ params }) {
             formData.append('status', data.status);
 
             // Gửi yêu cầu POST với FormData
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, formData, {
+            const res = await axios.post(`/api/movies/${id}/episodes`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data', // Đảm bảo kiểu nội dung là multipart/form-data
@@ -153,7 +153,7 @@ export default function AddNewFilm({ params }) {
     const deleteEpisode = async (data) => {
         try {
             // const token = localStorage.getItem('token');
-            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${data}`, {
+            const res = await axios.delete(`/api/movies/${id}/episodes/${data}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
@@ -185,7 +185,7 @@ export default function AddNewFilm({ params }) {
             // const token = localStorage.getItem('token');
 
             // Gửi yêu cầu POST với FormData
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/actors`, data, {
+            const res = await axios.post(`/api/movies/${id}/actors`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // Đảm bảo kiểu nội dung là multipart/form-data
                     "Accept": "application/json"
@@ -213,7 +213,7 @@ export default function AddNewFilm({ params }) {
             // const token = localStorage.getItem('token');
 
             // Gửi yêu cầu POST với FormData
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/genres`, data, {
+            const res = await axios.post(`/api/movies/${id}/genres`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // Đảm bảo kiểu nội dung là multipart/form-data
                     "Accept": "application/json"
@@ -252,7 +252,7 @@ export default function AddNewFilm({ params }) {
     const handleDeleteCmt = async (data) => {
         try {
             // const token = localStorage.getItem('token');http://127.0.0.1:8000/api/movies/{movieId}/comments/{commentId}
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comments/${data}`, {
+            await axios.delete(`/api/movies/${id}/comments/${data}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
@@ -271,7 +271,7 @@ export default function AddNewFilm({ params }) {
         // http://127.0.0.1:8000/api/movies/{movieId}/actors
         try {
             const query = actor_id.map(id => `actor_id[]=${id}`).join('&');
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/actors?${query}` ,{
+            await axios.delete(`/api/movies/${id}/actors?${query}` ,{
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
@@ -288,7 +288,7 @@ export default function AddNewFilm({ params }) {
         const genre_id= [data]
         try {
             const query = genre_id.map(id => `genre_id[]=${id}`).join('&');
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/genres?${query}` ,{
+            await axios.delete(`/api/movies/${id}/genres?${query}` ,{
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }

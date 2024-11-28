@@ -22,7 +22,7 @@ export default function UserPayMentPackageDetail({params}){
 
     useEffect(() => {
         if (token) {
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+          axios.get(`/api/profile`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -38,7 +38,7 @@ export default function UserPayMentPackageDetail({params}){
 
     useEffect(() => {
         const getPackages = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages/${id}`, { revalidate: 3600 }).then((res) => res.data)
+            const res = await axios.get(`/api/packages/${id}`, { revalidate: 3600 }).then((res) => res.data)
             setPackages(res)
             setValue('package_id', res.package_id)
         }
@@ -51,7 +51,7 @@ export default function UserPayMentPackageDetail({params}){
     const handlePayment = async (data) => {
         try {
             // const token = localStorage.getItem('token');
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/package/purchase`,data,{
+            const res = await axios.post(`/api/package/purchase`,data,{
               headers: {
                 'Authorization': `Bearer ${token}`,
               }

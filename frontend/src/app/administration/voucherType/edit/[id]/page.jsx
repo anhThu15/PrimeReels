@@ -16,7 +16,7 @@ export default function DetailVoucherType({ params }) {
     const fetchVoucherDetails = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types/${voucherId}`, {
+            const res = await fetch(`/api/voucher-types/${voucherId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export default function DetailVoucherType({ params }) {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types/${voucherId}`, {
+                const res = await fetch(`/api/voucher-types/${voucherId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

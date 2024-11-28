@@ -18,9 +18,14 @@ export default function AdminFilm() {
 
     useEffect(() => {
         const getFilms = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`, { revalidate: 3600 });
-            setFilms(res.data);
-            setSorts(res.data);
+            const res = await axios.get(`/api/movies`, { revalidate: 3600 });
+            // setFilms(res.data);
+            // setSorts(res.data);
+            // Sắp xếp mặc định từ mới nhất đến cũ nhất dựa vào `created_at` hoặc `movie_id`
+            const sortedData = res.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            setFilms(sortedData);
+            setSorts(sortedData); // Khởi tạo danh sách sắp xếp
         }
 
         getFilms();
@@ -29,7 +34,7 @@ export default function AdminFilm() {
     const handleDelete = async (data) => {
         try {
             // const token = localStorage.getItem('token');
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/movies/${data}`, {
+            await axios.delete(`/api/movies/${data}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
@@ -39,26 +44,34 @@ export default function AdminFilm() {
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
-            
+
         } catch (error) {
             console.log(error);
         }
     }
 
     const handleSort = (sortOrder) => {
-        let sortedData = [...films]; 
+        let sortedData = [...films];
+
         if (sortOrder === 'asc') {
+            // Sắp xếp lượt xem tăng dần
             sortedData.sort((a, b) => a.views - b.views);
         } else if (sortOrder === 'des') {
+            // Sắp xếp lượt xem giảm dần
             sortedData.sort((a, b) => b.views - a.views);
+        } else {
+            // Mặc định: sắp xếp theo ngày tạo (mới nhất -> cũ nhất)
+            sortedData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         }
+
         setSorts(sortedData);
-        setCurrentPage(1); 
+        setCurrentPage(1); // Quay về trang đầu khi sắp xếp thay đổi
     };
+
 
     useEffect(() => {
         handleSort(sortOrder);
-    }, [sortOrder]); 
+    }, [sortOrder]);
 
     useEffect(() => {
         const filteredData = sorts.filter((film) =>
@@ -100,13 +113,21 @@ export default function AdminFilm() {
                 </div>
                 <div className="col">
                     <div className="dropdown">
-                        <div className="mb-3 w-25">
-                            <select id="sortOrder" className="form-select" onChange={(e) => handleSort(e.target.value)} value={sortOrder}>
-                                <option value="0">Lọc Theo Lượt Xem</option>
-                                <option value="asc">Tăng dần</option>
-                                <option value="des">Giảm dần</option>
-                            </select>
-                        </div>
+                    <div className="mb-3 w-25">
+                        <select
+                            id="sortOrder"
+                            className="form-select"
+                            onChange={(e) => {
+                                setSortOrder(e.target.value); // Cập nhật sortOrder
+                                handleSort(e.target.value);  // Gọi hàm handleSort để áp dụng sắp xếp
+                            }}
+                            value={sortOrder} // Ràng buộc giá trị với trạng thái sortOrder
+                        >
+                            <option value="0">Mặc định (Mới nhất)</option>
+                            <option value="asc">Lượt xem tăng dần</option>
+                            <option value="des">Lượt xem giảm dần</option>
+                        </select>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -127,7 +148,7 @@ export default function AdminFilm() {
                         <th scope="col">TÁC VỤ</th>
                     </tr>
                 </thead>
-                <tbody>
+                {/* <tbody>
                     {currentFilms.map((film, i) => (
                         <tr key={film.movie_id}>
                             <th scope="row">
@@ -171,7 +192,53 @@ export default function AdminFilm() {
                             </td>
                         </tr>
                     ))}
+                </tbody> */}
+                <tbody>
+                    {currentFilms.map((film, i) => (
+                        <tr key={film.movie_id}>
+                            <th scope="row">
+                                <input type="checkbox" />
+                            </th>
+                            <th scope="row">{film.movie_id}</th>
+                            <td className="d-flex align-items-center gap-2">
+                                <img src={film.poster} alt="" style={{ width: "120px", height: "150px", objectFit: "cover" }} />
+                                <div className="d-flex flex-column">
+                                    <p>{film.title}</p>
+                                </div>
+                            </td>
+                            <td>{film.movie_type.name}</td>
+                            <td>{film.created_at}</td>
+                            <td>
+                                {film.genres.map((g) => (
+                                    <div key={g.id} className="bg-primary text-white rounded text-center mb-2">
+                                        {g.name}
+                                    </div>
+                                ))}
+                            </td>
+                            <td>
+                                {film.status === 1 ? (
+                                    <div className="bg-success text-white rounded text-center">Công Khai</div>
+                                ) : (
+                                    <div className="bg-warning text-white rounded text-center">Không Công Khai</div>
+                                )}
+                            </td>
+                            <td>{film.views}</td>
+                            <td>
+                                {film.rating}
+                                <i className="fa-solid fa-star mx-3" style={{ color: "gold" }}></i>
+                            </td>
+                            <td>
+                                <Link href={`/administration/adminFilm/${film.movie_id}`} className="ms-2 btn btn-secondary">
+                                    <i className="fa-solid fa-pen"></i>
+                                </Link>
+                                <button className="btn btn-danger ms-2" onClick={() => handleDelete(film.movie_id)}>
+                                    <i className="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
+
             </table>
 
             {/* Pagination */}

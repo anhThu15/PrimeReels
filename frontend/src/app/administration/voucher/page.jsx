@@ -16,12 +16,12 @@ export default function Voucher() {
 
     // Formik setup for new voucher
     const formik = useFormik({
-        initialValues: { 
-            name: '', 
-            voucher_type_id: '', 
-            voucher_quantity: '', 
-            expired: '', 
-            enddate: '' 
+        initialValues: {
+            name: '',
+            voucher_type_id: '',
+            voucher_quantity: '',
+            expired: '',
+            enddate: ''
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Tên voucher không được để trống"),
@@ -34,7 +34,7 @@ export default function Voucher() {
         onSubmit: async (values) => {
             try {
                 const token = Cookies.get('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, {
+                const res = await fetch(`/api/vouchers`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export default function Voucher() {
     const fetchVouchers = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, {
+            const res = await fetch(`/api/vouchers`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,8 +75,11 @@ export default function Voucher() {
                 return;
             }
             const newData = await res.json();
-            setData(newData);
-            setFilteredData(newData); // Set filtered data initially to all vouchers
+            // Sắp xếp theo ID từ mới nhất đến cũ nhất
+            const sortedData = newData.sort((a, b) => b.voucher_id - a.voucher_id);
+
+            setData(sortedData);
+            setFilteredData(sortedData); // Set filtered data ban đầu
         } catch (error) {
             console.error('Lỗi khi lấy danh sách vouchers:', error);
         }
@@ -86,7 +89,7 @@ export default function Voucher() {
     const fetchVoucherTypes = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/voucher-types`, {
+            const res = await fetch(`/api/voucher-types`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,17 +112,45 @@ export default function Voucher() {
         fetchVoucherTypes();
     }, []);
 
+    // useEffect(() => {
+    //     const filtered = data.filter(voucher =>
+    //         voucher.name.toLowerCase().includes(searchTerm.toLowerCase())
+    //     );
+    //     setFilteredData(filtered);
+    // }, [searchTerm, data]);
+
     useEffect(() => {
-        const filtered = data.filter(voucher =>
-            voucher.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredData(filtered);
-    }, [searchTerm, data]);
+        let sortedData = [...data];
+        if (filteredData.length > 0) {
+            if (searchTerm) {
+                sortedData = data.filter((voucher) =>
+                    voucher.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+        }
+        setFilteredData(sortedData);
+    }, [data, searchTerm]);
+
+    const handleSort = (order) => {
+        const sortedData = [...filteredData];
+        if (order === 'asc') {
+            // Sắp xếp A-Z
+            sortedData.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (order === 'desc') {
+            // Sắp xếp Z-A
+            sortedData.sort((a, b) => b.name.localeCompare(a.name));
+        } else {
+            // Mặc định: sắp xếp theo voucher_id (mới nhất -> cũ nhất)
+            sortedData.sort((a, b) => b.voucher_id - a.voucher_id);
+        }
+        setFilteredData(sortedData);
+    };
+
 
     const handleDelete = async (id) => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${id}`, {
+            const res = await fetch(`/api/vouchers/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -160,13 +191,13 @@ export default function Voucher() {
                                     <form onSubmit={formik.handleSubmit}>
                                         <div className="mb-3">
                                             <label className="form-label">Tên Voucher</label>
-                                            <input 
-                                                type="text" 
-                                                className="form-control" 
-                                                name="name" 
-                                                value={formik.values.name} 
-                                                onChange={formik.handleChange} 
-                                                onBlur={formik.handleBlur} 
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="name"
+                                                value={formik.values.name}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
                                             {formik.touched.name && formik.errors.name ? (
                                                 <div className="text-danger">{formik.errors.name}</div>
@@ -174,13 +205,13 @@ export default function Voucher() {
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label">Số Lượng Voucher</label>
-                                            <input 
-                                                type="number" 
-                                                className="form-control" 
-                                                name="voucher_quantity" 
-                                                value={formik.values.voucher_quantity} 
-                                                onChange={formik.handleChange} 
-                                                onBlur={formik.handleBlur} 
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                name="voucher_quantity"
+                                                value={formik.values.voucher_quantity}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
                                             {formik.touched.voucher_quantity && formik.errors.voucher_quantity ? (
                                                 <div className="text-danger">{formik.errors.voucher_quantity}</div>
@@ -188,13 +219,13 @@ export default function Voucher() {
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label">Ngày Bắt Đầu</label>
-                                            <input 
-                                                type="date" 
-                                                className="form-select" 
-                                                name="expired" 
-                                                value={formik.values.expired} 
-                                                onChange={formik.handleChange} 
-                                                onBlur={formik.handleBlur} 
+                                            <input
+                                                type="date"
+                                                className="form-select"
+                                                name="expired"
+                                                value={formik.values.expired}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
                                             {formik.touched.expired && formik.errors.expired ? (
                                                 <div className="text-danger">{formik.errors.expired}</div>
@@ -202,13 +233,13 @@ export default function Voucher() {
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label">Ngày Kết Thúc</label>
-                                            <input 
-                                                type="date" 
-                                                className="form-select" 
-                                                name="enddate" 
-                                                value={formik.values.enddate} 
-                                                onChange={formik.handleChange} 
-                                                onBlur={formik.handleBlur} 
+                                            <input
+                                                type="date"
+                                                className="form-select"
+                                                name="enddate"
+                                                value={formik.values.enddate}
+                                                onChange={formik.handleChange}
+                                                onBlur={formik.handleBlur}
                                             />
                                             {formik.touched.enddate && formik.errors.enddate ? (
                                                 <div className="text-danger">{formik.errors.enddate}</div>
@@ -216,11 +247,11 @@ export default function Voucher() {
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label">Loại Voucher</label>
-                                            <select 
-                                                className="form-select" 
-                                                name="voucher_type_id" 
-                                                value={formik.values.voucher_type_id} 
-                                                onChange={formik.handleChange} 
+                                            <select
+                                                className="form-select"
+                                                name="voucher_type_id"
+                                                value={formik.values.voucher_type_id}
+                                                onChange={formik.handleChange}
                                                 onBlur={formik.handleBlur}
                                             >
                                                 <option value="">Chọn loại voucher</option>
@@ -248,11 +279,11 @@ export default function Voucher() {
             <div className="row">
                 <div className="col-2">
                     <form className="d-flex" role="search" onSubmit={e => e.preventDefault()}>
-                        <input 
-                            className="form-control" 
-                            type="search" 
-                            placeholder="Tìm kiếm" 
-                            aria-label="Search" 
+                        <input
+                            className="form-control"
+                            type="search"
+                            placeholder="Tìm kiếm"
+                            aria-label="Search"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
                         />
@@ -264,8 +295,9 @@ export default function Voucher() {
                             <i className="fa-solid fa-filter"></i> Lọc
                         </button>
                         <ul className="dropdown-menu">
-                            <li><a className="dropdown-item" onClick={() => setFilteredData([...filteredData].sort((a, b) => a.name.localeCompare(b.name)))}>A-Z</a></li>
-                            <li><a className="dropdown-item" onClick={() => setFilteredData([...filteredData].sort((a, b) => b.name.localeCompare(a.name)))}>Z-A</a></li>
+                            <li><a className="dropdown-item" onClick={() => handleSort('asc')}>A-Z</a></li>
+                            <li><a className="dropdown-item" onClick={() => handleSort('desc')}>Z-A</a></li>
+                            <li><a className="dropdown-item" onClick={() => handleSort('default')}>Mặc định (Mới nhất)</a></li>
                         </ul>
                     </div>
                 </div>
@@ -304,7 +336,7 @@ export default function Voucher() {
                                 <Link href={`/administration/voucher/edit/${voucher.voucher_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
-                                <button 
+                                <button
                                     className="btn btn-danger ms-2"
                                     onClick={() => {
                                         setVoucherToDelete(voucher.voucher_id);
@@ -332,11 +364,21 @@ export default function Voucher() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>Hủy</button>
-                            <button type="button" className="btn btn-danger" onClick={() => handleDelete(voucherToDelete)}>Xóa</button>
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={() => {
+                                    handleDelete(voucherToDelete);
+                                    setShowDeleteModal(false);
+                                }}
+                            >
+                                Xóa
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }

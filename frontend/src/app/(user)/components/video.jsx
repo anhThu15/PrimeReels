@@ -21,7 +21,7 @@ export default function Video(props){
         const addHistory = async () => {
             // const token = localStorage.getItem('token');
             try {
-                const Check = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/history`,{        
+                const Check = await axios.get(`/api/history`,{        
                     headers: {
                     'Authorization': `Bearer ${token}`,
                   }
@@ -32,7 +32,7 @@ export default function Video(props){
                 const episodeIndex = CheckArr.findIndex(item => item.episode_id === idEpisode);
                 
                 if(episodeIndex === -1){
-                    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes/${idEpisode}/history`,{},{        
+                    const res = await axios.post(`/api/movies/${id}/episodes/${idEpisode}/history`,{},{        
                         headers: {
                         'Authorization': `Bearer ${token}`,
                       }
@@ -82,7 +82,7 @@ export default function Video(props){
             // const token = localStorage.getItem('token');
             const id = props.data.episode.movie_id
             // console.log(id);
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/favourites`,{},{        
+            const res = await axios.post(`/api/movies/${id}/favourites`,{},{        
                 headers: {
                 'Authorization': `Bearer ${token}`,
               }

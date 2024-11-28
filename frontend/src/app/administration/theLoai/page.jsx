@@ -19,7 +19,7 @@ export default function TheLoai() {
   const fetchGenre = async () => {
     try {
       const token = Cookies.get('token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`, {
+      const res = await fetch(`/api/genres`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -31,8 +31,9 @@ export default function TheLoai() {
         return;
       }
       const newData = await res.json();
-      setData(newData);
-      setFilteredData(newData);
+      const sortedData = newData.sort((a, b) => b.genre_id - a.genre_id);
+      setData(sortedData);
+      setFilteredData(sortedData);
     } catch (error) {
       console.error('Error fetching genres:', error);
     }
@@ -44,7 +45,7 @@ export default function TheLoai() {
 
     try {
       const token = Cookies.get('token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres/${genreToDelete}`, {
+      const res = await fetch(`/api/genres/${genreToDelete}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ export default function TheLoai() {
     onSubmit: async (values) => {
       try {
         const token = Cookies.get('token');
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`, {
+        const res = await fetch(`/api/genres`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -120,21 +121,21 @@ export default function TheLoai() {
 
   useEffect(() => {
     const filtered = data.filter(genre => 
-      genre.name.toLowerCase().includes(searchTerm.toLowerCase())
+        genre.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredData(filtered);
-    setCurrentPage(1); // Reset to the first page on search
-  }, [searchTerm, data]);
+    setCurrentPage(1); // Reset về trang đầu tiên khi tìm kiếm
+}, [searchTerm, data]);
 
-  useEffect(() => {
-    let sortedData = [...filteredData];
-    if (sortOrder === 'asc') {
+useEffect(() => {
+  let sortedData = [...filteredData];
+  if (sortOrder === 'asc') {
       sortedData.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortOrder === 'desc') {
+  } else if (sortOrder === 'desc') {
       sortedData.sort((a, b) => b.name.localeCompare(a.name));
-    }
-    setFilteredData(sortedData);
-  }, [sortOrder]);
+  }
+  setFilteredData(sortedData);
+}, [sortOrder]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredData.length / genresPerPage);

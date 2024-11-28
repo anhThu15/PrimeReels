@@ -141,13 +141,14 @@ const handleSubmit = async (event) => {
             } else {
                 toast.success('Đăng nhập thành công!');
                 // Save token to cookies only after successful login and verification
-                document.cookie = `token=${data.token}; path=/; samesite=strict; secure`;
+                document.cookie = `token=${data.token}; path=/; samesite=strict; secure; max-age=3600`;
+                // tuổi thọ của token là 1 giờ tương đương với bên BackEnd
                 
                 if (data.user.role === 100) {
                     window.location.pathname = '/administration';
                 } else {
-                    // window.location.pathname = '/';
-                    // window.location.reload();
+                    window.location.pathname = '/';
+                    window.location.reload();
                     console.log(data.user)
                 }
             }

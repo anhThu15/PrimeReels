@@ -117,7 +117,7 @@ function MovieList() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies`);
+        const response = await fetch(`/api/movies`);
         const data = await response.json();
         let filteredMovies = data;
 

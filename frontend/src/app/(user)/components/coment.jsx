@@ -26,7 +26,7 @@ export default function Comment(props) {
   // console.log(coment);
   useEffect(() => {
     if (token) {
-      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+      axios.get(`/api/profile`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -49,14 +49,14 @@ export default function Comment(props) {
 
       // const token = localStorage.getItem('token');
       if (!checkUser) {
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comment`, data, {
+        const res = await axios.post(`/api/movies/${id}/comment`, data, {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
         }).then((res) => res.data);
         if (res) {
           toast.success('Bình Luận Và Đánh Giá Thành Công');
-          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
+          const res = await axios.get(`/api/comments/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
           setComent(res)
           // window.location.reload()
         } else {
@@ -65,14 +65,14 @@ export default function Comment(props) {
         }
       } else {
         // console.log( checkUser.rating);
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/comment`, data, {
+        const res = await axios.post(`/api/movies/${id}/comment`, data, {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
         }).then((res) => res.data);
         if (res) {
           toast.success('Bình Luận Và Đánh Giá Thành Công');
-          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/comments/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
+          const res = await axios.get(`/api/comments/movies/${id}`, { revalidate: 3600 }).then((res) => res.data)
           setComent(res)
           // console.log(res);
           // window.location.reload()

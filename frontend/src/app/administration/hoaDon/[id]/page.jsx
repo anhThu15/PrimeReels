@@ -9,7 +9,7 @@ export default function chitiethoaDon({params}){
   useEffect(() => {
     const getHds = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/invoices/${params.id}`,{ revalidate: 3600 }).then((res) => res.data)
+        const res = await axios.get(`/api/invoices/${params.id}`,{ revalidate: 3600 }).then((res) => res.data)
         setHds(res)
       } catch (error) {
         console.log(error);

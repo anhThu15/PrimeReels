@@ -17,7 +17,7 @@ export default function UserBuyPackage() {
 
     useEffect(() => {
         if (token) {
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
+          axios.get(`/api/profile`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -102,12 +102,12 @@ export default function UserBuyPackage() {
 
     useEffect(() => {
         const getPackages = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/packages`, { revalidate: 3600 }).then((res) => res.data)
+            const res = await axios.get(`/api/packages`, { revalidate: 3600 }).then((res) => res.data)
             setPackages(res)
         }
 
         const getVouchers = async () => {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+            const res = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
             setVouchers(res)
         }
        
