@@ -59,7 +59,7 @@ export default function AddAdmin() {
     return (
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
-                <Link href="/administration/account">
+                <Link href="/administration/accountAdmin">
                     <button className="btn btn-danger">
                         <i className="fas fa-chevron-left"></i>
                     </button>
@@ -146,19 +146,6 @@ export default function AddAdmin() {
                                         onBlur={formik.handleBlur}
                                     />
                                     <label className="form-check-label" htmlFor="genderFemale">Nữ</label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="gender"
-                                        id="genderOther"
-                                        value="khac"
-                                        checked={formik.values.gender === 'khac'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <label className="form-check-label" htmlFor="genderOther">Khác</label>
                                 </div>
                             </div>
                             {formik.touched.gender && formik.errors.gender ? (

@@ -82,7 +82,7 @@ class UserController extends Controller
             'user_name' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:users,email,' . $user_id . ',user_id',
             'password' => 'nullable|string|min:8',
-            'avatar' => 'nullable|file|max:1000',
+            'avatar' => 'nullable|string|max:1000',
             'gender' => 'nullable|in:nam,nu',
             'role' => 'nullable|integer',
             'google_id' => 'nullable|string|max:1000',

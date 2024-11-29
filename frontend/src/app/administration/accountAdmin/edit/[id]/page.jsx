@@ -111,7 +111,7 @@ export default function UpdateAccountAdmin({ params }) {
                                 <div className="invalid-feedback">{formik.errors.user_name}</div>
                             ) : null}
                         </div>
-                        <div className="mb-3">
+                        {/* <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email</label>
                             <input
                                 type="email"
@@ -126,7 +126,7 @@ export default function UpdateAccountAdmin({ params }) {
                             {formik.touched.email && formik.errors.email ? (
                                 <div className="invalid-feedback">{formik.errors.email}</div>
                             ) : null}
-                        </div>
+                        </div> */}
                         <div className="mb-3">
                             <label className="form-label">Giới tính</label>
                             <div className="d-flex mt-2">
@@ -156,46 +156,11 @@ export default function UpdateAccountAdmin({ params }) {
                                     />
                                     <label className="form-check-label" htmlFor="genderFemale">Nữ</label>
                                 </div>
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="gender"
-                                        id="genderOther"
-                                        value="khac"
-                                        checked={formik.values.gender === 'khac'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <label className="form-check-label" htmlFor="genderOther">Khác</label>
-                                </div>
                             </div>
                             {formik.touched.gender && formik.errors.gender ? (
                                 <div className="invalid-feedback d-block">{formik.errors.gender}</div>
                             ) : null}
                         </div>
-
-                        {/* <div className="mb-3">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <label htmlFor="role" className="form-label">Vai trò</label>
-                                    <select
-                                        name="role"
-                                        id="role"
-                                        className={`form-select ${formik.touched.role && formik.errors.role ? 'is-invalid' : ''}`}
-                                        value={formik.values.role}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    >
-                                        <option value="0">Khách hàng</option>
-                                        <option value="100">Quản trị</option>
-                                    </select>
-                                    {formik.touched.role && formik.errors.role ? (
-                                        <div className="invalid-feedback">{formik.errors.role}</div>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </div> */}
                         
                     </div>
 

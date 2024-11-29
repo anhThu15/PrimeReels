@@ -42,7 +42,7 @@ export default function UpdateAccount({ params }) {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Cập nhật tài khoản thành công!');
+                    // alert('Cập nhật tài khoản thành công!');
                     toast.success('Cập nhật tài khoản thành công!');
                     router.back();
                 } else {
@@ -115,7 +115,7 @@ export default function UpdateAccount({ params }) {
                                 <div className="invalid-feedback">{formik.errors.user_name}</div>
                             ) : null}
                         </div>
-                        <div className="mb-3">
+                        {/* <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email</label>
                             <input
                                 type="email"
@@ -130,7 +130,7 @@ export default function UpdateAccount({ params }) {
                             {formik.touched.email && formik.errors.email ? (
                                 <div className="invalid-feedback">{formik.errors.email}</div>
                             ) : null}
-                        </div>
+                        </div> */}
                         <div className="mb-3">
                             <label className="form-label">Giới tính</label>
                             <div className="d-flex mt-2">
@@ -159,19 +159,6 @@ export default function UpdateAccount({ params }) {
                                         onBlur={formik.handleBlur}
                                     />
                                     <label className="form-check-label" htmlFor="genderFemale">Nữ</label>
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="gender"
-                                        id="genderOther"
-                                        value="khac"
-                                        checked={formik.values.gender === 'khac'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <label className="form-check-label" htmlFor="genderOther">Khác</label>
                                 </div>
                             </div>
                             {formik.touched.gender && formik.errors.gender ? (
