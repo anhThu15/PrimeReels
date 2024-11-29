@@ -47,7 +47,7 @@ export default function AddAccount() {
                     router.back(); // Redirect to account page after creation
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
-                    alert('Tạo tài khoản không thành công!');
+                    // alert('Tạo tài khoản không thành công!');
                     toast.error('Tạo tài khoản không thành công!');
                 }
             } catch (error) {
@@ -180,33 +180,6 @@ export default function AddAccount() {
                             </select>
                         </div>
                     </div>
-
-                    {/* <div className="col-md-4">
-                        <h2>Avatar</h2>
-                        <div className="text-center">
-                            <img
-                                src={formik.values.avatar}
-                                alt="Avatar"
-                                style={{ width: "100%", objectFit: "cover", height: "100%" }}
-                                className="rounded mb-3"
-                            />
-                            <input
-                                type="text"
-                                className={`form-control rounded mb-3 ${formik.touched.avatar && formik.errors.avatar ? 'is-invalid' : ''}`}
-                                placeholder="Nhập URL hình ảnh"
-                                value={formik.values.avatar}
-                                name="avatar"
-                                onChange={(e) => {
-                                    formik.handleChange(e);
-                                    setAvatarUrl(e.target.value); 
-                                }}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.touched.avatar && formik.errors.avatar ? (
-                                <div className="invalid-feedback">{formik.errors.avatar}</div>
-                            ) : null}
-                        </div>
-                    </div> */}
                 </div>
             </form>
         </div>
