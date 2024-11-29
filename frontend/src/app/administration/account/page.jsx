@@ -152,9 +152,15 @@ export default function Account() {
                             {/* <th scope="row">
                                 <input type="checkbox" />
                             </th> */}
-                            <th scope="row">{(currentPage - 1) * usersPerPage + user.user_id}</th>
+                            <th scope="row">{(currentPage - 1) * usersPerPage + index + 1}</th>
                             <td>
-                                <img src={user.avatar || "../images/default-avatar.jpg"} alt="" style={{ width: "40px", height: "40px", objectFit: "cover" }} className="rounded-circle" />
+                                {/* <img src={user.avatar || "../images/default-avatar.jpg"} alt="" style={{ width: "40px", height: "40px", objectFit: "cover" }} className="rounded-circle" /> */}
+                                <img 
+                                    src={user.avatar ? user.avatar : "../images/userAvatar.png"} 
+                                    alt="Avatar" 
+                                    style={{ width: "40px", height: "40px", objectFit: "cover" }} 
+                                    className="rounded-circle" 
+                                />
                             </td>
                             <td>{user.user_name}</td>
                             <td>{user.email}</td>

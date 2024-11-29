@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 
 export default function AddActor() {
     const router = useRouter();
-    const [message, setMessage] = useState('');
     const [previewImage, setPreviewImage] = useState('../../images/default-user.png'); // Avatar preview
     const [uploadedFile, setUploadedFile] = useState(null); // Tệp tải lên
 
@@ -18,8 +17,8 @@ export default function AddActor() {
             name: '',
             biography: '',
             birth_date: '',
-            image_url: '', // Không còn cần dùng, nhưng giữ để xử lý fallback
-            status: 1 // Trạng thái mặc định
+            status: 1, // Trạng thái mặc định là hoạt động
+            image_url: "", // Dùng thuộc tính image_url thay vì image
         },
         validationSchema: Yup.object({
             name: Yup.string().required('Tên diễn viên là bắt buộc'),
@@ -36,8 +35,15 @@ export default function AddActor() {
             formData.append('biography', values.biography);
             formData.append('birth_date', values.birth_date);
             formData.append('status', values.status);
+
+            // Thêm tệp ảnh vào FormData nếu có
             if (uploadedFile) {
-                formData.append('image', uploadedFile); // Thêm tệp ảnh vào FormData
+                formData.append('image_url', uploadedFile); // Đổi thành image_url
+            }
+
+            // Debug: Kiểm tra dữ liệu formData
+            for (let pair of formData.entries()) {
+                console.log(pair[0]+ ': ' + pair[1]);
             }
 
             try {
@@ -65,13 +71,32 @@ export default function AddActor() {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setUploadedFile(file); // Lưu tệp vào state
+            console.log(file);  // Debug: Kiểm tra tệp đã được chọn
+            setUploadedFile(file);
             const reader = new FileReader();
             reader.onload = () => {
                 setPreviewImage(reader.result); // Hiển thị ảnh xem trước
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    const handleBirthDateChange = (e) => {
+        let value = e.target.value;
+    
+        // Remove non-digit characters
+        value = value.replace(/\D/g, '');
+    
+        // Add dashes at the appropriate positions (YYYY-MM-DD)
+        if (value.length >= 5) {
+            value = value.substring(0, 4) + '-' + value.substring(4);
+        }
+        if (value.length >= 8) {
+            value = value.substring(0, 7) + '-' + value.substring(7);
+        }
+    
+        // Update formik value
+        formik.setFieldValue('birth_date', value);
     };
 
     return (
@@ -134,12 +159,12 @@ export default function AddActor() {
                                 type="file" 
                                 className="form-control" 
                                 id="image" 
-                                name="image" 
+                                name="image_url"  // Đảm bảo tên đúng là image_url
                                 accept="image/*" 
                                 onChange={handleFileChange} 
                             />
                         </div>
-                        <div className="mb-3">
+                        {/* <div className="mb-3">
                             <label htmlFor="birthdate" className="form-label">Ngày Sinh</label>
                             <input 
                                 type="text" 
@@ -153,7 +178,22 @@ export default function AddActor() {
                             {formik.touched.birth_date && formik.errors.birth_date ? (
                                 <div className="invalid-feedback">{formik.errors.birth_date}</div>
                             ) : null}
-                        </div>
+                        </div> */}
+                            <div className="mb-3">
+                                <label htmlFor="birthdate" className="form-label">Ngày Sinh</label>
+                                <input 
+                                    type="text" 
+                                    className={`form-control rounded ${formik.touched.birth_date && formik.errors.birth_date ? 'is-invalid' : ''}`} 
+                                    id="birthdate" 
+                                    name="birth_date" 
+                                    placeholder="YYYY-MM-DD" 
+                                    onChange={handleBirthDateChange} 
+                                    value={formik.values.birth_date} 
+                                />
+                                {formik.touched.birth_date && formik.errors.birth_date ? (
+                                    <div className="invalid-feedback">{formik.errors.birth_date}</div>
+                                ) : null}
+                            </div>
                         <div className="mb-3">
                             <label htmlFor="status" className="form-label">Trạng Thái</label>
                             <select 

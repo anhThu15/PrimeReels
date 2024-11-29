@@ -24,7 +24,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
         const token = Cookies.get('token');
         if (token) {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/profile/change-password', {
+                const response = await fetch('/api/profile/change-password', {
                     method: 'PUT',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -39,9 +39,17 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                 
                 const data = await response.json();
                 if (data.status === 'success') {
-                    // alert("Mật khẩu đã được thay đổi thành công!");
+                    // Thông báo thành công
                     toast.success('Mật khẩu đã được thay đổi thành công!');
-                    onClose(); // Đóng modal
+                    
+                    // Reset form
+                    setCurrentPassword('');
+                    setNewPassword('');
+                    setConfirmPassword('');
+                    setError('');
+                    
+                    // Đóng modal
+                    onClose(); 
                 } else if (data.status === 'error' && data.code === 'incorrect_password') {
                     setError("Mật khẩu hiện tại không đúng.");
                 } else {
@@ -53,6 +61,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
             }
         }
     };
+    
 
     const toggleShowCurrentPassword = () => {
         setShowCurrentPassword(prev => !prev);
@@ -74,7 +83,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                 <div className="modal-content">
                     <div className="modal-header justify-content-between">
                         <h5 className="modal-title">Thay đổi mật khẩu</h5>
-                        <button type="button" className="close" onClick={onClose}>
+                        <button type="button" className="close btn btn-primary" onClick={onClose}>
                             <span>&times;</span>
                         </button>
                     </div>

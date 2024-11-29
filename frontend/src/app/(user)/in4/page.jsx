@@ -7,9 +7,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player"
 import Cookies from 'js-cookie';
-import DVDX from "../components/dvdx";
-import LSDX from "../components/lsdx";
-import DSYT from "../components/dsyt";
 
 
 export default function InfomationUser() {
@@ -20,7 +17,7 @@ export default function InfomationUser() {
         email: '',
         password: '',
         avatar: '', // Avatar field
-        file: null,
+        // file: null,
 
     });
     const [modalOpen, setModalOpen] = useState(false);
@@ -55,17 +52,17 @@ export default function InfomationUser() {
 
     useEffect(() => {
         if (token) {
-          axios.get(`/api/profile`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          .then(res => setUser(res.data.user))
-          .catch(error => {
-            console.error("Error fetching user data:", error);
-          });
+            axios.get(`/api/profile`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(res => setUser(res.data.user))
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                });
         }
-      }, [token]);
+    }, [token]);
 
     //   console.log(user);
 
@@ -157,49 +154,33 @@ export default function InfomationUser() {
     // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (token) {
             try {
-                // Tạo FormData để gửi dữ liệu file
-                const formData = new FormData();
-                formData.append('user_name', userData.username);
-                formData.append('gender', userData.gender);
-                if (userData.file) { // Nếu có file mới được chọn
-                    formData.append('avatar', userData.file);
-                }
-
-                const response = await fetch(`/api/profile/update`, {
+                const response = await fetch('/api/profile/update', {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${token}`, // Không thêm Content-Type (Fetch tự động thêm)
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
                     },
-                    body: formData,
+                    body: JSON.stringify({
+                        user_name: userData.username,
+                        gender: userData.gender,
+                        avatar: userData.avatar,  // Chỉ gửi URL ảnh
+                    }),
                 });
 
                 const result = await response.json();
-                if (response.status === 200) {
-                    // Thông báo thành công
-                    window.location.reload();
-                    toast.success('Thông tin đã được cập nhật thành công!');
-                    // Cập nhật lại state với thông tin đã nhập
-                    setUserData((prevData) => ({
-                        ...prevData,
-                        username: userData.username,
-                        gender: userData.gender,
-                    }));
-                    setIsUpdated(!isUpdated);
+                if (result.status === 'success') {
+                    toast.success("Thông tin đã được cập nhật thành công!");
                 } else {
-                    // Xử lý lỗi nếu cập nhật không thành công
-                    toast.error('Có lỗi xảy ra: ' + (result.message || 'Không thể cập nhật thông tin.'));
+                    toast.error("Có lỗi xảy ra: " + result.message);
                 }
             } catch (error) {
-                console.error('Lỗi khi cập nhật thông tin người dùng:', error);
-                toast.error('Đã xảy ra lỗi trong quá trình cập nhật thông tin.');
+                console.error('Error updating user data:', error);
             }
-        } else {
-            toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
         }
     };
+
 
     //  xử lý cài đặt tài khoản
 
@@ -325,6 +306,130 @@ export default function InfomationUser() {
                         {activeSection === 'u-favorite' && <span className="active-indicator" />}
                     </li>
                 </ul>
+                {/* <div className="user-info" id="userInfo">
+                    <div className="user-info-content row">
+                        <div className="col-sm-2 text-center">
+                            <div className="user-image">
+                                <img
+                                    src={userData.avatar || "images/default-user.png"}
+                                    className="img-fluid rounded-circle"
+                                    id="userImg"
+                                    alt="User Avatar"
+                                    style={{ width: '100px', height: '100px' }} // Adjust size as needed
+                                />
+                            </div>
+                            <div className="join-date text-white">Tham gia: 26/09/2024</div>
+                        </div>
+                        <div className="col-sm-10">
+                            <form id="userInfoForm" onSubmit={handleSubmit}>
+                                <div className="row mb-3">
+                                    <div className="col-sm-6">
+                                        <label htmlFor="username" className="form-label text-white">Tên người dùng:</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="username"
+                                            placeholder="Nguyễn Văn A"
+                                            value={userData.username}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <label className="form-label text-white">Giới tính:</label>
+                                        <div className="d-flex">
+                                            <div className="form-check me-4">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="radio"
+                                                    name="gender"
+                                                    id="genderMale"
+                                                    value="nam"
+                                                    checked={userData.gender === 'nam'}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                                <label className="form-check-label text-white" htmlFor="genderMale">Nam</label>
+                                            </div>
+                                            <div className="form-check me-4">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="radio"
+                                                    name="gender"
+                                                    id="genderFemale"
+                                                    value="nu"
+                                                    checked={userData.gender === 'nu'}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                                <label className="form-check-label text-white" htmlFor="genderFemale">Nữ</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row mb-3">
+                                    <div className="col-sm-6">
+                                        <label htmlFor="email" className="form-label text-white">Email:</label>
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            id="email"
+                                            placeholder="userABC@gmail.com"
+                                            value={userData.email}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <label htmlFor="avatar" className="form-label text-white">Avatar URL:</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="avatar"
+                                            placeholder="https://example.com/avatar.png"
+                                            value={userData.avatar}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <label htmlFor="avatar" className="form-label text-white">Chọn avatar:</label>
+                                        <input
+                                            type="file"
+                                            className="form-control"
+                                            id="avatar"
+                                            accept="image/*"
+                                            onChange={(e) => setUserData({ ...userData, file: e.target.files[0] })}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row mb-3">
+                                    <div className="col-sm-6">
+                                        <label htmlFor="password" className="form-label text-white">Mật khẩu:</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            placeholder="********"
+                                            value={userData.password}
+                                            readOnly
+                                        />
+                                        <Link
+                                            href="#"
+                                            onClick={() => setModalOpen(true)}
+                                            className="change-password"
+                                        >
+                                            Thay đổi mật khẩu
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="u-button">
+                                    <button type="submit" className="btn btn-danger">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> */}
                 <div className="user-info" id="userInfo">
                     <div className="user-info-content row">
                         <div className="col-sm-2 text-center">
@@ -399,7 +504,7 @@ export default function InfomationUser() {
                                             readOnly
                                         />
                                     </div>
-                                    {/* <div className="col-sm-6">
+                                    <div className="col-sm-6">
                                         <label htmlFor="avatar" className="form-label text-white">Avatar URL:</label>
                                         <input
                                             type="text"
@@ -409,16 +514,6 @@ export default function InfomationUser() {
                                             value={userData.avatar}
                                             onChange={handleChange}
                                             required
-                                        />
-                                    </div> */}
-                                    <div className="col-sm-6">
-                                        <label htmlFor="avatar" className="form-label text-white">Chọn avatar:</label>
-                                        <input
-                                            type="file"
-                                            className="form-control"
-                                            id="avatar"
-                                            accept="image/*"
-                                            onChange={(e) => setUserData({ ...userData, file: e.target.files[0] })}
                                         />
                                     </div>
                                 </div>
@@ -451,14 +546,8 @@ export default function InfomationUser() {
                 </div>
 
                 {/* Modal for changing password */}
-                {/* <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} /> */}
+                <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
-                    {invoice.length === 0 ? (
-                        <>
-                            <DVDX></DVDX>
-                        </>
-                    ):(
-                        <>
                     <div className="row">
                         {invoice.map((iv) => {
                             let statusButton;
@@ -497,8 +586,6 @@ export default function InfomationUser() {
                             )
                         })}
                     </div>
-                        </>
-                    )}
                 </div>
 
                 <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
@@ -507,13 +594,6 @@ export default function InfomationUser() {
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
                             </div>
-                            {history.length === 0 ? (
-                                <>
-                                <LSDX></LSDX>
-                                </>
-                            ):
-                            (
-                                <>
                             <div className="row mt-3">
 
                                 {history.map((ht) => {
@@ -544,23 +624,14 @@ export default function InfomationUser() {
 
 
                             </div>
-                                </>
-                            )}
                         </div>
                     </div>
                 </div>
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
-                            {love.length === 0 ? (
-                                <>
-                                <DSYT></DSYT>
-                                </>
-                            ):
-                            (
-                                <>
                             <div className="history-view-title d-flex align-items-center">
-                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã thích {love.length} phim gần đây</p>
+                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã xem {love.length} phim gần đây</p>
                                 {/* <button className="btn btn-danger">Xóa toàn bộ</button> */}
                             </div>
                             <div className="row mt-3">
@@ -574,25 +645,26 @@ export default function InfomationUser() {
                                                     <div>
                                                         <img src={mv.movie.poster} height={350} className="card-img" alt="..." />
                                                     </div>
-                                                    <div className="play-icon-overlay">
-                                                        <div className="row">
-                                                            <div className=" col rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px" }}>
-                                                                <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white  mt-4"></Link>
+                                                    <div className="play-icon-overlay d-flex justify-content-center align-items-center">
+                                                        <div className="d-flex">
+                                                            <div className="rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white" />
                                                             </div>
-                                                            <div className=" col rounded-circle bg-black opacity-50 border border-white ms-2" style={{ width: "50px", height: "50px" }}>
-                                                                <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{ paddingLeft: "1px" }}><i class="fa-solid fa-trash text-danger fa-xl mt-3"  ></i></button>
+                                                            <div className="rounded-circle bg-black opacity-50 border border-white ms-2" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{ padding: 0 }}>
+                                                                    <i className="fa-solid fa-trash text-danger fa-xl"></i>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </>
                                     )
                                 })}
 
                             </div>
-                                </>
-                            )}
                         </div>
                     </div>
                 </div>

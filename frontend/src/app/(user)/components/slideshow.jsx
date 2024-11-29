@@ -162,11 +162,12 @@ export default function SlideShow(props) {
                   <div className="play-icon-overlay">
                     <div
                       className="rounded-circle bg-black opacity-50 border border-white d-flex align-items-center justify-content-center"
-                      style={{ width: "50px", height: "50px" }}
+                      style={{ width: "50px", height: "50px", position:"relative", top:"2px",right:"-4px" }}
                     >
                       <Link
                         href={`/film/${action.movie_id}`}
                         className="nav-link fa-solid fa-play fa-2xl text-white"
+                        style={{position:"relative", top:"0px" , right:"-2px"}}
                       ></Link>
                     </div>
                   </div>

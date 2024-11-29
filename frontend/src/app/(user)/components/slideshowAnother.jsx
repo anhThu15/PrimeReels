@@ -157,8 +157,8 @@ export default function SlideShowAnother(props) {
                 >
                   <div className="bg-black opacity-75">
                     <img
-                      src={country.poster}
-                      height={300}
+                      src={country.banner}
+                      height={250}
                       className="card-img w-full"
                       alt={`Banner of ${country.title}`}
                       style={{objectFit:"fill"}}
@@ -173,6 +173,7 @@ export default function SlideShowAnother(props) {
                       <Link
                         href={`/film/${country.movie_id}`}
                         className="nav-link fa-solid fa-play fa-2xl text-white"
+                        style={{position:"relative", top:"0px" , right:"-2px"}}
                       ></Link>
                     </div>
                   </div>

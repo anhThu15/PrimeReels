@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
-
+import { toast } from "react-toastify";
 export default function AdminActor() {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -54,11 +54,13 @@ export default function AdminActor() {
                 return;
             }
             const updatedData = data.filter(actor => actor.actor_id !== actorIdToDelete);
+            toast.success("Xóa diễn viên thành công!")
             setData(updatedData);
             setFilteredData(updatedData);
             setActorIdToDelete(null);
         } catch (error) {
             console.error('Error deleting actor:', error);
+            toast.error("Đã có lỗi xảy ra hãy kiểm tra lại thao tác!")
         }
     };
 
@@ -77,7 +79,7 @@ export default function AdminActor() {
         let filtered = data.filter(actor =>
             actor.name.toLowerCase().includes(search.toLowerCase())
         );
-    
+
         // Logic sắp xếp
         if (sort === 'A-Z') {
             filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -86,11 +88,11 @@ export default function AdminActor() {
         } else if (sort === 'default') {
             filtered.sort((a, b) => b.actor_id - a.actor_id); // Mặc định: mới nhất -> cũ nhất
         }
-    
+
         setFilteredData(filtered);
         setCurrentPage(1); // Reset về trang đầu tiên khi có thay đổi
     };
-    
+
 
     const totalPages = Math.ceil(filteredData.length / actorsPerPage);
 
@@ -104,7 +106,7 @@ export default function AdminActor() {
         fetchActors();
     }, []);
 
-    
+
 
     return (
         <div className="container-fluid">
@@ -156,35 +158,50 @@ export default function AdminActor() {
                         <th scope="col">ID</th>
                         <th scope="col">AVATAR</th>
                         <th scope="col">TÊN</th>
-                        <th scope="col" style={{width:"20%"}}>TIỂU SỬ</th>
+                        <th scope="col" style={{ width: "20%" }}>TIỂU SỬ</th>
                         <th scope="col">SINH NHẬT</th>
                         <th scope="col">TÁC VỤ</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {currentActors.map((actor,i) => (
+                    {currentActors.map((actor, i) => (
                         <tr key={actor.actor_id}>
                             {/* <th scope="row">
                                 <input type="checkbox" />
                             </th> */}
-                            <td>{i+1}</td>
+                            <td>{i + 1}</td>
                             <td>
                                 {/* <img src={actor.image_url} alt="" style={{ width: "50px", height: "50px", objectFit: "cover" }} className="rounded" /> */}
                                 <td>
-                                <img
+                                    {/* <img
                                     src={actor.image_url || "/images/default-avatar.png"} // Sử dụng URL hoặc ảnh mặc định
                                     alt="Actor Avatar"
                                     style={{ width: "50px", height: "50px", objectFit: "cover" }}
                                     className="rounded"
+                                /> */}
+                                {actor.image_url && (actor.image_url.startsWith('http') || 
+                                actor.image_url.endsWith('.jpg') || 
+                                actor.image_url.endsWith('.jpeg') || 
+                                actor.image_url.endsWith('.png') || 
+                                actor.image_url.endsWith('.webp') || 
+                                actor.image_url.endsWith('.gif')) ? (
+                                <img
+                                    src={actor.image_url.startsWith('http') ? actor.image_url : `http://127.0.0.1:8000/storage/${actor.image_url}`}
+                                    alt={actor.name}
+                                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                                    className="rounded"
                                 />
-                            </td>
+                                ) : (
+                                <p>{actor.image_url}</p> // Display the URL if not a valid image file
+                                )}
+                                </td>
                             </td>
                             <td>{actor.name}</td>
-                            <td style={{ 
-                                maxWidth: "300px", 
-                                whiteSpace: "normal", 
-                                wordBreak: "break-word", 
-                                overflowWrap: "break-word" 
+                            <td style={{
+                                maxWidth: "300px",
+                                whiteSpace: "normal",
+                                wordBreak: "break-word",
+                                overflowWrap: "break-word"
                             }}>
                                 {actor.biography}
                             </td>

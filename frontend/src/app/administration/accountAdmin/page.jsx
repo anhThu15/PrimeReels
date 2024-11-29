@@ -28,9 +28,12 @@ export default function AccountAdmin() {
                 return;
             }
             const newData = await res.json();
-            // Filter users with role 100
             const adminUsers = newData.filter(user => user.role === 100);
-            setData(adminUsers);
+        
+            // Sort the data by user_id in descending order (most recent first)
+            const sortedAdminUsers = adminUsers.sort((a, b) => b.user_id - a.user_id);
+            setData(sortedAdminUsers);
+            // setData(adminUsers);
         } catch (error) {
             console.error('Error fetching admin user list:', error);
         }
@@ -112,7 +115,13 @@ export default function AccountAdmin() {
                             </th> */}
                             <th scope="row">{index+1}</th>
                             <td>
-                                <img src={user.avatar || "../images/default-avatar.jpg"} alt="" style={{ width: "40px", height: "40px", objectFit: "cover" }} className="rounded-circle" />
+                                {/* <img src={user.avatar || "../images/default-avatar.jpg"} alt="" style={{ width: "40px", height: "40px", objectFit: "cover" }} className="rounded-circle" /> */}
+                                <img 
+                                    src={user.avatar ? user.avatar : "../images/adminAvatar.jpg"} 
+                                    alt="Avatar" 
+                                    style={{ width: "40px", height: "40px", objectFit: "cover" }} 
+                                    className="rounded-circle" 
+                                />
                             </td>
                             <td>{user.user_name}</td>
                             <td>{user.email}</td>

@@ -7,23 +7,25 @@ import { toast } from "react-toastify";
 
 export default function UpdateActor({ params }) {
     const router = useRouter();
-    const { id } = params;
+    const { id } = params;  // Extract the actor's ID from the URL parameters
     const [actor, setActor] = useState({
         name: '',
         biography: '',
         birth_date: '',
-        image_url: ''
+        image_url: '',  // This will store the image URL or file
     });
     const [loading, setLoading] = useState(true);
 
+    // Fetch actor data when the component mounts or the id changes
     useEffect(() => {
         if (id) {
             fetchActor();
         }
     }, [id]);
 
+    // Function to fetch actor details
     const fetchActor = async () => {
-        const token = Cookies.get('token');
+        const token = Cookies.get('token');  // Retrieve the token for authorization
         const res = await fetch(`/api/actors/${id}`, {
             method: 'GET',
             headers: {
@@ -36,23 +38,23 @@ export default function UpdateActor({ params }) {
             const data = await res.json();
             setActor({
                 ...data,
-                birth_date: data.birth_date.split(' ')[0]
+                birth_date: data.birth_date.split(' ')[0],  // Ensure date is in 'YYYY-MM-DD' format
+                image_url: data.image_url || ''  // Populate image URL if available
             });
         } else {
-            console.error('Lỗi khi lấy thông tin diễn viên:', res.status);
+            console.error('Error fetching actor data:', res.status);
+            toast.error('Lỗi khi lấy thông tin diễn viên');
         }
         setLoading(false);
     };
 
+    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Format date for birth_date input
         if (name === 'birth_date') {
-            // Remove all non-digit characters
-            const digits = value.replace(/\D/g, '');
-            
-            // Format the input as YYYY-MM-DD
+
+            const digits = value.replace(/\D/g, '');  
             let formattedDate = '';
             if (digits.length > 4) {
                 formattedDate += digits.slice(0, 4) + '-';
@@ -65,35 +67,93 @@ export default function UpdateActor({ params }) {
             } else {
                 formattedDate = digits;
             }
-            
-            // Set the formatted date in the state
             setActor({ ...actor, [name]: formattedDate });
+        } else if (name === 'image_url') {
+
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setActor((prevState) => ({
+                        ...prevState,
+                        image_url: reader.result  
+                    }));
+                };
+                reader.readAsDataURL(file);  
+            }
         } else {
             setActor({ ...actor, [name]: value });
         }
     };
 
+    // Handle form submission (update actor)
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const token = Cookies.get('token'); 
+
+    //     const formData = new FormData();  
+
+
+    //     formData.append('name', actor.name);
+    //     formData.append('biography', actor.biography);
+    //     formData.append('birth_date', actor.birth_date);
+    //     formData.append('image_url', actor.image_url);  
+
+    //     const res = await fetch(`/api/actors/${id}`, {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`,
+    //         },
+    //         body: formData, 
+    //     });
+
+    //     if (res.ok) {
+    //         toast.success('Cập nhật diễn viên thành công!');
+    //         router.push('/administration/actor');
+    //     } else {
+    //         console.error('Error updating actor:', res.status);
+    //         toast.error('Cập nhật không thành công!');
+    //     }
+    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = Cookies.get('token');
-
-        const res = await fetch(`http://127.0.0.1:8000/api/actors/${id}`, {
+    
+        // Tạo đối tượng FormData chỉ chứa ảnh
+        const formData = new FormData();
+    
+        // Nếu có ảnh được chọn, thêm nó vào FormData
+        if (actor.image_url && actor.image_url.startsWith('data:image')) {
+            const file = dataURLtoFile(actor.image_url, 'avatar.jpg');  // Chuyển dataURL thành file
+            formData.append('image_url', file);
+        }
+    
+        // Gửi dữ liệu không phải ảnh qua URL-encoded (x-www-form-urlencoded)
+        const body = new URLSearchParams({
+            name: actor.name,
+            biography: actor.biography,
+            birth_date: actor.birth_date,
+        });
+    
+        // Cập nhật bằng PUT, gửi dữ liệu qua x-www-form-urlencoded + FormData cho ảnh
+        const res = await fetch(`/api/actors/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded',  // Đảm bảo Content-Type là x-www-form-urlencoded
             },
-            body: JSON.stringify(actor),
+            body: body.toString() + '&' + formData.toString(),  // Gửi cả hai body: x-www-form-urlencoded và FormData
         });
-
+    
         if (res.ok) {
-            toast.success('Cập nhật diễn viên thành công!')
+            toast.success('Cập nhật diễn viên thành công!');
             router.push('/administration/actor');
         } else {
-            console.error('Lỗi khi cập nhật diễn viên:', res.status);
-            toast.error('Cập nhật không thành công!')
+            console.error('Error updating actor:', res.status);
+            toast.error('Cập nhật không thành công!');
         }
     };
+    
 
     if (loading) return <div>Loading...</div>;
 
@@ -112,62 +172,78 @@ export default function UpdateActor({ params }) {
                     <div className="col-md-8">
                         <div className="mb-3">
                             <label htmlFor="actorName" className="form-label">Tên Diễn Viên</label>
-                            <input 
-                                type="text" 
-                                className="form-control rounded" 
-                                id="actorName" 
-                                name="name" 
-                                value={actor.name} 
-                                onChange={handleChange} 
-                                placeholder="Victor Dobronravov" 
+                            <input
+                                type="text"
+                                className="form-control rounded"
+                                id="actorName"
+                                name="name"
+                                value={actor.name}
+                                onChange={handleChange}
+                                placeholder="Victor Dobronravov"
                             />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="actorBio" className="form-label">Tiểu Sử</label>
-                            <textarea 
-                                className="form-control rounded" 
-                                id="actorBio" 
-                                name="biography" 
-                                rows="10" 
-                                value={actor.biography} 
-                                onChange={handleChange} 
-                                placeholder="Viktor Dobronravov, sinh ngày 8 tháng 3 năm 1983 tại Taganrog, Nga, là một diễn viên nổi tiếng của Nga, con trai của diễn viên Fyodor Dobronravov."
+                            <textarea
+                                className="form-control rounded"
+                                id="actorBio"
+                                name="biography"
+                                rows="10"
+                                value={actor.biography}
+                                onChange={handleChange}
+                                placeholder="Viktor Dobronravov, sinh ngày 8 tháng 3 năm 1983 tại Taganrog, Nga..."
                             />
                         </div>
                     </div>
 
                     <div className="col-md-4">
                         <h2>Avatar</h2>
-                        <div className="text-center mb-3">
-                            <img 
-                                src={actor.image_url} 
-                                alt="Avatar" 
-                                style={{ width: "250px", objectFit: "cover", height: "300px" }} 
-                                className="rounded-circle mb-3" 
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="image_url" className="form-label">URL Hình Ảnh</label>
-                            <input 
-                                type="text" 
-                                className="form-control rounded" 
-                                id="image_url" 
-                                name="image_url" 
-                                value={actor.image_url} 
-                                onChange={handleChange} 
-                                placeholder="https://example.com/avatar.jpg" 
-                            />
-                        </div>
+                        {/* <div className="text-center mb-3">
+                            {actor.image_url && (
+                                <img
+                                    src={actor.image_url}
+                                    alt="Avatar"
+                                    style={{ width: "250px", objectFit: "cover", height: "300px" }}
+                                    className="rounded-circle mb-3"
+                                />
+                            )}
+                        </div> */}
+                                    <div className="text-center mb-3">
+                                {actor.image_url && (
+                                    <img
+                                    src={
+                                        actor.image_url.startsWith("data:image")
+                                        ? actor.image_url
+                                        : `http://127.0.0.1:8000/storage/${actor.image_url}`
+                                    }
+                                    alt="Avatar"
+                                    style={{ width: "250px", objectFit: "cover", height: "300px" }}
+                                    className="rounded-circle mb-3"
+                                    />
+                                )}
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="image_url" className="form-label">
+                                        Ảnh Đại Diện
+                                    </label>
+                                    <input
+                                        type="file"
+                                        className="form-control rounded"
+                                        id="image_url"
+                                        name="image_url"
+                                        onChange={handleChange}
+                                    />
+                                    </div>
                         <div className="mb-3">
                             <label htmlFor="birthdate" className="form-label">Ngày Sinh</label>
-                            <input 
-                                type="text" 
-                                className="form-control rounded" 
-                                id="birthdate" 
-                                name="birth_date" 
-                                value={actor.birth_date} 
-                                onChange={handleChange} 
-                                placeholder="YYYY-MM-DD" 
+                            <input
+                                type="text"
+                                className="form-control rounded"
+                                id="birthdate"
+                                name="birth_date"
+                                value={actor.birth_date}
+                                onChange={handleChange}
+                                placeholder="YYYY-MM-DD"
                             />
                         </div>
                     </div>

@@ -10,9 +10,7 @@ import { toast } from "react-toastify";
 
 export default function AddAccount() {
     const router = useRouter();
-    const [avatarUrl, setAvatarUrl] = useState('../../images/default-user.png');
-    const [userIdDelete, setUserIdDelete] = useState(null);
-
+    const [avatarUrl, setAvatarUrl] = useState('../../images/userAvatar.png');
 
     //setup formik và yup để bắt lỗi form
     const formik = useFormik({
@@ -21,15 +19,16 @@ export default function AddAccount() {
             email: '',
             password: '',
             gender: '',
-            avatar: avatarUrl, 
-            role: 0
+            // avatar: avatarUrl, 
+            role: 0,
+            email_verification_token:""
         },
         validationSchema: Yup.object({
             user_name: Yup.string().required('Tên người dùng là bắt buộc'),
             email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
             password: Yup.string().required("Mật khẩu là bắt buộc"),
             gender: Yup.string().required('Giới tính là bắt buộc'),
-            avatar: Yup.string().required('URL hình ảnh là bắt buộc'),
+            // avatar: Yup.string().required('URL hình ảnh là bắt buộc'),
         }),
         onSubmit: async (values) => {
             console.log("Submitting values:", values);
@@ -45,7 +44,7 @@ export default function AddAccount() {
                 });
                 if (res.ok) {
                     toast.success('Tạo tài khoản thành công!')
-                    router.push('/administration/account'); // Redirect to account page after creation
+                    router.back(); // Redirect to account page after creation
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
                     alert('Tạo tài khoản không thành công!');
@@ -182,7 +181,7 @@ export default function AddAccount() {
                         </div>
                     </div>
 
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                         <h2>Avatar</h2>
                         <div className="text-center">
                             <img
@@ -207,7 +206,7 @@ export default function AddAccount() {
                                 <div className="invalid-feedback">{formik.errors.avatar}</div>
                             ) : null}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </form>
         </div>
