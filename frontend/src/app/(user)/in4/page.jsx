@@ -7,6 +7,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player"
 import Cookies from 'js-cookie';
+import DVDX from "../components/dvdx";
+import LSDX from "../components/lsdx";
+import DSYT from "../components/dsyt";
 
 
 export default function InfomationUser() {
@@ -306,130 +309,7 @@ export default function InfomationUser() {
                         {activeSection === 'u-favorite' && <span className="active-indicator" />}
                     </li>
                 </ul>
-                {/* <div className="user-info" id="userInfo">
-                    <div className="user-info-content row">
-                        <div className="col-sm-2 text-center">
-                            <div className="user-image">
-                                <img
-                                    src={userData.avatar || "images/default-user.png"}
-                                    className="img-fluid rounded-circle"
-                                    id="userImg"
-                                    alt="User Avatar"
-                                    style={{ width: '100px', height: '100px' }} // Adjust size as needed
-                                />
-                            </div>
-                            <div className="join-date text-white">Tham gia: 26/09/2024</div>
-                        </div>
-                        <div className="col-sm-10">
-                            <form id="userInfoForm" onSubmit={handleSubmit}>
-                                <div className="row mb-3">
-                                    <div className="col-sm-6">
-                                        <label htmlFor="username" className="form-label text-white">Tên người dùng:</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="username"
-                                            placeholder="Nguyễn Văn A"
-                                            value={userData.username}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <label className="form-label text-white">Giới tính:</label>
-                                        <div className="d-flex">
-                                            <div className="form-check me-4">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="radio"
-                                                    name="gender"
-                                                    id="genderMale"
-                                                    value="nam"
-                                                    checked={userData.gender === 'nam'}
-                                                    onChange={handleChange}
-                                                    required
-                                                />
-                                                <label className="form-check-label text-white" htmlFor="genderMale">Nam</label>
-                                            </div>
-                                            <div className="form-check me-4">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="radio"
-                                                    name="gender"
-                                                    id="genderFemale"
-                                                    value="nu"
-                                                    checked={userData.gender === 'nu'}
-                                                    onChange={handleChange}
-                                                    required
-                                                />
-                                                <label className="form-check-label text-white" htmlFor="genderFemale">Nữ</label>
-                                            </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row mb-3">
-                                    <div className="col-sm-6">
-                                        <label htmlFor="email" className="form-label text-white">Email:</label>
-                                        <input
-                                            type="email"
-                                            className="form-control"
-                                            id="email"
-                                            placeholder="userABC@gmail.com"
-                                            value={userData.email}
-                                            readOnly
-                                        />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <label htmlFor="avatar" className="form-label text-white">Avatar URL:</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="avatar"
-                                            placeholder="https://example.com/avatar.png"
-                                            value={userData.avatar}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <label htmlFor="avatar" className="form-label text-white">Chọn avatar:</label>
-                                        <input
-                                            type="file"
-                                            className="form-control"
-                                            id="avatar"
-                                            accept="image/*"
-                                            onChange={(e) => setUserData({ ...userData, file: e.target.files[0] })}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row mb-3">
-                                    <div className="col-sm-6">
-                                        <label htmlFor="password" className="form-label text-white">Mật khẩu:</label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            id="password"
-                                            placeholder="********"
-                                            value={userData.password}
-                                            readOnly
-                                        />
-                                        <Link
-                                            href="#"
-                                            onClick={() => setModalOpen(true)}
-                                            className="change-password"
-                                        >
-                                            Thay đổi mật khẩu
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="u-button">
-                                    <button type="submit" className="btn btn-danger">Lưu thay đổi</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> */}
                 <div className="user-info" id="userInfo">
                     <div className="user-info-content row">
                         <div className="col-sm-2 text-center">
@@ -548,49 +428,55 @@ export default function InfomationUser() {
                 {/* Modal for changing password */}
                 <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
-                    <div className="row">
-                        {invoice.map((iv) => {
-                            let statusButton;
-                            // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
-                            if (iv.status === 'pending') {
-                                statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
-                            } else if (iv.status === 'success') {
-                                statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
-                            } else if (iv.status === 'fail') {
-                                statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
-                            }
-                            return (
-                                <>
-                                    <div className="col-md-6 mb-4">
-                                        <div className="card box-card">
-                                            <div className="row g-0">
-                                                <div className="col-md-4">
-                                                    <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
-                                                </div>
-                                                <div className="col-md-8">
-                                                    <div className="card-body">
-                                                        <div>
-                                                            <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
-                                                            {statusButton}
+                    {invoice.length === 0 ? (<DVDX></DVDX>):(
+                        <>
+                        <div className="row">
+                            {invoice.map((iv) => {
+                                let statusButton;
+                                // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
+                                if (iv.status === 'pending') {
+                                    statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
+                                } else if (iv.status === 'success') {
+                                    statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
+                                } else if (iv.status === 'fail') {
+                                    statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
+                                }
+                                return (
+                                    <>
+                                        <div className="col-md-6 mb-4">
+                                            <div className="card box-card">
+                                                <div className="row g-0">
+                                                    <div className="col-md-4">
+                                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
+                                                    </div>
+                                                    <div className="col-md-8">
+                                                        <div className="card-body">
+                                                            <div>
+                                                                <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
+                                                                {statusButton}
+                                                            </div>
+                                                            <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
+                                                            <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name) : ('Không Dùng')}</p>
+                                                            <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
+                                                            <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
                                                         </div>
-                                                        <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
-                                                        <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name) : ('Không Dùng')}</p>
-                                                        <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
-                                                        <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </>
-                            )
-                        })}
-                    </div>
+                                    </>
+                                )
+                            })}
+                        </div>
+                        </>
+                    )}
                 </div>
 
                 <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
+                            {history.length === 0 ? (<LSDX></LSDX>):(
+                                <>
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
                             </div>
@@ -624,14 +510,18 @@ export default function InfomationUser() {
 
 
                             </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
+                            {love.length === 0 ? (<DSYT></DSYT>):(
+                                <>
                             <div className="history-view-title d-flex align-items-center">
-                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã xem {love.length} phim gần đây</p>
+                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã thích {love.length} phim gần đây</p>
                                 {/* <button className="btn btn-danger">Xóa toàn bộ</button> */}
                             </div>
                             <div className="row mt-3">
@@ -665,6 +555,8 @@ export default function InfomationUser() {
                                 })}
 
                             </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
