@@ -126,7 +126,7 @@ export default function AddNewFilm({ params }) {
             formData.append('status', data.status);
 
             // Gửi yêu cầu POST với FormData
-            const res = await axios.post(`/api/movies/${id}/episodes`, formData, {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data', // Đảm bảo kiểu nội dung là multipart/form-data
