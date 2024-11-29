@@ -197,7 +197,7 @@ export default function Watch({ params }) {
         }
 
       } catch (error) {
-        setCount(5); 
+        setCount(7); 
         console.log(error);
       }
     }
