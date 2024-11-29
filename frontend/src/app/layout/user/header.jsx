@@ -16,39 +16,74 @@ export default function HeaderUser({ hasBanner }) {
   const [userRole, setUserRole] = useState(null);
   const [userAvatar, setUserAvatar] = useState('/images/userAvatar.png');
   const [showSearch, setShowSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); 
+  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (token) {
+  //     axios
+  //       .get(`/api/profile`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           const user = response.data.user;
+  //           setUserName(user.user_name);
+  //           setUserRole(user.role);
+  //           setIsLoggedIn(true);
+
+  //           // Kiểm tra role và đặt avatar
+  //           if (user.role === 100) {
+  //             setUserAvatar('/images/adminAvatar.jpg');
+  //           } else {
+  //             const avatarUrl = user.avatar ? user.avatar : '';
+  //             setUserAvatar(avatarUrl || '/images/userAvatar.png');
+  //           }
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching user data:", error);
+  //         setIsLoggedIn(false);
+  //       });
+  //   }
+  // }, [token]);
+   // Hàm để lấy thông tin người dùng từ API
+   const fetchUserData = async () => {
     if (token) {
-        axios
-            .get(`/api/profile`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                if (response.status === 200) {
-                    const user = response.data.user;
-                    setUserName(user.user_name);
-                    setUserRole(user.role);
-                    setIsLoggedIn(true);
+      try {
+        const response = await axios.get(`/api/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-                    // Kiểm tra role và đặt avatar
-                    if (user.role === 100) {
-                        setUserAvatar('/images/adminAvatar.jpg'); // Avatar admin
-                    } else {
-                        const avatarUrl = user.avatar ? user.avatar : '';
-                        setUserAvatar(avatarUrl || '/images/userAvatar.png'); // Avatar user
-                    }
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching user data:", error);
-                setIsLoggedIn(false);
-            });
+        if (response.status === 200) {
+          const user = response.data.user;
+          setUserName(user.user_name);
+          setUserRole(user.role);
+          setIsLoggedIn(true);
+
+          // Kiểm tra role và đặt avatar
+          if (user.role === 100) {
+            setUserAvatar('/images/adminAvatar.jpg'); // Avatar admin
+          } else {
+            const avatarUrl = user.avatar ? user.avatar : '';
+            setUserAvatar(avatarUrl || '/images/userAvatar.png'); // Avatar user
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setIsLoggedIn(false);
+      }
     }
-}, [token]);
+  };
 
+  // Dùng useEffect để gọi fetchUserData khi token thay đổi
+  useEffect(() => {
+    fetchUserData();
+  }, [token]); // fetch lại dữ liệu khi token thay đổi
+  
   const handleLogout = () => {
     Cookies.remove("token", { path: '/' });
     Cookies.remove("user", { path: '/' });
@@ -58,7 +93,7 @@ export default function HeaderUser({ hasBanner }) {
     toast.success("Đăng xuất thành công");
     setIsLoggedIn(false);
   };
-  
+
 
   const toggleSearch = () => setShowSearch(!showSearch); //mở input search
 
@@ -72,7 +107,7 @@ export default function HeaderUser({ hasBanner }) {
   };
 
   const handleClickCheck = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (!isLoggedIn) {
       toast.error("Chưa Đăng Nhập Mời Bạn Đăng Nhập Để Mua Gói");
       router.push("/login");
@@ -80,10 +115,10 @@ export default function HeaderUser({ hasBanner }) {
       router.push("/user-buy-package");
     }
   };
-  
-  const isTransparentPage = ["/", "/filmSeries", "/oddFilm", "/animeFilm","/login", "/register"].includes(pathName);  
+
+  const isTransparentPage = ["/", "/filmSeries", "/oddFilm", "/animeFilm", "/login", "/register"].includes(pathName);
   //dùng để xác định các trang như trang chủ, phim bộ, phim lẻ, phim hoạt hình để phần header có thể position và ngược lại
-  
+
   return (
     <nav
       className={`navbar navbar-expand-lg ${styles.navMenuHeader} ${isTransparentPage ? styles.transparentHeader : styles.solidHeader}`}
@@ -91,7 +126,7 @@ export default function HeaderUser({ hasBanner }) {
     >
       <div className="container">
         <Link href="/">
-        <img className="navbar-brand me-5" src="/images/Logo-PR-(1).png" width={100} alt="Logo" />
+          <img className="navbar-brand me-5" src="/images/Logo-PR-(1).png" width={100} alt="Logo" />
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -99,18 +134,27 @@ export default function HeaderUser({ hasBanner }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className={`nav-link me-3 ${pathName === '/' ? 'active' : ''}`} href="/">TRANG CHỦ</Link>
+              <Link className={`nav-link me-3 ${pathName === '/' ? 'active' : ''} ${styles.navLink}`} href="/">
+                TRANG CHỦ
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link me-3 ${pathName === '/filmSeries' ? 'active' : ''}`} href="/filmSeries">PHIM BỘ</Link>
+              <Link className={`nav-link me-3 ${pathName === '/filmSeries' ? 'active' : ''} ${styles.navLink}`} href="/filmSeries">
+                PHIM BỘ
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link me-3 ${pathName === '/oddFilm' ? 'active' : ''}`} href="/oddFilm">PHIM LẺ</Link>
+              <Link className={`nav-link me-3 ${pathName === '/oddFilm' ? 'active' : ''} ${styles.navLink}`} href="/oddFilm">
+                PHIM LẺ
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link me-3 ${pathName === '/animeFilm' ? 'active' : ''}`} href="/animeFilm">PHIM HOẠT HÌNH</Link>
+              <Link className={`nav-link me-3 ${pathName === '/animeFilm' ? 'active' : ''} ${styles.navLink}`} href="/animeFilm">
+                PHIM HOẠT HÌNH
+              </Link>
             </li>
           </ul>
+
 
           <div onClick={toggleSearch} style={{ cursor: 'pointer' }}>
             <i className="fa-solid fa-magnifying-glass me-3 text-white"></i>
@@ -126,9 +170,9 @@ export default function HeaderUser({ hasBanner }) {
               onKeyDown={handleSearchSubmit}
             />
           )}
-          
+
           <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
-            <Link href='#' onClick={handleClickCheck}  style={{ textDecoration: 'none', color: 'white' }}>
+            <Link href='#' onClick={handleClickCheck} style={{ textDecoration: 'none', color: 'white' }}>
               <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
             </Link>
           </div>
@@ -145,7 +189,7 @@ export default function HeaderUser({ hasBanner }) {
                     <li><Link className="dropdown-item" href="/administration">Trang quản trị</Link></li>
                   )}
                   <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" onClick={handleLogout} style={{cursor:"pointer"}}>Đăng Xuất</a></li>
+                  <li><a className="dropdown-item" onClick={handleLogout} style={{ cursor: "pointer" }}>Đăng Xuất</a></li>
                 </ul>
               </li>
             </>
