@@ -112,49 +112,6 @@ export default function InfomationUser() {
     };
 
     //xử lý cài đặt tài khoản
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     if (token) {
-    //         try {
-    //             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
-    //                 method: 'PUT',
-    //                 headers: {
-    //                     'Authorization': `Bearer ${token}`,
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify({
-    //                     user_name: userData.username,
-    //                     gender: userData.gender,
-    //                     avatar: userData.avatar
-    //                 }),
-    //             });
-
-    //             const result = await response.json();
-    //             if (response.status === 200) {
-
-    //                 window.location.reload();
-    //                 toast.success('Thông tin đã được cập nhật thành công!');
-
-    //                 setUserData(prevData => ({
-    //                     ...prevData,
-    //                     username: userData.username,
-    //                     gender: userData.gender,
-    //                     avatar: userData.avatar
-    //                 }));
-    //                 setIsUpdated(!isUpdated);
-    //             } else {
-
-    //                 toast.error('Có lỗi xảy ra: ' + (result.message || 'Không thể cập nhật thông tin.'));
-    //             }
-    //         } catch (error) {
-    //             console.error('Lỗi khi cập nhật thông tin người dùng:', error);
-    //             toast.error('Đã xảy ra lỗi trong quá trình cập nhật thông tin.');
-    //         }
-    //     } else {
-    //         toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
-    //     }
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (token) {
@@ -322,7 +279,7 @@ export default function InfomationUser() {
                                     style={{ width: '100px', height: '100px' }} // Adjust size as needed
                                 />
                             </div>
-                            <div className="join-date text-white">Tham gia: 26/09/2024</div>
+                            <div className="join-date text-white">{userData.created_at}</div>
                         </div>
                         <div className="col-sm-10">
                             <form id="userInfoForm" onSubmit={handleSubmit}>
@@ -564,3 +521,4 @@ export default function InfomationUser() {
         </div>
     );
 }
+
