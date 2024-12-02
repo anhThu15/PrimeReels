@@ -41,8 +41,10 @@ export default function UserBuyPackage() {
             //   console.log(res.data);
               const userInvoices = res.data
                                   .filter(invoice => invoice.user_id === user.user_id) 
-                                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                                  console.log(user);
+                                //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                                  .sort((a, b) => b.invoice_id - a.invoice_id);
+
+                                //   console.log(user);
                                   
               const calculateSecondsBetweenDates = (startDate, endDate) => {
                       const formatDate = (dateStr) => {

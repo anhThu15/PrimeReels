@@ -123,10 +123,10 @@ export default function Watch({ params }) {
         // console.log(res.data);
         const userInvoices = res.data
                             .filter(invoice => invoice.user_id === user.user_id) 
-                            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                            // .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                            .sort((a, b) => b.invoice_id - a.invoice_id);
               // console.log(userInvoices);
           // console.log(userInvoices[0].status === 'success');
-
               
         // hàm tính giây cho thgian dc phép xem 
         const calculateSecondsBetweenDates = (startDate, endDate) => {
@@ -156,7 +156,7 @@ export default function Watch({ params }) {
         // hàm tính giây cho thgian dc phép xem 
 
         if(userInvoices && userInvoices[0] && userInvoices[0].status){
-          console.log(userInvoices[0].status === 'success');
+          // console.log(userInvoices[0].status === 'success');
             if(userInvoices[0].status === 'success'){
               const currentDate = new Date();
               const options = {
