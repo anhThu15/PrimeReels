@@ -34,7 +34,7 @@ export default function InfomationUser() {
 
     useEffect(() => {
         showSection(activeSection);
-        fetchUserData();
+        // fetchUserData();
     }, [activeSection]);
 
     useEffect(() => {
