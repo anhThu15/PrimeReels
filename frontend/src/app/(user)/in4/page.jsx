@@ -54,17 +54,22 @@ export default function InfomationUser() {
     };
 
     useEffect(() => {
-        if (token) {
-            axios.get(`/api/profile`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then(res => setUser(res.data.user))
-                .catch(error => {
-                    console.error("Error fetching user data:", error);
-                });
+        const getToken = () => {
+            if (token) {
+                axios.get(`/api/profile`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                    .then(res => setUser(res.data.user))
+                    .catch(error => {
+                        console.error("Error fetching user data:", error);
+                    });
+            }
         }
+        setTimeout(() => {
+            getToken()
+        }, 2000);
     }, [token]);
 
     //   console.log(user);
@@ -217,7 +222,7 @@ export default function InfomationUser() {
             }
         }
         getInvoice()
-    }, [invoice])
+    }, [user.user_id])
     // console.log(invoice);
 
     return (

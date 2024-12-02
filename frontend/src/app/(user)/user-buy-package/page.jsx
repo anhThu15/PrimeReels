@@ -16,17 +16,22 @@ export default function UserBuyPackage() {
     const [vouchers, setVouchers] = useState([])
 
     useEffect(() => {
-        if (token) {
-          axios.get(`/api/profile`, {
-            headers: {
-              Authorization: `Bearer ${token}`
+        const getToken = () =>{
+            if (token) {
+              axios.get(`/api/profile`, {
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
+              })
+              .then(res => setUser(res.data.user))
+              .catch(error => {
+                console.error("Error fetching user data:", error);
+              });
             }
-          })
-          .then(res => setUser(res.data.user))
-          .catch(error => {
-            console.error("Error fetching user data:", error);
-          });
-        }
+        } 
+        setTimeout(() => {
+            getToken()
+        }, 2000);
       }, [token]);
 
     useEffect(() => {
@@ -98,7 +103,7 @@ export default function UserBuyPackage() {
           }
 
           checkUserInvoice();
-    },[user])
+    },[user.user_id])
 
     useEffect(() => {
         const getPackages = async () => {
