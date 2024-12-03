@@ -207,7 +207,8 @@ export default function AdminFilm() {
                                 </div>
                             </td>
                             <td>{film.movie_type.name}</td>
-                            <td>{film.created_at}</td>
+                            {/* <td>{film.created_at}</td> */}
+                            <td>{new Date(film.created_at).toLocaleDateString('vi-VN')}</td>
                             <td>
                                 {film.genres.map((g) => (
                                     <div key={g.id} className="bg-primary text-white rounded text-center mb-2">

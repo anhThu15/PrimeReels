@@ -503,12 +503,12 @@ export default function AddNewFilm({ params }) {
                                                         </select>
                                                         {errorsForm2.status && <div className="text-danger">{errorsForm2.status.message}</div>}
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary">Thêm Tập Phim </button>
+                                                    <button type="submit" class="btn btn-primary" style={{float:"right"}}>Thêm Tập Phim </button>
                                                 </form>
                                             </div>
-                                            <div class="modal-footer">
+                                            {/* <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>

@@ -141,9 +141,9 @@ function MovieList() {
   return (
     <>
       <div className="header-text">
-        <h1 className="text-light">Kết quả tìm kiếm cho phim với từ khóa: "{query}"</h1>
+        <h2 className="text-light">Kết quả tìm kiếm cho phim với từ khóa: "{query}"</h2>
         {!loading && (
-          <p className="text-light">
+          <p className="text-light mb-5">
             {movies.length > 0
               ? `Tìm thấy ${movies.length} bộ phim`
               : "Không có phim nào phù hợp với từ khóa tìm kiếm."}
@@ -157,8 +157,8 @@ function MovieList() {
           movies.map((movie) => (
             <div
               key={movie.movie_id}
-              className="card text-bg-dark hover-box"
-              style={{ width: "23%", margin: "10px" }}
+              className="card text-bg-dark hover-box mb-5"
+              style={{ width: "23%" ,borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0" }}
             >
               <div>
                 <img
@@ -183,7 +183,7 @@ function MovieList() {
           ))
         ) : (
           !loading && (
-            <div className="alert alert-danger no-movies" role="alert">
+            <div className="alert alert-danger no-movies" role="alert" style={{height:"150px", display:"flex", alignItems:"center"}}>
               Không có phim nào phù hợp với từ khóa tìm kiếm.
             </div>
           )

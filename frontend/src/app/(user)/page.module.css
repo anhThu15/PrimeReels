@@ -198,6 +198,7 @@ a.secondary {
 .navLink {
   color: white;
   font-weight: 500;
+  font-size:1.1rem;
 }
 
 @media (max-width: 992px) {
@@ -205,4 +206,33 @@ a.secondary {
     background: black;
     position: relative;
   }
+}
+
+.description-container {
+  height: 150px;
+  overflow-y: auto;  
+  /* padding: 10px; */
+  /* background-color: rgba(0, 0, 0, 0.5);  */
+  color: white;
+  border-radius: 8px;  
+  font-size: 14px; 
+  line-height: 1.5;  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  overflow-y: scroll;  
+  scrollbar-width: thin;  
+  scrollbar-color: rgba(255, 255, 255, 0.6) rgba(0, 0, 0, 0.3); 
+}
+
+.description-container::-webkit-scrollbar {
+  width: 6px;  
+}
+
+.description-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.6);  
+  border-radius: 3px;
+}
+
+.description-container::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.3); 
+  border-radius: 3px;
 }

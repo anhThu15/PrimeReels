@@ -197,7 +197,7 @@ export default function FilterFilmSeries() {
                                 <div
                                     key={movie.movie_id}
                                     className="card text-bg-dark hover-box"
-                                    style={{ width: "23%", margin: "10px" }}
+                                    style={{ width: "22%", margin: "10px",borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0"  }}
                                 >
                                     <div>
                                         <img

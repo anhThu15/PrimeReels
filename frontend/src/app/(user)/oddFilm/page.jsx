@@ -115,7 +115,7 @@ export default function FilmSeries() {
   // Giao diện trang
   return (
     <>
-      <div className="container-fluid bg-dark p-0 text-white">
+      <div className="container-fluid bg-nenVipPro p-0 text-white">
         <div className="container-fluid p-0">
           <Banner bannerData={bannerData}
             genres={genres}
@@ -141,7 +141,7 @@ export default function FilmSeries() {
           </div> */}
           {/* Hiển thị các danh mục phim */}
           <div>
-            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Đề Xuất Hôm Nay</h2>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Lẻ Đề Xuất Hôm Nay</h2>
             <SlideShow data={moviesData.random} />
           </div>
           <div>
@@ -149,7 +149,7 @@ export default function FilmSeries() {
             <SlideShowAnother data={moviesData.date} />
           </div>
           <div>
-            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Được Quan Tâm Nhất</h2>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Lẻ Được Quan Tâm Nhất</h2>
             <SlideShow2 data={moviesData.better} />
           </div>
           <div>
@@ -163,7 +163,7 @@ export default function FilmSeries() {
             ))}
           </div>
           <div>
-            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Việt Nam</h2>
+            <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Lẻ  Việt Nam</h2>
             {/* <SlideShowAnother2 data={moviesData.country} /> */}
             <SlideShowAnother data={moviesData.country}></SlideShowAnother>
           </div>

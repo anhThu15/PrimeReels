@@ -8,6 +8,7 @@ import SlideShow from "../../components/slideshow";
 import { toast } from "react-toastify";
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
+import styles from "../../page.module.css"
 
 export default function film({params}){
   const id = params.id
@@ -110,21 +111,38 @@ export default function film({params}){
     return(
         <>
           <div className="container-fluid bg-black p-0 text-white">
-
             {/*  banner */}
               <div className="row container-fluid p-0 m-0 position-relative" >
                 <div className="col-4  text-start">
-                    <div className=" position-absolute " style={{top:100, left:110, width:"430px"}}>
+                    <div className=" position-absolute " style={{top:50, left:110, width:"430px",zIndex:"1"}}>
                           <h1 className=" fw-bold">{film.title}</h1>
                           <div className=" row" style={{width:400}}>
                              <div className="col"><i className="fa-regular fa-star"></i> {film.rating}</div>
-                             <div className="col"><i className="fa-regular fa-clock"></i> {film?.episode?.length}/{film.duration}</div>
-                             <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(film.updated_at).toLocaleString()}</div>
+                             {/* <div className="col"><i className="fa-regular fa-clock"></i> {film?.episode?.length}/{film.duration}</div> */}
+                             <div className="col">
+                              <i className="fa-regular fa-clock"></i> 
+                              {film?.episode?.length === 1 ? 
+                                `${film?.episode?.length}` : 
+                                `${film?.episode?.length}/${film?.duration}`}
+                            </div>  
+                            {/* Nếu phim chỉ có 1 tập thì không cần hiển thị dấu (/) */}
+
+                            
+                             {/* <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(film.updated_at).toLocaleString()}</div> */}
+                                {/* Chỉ hiển thị năm */}
+                             <div className="col">
+                              <i className="fa-solid fa-calendar-days"></i> {new Date(film.updated_at).getFullYear()}
+                            </div>
                              {/* <div className="bg-danger rounded-pill" style={{width:"40px"}}>HD </div> */}
                           </div>
-                          <div className="col mt-2 overflow-auto" style={{height:"100px"}}>
+                          {/* <div className="col mt-2 description-container">
                               {film.description}                                                
-                          </div>
+                          </div> */}
+                              <div className="col mt-2">
+                              <div className={styles['description-container']}>
+                                {film.description}
+                              </div>
+                            </div>
                           <div className="row mt-2">
                               <div className="col-1">
                                 <button className="btn btn-outline-light rounded-circle" onClick={() => handleLove()}>

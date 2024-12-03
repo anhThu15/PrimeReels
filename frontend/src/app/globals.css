@@ -28,7 +28,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 200px; 
+  height: 300px; 
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)); /* Làm mờ dần từ trong suốt đến đen */
   pointer-events: none; 
   z-index: 10;
@@ -1817,4 +1817,31 @@ html,body {
 
 .sl-dropdown select option:hover{
   display: block;
+}
+
+.img-small {
+  width: 110px;
+  height: 150px;
+  /* object-fit: cover; */
+  z-index: -1; 
+  left: 85px; 
+  top: 15px; 
+}
+
+.comment-container {
+  background-color: rgba(255, 255, 255, 0.24); /* Màu trắng với độ trong suốt 10% */
+  padding: 20px;
+  border-radius: 55px;
+  height: 150px;
+}
+
+.comment-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.top-comment-nav select option{
+  color: black;
 }

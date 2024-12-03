@@ -113,7 +113,7 @@ export default function FilmSeries() {
   // Giao diện trang
   return (
     <>
-      <div className="container-fluid bg-dark p-0 text-white">
+      <div className="container-fluid bg-nenVipPro p-0 text-white">
         <div className="container-fluid p-0">
           <Banner bannerData={bannerData}
             genres={genres}
@@ -148,7 +148,8 @@ export default function FilmSeries() {
           </div>
           <div>
             <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Bộ Được Quan Tâm Nhất</h2>
-            <SlideShow2 data={moviesData.better} />
+            {/* <SlideShow2 data={moviesData.better} /> */}
+            <SlideShow data={moviesData.better}></SlideShow>
           </div>
           <div>
             {Object.keys(moviesData.moviesByGenre).map((genreId) => (

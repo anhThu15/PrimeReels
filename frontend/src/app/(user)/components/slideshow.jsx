@@ -113,21 +113,21 @@ export default function SlideShow(props) {
         breakpoint: 1200,
         settings: {
           slidesToShow: 5,
-          slidesToScroll: 1,
+          slidesToScroll: 3,
         },
       },
       {
         breakpoint: 992,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 1,
+          slidesToScroll: 2,
         },
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 1,
+          slidesToScroll: 2,
         },
       },
       {
@@ -150,7 +150,7 @@ export default function SlideShow(props) {
           <Slider {...settings}>
             {props.data.map((action, index) => (
               <div key={index} style={{ margin: "0 10px" }}>
-                <div className="card text-bg-dark hover-box" style={{ width: "200px" }}>
+                <div className="card text-bg-dark hover-box" style={{ width: "200px",borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0" }}>
                   <div>
                     <img
                       src={action.poster}

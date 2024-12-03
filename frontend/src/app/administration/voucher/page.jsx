@@ -320,7 +320,7 @@ export default function Voucher() {
                         <th scope="col">ID</th>
                         <th scope="col">TÊN VOUCHER</th>
                         <th scope="col">SỐ LƯỢNG</th>
-                        <th scope="col">NGÀY HẾT HẠN</th>
+                        <th scope="col">NGÀY BẮT ĐẦU</th>
                         <th scope="col">NGÀY KẾT THÚC</th>
                         <th scope="col">TÁC VỤ</th>
                     </tr>
