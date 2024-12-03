@@ -215,7 +215,7 @@ export default function InfomationUser() {
         const getInvoice = async () => {
             try {
                 const res = await axios.get(`/api/invoices`, { revalidate: 3600 }).then((res) => res.data)
-                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id)
+                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id && invoice.status ==='success')
                 setInvoice(userInvoices)
             } catch (error) {
                 console.log(error);
