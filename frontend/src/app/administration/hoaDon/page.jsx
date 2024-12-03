@@ -192,7 +192,7 @@ export default function hoaDon() {
           <tbody>
             {currentInvoices.map((hd, i) => (
               <tr key={hd.invoice_id}>
-                <th scope="row">{hd.invoice_id}</th>
+                <th scope="row">{i+1}</th>
                 <td>{hd.invoice_code}</td>
                 <td>{hd.total.toLocaleString()}đ</td>
                 <td>{hd?.package?.name}</td>

@@ -44,8 +44,8 @@ class ActorController extends Controller
         $actor = Actor::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:1000',
-            'status' => 'required|integer',
+            'name' => 'nullable|string|max:1000',
+            'status' => 'nullable|integer',
             'biography' => 'nullable|string',
             'birth_date' => 'nullable|date',
             'image_url' => 'nullable|file|max:1000',

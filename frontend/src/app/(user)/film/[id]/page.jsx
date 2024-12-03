@@ -40,7 +40,7 @@ export default function film({params}){
         ]);
   
         // Thêm delay trước khi xử lý dữ liệu
-        await delay(2000);
+        await delay(1000);
   
         // Xử lý dữ liệu
         setFilm(filmRes);

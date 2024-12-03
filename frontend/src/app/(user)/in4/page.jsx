@@ -7,6 +7,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player"
 import Cookies from 'js-cookie';
+import DVDX from "../components/dvdx";
+import LSDX from "../components/lsdx";
+import DSYT from "../components/dsyt";
 
 
 export default function InfomationUser() {
@@ -17,7 +20,7 @@ export default function InfomationUser() {
         email: '',
         password: '',
         avatar: '', // Avatar field
-        file: null,
+        // file: null,
 
     });
     const [modalOpen, setModalOpen] = useState(false);
@@ -31,7 +34,7 @@ export default function InfomationUser() {
 
     useEffect(() => {
         showSection(activeSection);
-        fetchUserData();
+        // fetchUserData();
     }, [activeSection]);
 
     useEffect(() => {
@@ -51,18 +54,23 @@ export default function InfomationUser() {
     };
 
     useEffect(() => {
-        if (token) {
-          axios.get(`/api/profile`, {
-            headers: {
-              Authorization: `Bearer ${token}`
+        const getToken = () => {
+            if (token) {
+                axios.get(`/api/profile`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                    .then(res => setUser(res.data.user))
+                    .catch(error => {
+                        console.error("Error fetching user data:", error);
+                    });
             }
-          })
-          .then(res => setUser(res.data.user))
-          .catch(error => {
-            console.error("Error fetching user data:", error);
-          });
         }
-      }, [token]);
+        setTimeout(() => {
+            getToken()
+        }, 2000);
+    }, [token]);
 
     //   console.log(user);
 
@@ -109,94 +117,35 @@ export default function InfomationUser() {
     };
 
     //xử lý cài đặt tài khoản
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     if (token) {
-    //         try {
-    //             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
-    //                 method: 'PUT',
-    //                 headers: {
-    //                     'Authorization': `Bearer ${token}`,
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify({
-    //                     user_name: userData.username,
-    //                     gender: userData.gender,
-    //                     avatar: userData.avatar
-    //                 }),
-    //             });
-
-    //             const result = await response.json();
-    //             if (response.status === 200) {
-
-    //                 window.location.reload();
-    //                 toast.success('Thông tin đã được cập nhật thành công!');
-
-    //                 setUserData(prevData => ({
-    //                     ...prevData,
-    //                     username: userData.username,
-    //                     gender: userData.gender,
-    //                     avatar: userData.avatar
-    //                 }));
-    //                 setIsUpdated(!isUpdated);
-    //             } else {
-
-    //                 toast.error('Có lỗi xảy ra: ' + (result.message || 'Không thể cập nhật thông tin.'));
-    //             }
-    //         } catch (error) {
-    //             console.error('Lỗi khi cập nhật thông tin người dùng:', error);
-    //             toast.error('Đã xảy ra lỗi trong quá trình cập nhật thông tin.');
-    //         }
-    //     } else {
-    //         toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
-    //     }
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (token) {
             try {
-                // Tạo FormData để gửi dữ liệu file
-                const formData = new FormData();
-                formData.append('user_name', userData.username);
-                formData.append('gender', userData.gender);
-                if (userData.file) { // Nếu có file mới được chọn
-                    formData.append('avatar', userData.file);
-                }
-
-                const response = await fetch(`/api/profile/update`, {
+                const response = await fetch('/api/profile/update', {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${token}`, // Không thêm Content-Type (Fetch tự động thêm)
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
                     },
-                    body: formData,
+                    body: JSON.stringify({
+                        user_name: userData.username,
+                        gender: userData.gender,
+                        avatar: userData.avatar,  // Chỉ gửi URL ảnh
+                    }),
                 });
 
                 const result = await response.json();
-                if (response.status === 200) {
-                    // Thông báo thành công
-                    window.location.reload();
-                    toast.success('Thông tin đã được cập nhật thành công!');
-                    // Cập nhật lại state với thông tin đã nhập
-                    setUserData((prevData) => ({
-                        ...prevData,
-                        username: userData.username,
-                        gender: userData.gender,
-                    }));
-                    setIsUpdated(!isUpdated);
+                if (result.status === 'success') {
+                    toast.success("Thông tin đã được cập nhật thành công!");
                 } else {
-                    // Xử lý lỗi nếu cập nhật không thành công
-                    toast.error('Có lỗi xảy ra: ' + (result.message || 'Không thể cập nhật thông tin.'));
+                    toast.error("Có lỗi xảy ra: " + result.message);
                 }
             } catch (error) {
-                console.error('Lỗi khi cập nhật thông tin người dùng:', error);
-                toast.error('Đã xảy ra lỗi trong quá trình cập nhật thông tin.');
+                console.error('Error updating user data:', error);
             }
-        } else {
-            toast.error('Không tìm thấy token, vui lòng đăng nhập lại.');
         }
     };
+
 
     //  xử lý cài đặt tài khoản
 
@@ -273,7 +222,7 @@ export default function InfomationUser() {
             }
         }
         getInvoice()
-    }, [invoice])
+    }, [user.user_id])
     // console.log(invoice);
 
     return (
@@ -322,6 +271,7 @@ export default function InfomationUser() {
                         {activeSection === 'u-favorite' && <span className="active-indicator" />}
                     </li>
                 </ul>
+
                 <div className="user-info" id="userInfo">
                     <div className="user-info-content row">
                         <div className="col-sm-2 text-center">
@@ -334,7 +284,7 @@ export default function InfomationUser() {
                                     style={{ width: '100px', height: '100px' }} // Adjust size as needed
                                 />
                             </div>
-                            <div className="join-date text-white">Tham gia: 26/09/2024</div>
+                            <div className="join-date text-white">{userData.created_at}</div>
                         </div>
                         <div className="col-sm-10">
                             <form id="userInfoForm" onSubmit={handleSubmit}>
@@ -396,7 +346,7 @@ export default function InfomationUser() {
                                             readOnly
                                         />
                                     </div>
-                                    {/* <div className="col-sm-6">
+                                    <div className="col-sm-6">
                                         <label htmlFor="avatar" className="form-label text-white">Avatar URL:</label>
                                         <input
                                             type="text"
@@ -406,16 +356,6 @@ export default function InfomationUser() {
                                             value={userData.avatar}
                                             onChange={handleChange}
                                             required
-                                        />
-                                    </div> */}
-                                    <div className="col-sm-6">
-                                        <label htmlFor="avatar" className="form-label text-white">Chọn avatar:</label>
-                                        <input
-                                            type="file"
-                                            className="form-control"
-                                            id="avatar"
-                                            accept="image/*"
-                                            onChange={(e) => setUserData({ ...userData, file: e.target.files[0] })}
                                         />
                                     </div>
                                 </div>
@@ -448,51 +388,57 @@ export default function InfomationUser() {
                 </div>
 
                 {/* Modal for changing password */}
-                {/* <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} /> */}
+                <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
-                    <div className="row">
-                        {invoice.map((iv) => {
-                            let statusButton;
-                            // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
-                            if (iv.status === 'pending') {
-                                statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
-                            } else if (iv.status === 'success') {
-                                statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
-                            } else if (iv.status === 'fail') {
-                                statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
-                            }
-                            return (
-                                <>
-                                    <div className="col-md-6 mb-4">
-                                        <div className="card box-card">
-                                            <div className="row g-0">
-                                                <div className="col-md-4">
-                                                    <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
-                                                </div>
-                                                <div className="col-md-8">
-                                                    <div className="card-body">
-                                                        <div>
-                                                            <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
-                                                            {statusButton}
+                    {invoice.length === 0 ? (<DVDX></DVDX>):(
+                        <>
+                        <div className="row">
+                            {invoice.map((iv) => {
+                                let statusButton;
+                                // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
+                                if (iv.status === 'pending') {
+                                    statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
+                                } else if (iv.status === 'success') {
+                                    statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
+                                } else if (iv.status === 'fail') {
+                                    statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
+                                }
+                                return (
+                                    <>
+                                        <div className="col-md-6 mb-4">
+                                            <div className="card box-card">
+                                                <div className="row g-0">
+                                                    <div className="col-md-4">
+                                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
+                                                    </div>
+                                                    <div className="col-md-8">
+                                                        <div className="card-body">
+                                                            <div>
+                                                                <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
+                                                                {statusButton}
+                                                            </div>
+                                                            <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
+                                                            <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name) : ('Không Dùng')}</p>
+                                                            <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
+                                                            <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
                                                         </div>
-                                                        <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
-                                                        <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name) : ('Không Dùng')}</p>
-                                                        <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
-                                                        <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </>
-                            )
-                        })}
-                    </div>
+                                    </>
+                                )
+                            })}
+                        </div>
+                        </>
+                    )}
                 </div>
 
                 <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
+                            {history.length === 0 ? (<LSDX></LSDX>):(
+                                <>
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
                             </div>
@@ -526,14 +472,18 @@ export default function InfomationUser() {
 
 
                             </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
+                            {love.length === 0 ? (<DSYT></DSYT>):(
+                                <>
                             <div className="history-view-title d-flex align-items-center">
-                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã xem {love.length} phim gần đây</p>
+                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã thích {love.length} phim gần đây</p>
                                 {/* <button className="btn btn-danger">Xóa toàn bộ</button> */}
                             </div>
                             <div className="row mt-3">
@@ -547,23 +497,28 @@ export default function InfomationUser() {
                                                     <div>
                                                         <img src={mv.movie.poster} height={350} className="card-img" alt="..." />
                                                     </div>
-                                                    <div className="play-icon-overlay">
-                                                        <div className="row">
-                                                            <div className=" col rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px" }}>
-                                                                <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white  mt-4"></Link>
+                                                    <div className="play-icon-overlay d-flex justify-content-center align-items-center">
+                                                        <div className="d-flex">
+                                                            <div className="rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white" />
                                                             </div>
-                                                            <div className=" col rounded-circle bg-black opacity-50 border border-white ms-2" style={{ width: "50px", height: "50px" }}>
-                                                                <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{ paddingLeft: "1px" }}><i class="fa-solid fa-trash text-danger fa-xl mt-3"  ></i></button>
+                                                            <div className="rounded-circle bg-black opacity-50 border border-white ms-2" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{ padding: 0 }}>
+                                                                    <i className="fa-solid fa-trash text-danger fa-xl"></i>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </>
                                     )
                                 })}
 
                             </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -571,3 +526,4 @@ export default function InfomationUser() {
         </div>
     );
 }
+

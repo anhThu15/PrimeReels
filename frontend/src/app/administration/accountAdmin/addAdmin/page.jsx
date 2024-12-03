@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 export default function AddAdmin() {
     const router = useRouter();
-    const [avatarUrl, setAvatarUrl] = useState('../../images/default-user.png');
+    // const [avatarUrl, setAvatarUrl] = useState('../../images/default-user.png');
 
     // Setup formik và yup để bắt lỗi form
     const formik = useFormik({
@@ -19,15 +19,16 @@ export default function AddAdmin() {
             email: '',
             password: '',
             gender: '',
-            avatar: avatarUrl, 
-            role: 100 
+            // avatar: avatarUrl, 
+            role: 100,
+            email_verification_token:"",
         },
         validationSchema: Yup.object({
             user_name: Yup.string().required('Tên người dùng là bắt buộc'),
             email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
             password: Yup.string().required("Mật khẩu là bắt buộc"),
             gender: Yup.string().required('Giới tính là bắt buộc'),
-            avatar: Yup.string().required('URL hình ảnh là bắt buộc'),
+            // avatar: Yup.string().required('URL hình ảnh là bắt buộc'),
         }),
         onSubmit: async (values) => {
             console.log("Submitting values:", values);
@@ -42,9 +43,9 @@ export default function AddAdmin() {
                     body: JSON.stringify(values),
                 });
                 if (res.ok) {
-                    alert('Tạo tài khoản quản trị viên thành công!');
+                    // alert('Tạo tài khoản quản trị viên thành công!');
                     toast.success('Tạo tài khoản quản trị viên thành công!')
-                    router.push('/administration/accountAdmin');
+                    router.back();
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
                     toast.error('Tạo tài khoản không thành công!');
@@ -58,7 +59,7 @@ export default function AddAdmin() {
     return (
         <div className="container-fluid">
             <div className="d-flex gap-3 align-items-center mt-2">
-                <Link href="/administration/account">
+                <Link href="/administration/accountAdmin">
                     <button className="btn btn-danger">
                         <i className="fas fa-chevron-left"></i>
                     </button>
@@ -146,19 +147,6 @@ export default function AddAdmin() {
                                     />
                                     <label className="form-check-label" htmlFor="genderFemale">Nữ</label>
                                 </div>
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="gender"
-                                        id="genderOther"
-                                        value="khac"
-                                        checked={formik.values.gender === 'khac'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <label className="form-check-label" htmlFor="genderOther">Khác</label>
-                                </div>
                             </div>
                             {formik.touched.gender && formik.errors.gender ? (
                                 <div className="invalid-feedback d-block">{formik.errors.gender}</div>
@@ -168,7 +156,7 @@ export default function AddAdmin() {
                         <input type="hidden" name="role" value={formik.values.role} />
                     </div>
 
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                         <h2>Avatar</h2>
                         <div className="text-center">
                             <img
@@ -193,7 +181,7 @@ export default function AddAdmin() {
                                 <div className="invalid-feedback">{formik.errors.avatar}</div>
                             ) : null}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </form>
         </div>

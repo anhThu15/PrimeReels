@@ -187,9 +187,9 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-          {currentGenres.map((genre) => (
+          {currentGenres.map((genre,i) => (
             <tr key={genre.genre_id}>
-              <th scope="row">{genre.genre_id}</th>
+              <th scope="row">{i+1}</th>
               <td>{genre.name}</td>
               <td>
                 <div className={`bg-${genre.status ? 'success' : 'danger'} text-white rounded-pill text-center`}>

@@ -38,14 +38,17 @@ export default function Video(props){
                       }
                     }).then((res) => res.data)
                     // console.log(episodeExists);
-                    
+                }else{
+                    console.log('có rồi');
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
 
-        addHistory();
+        setTimeout(() => {
+            addHistory();
+        }, 1500);
     }, [id, idEpisode]); 
 
     const handleNext = async () => {

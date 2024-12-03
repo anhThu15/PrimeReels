@@ -214,7 +214,7 @@ export default function goiVip() {
               return (
                 <>
                   <tr key={goi.package_id}>
-                    <th scope="row">{goi.package_id}</th>
+                    <th scope="row">{i+1}</th>
                     <td>{goi.name}</td>
                     <td>{goi.price.toLocaleString()}đ</td>
                     <td> {goi.duration} Ngày</td>

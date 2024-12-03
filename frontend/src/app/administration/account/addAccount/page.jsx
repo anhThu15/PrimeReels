@@ -10,9 +10,7 @@ import { toast } from "react-toastify";
 
 export default function AddAccount() {
     const router = useRouter();
-    const [avatarUrl, setAvatarUrl] = useState('../../images/default-user.png');
-    const [userIdDelete, setUserIdDelete] = useState(null);
-
+    const [avatarUrl, setAvatarUrl] = useState('../../images/userAvatar.png');
 
     //setup formik và yup để bắt lỗi form
     const formik = useFormik({
@@ -21,15 +19,20 @@ export default function AddAccount() {
             email: '',
             password: '',
             gender: '',
-            avatar: avatarUrl, 
-            role: 0
+            // avatar: avatarUrl, 
+            role: 0,
+            email_verification_token:""
         },
         validationSchema: Yup.object({
             user_name: Yup.string().required('Tên người dùng là bắt buộc'),
             email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
-            password: Yup.string().required("Mật khẩu là bắt buộc"),
+            password: Yup.string()
+                .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
+                .matches(/[a-zA-Z]/, 'Mật khẩu phải chứa ít nhất một chữ cái')
+                .matches(/\d/, 'Mật khẩu phải chứa ít nhất một số')
+                .required('Mật khẩu là bắt buộc'),
             gender: Yup.string().required('Giới tính là bắt buộc'),
-            avatar: Yup.string().required('URL hình ảnh là bắt buộc'),
+            // avatar: Yup.string().required('URL hình ảnh là bắt buộc'),
         }),
         onSubmit: async (values) => {
             console.log("Submitting values:", values);
@@ -45,7 +48,7 @@ export default function AddAccount() {
                 });
                 if (res.ok) {
                     toast.success('Tạo tài khoản thành công!')
-                    router.push('/administration/account'); // Redirect to account page after creation
+                    router.back(); // Redirect to account page after creation
                 } else {
                     console.error('Lỗi khi tạo tài khoản:', res.status);
                     alert('Tạo tài khoản không thành công!');
@@ -104,6 +107,22 @@ export default function AddAccount() {
                                 <div className="invalid-feedback">{formik.errors.email}</div>
                             ) : null}
                         </div>
+                        {/* <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Mật khẩu</label>
+                            <input
+                                type="password"
+                                className={`form-control rounded ${formik.touched.password && formik.errors.password ? 'is-invalid' : ''}`}
+                                id="password"
+                                name="password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                placeholder="Nhập mật khẩu"
+                            />
+                            {formik.touched.password && formik.errors.password ? (
+                                <div className="invalid-feedback">{formik.errors.password}</div>
+                            ) : null}
+                        </div> */}
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Mật khẩu</label>
                             <input
@@ -149,19 +168,6 @@ export default function AddAccount() {
                                     />
                                     <label className="form-check-label" htmlFor="genderFemale">Nữ</label>
                                 </div>
-                                <div className="form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="gender"
-                                        id="genderOther"
-                                        value="khac"
-                                        checked={formik.values.gender === 'khac'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <label className="form-check-label" htmlFor="genderOther">Khác</label>
-                                </div>
                             </div>
                             {formik.touched.gender && formik.errors.gender ? (
                                 <div className="invalid-feedback d-block">{formik.errors.gender}</div>
@@ -182,7 +188,7 @@ export default function AddAccount() {
                         </div>
                     </div>
 
-                    <div className="col-md-4">
+                    {/* <div className="col-md-4">
                         <h2>Avatar</h2>
                         <div className="text-center">
                             <img
@@ -207,7 +213,7 @@ export default function AddAccount() {
                                 <div className="invalid-feedback">{formik.errors.avatar}</div>
                             ) : null}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </form>
         </div>

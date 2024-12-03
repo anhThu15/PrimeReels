@@ -37,7 +37,7 @@ export default function CardSlide(){
                   </div>
                   <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[0].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[0].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4" style={{width:"100%", height:"100%", position:"absolute", top:"0px",left:"-1px"}}></Link>
                     </div>
                   </div>
                 </div>
@@ -55,7 +55,7 @@ export default function CardSlide(){
                   </div>
                   <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[1].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[1].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"   style={{width:"100%", height:"100%", position:"absolute", top:"0px",left:"-1px"}}></Link>
                     </div>
                   </div>
                 </div>
@@ -73,7 +73,7 @@ export default function CardSlide(){
                   </div>
                   <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[2].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[2].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"   style={{width:"100%", height:"100%", position:"absolute", top:"0px",left:"-1px"}}></Link>
                     </div>
                   </div>
                 </div>
@@ -91,7 +91,7 @@ export default function CardSlide(){
                   </div>
                   <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[3].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[3].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"   style={{width:"100%", height:"100%", position:"absolute", top:"0px",left:"-1px"}}></Link>
                     </div>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ export default function CardSlide(){
                   </div>
                   <div className="play-icon-overlay">
                     <div className=" rounded-circle bg-black opacity-50 border border-white" style={{width:"50px", height:"50px"}}>
-                      <Link href={`/film/${top5[4].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                      <Link href={`/film/${top5[4].movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"   style={{width:"100%", height:"100%", position:"absolute", top:"0px",left:"-1px"}}></Link>
                     </div>
                   </div>
                 </div>

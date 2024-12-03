@@ -16,17 +16,22 @@ export default function UserBuyPackage() {
     const [vouchers, setVouchers] = useState([])
 
     useEffect(() => {
-        if (token) {
-          axios.get(`/api/profile`, {
-            headers: {
-              Authorization: `Bearer ${token}`
+        const getToken = () =>{
+            if (token) {
+              axios.get(`/api/profile`, {
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
+              })
+              .then(res => setUser(res.data.user))
+              .catch(error => {
+                console.error("Error fetching user data:", error);
+              });
             }
-          })
-          .then(res => setUser(res.data.user))
-          .catch(error => {
-            console.error("Error fetching user data:", error);
-          });
-        }
+        } 
+        setTimeout(() => {
+            getToken()
+        }, 2000);
       }, [token]);
 
     useEffect(() => {
@@ -36,8 +41,10 @@ export default function UserBuyPackage() {
             //   console.log(res.data);
               const userInvoices = res.data
                                   .filter(invoice => invoice.user_id === user.user_id) 
-                                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                                  console.log(user);
+                                //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                                  .sort((a, b) => b.invoice_id - a.invoice_id);
+
+                                //   console.log(user);
                                   
               const calculateSecondsBetweenDates = (startDate, endDate) => {
                       const formatDate = (dateStr) => {
@@ -98,7 +105,7 @@ export default function UserBuyPackage() {
           }
 
           checkUserInvoice();
-    },[user])
+    },[user.user_id])
 
     useEffect(() => {
         const getPackages = async () => {

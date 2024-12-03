@@ -147,10 +147,10 @@ export default function Voucher() {
     };
 
 
-    const handleDelete = async (id) => {
+    const handleDeleteVoucher = async () => {
         try {
             const token = Cookies.get('token');
-            const res = await fetch(`/api/vouchers/${id}`, {
+            const res = await fetch(`/api/vouchers/${voucherToDelete}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -158,11 +158,11 @@ export default function Voucher() {
                 },
             });
             if (res.ok) {
-                alert('Xóa voucher thành công!');
+                toast.success("Xóa voucher thành công!");
                 fetchVouchers();
             } else {
                 console.error('Lỗi khi xóa voucher:', res.status);
-                alert('Xóa voucher không thành công!');
+                toast.error("Xóa voucher không thành công!");
             }
         } catch (error) {
             console.error('Lỗi khi gửi yêu cầu xóa voucher:', error);
@@ -171,6 +171,7 @@ export default function Voucher() {
             setVoucherToDelete(null);
         }
     };
+
 
     return (
         <div className="container-fluid">
@@ -327,7 +328,7 @@ export default function Voucher() {
                 <tbody>
                     {filteredData.map((voucher, index) => (
                         <tr key={voucher.voucher_id}>
-                            <th scope="row">{voucher.voucher_id}</th>
+                            <th scope="row">{index + 1}</th>
                             <td>{voucher.name}</td>
                             <td>{voucher.voucher_quantity}</td>
                             <td>{new Date(voucher.expired).toLocaleDateString()}</td>
@@ -339,45 +340,42 @@ export default function Voucher() {
                                 <button
                                     className="btn btn-danger ms-2"
                                     onClick={() => {
-                                        setVoucherToDelete(voucher.voucher_id);
-                                        setShowDeleteModal(true);
+                                        setVoucherToDelete(voucher.voucher_id);  // Lưu voucher_id vào state
+                                        setShowDeleteModal(true);  // Hiển thị modal xác nhận
                                     }}
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteVoucherModal" // Đảm bảo trigger modal xác nhận
                                 >
-                                    <i className="fa-solid fa-trash"></i>
+                                    <i className="fa-solid fa-trash"></i> Xóa
                                 </button>
+
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-            {/* Delete Confirmation Modal */}
-            <div className={`modal fade ${showDeleteModal ? 'show' : ''}`} style={{ display: showDeleteModal ? 'block' : 'none' }} tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden={!showDeleteModal}>
+            <div className="modal fade" id="confirmDeleteVoucherModal" tabIndex="-1" aria-labelledby="confirmDeleteVoucherModalLabel" aria-hidden="true" data-bs-backdrop="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="deleteModalLabel">Xác Nhận Xóa</h5>
-                            <button type="button" className="btn-close" onClick={() => setShowDeleteModal(false)} aria-label="Close"></button>
+                            <h5 className="modal-title" id="confirmDeleteVoucherModalLabel">Xác nhận xóa voucher</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             Bạn có chắc chắn muốn xóa voucher này?
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>Hủy</button>
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                onClick={() => {
-                                    handleDelete(voucherToDelete);
-                                    setShowDeleteModal(false);
-                                }}
-                            >
-                                Xóa
-                            </button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" className="btn btn-danger" onClick={handleDeleteVoucher} data-bs-dismiss="modal">Xóa</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
 
         </div>
     );

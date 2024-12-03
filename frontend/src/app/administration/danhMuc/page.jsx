@@ -207,9 +207,9 @@ export default function danhMuc() {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((movieType) => (
+            {filteredData.map((movieType,i) => (
               <tr key={movieType.movie_type_id}>
-                <th scope="row">{movieType.movie_type_id}</th>
+                <th scope="row">{i+1}</th>
                 <td>{movieType.name}</td>
                 {/* <td>39</td> */}
                 <td>

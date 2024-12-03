@@ -275,7 +275,7 @@ export default function VoucherType() {
                 <tbody>
                     {filteredData.map((voucher, index) => (
                         <tr key={voucher.voucher_type_id}>
-                            <th scope="row">{voucher.voucher_type_id}</th>
+                            <th scope="row">{index+1}</th>
                             <td>{voucher.name}</td>
                             <td>{voucher.discount}</td>
                             <td>{voucher.customer_usage_limit}</td>

@@ -41,7 +41,7 @@ export default function Watch({ params }) {
         };
   
         // Thêm thời gian delay
-        await delay(2000);
+        await delay(1000);
   
         // Thực hiện các API song song
         const [watchRes, filmRes, episodesRes, randomRes, cmtRes] = await Promise.all([
@@ -72,7 +72,7 @@ export default function Watch({ params }) {
         setCmts(cmtRes);
       } catch (error) {
         console.error("Error loading data:", error);
-        router.push('/404')
+        // router.push('/404')
         // alert("Failed to load data. Please try again.");
       }
     };
@@ -83,17 +83,22 @@ export default function Watch({ params }) {
   
 
   useEffect(() => {
-    if (token) {
-      axios.get(`/api/profile`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(res => setUser(res.data.user))
-      .catch(error => {
-        console.error("Error fetching user data:", error);
-      });
+    const getToken = () => {
+      if (token) {
+        axios.get(`/api/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then(res => setUser(res.data.user))
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+        });
+      }
     }
+    setTimeout(() => {
+      getToken()
+    }, 2000);
   }, [token]);
 
   // console.log(user);
@@ -118,10 +123,10 @@ export default function Watch({ params }) {
         // console.log(res.data);
         const userInvoices = res.data
                             .filter(invoice => invoice.user_id === user.user_id) 
-                            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                            // .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                            .sort((a, b) => b.invoice_id - a.invoice_id);
               // console.log(userInvoices);
-          console.log(userInvoices[0].status === 'success');
-
+          // console.log(userInvoices[0].status === 'success');
               
         // hàm tính giây cho thgian dc phép xem 
         const calculateSecondsBetweenDates = (startDate, endDate) => {
@@ -151,7 +156,7 @@ export default function Watch({ params }) {
         // hàm tính giây cho thgian dc phép xem 
 
         if(userInvoices && userInvoices[0] && userInvoices[0].status){
-          console.log(userInvoices[0].status === 'success');
+          // console.log(userInvoices[0].status === 'success');
             if(userInvoices[0].status === 'success'){
               const currentDate = new Date();
               const options = {
@@ -197,14 +202,14 @@ export default function Watch({ params }) {
         }
 
       } catch (error) {
-        setCount(5); 
+        setCount(10); 
         console.log(error);
       }
     }
 
     checkUserInvoice();
 
-  }, [user]);
+  }, [user.user_id]);
   
 
   useEffect(() => {
