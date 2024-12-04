@@ -202,15 +202,15 @@ export default function film({params}){
             {/* tập phim */}
 
             {/* cmt */}
-            <div className=" mt-5 container " style={{marginLeft:"90px" }}>
+            <div className=" mt-5 container ">
                 <Comment data={film}></Comment>
             </div>
             {/* cmt */}
 
 
             {/* Có thể bạn sẽ thích */}
-            <div style={{marginLeft:"90px"}} className="container">
-              <h2 className="fw-bold mt-5" style={{marginLeft:"50px"}}>Có thể bạn sẽ thích</h2>
+            <div className="container">
+              <h2 className="fw-bold mt-5">Có thể bạn sẽ thích</h2>
               <SlideShow data={random}></SlideShow>
             </div>
             {/* Có thể bạn sẽ thích */}

@@ -25,8 +25,8 @@ export default function Episodes(props){
                                 <div className="bg-black opacity-75">
                                   <ReactPlayer
                                     width="100%"
-                                    height={220}
-                                    style={{ marginTop: "-18px" }}
+                                    height={320}
+                                    style={{ marginTop: "", objectFit:"cover" }}
                                     url={episode.video_url}
                                     light={true}
                                   />

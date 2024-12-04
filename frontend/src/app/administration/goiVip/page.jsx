@@ -127,7 +127,7 @@ export default function goiVip() {
         <div className="row">
           <h2 className=" col fw-bold">Gói VIP</h2>
           <div className="col-2">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
               + Thêm Gói VIP
             </button>
 

@@ -174,14 +174,14 @@ export default function Account() {
                                 <Link href={`/administration/account/edit/${user.user_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
                                 </Link>
-                                <button
+                                {/* <button
                                     className="btn btn-danger ms-2"
                                     onClick={() => setUserIdToDelete(user.user_id)}
                                     data-bs-toggle="modal"
                                     data-bs-target="#confirmDeleteModal"
                                 >
                                     <i className="fa-solid fa-trash"></i>
-                                </button>
+                                </button> */}
                             </td>
                         </tr>
                     ))}

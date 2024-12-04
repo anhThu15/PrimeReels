@@ -1846,3 +1846,13 @@ html,body {
   color: black;
 }
 
+.comment-container {
+  background-color: rgba(255, 255, 255, 0.24);
+  padding: 20px;
+  border-radius: 55px;
+  height: 150px;
+}
+
+.top-comment-nav select option{
+  color: black;
+}

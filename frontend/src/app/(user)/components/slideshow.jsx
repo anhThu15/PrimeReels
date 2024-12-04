@@ -89,13 +89,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function SlideShow(props) {
-  //slick settings slide
+  // slick settings slide
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: Math.min(props.data.length, 6), // Cập nhật điều này
-    slidesToScroll: 6 ,// Điều chỉnh khi ít dữ liệu
+    slidesToShow: Math.min(Math.max(props.data.length, 1), 6), // Đảm bảo slidesToShow >= 1
+    slidesToScroll: Math.min(props.data.length, 6), // Điều chỉnh khi ít dữ liệu
     arrows: props.data.length > 6,
     swipe: props.data.length > 6,
     prevArrow: (
@@ -141,42 +141,53 @@ export default function SlideShow(props) {
       },
     ],
   };
-  
 
   return (
-    <>
-      <div className="pb-3 mt-3" data-bs-theme="dark">
-        <div className="container-fluid px-3 box-slider3 slideShow">
-          <Slider {...settings}>
-            {props.data.map((action, index) => (
-              <div key={index} style={{ margin: "0 10px" }}>
-                <div className="card text-bg-dark hover-box" style={{ width: "200px",borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0" }}>
-                  <div>
-                    <img
-                      src={action.poster}
-                      height={350}
-                      className="card-img"
-                      alt={`Poster of ${action.title}`}
-                    />
-                  </div>
-                  <div className="play-icon-overlay">
-                    <div
-                      className="rounded-circle bg-black opacity-50 border border-white d-flex align-items-center justify-content-center"
-                      style={{ width: "50px", height: "50px", position:"relative", top:"2px",right:"-4px" }}
-                    >
-                      <Link
-                        href={`/film/${action.movie_id}`}
-                        className="nav-link fa-solid fa-play fa-2xl text-white"
-                        style={{position:"relative", top:"0px" , right:"-2px"}}
-                      ></Link>
-                    </div>
+    <div className="pb-3 mt-3" data-bs-theme="dark">
+      <div className="container-fluid px-3 box-slider3 slideShow">
+        <Slider {...settings}>
+          {props.data.map((action, index) => (
+            <div key={index} style={{ margin: "0 10px" }}>
+              <div
+                className="card text-bg-dark hover-box"
+                style={{
+                  width: "200px",
+                  borderRadius: "0",
+                  border: "none",
+                  "--bs-card-inner-border-radius": "0",
+                }}
+              >
+                <div>
+                  <img
+                    src={action.poster}
+                    height={350}
+                    className="card-img"
+                    alt={`Poster of ${action.title}`}
+                  />
+                </div>
+                <div className="play-icon-overlay">
+                  <div
+                    className="rounded-circle bg-black opacity-50 border border-white d-flex align-items-center justify-content-center"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      position: "relative",
+                      top: "2px",
+                      right: "-4px",
+                    }}
+                  >
+                    <Link
+                      href={`/film/${action.movie_id}`}
+                      className="nav-link fa-solid fa-play fa-2xl text-white"
+                      style={{ position: "relative", top: "0px", right: "-2px" }}
+                    ></Link>
                   </div>
                 </div>
               </div>
-            ))}
-          </Slider>
-        </div>
+            </div>
+          ))}
+        </Slider>
       </div>
-    </>
+    </div>
   );
 }

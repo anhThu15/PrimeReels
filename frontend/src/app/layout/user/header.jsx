@@ -7,8 +7,7 @@ import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import styles from "../../(user)/page.module.css"
-
-export default function HeaderUser({ hasBanner }) {
+export default function HeaderUser() {
   const token = Cookies.get('token');
   const router = useRouter();
   const pathName = usePathname();
@@ -16,10 +15,41 @@ export default function HeaderUser({ hasBanner }) {
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState(null);
   const [userAvatar, setUserAvatar] = useState('/images/userAvatar.png');
+  const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // useEffect(() => {
+  //   if (token) {
+  //     axios
+  //       .get(`/api/profile`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           const user = response.data.user;
+  //           setUserName(user.user_name);
+  //           setUserRole(user.role);
+  //           setIsLoggedIn(true);
 
-  // Hàm để lấy thông tin người dùng từ API
-  const fetchUserData = async () => {
+  //           // Kiểm tra role và đặt avatar
+  //           if (user.role === 100) {
+  //             setUserAvatar('/images/adminAvatar.jpg');
+  //           } else {
+  //             const avatarUrl = user.avatar ? user.avatar : '';
+  //             setUserAvatar(avatarUrl || '/images/userAvatar.png');
+  //           }
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching user data:", error);
+  //         setIsLoggedIn(false);
+  //       });
+  //   }
+  // }, [token]);
+   // Hàm để lấy thông tin người dùng từ API
+   const fetchUserData = async () => {
     if (token) {
       try {
         const response = await axios.get(`/api/profile`, {
@@ -64,6 +94,9 @@ export default function HeaderUser({ hasBanner }) {
     setIsLoggedIn(false);
   };
 
+
+  const toggleSearch = () => setShowSearch(!showSearch); //mở input search
+
   //xử lý search theo query
   const handleSearchSubmit = (e) => {
     if (e.key === 'Enter' || e.type === 'click') {
@@ -84,6 +117,7 @@ export default function HeaderUser({ hasBanner }) {
   };
 
   const isTransparentPage = ["/", "/filmSeries", "/oddFilm", "/animeFilm", "/login", "/register"].includes(pathName);
+  //dùng để xác định các trang như trang chủ, phim bộ, phim lẻ, phim hoạt hình để phần header có thể position và ngược lại
 
   return (
     <nav
@@ -121,46 +155,50 @@ export default function HeaderUser({ hasBanner }) {
             </li>
           </ul>
 
-          {/* Tìm kiếm luôn hiển thị */}
-          <input
-            type="text"
-            className="form-control me-3"
-            style={{ width: "300px", transition: "width 0.3s" }}
-            placeholder="Nhập tên phim tìm kiếm..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleSearchSubmit}
-          />
+
+          <div onClick={toggleSearch} style={{ cursor: 'pointer' }}>
+            <i className="fa-solid fa-magnifying-glass me-3 text-white"></i>
+          </div>
+          {showSearch && (
+            <input
+              type="text"
+              className="form-control me-3"
+              style={{ width: "200px", transition: "width 0.3s" }}
+              placeholder="Tìm kiếm..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchSubmit}
+            />
+          )}
 
           <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
             <Link href='#' onClick={handleClickCheck} style={{ textDecoration: 'none', color: 'white' }}>
-              <p className="" style={{margin:"3px 0 0 13px"}}>MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
+              <p className="" style={{margin:"2px 0 0 13px"}}>MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
             </Link>
           </div>
-
           {isLoggedIn ? (
-              <>
-                <li className="nav-item dropdown" style={{ listStyle: "none", color: "white" }}>
-                  <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end">
-                    <li className="dropdown-item">Xin chào, {userName}</li>
-                    <li><Link className="dropdown-item" href="/in4">Trang tài khoản</Link></li>
-                    {userRole === 100 && (
-                      <li><Link className="dropdown-item" href="/administration">Trang quản trị</Link></li>
-                    )}
-                    <li><hr className="dropdown-divider" /></li>
-                    <li><a className="dropdown-item" onClick={handleLogout} style={{ cursor: "pointer" }}>Đăng Xuất</a></li>
-                  </ul>
-                </li>
-              </>
+            <>
+              <li className="nav-item dropdown" style={{ listStyle: "none", color: "white" }}>
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  <li className="dropdown-item">Xin chào, {userName}</li>
+                  <li><Link className="dropdown-item" href="/in4">Trang tài khoản</Link></li>
+                  {userRole === 100 && (
+                    <li><Link className="dropdown-item" href="/administration">Trang quản trị</Link></li>
+                  )}
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><a className="dropdown-item" onClick={handleLogout} style={{ cursor: "pointer" }}>Đăng Xuất</a></li>
+                </ul>
+              </li>
+            </>
+
             ) : (
               <Link className={`${styles.navLink} text-white`} href="/login" style={{textDecoration:"none"}}>
                 Đăng nhập
               </Link>
             )}
-
         </div>
       </div>
     </nav>
