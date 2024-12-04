@@ -81,6 +81,7 @@ Route::get('/payment/return', [PaymentController::class, 'paymentReturn'])->name
 //______________________________________VOUCHER_______________________________________________
 Route::get('vouchers/', [VoucherController::class, 'index']); // Lấy danh sách voucher
 Route::get('vouchers/{id}', [VoucherController::class, 'show']); // Lấy thông tin voucher
+Route::post('vouchersUser/', [VoucherController::class, 'store']); // Thêm voucher
 
 Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::post('vouchers/', [VoucherController::class, 'store']); // Thêm voucher
@@ -153,7 +154,7 @@ Route::get('/movies-type/{typeId}', [MovieController::class, 'filterByType']); /
 Route::get('/movies-genre/{genreId}', [MovieController::class, 'filterByGenre']); // lọc phim theo thể loại genre
 //______________________________________COMMENT_______________________________________________
 Route::middleware(['jwt.verify'])->post('/movies/{movieId}/comment', [CommentController::class, 'store']); // Thêm bình luận
-Route::get('/comments/movies/{movieId}', [CommentController::class, 'index']); // Lấy danh sách bình luận 
+Route::get('/comments/movies/{movieId}', [CommentController::class, 'index']); // Lấy danh sách bình luận
 Route::middleware(['jwt.verify', 'admin'])->group(function () {
     Route::get('/movies/{movieId}/comments/{commentId}', [CommentController::class, 'show']); // Lấy thông tin chi tiết một bình luận
     Route::put('/movies/{movieId}/comments/{commentId}', [CommentController::class, 'update']); // Cập nhật một bình luận

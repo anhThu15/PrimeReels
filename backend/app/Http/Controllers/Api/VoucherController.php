@@ -26,7 +26,7 @@ class VoucherController extends Controller
             'name' => 'required|string|max:1000',
             'voucher_type_id' => 'required|exists:voucher_types,voucher_type_id',
             'voucher_quantity' => 'required|integer|min:1',
-            'enddate' => 'required|date|after_or_equal:now',
+            'enddate' => 'nullable|date|after_or_equal:now',
         ]);
 
         // Tạo voucher mới
@@ -63,7 +63,7 @@ class VoucherController extends Controller
                 $voucher->expired = $request->input('expired'); // Đảm bảo cập nhật đúng giá trị boolean
             }
 
-            $voucher->save(); 
+            $voucher->save();
 
             return response()->json($voucher);
         }

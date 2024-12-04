@@ -33,6 +33,8 @@ export default function Voucher() {
         }),
         onSubmit: async (values) => {
             try {
+                console.log(values);
+                
                 const token = Cookies.get('token');
                 const res = await fetch(`/api/vouchers`, {
                     method: 'POST',
@@ -320,7 +322,7 @@ export default function Voucher() {
                         <th scope="col">ID</th>
                         <th scope="col">TÊN VOUCHER</th>
                         <th scope="col">SỐ LƯỢNG</th>
-                        <th scope="col">NGÀY BẮT ĐẦU</th>
+                        {/* <th scope="col">NGÀY BẮT ĐẦU</th> */}
                         <th scope="col">NGÀY KẾT THÚC</th>
                         <th scope="col">TÁC VỤ</th>
                     </tr>
@@ -331,7 +333,7 @@ export default function Voucher() {
                             <th scope="row">{index + 1}</th>
                             <td>{voucher.name}</td>
                             <td>{voucher.voucher_quantity}</td>
-                            <td>{new Date(voucher.expired).toLocaleDateString()}</td>
+                            {/* <td>{new Date(voucher.expired).toLocaleDateString()}</td> */}
                             <td>{new Date(voucher.enddate).toLocaleDateString()}</td>
                             <td>
                                 <Link href={`/administration/voucher/edit/${voucher.voucher_id}`} className="btn btn-secondary">

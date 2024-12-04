@@ -30,6 +30,7 @@ export default function InfomationUser() {
     const [history, setHistory] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
     const [invoice, setInvoice] = useState([]);
+    const [voucher, setVoucher] = useState([]);
 
 
     useEffect(() => {
@@ -217,13 +218,91 @@ export default function InfomationUser() {
                 const res = await axios.get(`/api/invoices`, { revalidate: 3600 }).then((res) => res.data)
                 const userInvoices = res.filter(invoice => invoice.user_id === user.user_id && invoice.status ==='success')
                 setInvoice(userInvoices)
+
+                if(userInvoices.length === 1){
+                    // alert('tặng m voucher mới nè ')
+                    const getVouchers = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+                    const find = getVouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
+
+                    if(find.length === 0 ){
+                        const value ={
+                            name:`THUONGNAPLANDAU_${user.user_id}`,
+                            voucher_type_id: 4 ,
+                            voucher_quantity: 1,
+                            enddate: null
+                        }
+                        // console.log(value);
+                        
+                        const res = await fetch(`/api/vouchersUser`, {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`,
+                            },
+                            body: JSON.stringify(value),
+                        });
+    
+                        if(res){
+                            // console.log('thành công', value, res);
+                            toast.success('Chúc mừng bạn nhận thưởng nạp lần đầu hihi')
+                            
+                        }else{
+                            console.log('thất bai', value);
+                            
+                        }
+
+                    }
+
+                    try {
+                        const vouchers =  await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+                        const find = vouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
+                        setVoucher(find)
+                    } catch (error) {
+                        console.error("Error fetching vouchers:", error);
+                    }
+
+                }
             } catch (error) {
                 console.log(error);
             }
         }
+
         getInvoice()
+        // getVouchers()
     }, [user.user_id])
     // console.log(invoice);
+
+    useEffect(() => {
+        if(voucher){
+            // console.log("Voucher has been updated:", voucher);
+        }
+    },[voucher])
+    console.log(voucher);
+
+    const marqueeStyle = {
+        fontSize: '36px',
+        fontWeight: 'bold',
+        animation: 'colorChange 1s infinite',
+      };
+    
+    const keyframesStyle = `
+        @keyframes colorChange {
+          0% { color: red; }
+          20% { color: yellow; }
+          40% { color: green; }
+          60% { color: blue; }
+          80% { color: purple; }
+          100% { color: orange; }
+        }
+      `;
+    
+      // Thêm keyframes vào đầu tài liệu
+      if (typeof document !== 'undefined') {
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(keyframesStyle, styleSheet.cssRules.length);
+      }
+
 
     return (
         <div className="first-page">
@@ -390,6 +469,15 @@ export default function InfomationUser() {
                 {/* Modal for changing password */}
                 <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
+                    <div className="w-100 bg-danger mb-2">
+                        {voucher.length === 1 ? (
+                            <>
+                                <marquee behavior="scroll" direction="left" scrollamount="5" loop="infinite" className="text-white fw-bold fs-4">
+                                    Chúc mừng bạn nạp lần đầu thành công, tặng bạn voucher <span  style={marqueeStyle} >{voucher[0]?.name}</span> , Chúc bạn xem phim vui vẻ =)))
+                                </marquee>
+                            </>
+                        ):(<></>)}
+                    </div>
                     {invoice.length === 0 ? (<DVDX></DVDX>):(
                         <>
                         <div className="row">
