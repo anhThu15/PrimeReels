@@ -474,7 +474,7 @@ export default function InfomationUser() {
                 <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
                     <div className="w-100 bg-danger mb-2">
-                        {voucher.length === 1 ? (
+                        {voucher[0]?.voucher_quantity === 1 ? (
                             <>
                                 <marquee behavior="scroll" direction="left" scrollamount="5" loop="infinite" className="text-white fw-bold fs-4">
                                     Chúc mừng bạn nạp lần đầu thành công, tặng bạn voucher <span  style={marqueeStyle} >{voucher[0]?.name}</span> , Chúc bạn xem phim vui vẻ =)))
