@@ -94,6 +94,13 @@
   filter: brightness(0.5);
   /* Làm tối nền khi hover */
   transition: filter 0.3s ease;
+  z-index: 10;
+}
+
+.card:hover {
+  z-index: 10; 
+  transform: scale(1.05); 
+  transition: transform 0.3s ease, z-index 0s;
 }
 
 /* Ẩn icon play ban đầu */

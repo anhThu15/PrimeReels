@@ -138,6 +138,10 @@ export default function InfomationUser() {
                 const result = await response.json();
                 if (result.status === 'success') {
                     toast.success("Thông tin đã được cập nhật thành công!");
+                    // fetchUserData();
+                    setTimeout(() => {
+                        window.location.reload();
+                      }, 1000); //đợi 1s mới reload lại
                 } else {
                     toast.error("Có lỗi xảy ra: " + result.message);
                 }
@@ -227,7 +231,7 @@ export default function InfomationUser() {
                     if(find.length === 0 ){
                         const value ={
                             name:`THUONGNAPLANDAU_${user.user_id}`,
-                            voucher_type_id: 4 ,
+                            voucher_type_id: 4,
                             voucher_quantity: 1,
                             enddate: null
                         }

@@ -18,36 +18,6 @@ export default function HeaderUser() {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
-  // useEffect(() => {
-  //   if (token) {
-  //     axios
-  //       .get(`/api/profile`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           const user = response.data.user;
-  //           setUserName(user.user_name);
-  //           setUserRole(user.role);
-  //           setIsLoggedIn(true);
-
-  //           // Kiểm tra role và đặt avatar
-  //           if (user.role === 100) {
-  //             setUserAvatar('/images/adminAvatar.jpg');
-  //           } else {
-  //             const avatarUrl = user.avatar ? user.avatar : '';
-  //             setUserAvatar(avatarUrl || '/images/userAvatar.png');
-  //           }
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching user data:", error);
-  //         setIsLoggedIn(false);
-  //       });
-  //   }
-  // }, [token]);
    // Hàm để lấy thông tin người dùng từ API
    const fetchUserData = async () => {
     if (token) {

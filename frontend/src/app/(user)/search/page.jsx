@@ -158,11 +158,11 @@ function MovieList() {
             <div
               key={movie.movie_id}
               className="card text-bg-dark hover-box mb-5"
-              style={{ width: "23%" ,borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0" }}
+              style={{ width: "19%",margin:"2px" ,borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0" }}
             >
               <div>
                 <img
-                  src={movie.banner}
+                  src={movie.poster}
                   className="card-img"
                   alt={movie.title}
                   style={{ objectFit: "cover", width: "100%", height: "400px" }}
