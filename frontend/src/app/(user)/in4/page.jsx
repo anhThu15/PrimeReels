@@ -170,8 +170,12 @@ export default function InfomationUser() {
                 console.error(error);
             }
         };
-        getLove();
+        setTimeout(() => {
+            getLove();
+        }, 2000);
     }, [isUpdated]); // Chỉ chạy khi có cập nhật
+    // console.log(love);
+    
 
     const hanldeRemoveLove = async (id) => {
         // alert(id)
