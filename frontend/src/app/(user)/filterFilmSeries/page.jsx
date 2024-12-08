@@ -148,85 +148,100 @@ export default function FilterFilmSeries() {
     };
 
     return (
-        <div className="container-fluid bg-dark">
-            <div className="product-slide">
-                <div className="container">
-                    <div className="top-page-filter">
-                        <div className="header-text">
-                            <h1 className="text-light">{getTitle()}</h1>
-                        </div>
-                        <div className="header-filter">
-                            <div className="form-group">
-                                <label htmlFor="genreSelect">Chọn thể loại:</label>
-                                <select
-                                    id="genreSelect"
-                                    className="form-select"
-                                    onChange={handleGenreChange}
-                                    value={genreId}
-                                >
-                                    <option value="">-- Chọn thể loại --</option>
-                                    {genres.map(genre => (
-                                        <option key={genre.genre_id} value={genre.genre_id}>{genre.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="countrySelect">Chọn quốc gia:</label>
-                                <select
-                                    id="countrySelect"
-                                    className="form-select"
-                                    onChange={handleCountryChange}
-                                    value={country}
-                                >
-                                    <option value="">-- Chọn quốc gia --</option>
-                                    <option value="Hoa Kỳ">Hoa Kỳ</option>
-                                    <option value="Trung Quốc">Trung Quốc</option>
-                                    <option value="Hàn Quốc">Hàn Quốc</option>
-                                    <option value="Việt Nam">Việt Nam</option>
-                                    <option value="Pháp">Pháp</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    {loading && <div className="text-light">Đang tải...</div>}
-                    {error && <div className="alert alert-danger">{error}</div>}
-                    <div className="d-flex flex-wrap mt-3">
-                        {movies.length > 0 ? (
-                            movies.map((movie) => (
-                                <div
-                                    key={movie.movie_id}
-                                    className="card text-bg-dark hover-box"
-                                    style={{ width: "19%", margin: "2px",borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0"  }}
-                                >
-                                    <div>
-                                        <img
-                                            src={movie.poster}
-                                            className="card-img"
-                                            alt={movie.title}
-                                            style={{ objectFit: "cover", width: "100%", height: "400px" }}
-                                        />
-                                    </div>
-                                    <div className="play-icon-overlay">
-                                        <div
-                                            className="rounded-circle bg-black opacity-50 border border-white"
-                                            style={{ width: "50px", height: "50px" }}
-                                        >
-                                            <Link href={`/film/${movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            !loading && (
-                                <div className="alert alert-danger no-movies" role="alert">
-                                    Không có thể loại phim này trong {movieTypeName}
-                                </div>
-                            )
-                        )}
-                    </div>
-                </div>
-            </div>
+<div className="container-fluid bg-nenVipPro">
+  <div className="product-slide">
+    <div className="container">
+      <div className="top-page-filter">
+        <div className="header-text">
+          <h1 className="text-light">{getTitle()}</h1>
         </div>
+        <div className="header-filter mt-2">
+          <div className="form-group">
+            {/* <label htmlFor="genreSelect">Chọn thể loại:</label> */}
+            <select
+              id="genreSelect"
+              className="form-select"
+              onChange={handleGenreChange}
+              value={genreId}
+            >
+              <option value="">-- Chọn thể loại --</option>
+              {genres.map((genre) => (
+                <option key={genre.genre_id} value={genre.genre_id}>
+                  {genre.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            {/* <label htmlFor="countrySelect">Chọn quốc gia:</label> */}
+            <select
+              id="countrySelect"
+              className="form-select"
+              onChange={handleCountryChange}
+              value={country}
+            >
+              <option value="">-- Chọn quốc gia --</option>
+              <option value="Hoa Kỳ">Hoa Kỳ</option>
+              <option value="Trung Quốc">Trung Quốc</option>
+              <option value="Hàn Quốc">Hàn Quốc</option>
+              <option value="Việt Nam">Việt Nam</option>
+              <option value="Pháp">Pháp</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {loading && <div className="text-light">Đang tải...</div>}
+      {error && <div className="alert alert-danger">{error}</div>}
+      <div className="d-flex flex-wrap mt-3">
+        {movies.length > 0 ? (
+          movies.map((movie) => (
+            <div
+              key={movie.movie_id}
+              className="col-6 col-sm-4 col-md-3 mb-5" // Điều chỉnh số cột cho từng màn hình
+            >
+              <div
+                className="card text-bg-dark hover-box"
+                style={{
+                margin:"5px",
+                  borderRadius: "0",
+                  border: "none",
+                  "--bs-card-inner-border-radius": "0",
+                }}
+              >
+                <div>
+                  <img
+                    src={movie.poster}
+                    className="card-img"
+                    alt={movie.title}
+                    style={{ objectFit: "", width: "100%", height: "400px" }}
+                  />
+                </div>
+                <div className="play-icon-overlay">
+                  <div
+                    className="rounded-circle bg-black opacity-50 border border-white"
+                    style={{ width: "50px", height: "50px" }}
+                  >
+                    <Link
+                      href={`/film/${movie.movie_id}`}
+                      className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"
+                    ></Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          !loading && (
+            <div className="alert alert-danger no-movies" role="alert">
+              Không có thể loại phim này trong {movieTypeName}
+            </div>
+          )
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
     );
 }

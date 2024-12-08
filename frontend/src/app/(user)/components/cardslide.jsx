@@ -130,9 +130,7 @@ export default function CardSlide() {
   if (error) return <div>Lỗi tải dữ liệu</div>;
   if (isLoading) return (
     <>
-      {/* <div className="spinner-border text-danger" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div> */}
+
     </>
   );
 

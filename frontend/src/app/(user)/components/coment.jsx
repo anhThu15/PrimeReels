@@ -435,7 +435,7 @@ export default function Comment(props) {
               <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}><i class="fa-solid fa-chevron-left"></i></button>
             </li>
             {[...Array(totalPages)].map((_, index) => (
-              <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+              <li key={index} className={`page-item ${currentPage === index + 1 ? 'active danger' : ''}`}>
                 <button className="page-link" onClick={() => setCurrentPage(index + 1)}>
                   {index + 1}
                 </button>

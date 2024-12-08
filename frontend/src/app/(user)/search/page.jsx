@@ -140,62 +140,78 @@ function MovieList() {
 
   return (
     <>
-      <div className="header-text">
-        <h2 className="text-light">Kết quả tìm kiếm cho phim với từ khóa: "{query}"</h2>
-        {!loading && (
-          <p className="text-light mb-5">
-            {movies.length > 0
-              ? `Tìm thấy ${movies.length} bộ phim`
-              : "Không có phim nào phù hợp với từ khóa tìm kiếm."}
-          </p>
-        )}
-      </div>
-      {loading && <div className="text-light">Đang tải...</div>}
-      {error && <div className="alert alert-danger">{error}</div>}
-      <div className="d-flex flex-wrap mt-3">
-        {movies.length > 0 ? (
-          movies.map((movie) => (
-            <div
-              key={movie.movie_id}
-              className="card text-bg-dark hover-box mb-5"
-              style={{ width: "19%",margin:"2px" ,borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0" }}
-            >
-              <div>
-                <img
-                  src={movie.poster}
-                  className="card-img"
-                  alt={movie.title}
-                  style={{ objectFit: "cover", width: "100%", height: "400px" }}
-                />
-              </div>
-              <div className="play-icon-overlay">
-                <div
-                  className="rounded-circle bg-black opacity-50 border border-white"
-                  style={{ width: "50px", height: "50px" }}
-                >
-                  <Link
-                    href={`/film/${movie.movie_id}`}
-                    className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"
-                  ></Link>
-                </div>
+<div className="container">
+  <div className="header-text">
+    <h2 className="text-light">Kết quả tìm kiếm cho phim với từ khóa: "{query}"</h2>
+    {!loading && (
+      <p className="text-light mb-5">
+        {movies.length > 0
+          ? `Tìm thấy ${movies.length} bộ phim`
+          : "Không có phim nào phù hợp với từ khóa tìm kiếm."}
+      </p>
+    )}
+  </div>
+  {loading && <div className="text-light">Đang tải...</div>}
+  {error && <div className="alert alert-danger">{error}</div>}
+  <div className="d-flex flex-wrap mt-3">
+    {movies.length > 0 ? (
+      movies.map((movie) => (
+        <div
+          key={movie.movie_id}
+          className="col-6 col-sm-4 col-md-3 mb-5"
+        >
+          <div
+            className="card text-bg-dark hover-box"
+            style={{
+              margin:"5px",
+              borderRadius: "0",
+              border: "none",
+              "--bs-card-inner-border-radius": "0",
+            }}
+          >
+            <div>
+              <img
+                src={movie.poster}
+                className="card-img"
+                alt={movie.title}
+                style={{ objectFit: "", width: "100%", height: "400px" }}
+              />
+            </div>
+            <div className="play-icon-overlay">
+              <div
+                className="rounded-circle bg-black opacity-50 border border-white"
+                style={{ width: "50px", height: "50px" }}
+              >
+                <Link
+                  href={`/film/${movie.movie_id}`}
+                  className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"
+                ></Link>
               </div>
             </div>
-          ))
-        ) : (
-          !loading && (
-            <div className="alert alert-danger no-movies" role="alert" style={{height:"150px", display:"flex", alignItems:"center"}}>
-              Không có phim nào phù hợp với từ khóa tìm kiếm.
-            </div>
-          )
-        )}
-      </div>
+          </div>
+        </div>
+      ))
+    ) : (
+      !loading && (
+        <div
+          className="alert alert-danger no-movies"
+          role="alert"
+          style={{ height: "150px", display: "flex", alignItems: "center" }}
+        >
+          Không có phim nào phù hợp với từ khóa tìm kiếm.
+        </div>
+      )
+    )}
+  </div>
+</div>
+
     </>
   );
 }
 
 export default function SearchPage() {
   return (
-    <div className="container-fluid bg-dark">
+    <div className="container-fluid bg-nenVipPro">
       <div className="product-slide">
         <div className="container">
           <Suspense fallback={<div>Đang tải...</div>}>
