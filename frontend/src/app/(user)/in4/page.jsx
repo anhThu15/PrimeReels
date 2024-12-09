@@ -490,14 +490,33 @@ export default function InfomationUser() {
                         <div className="row">
                             {invoice.map((iv) => {
                                 let statusButton;
-                                // Kiểm tra iv.status và gán giá trị cho statusButton tương ứng
-                                if (iv.status === 'pending') {
-                                    statusButton = <button className="btn btn-sm btn-warning">Chưa Thanh Toán</button>;
-                                } else if (iv.status === 'success') {
-                                    statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
-                                } else if (iv.status === 'fail') {
-                                    statusButton = <button className="btn btn-sm btn-danger">Thất Bại</button>;
+
+                                const calculateSeconds = (targetDate) => {
+                                    const now = new Date(); 
+                                    const target = new Date(targetDate); 
+
+                                    // console.log('now:'+now , 'then:'+target);
+                                    
+                                    
+                                    // Tính khoảng cách bằng giây
+                                    const diffInSeconds = Math.floor((target - now) / 1000);
+                                    
+                                    return diffInSeconds;
+                                  };
+
+                    
+                            if(iv){
+                                const seconds = calculateSeconds(iv.end_date);
+                                // console.log(seconds);
+                                
+                                if(seconds > 0){
+                                  statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
+                                }else{
+                                  statusButton = <button className="btn btn-sm btn-warning">Hết Hạn</button>;
                                 }
+                                
+                            }
+
                                 return (
                                     <>
                                         <div className="col-md-6 mb-4">
