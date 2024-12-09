@@ -131,14 +131,17 @@ export default function Home() {
                 const getVouchers = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
                 const find = getVouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
 
+                const enddate = new Date();
+                enddate.setDate(enddate.getDate() + 365);
+
                 if(find.length === 0 ){
                     const value ={
                         name:`THUONGNAPLANDAU_${user.user_id}`,
                         voucher_type_id: 4,
                         voucher_quantity: 1,
-                        enddate: null
+                        enddate: enddate.toISOString().split('T')[0]
                     }
-                    // console.log(value);
+                    console.log(value);
                     
                     const res = await fetch(`/api/vouchersUser`, {
                         method: 'POST',
