@@ -226,41 +226,40 @@ export default function InfomationUser() {
                 const res = await axios.get(`/api/invoices`, { revalidate: 3600 }).then((res) => res.data)
                 const userInvoices = res.filter(invoice => invoice.user_id === user.user_id && invoice.status ==='success')
                 setInvoice(userInvoices)
-
                 if(userInvoices.length === 1){
                     // alert('tặng m voucher mới nè ')
-                    const getVouchers = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
-                    const find = getVouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
+                    // const getVouchers = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+                    // const find = getVouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
 
-                    if(find.length === 0 ){
-                        const value ={
-                            name:`THUONGNAPLANDAU_${user.user_id}`,
-                            voucher_type_id: 4,
-                            voucher_quantity: 1,
-                            enddate: null
-                        }
-                        // console.log(value);
+                    // if(find.length === 0 ){
+                    //     const value ={
+                    //         name:`THUONGNAPLANDAU_${user.user_id}`,
+                    //         voucher_type_id: 4,
+                    //         voucher_quantity: 1,
+                    //         enddate: null
+                    //     }
+                    //     // console.log(value);
                         
-                        const res = await fetch(`/api/vouchersUser`, {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`,
-                            },
-                            body: JSON.stringify(value),
-                        });
+                    //     const res = await fetch(`/api/vouchersUser`, {
+                    //         method: 'POST',
+                    //         headers: {
+                    //             'Accept': 'application/json',
+                    //             'Content-Type': 'application/json',
+                    //             'Authorization': `Bearer ${token}`,
+                    //         },
+                    //         body: JSON.stringify(value),
+                    //     });
     
-                        if(res){
-                            // console.log('thành công', value, res);
-                            toast.success('Chúc mừng bạn nhận thưởng nạp lần đầu hihi')
+                    //     if(res){
+                    //         // console.log('thành công', value, res);
+                    //         toast.success('Chúc mừng bạn nhận thưởng nạp lần đầu hihi')
                             
-                        }else{
-                            console.log('thất bai', value);
+                    //     }else{
+                    //         console.log('thất bai', value);
                             
-                        }
+                    //     }
 
-                    }
+                    // }
 
                     try {
                         const vouchers =  await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)

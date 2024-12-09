@@ -13,9 +13,14 @@ import SlideShowAnother2 from "./components/slideshowAnother2";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import axiosRateLimit from 'axios-rate-limit';
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import Link from "next/link";
 
 
 export default function Home() {
+  const token = Cookies.get('token');
+  const [user, setUser] = useState([])
   const [action, setAction] = useState([]);
   const [comendy, setComendy] = useState([]);
   const [random, setRandom] = useState([]);
@@ -24,6 +29,24 @@ export default function Home() {
   const [date, setDate] = useState([]);
   const [bannerData, setBannerData] = useState([]);
   
+  useEffect(() => {
+    const getToken = () => {
+        if (token) {
+            axios.get(`/api/profile`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(res => setUser(res.data.user))
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                });
+        }
+    }
+    setTimeout(() => {
+        getToken()
+    }, 2000);
+}, [token]);
 
   useEffect(() => {
   const fetchMovies = async (url, filterFavorites = false, sortByDate = false) => {
@@ -95,8 +118,58 @@ export default function Home() {
   };
 
   loadData();
-}, []);
+  }, []);
 
+  useEffect(() => {
+    const getInvoice = async () => {
+        try {
+            const res = await axios.get(`/api/invoices`, { revalidate: 3600 }).then((res) => res.data)
+            const userInvoices = res.filter(invoice => invoice.user_id === user.user_id && invoice.status ==='success')
+
+            if(userInvoices.length === 1){
+                // alert('tặng m voucher mới nè ')
+                const getVouchers = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+                const find = getVouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
+
+                if(find.length === 0 ){
+                    const value ={
+                        name:`THUONGNAPLANDAU_${user.user_id}`,
+                        voucher_type_id: 4,
+                        voucher_quantity: 1,
+                        enddate: null
+                    }
+                    // console.log(value);
+                    
+                    const res = await fetch(`/api/vouchersUser`, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                        body: JSON.stringify(value),
+                    });
+
+                    if(res){
+                        // console.log('thành công', value, res);
+                        toast.success(<div>Chúc mừng bạn nhận thưởng nạp lần đầu hihi, <Link href={'/in4'}>Xem Voucher</Link> </div>)
+                        
+                    }else{
+                        console.log('thất bai', value);
+                        
+                    }
+
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    getInvoice()
+    // getVouchers()
+}, [user.user_id])
+// console.log(invoice);
 
   return (
     <>
