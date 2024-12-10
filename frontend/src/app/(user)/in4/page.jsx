@@ -480,7 +480,7 @@ export default function InfomationUser() {
                         {voucher[0]?.voucher_quantity === 1 ? (
                             <>
                                 <marquee behavior="scroll" direction="left" scrollamount="5" loop="infinite" className="text-white fw-bold fs-4">
-                                    Chúc mừng bạn nạp lần đầu thành công, tặng bạn voucher <span  style={marqueeStyle} >{voucher[0]?.name}</span> , Chúc bạn xem phim vui vẻ =)))
+                                    Chúc mừng bạn nạp lần đầu thành công, tặng bạn voucher <span  style={marqueeStyle} >{voucher[0]?.name}</span>hạn sử dụng lên đến 1 năm , Chúc bạn xem phim vui vẻ =)))
                                 </marquee>
                             </>
                         ):(<></>)}

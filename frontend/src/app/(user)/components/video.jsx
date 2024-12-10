@@ -53,25 +53,23 @@ export default function Video(props) {
 
     const handleNext = async () => {
         try {
-            // console.log(props.data.episode);
-            // const id = props.data.episode.movie_id
-            // const idEpisode = props.data.episode.episode_id
-            // const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/${id}/episodes`, { revalidate: 3600 }).then((res) => res.data)
+            const res = await axios.get(`/api/movies/${props.data?.episode?.movie_id}`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            }).then((res) => res.data)
 
-            // tìm vị trí trong mãng 0 là có -1 là xủi
-            // const findEp = res.findIndex(episode => episode.episode_id === idEpisode);
+            // console.log(res.episode.length);
+            
 
-            let nextEpisodeId = idEpisode + 1; // Giá trị mặc định nếu không tìm thấy episode tiếp theo
-            console.log(nextEpisodeId);
+            if(res.episode.length === 1){
+                toast.error('Phim này là phim lẻ, chỉ có 1 tập')
+            }else{
+                let nextEpisodeId = idEpisode + 1; 
+                router.push(`/watch/${id}/${nextEpisodeId}`)
+            }
+            
 
-
-            router.push(`/watch/${id}/${nextEpisodeId}`)
-
-            // if (findEp !== -1 && findEp + 1 < res.length) {
-            //   nextEpisodeId = res[findEp + 1].episode_id; // Lấy episode_id tiếp theo
-            // }
-
-            // console.log(nextEpisodeId);
 
         } catch (error) {
             console.log(error);
