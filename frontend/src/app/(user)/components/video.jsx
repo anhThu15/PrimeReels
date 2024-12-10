@@ -60,8 +60,8 @@ export default function Video(props) {
             }).then((res) => res.data)
 
             // console.log(res.episode.length);
-            
 
+            
             if(res.episode.length === 1){
                 toast.error('Phim này là phim lẻ, chỉ có 1 tập')
             }else{
