@@ -123,10 +123,8 @@ export default function Watch({ params }) {
         // console.log(res.data);
         const userInvoices = res.data
                             .filter(invoice => invoice.user_id === user.user_id) 
-                            // .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                             .sort((a, b) => b.invoice_id - a.invoice_id);
               // console.log(userInvoices);
-          // console.log(userInvoices[0].status === 'success');
               
         // hàm tính giây cho thgian dc phép xem 
         const calculateSecondsBetweenDates = (startDate, endDate) => {
@@ -178,6 +176,7 @@ export default function Watch({ params }) {
               
                 if(seconds > 0){
                   setCount(seconds + 86400 ); 
+                  // console.log(count);
                 }else if(seconds < 0 ){
                   toast.error(
                     <div>
@@ -199,11 +198,14 @@ export default function Watch({ params }) {
               toast.error('Thanh Toán Thất Bại. Vui Lòng Thử Lại');
               setCount(429);  // Đặt giá trị đếm cho trạng thái fail
             }
+        }else if(userInvoices.length === 0){
+          setCount(10); 
+          console.log('hahah', count);
         }
 
       } catch (error) {
         setCount(10); 
-        console.log(error);
+        console.log(error, count);
       }
     }
 
@@ -213,46 +215,47 @@ export default function Watch({ params }) {
   
 
   useEffect(() => {
-    const storedTimeLeft = localStorage.getItem('timeLeft');
+    // const storedTimeLeft = localStorage.getItem('timeLeft');
     const now = Date.now();
     
-    if (storedTimeLeft) {
-      const parsedTimeLeft = JSON.parse(storedTimeLeft);
-      const remainingTime = parsedTimeLeft.expiry - now;
+    // if (storedTimeLeft) {
+    //   const parsedTimeLeft = JSON.parse(storedTimeLeft);
+    //   const remainingTime = parsedTimeLeft.expiry - now;
   
-      if (remainingTime > 0) {
-        const newExpiryTimestamp = new Date(now + remainingTime);
-        restart(newExpiryTimestamp, true);
-      } else {
-        localStorage.removeItem('timeLeft');
-      }
-    } else if (count > 0) {
+    //   if (remainingTime > 0) {
+    //     const newExpiryTimestamp = new Date(now + remainingTime);
+    //     restart(newExpiryTimestamp, true);
+    //   } else {
+    //     localStorage.removeItem('timeLeft');
+    //   }
+    // } else 
+    if (count > 0) {
       const time = new Date();
       time.setSeconds(time.getSeconds() + count); // Thêm số giây từ count
       restart(time);
-      localStorage.setItem(
-        'timeLeft',
-        JSON.stringify({ expiry: time.getTime() })
-      );
+      // localStorage.setItem(
+      //   'timeLeft',
+      //   JSON.stringify({ expiry: time.getTime() })
+      // );
     }
   }, [count, restart]);
   
 
-  useEffect(() => {
-    const handleUnload = () => {
-      if (isRunning) {
-        const expiry = new Date();
-        expiry.setMinutes(expiry.getMinutes() + minutes);
-        expiry.setSeconds(expiry.getSeconds() + seconds);
-        localStorage.setItem(
-          'timeLeft',
-          JSON.stringify({ expiry: expiry.getTime() })
-        );
-      }
-    };
-    window.addEventListener('beforeunload', handleUnload);
-    return () => window.removeEventListener('beforeunload', handleUnload);
-  }, [isRunning, minutes, seconds]);
+  // useEffect(() => {
+  //   const handleUnload = () => {
+  //     if (isRunning) {
+  //       const expiry = new Date();
+  //       expiry.setMinutes(expiry.getMinutes() + minutes);
+  //       expiry.setSeconds(expiry.getSeconds() + seconds);
+  //       localStorage.setItem(
+  //         'timeLeft',
+  //         JSON.stringify({ expiry: expiry.getTime() })
+  //       );
+  //     }
+  //   };
+  //   window.addEventListener('beforeunload', handleUnload);
+  //   return () => window.removeEventListener('beforeunload', handleUnload);
+  // }, [isRunning, minutes, seconds]);
 
 
   useEffect(() => {
