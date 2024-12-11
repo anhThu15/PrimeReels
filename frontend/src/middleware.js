@@ -43,5 +43,5 @@ export async function middleware(request) {
 
 
 export const config = {
-    matcher: ['/in4','/admin','/user-payment-package','/after-payment'],
+    matcher: ['/in4','/admin','/user-payment-package'],
 };

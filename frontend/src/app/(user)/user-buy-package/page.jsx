@@ -115,7 +115,8 @@ export default function UserBuyPackage() {
 
         const getVouchers = async () => {
             const res = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
-            setVouchers(res)
+            const filteredVouchers = res.filter(voucher => voucher.voucher_type_id !== 4);
+            setVouchers(filteredVouchers)
         }
        
           getPackages()
@@ -194,7 +195,7 @@ export default function UserBuyPackage() {
                                             </div>
                                             <div className="item">
                                                 <i className="fa-solid fa-star"></i>
-                                                {pk.duration}h kể từ khi đăng ký
+                                                {pk.duration} ngày kể từ khi đăng ký
                                             </div>
                                             <div className="item">
                                                 <i className="fa-solid fa-star"></i>
@@ -204,18 +205,20 @@ export default function UserBuyPackage() {
                                         <hr />
                                         <h6>Chương trình ưu đãi</h6>
                                             {vouchers.map((vch) => {
-                                                return(
-                                                    <>
-                                                        <div className="bx-vnpay d-flex">
-                                                            <div className="icon-vnpay">
-                                                                <img src="images/icon-vnpay.webp" alt="" />
+                                                if(vch?.voucher_type?.min_spend <= pk.price ){
+                                                    return(
+                                                        <>
+                                                            <div className="bx-vnpay d-flex">
+                                                                <div className="icon-vnpay">
+                                                                    <img src="images/icon-vnpay.webp" alt="" />
+                                                                </div>
+                                                                <div className="text-sales">
+                                                                    Giảm {vch?.voucher_type?.discount}% khi thanh toán qua VNPAY với mã {vch.name}
+                                                                </div>
                                                             </div>
-                                                            <div className="text-sales">
-                                                                Giảm {vch?.voucher_type?.discount}% khi thanh toán qua VNPAY với mã {vch.name}
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                )
+                                                        </>
+                                                    )
+                                                }
                                             })}
                                     </div>
                                 </div>

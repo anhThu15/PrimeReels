@@ -94,14 +94,22 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function SlideShowAnother(props) {
-  // Slick settings
+  const dataLength = props.data.length;
+
+  // Dynamically adjust the number of slides to show and scroll
+  const slidesToShow = dataLength < 3 ? dataLength : 3;
+  const slidesToScroll = dataLength < 3 ? dataLength : 3;
+  
+  // Adjust the infinite scrolling behavior when there are fewer slides
+  const infiniteScroll = dataLength > slidesToShow;
+
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: infiniteScroll,  // Disable infinite scrolling if there are fewer than the number of slides to show
     speed: 500,
-    slidesToShow: 3, 
-    slidesToScroll: 3, 
-    arrows: props.data.length > 3, 
+    slidesToShow: slidesToShow,
+    slidesToScroll: slidesToScroll,
+    arrows: dataLength > 3, // Show arrows only if more than 3 items
     prevArrow: (
       <button className="slick-prev slick-arrow">
         <i className="fas fa-chevron-left text-white"></i>
@@ -114,31 +122,31 @@ export default function SlideShowAnother(props) {
     ),
     responsive: [
       {
-        breakpoint: 1200, 
+        breakpoint: 1200,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: slidesToShow,
+          slidesToScroll: slidesToScroll,
         },
       },
       {
         breakpoint: 992,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: slidesToShow,
+          slidesToScroll: slidesToScroll,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: slidesToShow,
+          slidesToScroll: slidesToScroll,
         },
       },
       {
         breakpoint: 567,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: slidesToShow,
+          slidesToScroll: slidesToScroll,
         },
       }
     ],
@@ -150,10 +158,10 @@ export default function SlideShowAnother(props) {
         <div className="container-fluid px-3 box-slider3">
           <Slider {...settings}>
             {props.data.map((country, index) => (
-              <div key={index} style={{}}>
+              <div key={index}>
                 <div
                   className="card text-bg-dark hover-box me-5"
-                  style={{ width: "480px"}}
+                  style={{ width: "480px",borderRadius: "0", border:"none","--bs-card-inner-border-radius": "0"  }}
                 >
                   <div className="bg-black opacity-75">
                     <img
@@ -161,7 +169,7 @@ export default function SlideShowAnother(props) {
                       height={250}
                       className="card-img w-full"
                       alt={`Banner of ${country.title}`}
-                      style={{objectFit:"fill"}}
+                      style={{ objectFit: "fill" }}
                     />
                   </div>
                   <div className="card-img-overlay"></div>
@@ -173,7 +181,7 @@ export default function SlideShowAnother(props) {
                       <Link
                         href={`/film/${country.movie_id}`}
                         className="nav-link fa-solid fa-play fa-2xl text-white"
-                        style={{position:"relative", top:"0px" , right:"-2px"}}
+                        style={{ position: "relative", top: "0px", right: "-2px" }}
                       ></Link>
                     </div>
                   </div>
@@ -186,3 +194,4 @@ export default function SlideShowAnother(props) {
     </>
   );
 }
+

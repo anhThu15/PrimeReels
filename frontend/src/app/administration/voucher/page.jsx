@@ -20,19 +20,23 @@ export default function Voucher() {
             name: '',
             voucher_type_id: '',
             voucher_quantity: '',
-            expired: '',
+            // expired: 
             enddate: ''
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Tên voucher không được để trống"),
             voucher_type_id: Yup.string().required("Loại voucher không được để trống"),
             voucher_quantity: Yup.number().required("Số lượng không được để trống").positive("Số lượng phải lớn hơn 0").integer("Số lượng phải là số nguyên"),
-            expired: Yup.date().required("Ngày hết hạn không được để trống").nullable(),
-            enddate: Yup.date().required("Ngày kết thúc không được để trống").nullable()
-                .min(Yup.ref('expired'), "Ngày kết thúc phải sau ngày hết hạn"),
+            // expired: Yup.date().required("Ngày hết hạn không được để trống").nullable(),
+            enddate: Yup.date()
+            .required("Ngày kết thúc không được để trống")
+            .nullable()
+            .min(new Date(), "Ngày kết thúc phải là ngày hiện tại hoặc sau ngày hiện tại")
         }),
         onSubmit: async (values) => {
             try {
+                console.log(values);
+                
                 const token = Cookies.get('token');
                 const res = await fetch(`/api/vouchers`, {
                     method: 'POST',
@@ -47,7 +51,7 @@ export default function Voucher() {
                     toast.success("Tạo mới voucher thành công")
                     fetchVouchers();
                     formik.resetForm(); // Reset form
-                    window.location.reload()
+                    // window.location.reload()
                 } else {
                     console.error('Lỗi khi tạo mới voucher:', res.status);
                     // alert('Tạo mới voucher không thành công!');
@@ -178,7 +182,7 @@ export default function Voucher() {
             <div className="row">
                 <h2 className="col fw-bold">Voucher</h2>
                 <div className="col-2">
-                    <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" className="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         + Thêm Mới
                     </button>
                     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -218,7 +222,7 @@ export default function Voucher() {
                                                 <div className="text-danger">{formik.errors.voucher_quantity}</div>
                                             ) : null}
                                         </div>
-                                        <div className="mb-3">
+                                        {/* <div className="mb-3">
                                             <label className="form-label">Ngày Bắt Đầu</label>
                                             <input
                                                 type="date"
@@ -231,7 +235,7 @@ export default function Voucher() {
                                             {formik.touched.expired && formik.errors.expired ? (
                                                 <div className="text-danger">{formik.errors.expired}</div>
                                             ) : null}
-                                        </div>
+                                        </div> */}
                                         <div className="mb-3">
                                             <label className="form-label">Ngày Kết Thúc</label>
                                             <input
@@ -302,7 +306,7 @@ export default function Voucher() {
                         </ul>
                     </div>
                 </div>
-                <div className="col-1">
+                {/* <div className="col-1">
                     <div className="dropdown">
                         <button className="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             10
@@ -312,7 +316,7 @@ export default function Voucher() {
                             <li><a className="dropdown-item" href="#">30</a></li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
             </div>
             <table className="table table-striped">
                 <thead>
@@ -320,7 +324,7 @@ export default function Voucher() {
                         <th scope="col">ID</th>
                         <th scope="col">TÊN VOUCHER</th>
                         <th scope="col">SỐ LƯỢNG</th>
-                        <th scope="col">NGÀY HẾT HẠN</th>
+                        {/* <th scope="col">NGÀY BẮT ĐẦU</th> */}
                         <th scope="col">NGÀY KẾT THÚC</th>
                         <th scope="col">TÁC VỤ</th>
                     </tr>
@@ -331,7 +335,7 @@ export default function Voucher() {
                             <th scope="row">{index + 1}</th>
                             <td>{voucher.name}</td>
                             <td>{voucher.voucher_quantity}</td>
-                            <td>{new Date(voucher.expired).toLocaleDateString()}</td>
+                            {/* <td>{new Date(voucher.expired).toLocaleDateString()}</td> */}
                             <td>{new Date(voucher.enddate).toLocaleDateString()}</td>
                             <td>
                                 <Link href={`/administration/voucher/edit/${voucher.voucher_id}`} className="btn btn-secondary">

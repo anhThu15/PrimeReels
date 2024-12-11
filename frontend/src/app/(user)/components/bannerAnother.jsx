@@ -104,7 +104,7 @@ export default function BannerAnother() {
                   bao sóng gió, họ đã tìm được lời đáp cho số phận của mình và
                   chấm dứt chuỗi bi kịch.
                 </p>
-                <button className="btn btn-light rounded-pill mt-3">
+                <button className="btn btn-light rounded-pill">
                   <i className="fa-solid fa-circle-play"></i> Xem Ngay
                 </button>
               </div>

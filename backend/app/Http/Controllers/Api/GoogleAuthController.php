@@ -60,7 +60,9 @@ class GoogleAuthController extends Controller
             //     'token' => $token,
             //     'user' => $user
             // ]);
+            
             return redirect()->away("http://localhost:3000/login/googleCallback?token={$token}&user=" . urlencode(json_encode($user)));
+
         } catch (\Exception $e) {
             // dd($e->getMessage());
             return response()->json(['error' => 'Đăng nhập Google thất bại.'], 500);

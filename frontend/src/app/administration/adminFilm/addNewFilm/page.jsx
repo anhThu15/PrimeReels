@@ -87,13 +87,13 @@ export default function AddNewFilm() {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="actorName" className="form-label">Đạo diễn</label>
-                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim" 
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên đạo diễn bộ phim" 
                                 {...register('director', { required: 'Đạo diễn Phim là bắt buộc' })} />
                                 {errors.director && <div className="text-danger">{errors.director.message}</div>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="actorName" className="form-label">Thời Gian</label>
-                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập tên bộ phim" 
+                            <input type="text" className="form-control rounded" id="actorName" placeholder="Nhập thời lượng của bộ phim" 
                                 {...register('duration', { required: 'Thời Gian Phim là bắt buộc' })} />
                                 {errors.duration && <div className="text-danger">{errors.duration.message}</div>}
                         </div>

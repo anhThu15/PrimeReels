@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import styles from "../../(user)/page.module.css"
-export default function HeaderUser({ hasBanner }) {
+export default function HeaderUser() {
   const token = Cookies.get('token');
   const router = useRouter();
   const pathName = usePathname();
@@ -17,37 +17,7 @@ export default function HeaderUser({ hasBanner }) {
   const [userAvatar, setUserAvatar] = useState('/images/userAvatar.png');
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  // useEffect(() => {
-  //   if (token) {
-  //     axios
-  //       .get(`/api/profile`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           const user = response.data.user;
-  //           setUserName(user.user_name);
-  //           setUserRole(user.role);
-  //           setIsLoggedIn(true);
-
-  //           // Kiểm tra role và đặt avatar
-  //           if (user.role === 100) {
-  //             setUserAvatar('/images/adminAvatar.jpg');
-  //           } else {
-  //             const avatarUrl = user.avatar ? user.avatar : '';
-  //             setUserAvatar(avatarUrl || '/images/userAvatar.png');
-  //           }
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching user data:", error);
-  //         setIsLoggedIn(false);
-  //       });
-  //   }
-  // }, [token]);
+  
    // Hàm để lấy thông tin người dùng từ API
    const fetchUserData = async () => {
     if (token) {
@@ -135,22 +105,22 @@ export default function HeaderUser({ hasBanner }) {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className={`nav-link me-3 ${pathName === '/' ? 'active' : ''} ${styles.navLink}`} href="/">
-                TRANG CHỦ
+                Trang chủ
               </Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link me-3 ${pathName === '/filmSeries' ? 'active' : ''} ${styles.navLink}`} href="/filmSeries">
-                PHIM BỘ
+                Phim bộ
               </Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link me-3 ${pathName === '/oddFilm' ? 'active' : ''} ${styles.navLink}`} href="/oddFilm">
-                PHIM LẺ
+                Phim lẻ
               </Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link me-3 ${pathName === '/animeFilm' ? 'active' : ''} ${styles.navLink}`} href="/animeFilm">
-                PHIM HOẠT HÌNH
+                Phim hoạt hình
               </Link>
             </li>
           </ul>
@@ -173,7 +143,7 @@ export default function HeaderUser({ hasBanner }) {
 
           <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
             <Link href='#' onClick={handleClickCheck} style={{ textDecoration: 'none', color: 'white' }}>
-              <p className="mt-1 ms-2">MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
+              <p className="" style={{margin:"2px 0 0 13px"}}>MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
             </Link>
           </div>
           {isLoggedIn ? (
@@ -193,9 +163,12 @@ export default function HeaderUser({ hasBanner }) {
                 </ul>
               </li>
             </>
-          ) : (
-            <Link className="text-white nav-link" href="/login">ĐĂNG NHẬP</Link>
-          )}
+
+            ) : (
+              <Link className={`${styles.navLink} text-white`} href="/login" style={{textDecoration:"none"}}>
+                Đăng nhập
+              </Link>
+            )}
         </div>
       </div>
     </nav>
