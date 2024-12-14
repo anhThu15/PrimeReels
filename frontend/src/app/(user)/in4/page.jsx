@@ -571,14 +571,14 @@ export default function InfomationUser() {
                                                             className="rounded-circle bg-black opacity-50 border border-white"
                                                             style={{ width: "50px", height: "50px" }}
                                                         >
-                                                            {localStorage.getItem("token") ? (
+                                                            {/* {localStorage.getItem("token") ? ( */}
                                                                 <Link
                                                                     href={`/watch/${ht.episode?.movie_id}/${ht.episode_id}`}
                                                                     className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"
                                                                 ></Link>
-                                                            ) : (
+                                                            {/* ) : (
                                                                 <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
-                                                            )}
+                                                            )} */}
                                                         </div>
                                                     </div>
                                                 </div>
