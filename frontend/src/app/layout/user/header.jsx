@@ -96,12 +96,12 @@ export default function HeaderUser() {
     >
       <div className="container">
         <Link href="/">
-          <img className="navbar-brand me-5" src="/images/Logo-PR-(1).png" width={100} alt="Logo" />
+          <img className="navbar-brand me-5 logo-nav-header" src="/images/Logo-PR-(1).png" width={100} alt="Logo" />
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse menu-nav-header" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className={`nav-link me-3 ${pathName === '/' ? 'active' : ''} ${styles.navLink}`} href="/">
@@ -127,12 +127,12 @@ export default function HeaderUser() {
 
 
           <div onClick={toggleSearch} style={{ cursor: 'pointer' }}>
-            <i className="fa-solid fa-magnifying-glass me-3 text-white"></i>
+            <i className="fa-solid fa-magnifying-glass me-3 text-white icon-search-header"></i>
           </div>
           {showSearch && (
             <input
               type="text"
-              className="form-control me-3"
+              className="form-control me-3 search-box-header"
               style={{ width: "200px", transition: "width 0.3s" }}
               placeholder="Tìm kiếm..."
               value={searchQuery}
@@ -141,9 +141,9 @@ export default function HeaderUser() {
             />
           )}
 
-          <div className="rounded-pill bg-danger text-white me-3" style={{ width: "140px", height: "30px" }}>
+          <div className="rounded-pill bg-danger text-white me-3 buy-package" style={{ width: "140px", height: "30px" }}>
             <Link href='#' onClick={handleClickCheck} style={{ textDecoration: 'none', color: 'white' }}>
-              <p className="" style={{margin:"2px 0 0 13px"}}>MUA GÓI VIP <i className="fa-regular fa-gem"></i></p>
+              <p className="" style={{margin:"2px 0 0 13px"}}>MUA GÓI VIP <i className="fa-regular fa-gem icon-buy-package-header"></i></p>
             </Link>
           </div>
           {isLoggedIn ? (
@@ -152,7 +152,7 @@ export default function HeaderUser() {
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src={userAvatar} className="rounded-circle" width={45} height={45} alt="" />
                 </a>
-                <ul className="dropdown-menu dropdown-menu-end">
+                <ul className="dropdown-menu dropdown-menu-end mt-2">
                   <li className="dropdown-item">Xin chào, {userName}</li>
                   <li><Link className="dropdown-item" href="/in4">Trang tài khoản</Link></li>
                   {userRole === 100 && (

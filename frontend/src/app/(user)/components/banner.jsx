@@ -134,6 +134,8 @@
 //     )
 // }
 
+
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -165,14 +167,15 @@ export default function Banner({ bannerData, genres, onGenreChange  }) {
               key={item.movie_id}
             >
               <div className="gradient-overlay"></div>
-              <div className="position-relative">
+              <div className="position-relative image-banner-slide">
                 <img
+                  className="image-banner"
                   src={item.banner}
                   width={"100%"}
-                  style={{ height: "100vh" }}
                   alt={item.title}
+                  
                 />
-                <div className="position-absolute" style={{ top: 180, left: 110, width: "600px" }}>
+                <div className="item-title-carousel">
                   <h1 className="fw-bold text-with-shadow">{item.title}</h1>
                   <div className="row text-with-shadow" style={{ width: 400 }}>
                     <div className="col"><i className="fa-regular fa-star"></i> {item.rating}</div>
@@ -188,8 +191,8 @@ export default function Banner({ bannerData, genres, onGenreChange  }) {
                 </div>
                 {showSelect && (
                 <div
-                  className="select-dropdown sl-dropdown"
-                  style={{ position: "absolute", top: 150, right: 100 }}
+                  className="select-dropdown sl-dropdown select-film-byMovieType"
+                  // style={{ position: "absolute", top: 200, right: 100 }}
                 >
                   <select onChange={(e) => onGenreChange(e.target.value)}>
                     <option value="">Chọn thể loại</option>

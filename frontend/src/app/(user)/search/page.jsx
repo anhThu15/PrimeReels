@@ -107,6 +107,13 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
 
+function removeAccents(str) {
+  return str
+    .normalize("NFD") // Chuẩn hóa Unicode
+    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ dấu
+    .toLowerCase(); // Chuyển về chữ thường
+}
+
 function MovieList() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
@@ -114,16 +121,40 @@ function MovieList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // useEffect(() => {
+  //   async function fetchMovies() {
+  //     try {
+  //       const response = await fetch(`/api/movies`);
+  //       const data = await response.json();
+  //       let filteredMovies = data;
+
+  //       if (query) {
+  //         filteredMovies = filteredMovies.filter((movie) =>
+  //           movie.title.toLowerCase().includes(query.toLowerCase())
+  //         );
+  //       }
+  //       setMovies(filteredMovies);
+  //     } catch (error) {
+  //       console.error("Error fetching movies:", error);
+  //       setError("Đã xảy ra lỗi khi lấy dữ liệu phim.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   fetchMovies();
+  // }, [query]);
   useEffect(() => {
     async function fetchMovies() {
       try {
         const response = await fetch(`/api/movies`);
         const data = await response.json();
         let filteredMovies = data;
-
+  
         if (query) {
+          const normalizedQuery = removeAccents(query); // Chuẩn hóa từ khóa tìm kiếm
           filteredMovies = filteredMovies.filter((movie) =>
-            movie.title.toLowerCase().includes(query.toLowerCase())
+            removeAccents(movie.title).includes(normalizedQuery)
           );
         }
         setMovies(filteredMovies);
@@ -134,9 +165,10 @@ function MovieList() {
         setLoading(false);
       }
     }
-
+  
     fetchMovies();
   }, [query]);
+  
 
   return (
     <>
