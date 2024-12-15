@@ -550,6 +550,8 @@ export default function InfomationUser() {
                             </div> */}
                             <div className="row mt-3">
                                     {history.map((ht) => {
+                                        // console.log(ht.episode);
+                                        
                                         return (
                                             <div
                                                 key={ht.episode?.episode_id}
@@ -573,7 +575,7 @@ export default function InfomationUser() {
                                                         >
                                                             {/* {localStorage.getItem("token") ? ( */}
                                                                 <Link
-                                                                    href={`/watch/${ht.episode?.movie_id}/${ht.episode_id}`}
+                                                                    href={`/watch/${ht.episode?.movie_id}/${ht.episode.episode_number}`}
                                                                     className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"
                                                                 ></Link>
                                                             {/* ) : (
