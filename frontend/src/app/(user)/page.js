@@ -200,7 +200,7 @@ export default function Home() {
             <SlideShow data={better}></SlideShow>
           </div>
           <div>
-            <BannerAnother></BannerAnother>
+            <BannerAnother data={bannerData}></BannerAnother>
           </div>
           <div >
             <h2 className="fw-bold mb-3" style={{marginLeft:"50px"}}>Phim Hành Động</h2>
