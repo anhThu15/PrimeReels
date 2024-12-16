@@ -11,7 +11,7 @@ export default function Comment(props) {
   const [comments, setComments] = useState([]);  // Danh sách bình luận gốc
   const [sortedComments, setSortedComments] = useState([]);  // Danh sách bình luận đã sắp xếp
   const [sortOrder, setSortOrder] = useState('newest');  // Mặc định sắp xếp theo 'Mới nhất'
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, reset ,formState: { errors } } = useForm();
   const movieId = props.data?.movie_id;
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage, setCommentsPerPage] = useState(3); // Số bình luận mỗi trang
@@ -97,6 +97,7 @@ export default function Comment(props) {
         toast.success('Bình luận và đánh giá thành công!');
         const updatedComments = await axios.get(`/api/comments/movies/${movieId}`);
         setComments(updatedComments.data);
+        reset()
       }
     } catch (error) {
       toast.error("Bình luận và đánh giá không thành công, vui lòng thử lại.");
