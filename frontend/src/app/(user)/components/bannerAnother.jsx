@@ -8,9 +8,9 @@ export default function BannerAnother(props) {
   return (
     <>
       <div className="banner-container text-center position-relative">
-        <div className="background-image">
+        <div className="background-image opacity-50">
           <img
-            src="/images/image 22.png"
+            src={props.data[0]?.banner}
             className="w-100"
             alt="Background"
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
