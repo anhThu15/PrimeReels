@@ -102,7 +102,7 @@ class AuthController extends Controller
 
         // Xác minh email thành công duyệt đăng nhập
         $token = JWTAuth::fromUser($user);
-        return redirect('http://localhost:3000//login')->with('status', 'Xác minh email thành công. Bạn có thể đăng nhập.');
+        return redirect('http://localhost:3000/login')->with('status', 'Xác minh email thành công. Bạn có thể đăng nhập.');
 
     }
 

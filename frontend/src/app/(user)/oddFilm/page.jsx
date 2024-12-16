@@ -118,7 +118,7 @@ export default function FilmSeries() {
       <div className="container-fluid bg-nenVipPro p-0 text-white">
         <div className="container-fluid p-0">
           <Banner bannerData={bannerData}
-            genres={genres}
+            genres={genres} // Truyền danh sách thể loại vào để hiển thị
             onGenreChange={(genreId) => {
               setSelectedGenre(genreId); // Cập nhật state thể loại
               if (genreId) {
@@ -126,20 +126,6 @@ export default function FilmSeries() {
               }
             }}
           />
-          {/* <div className="container">
-            <div className="group-select-box">
-              <div className="form-group">
-                <label htmlFor="genreSelect">Chọn thể loại:</label>
-                <select id="genreSelect" value={selectedGenreId} onChange={handleGenreChange} className="form-select">
-                  <option value="">-- Chọn thể loại --</option>
-                  {genres.map((genre) => (
-                    <option key={genre.genre_id} value={genre.genre_id}>{genre.name}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div> */}
-          {/* Hiển thị các danh mục phim */}
           <div>
             <h2 className="fw-bold mt-5" style={{ marginLeft: "50px" }}>Phim Lẻ Đề Xuất Hôm Nay</h2>
             <SlideShow data={moviesData.random} />

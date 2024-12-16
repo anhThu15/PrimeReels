@@ -143,7 +143,7 @@ export default function Account() {
                         <th scope="col">EMAIL</th>
                         <th scope="col">GIỚI TÍNH</th>
                         <th scope="col">VAI TRÒ</th>
-                        <th scope="col">TÁC VỤ</th>
+                        {/* <th scope="col">TÁC VỤ</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -170,10 +170,10 @@ export default function Account() {
                                     Khách hàng
                                 </div>
                             </td>
-                            <td>
+                            {/* <td>
                                 <Link href={`/administration/account/edit/${user.user_id}`} className="btn btn-secondary">
                                     <i className="fa-solid fa-pen"></i>
-                                </Link>
+                                </Link> */}
                                 {/* <button
                                     className="btn btn-danger ms-2"
                                     onClick={() => setUserIdToDelete(user.user_id)}
@@ -182,7 +182,7 @@ export default function Account() {
                                 >
                                     <i className="fa-solid fa-trash"></i>
                                 </button> */}
-                            </td>
+                            {/* </td> */}
                         </tr>
                     ))}
                 </tbody>

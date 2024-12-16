@@ -139,60 +139,77 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Banner({ bannerData, genres, onGenreChange  }) {
+export default function Banner({ bannerData, genres, onGenreChange }) {
 
-    const [currentPath, setCurrentPath] = useState("");
+  const [currentPath, setCurrentPath] = useState("");
 
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        setCurrentPath(window.location.pathname);
-      }
-    }, []);
-    // Kiểm tra nếu là trang phim bộ hoặc phim lẻ
-    const showSelect = currentPath === "/filmSeries" || currentPath === "/oddFilm" || currentPath === "/animeFilm";
-    if (!bannerData || bannerData.length === 0) {
-      return (
-        <div className="spinner-border text-danger" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      );
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentPath(window.location.pathname);
     }
-  
+  }, []);
+  // Kiểm tra nếu là trang phim bộ hoặc phim lẻ
+  const showSelect = currentPath === "/filmSeries" || currentPath === "/oddFilm" || currentPath === "/animeFilm";
+  if (!bannerData || bannerData.length === 0) {
     return (
-      <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-inner">
-          {bannerData.map((item, index) => (
-            <div
-              className={`carousel-item ${index === 0 ? "active" : ""}`}
-              key={item.movie_id}
-            >
-              <div className="gradient-overlay"></div>
-              <div className="position-relative image-banner-slide">
-                <img
-                  className="image-banner"
-                  src={item.banner}
-                  width={"100%"}
-                  alt={item.title}
-                  
-                />
-                <div className="item-title-carousel">
-                  <h1 className="fw-bold text-with-shadow">{item.title}</h1>
-                  <div className="row text-with-shadow" style={{ width: 400 }}>
-                    <div className="col"><i className="fa-regular fa-star"></i> {item.rating}</div>
-                    <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
-                    <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(item.updated_at).getFullYear()}</div>
-                  </div>
-                  <div className="col mt-2 text-with-shadow overflow-auto" style={{ textAlign: "justify" }}>
-                    {item.description}
-                  </div>
-                  <Link href={`/film/${item.movie_id}`} className="btn btn-light rounded-pill mt-3">
-                    <i className="fa-solid fa-circle-play"></i> Xem Ngay
-                  </Link>
+      <div className="spinner-border text-danger" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    );
+  }
+
+  return (
+    <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+      <div className="carousel-inner">
+        {bannerData.map((item, index) => (
+          <div
+            className={`carousel-item ${index === 0 ? "active" : ""}`}
+            key={item.movie_id}
+          >
+            <div className="gradient-overlay"></div>
+            <div className="position-relative image-banner-slide">
+              <img
+                className="image-banner"
+                src={item.banner}
+                width={"100%"}
+                height={"600px"}
+                alt={item.title}
+
+              />
+              <div className="item-title-carousel">
+                <h1 className="fw-bold text-with-shadow">{item.title}</h1>
+                <div className="row text-with-shadow" style={{ width: 400 }}>
+                  <div className="col"><i className="fa-regular fa-star"></i> {item.rating}</div>
+                  <div className="col"><i className="fa-regular fa-clock"></i> 20/25</div>
+                  <div className="col"><i className="fa-solid fa-calendar-days"></i> {new Date(item.updated_at).getFullYear()}</div>
                 </div>
-                {showSelect && (
+                {/* <div className="col mt-2 text-with-shadow overflow-auto" style={{ textAlign: "justify", }}>
+                    {item.description}
+                  </div> */}
+                <div
+                  className="col mt-2 text-with-shadow"
+                  style={{
+                    textAlign: "justify",
+                    display: "-webkit-box", // Sử dụng flexbox cho cắt dòng
+                    WebkitBoxOrient: "vertical", // Định hướng dọc
+                    overflow: "hidden", // Ẩn nội dung dư
+                    textOverflow: "ellipsis", // Hiển thị dấu "..."
+                    WebkitLineClamp: 3, // Số dòng hiển thị
+                  }}
+                >
+                  {item.description}
+                </div>
+
+
+
+                <Link href={`/film/${item.movie_id}`} className="btn btn-light rounded-pill mt-3">
+                  <i className="fa-solid fa-circle-play"></i> Xem Ngay
+                </Link>
+              </div>
+              {showSelect && (
                 <div
                   className="select-dropdown sl-dropdown select-film-byMovieType"
-                  // style={{ position: "absolute", top: 200, right: 100 }}
+                // style={{ position: "absolute", top: 200, right: 100 }}
                 >
                   <select onChange={(e) => onGenreChange(e.target.value)}>
                     <option value="">Chọn thể loại</option>
@@ -204,19 +221,18 @@ export default function Banner({ bannerData, genres, onGenreChange  }) {
                   </select>
                 </div>
               )}
-              </div>
             </div>
-          ))}
-        </div>
-        <button className="carousel-control-prev" style={{ width: "100px" }} type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" style={{ width: "100px" }} type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+          </div>
+        ))}
       </div>
-    );
-  }
-  
+      <button className="carousel-control-prev" style={{ width: "100px" }} type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Previous</span>
+      </button>
+      <button className="carousel-control-next" style={{ width: "100px" }} type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Next</span>
+      </button>
+    </div>
+  );
+}

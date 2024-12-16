@@ -156,7 +156,7 @@ export default function FilterFilmSeries() {
           <h1 className="text-light">{getTitle()}</h1>
         </div>
         <div className="header-filter mt-2">
-          <div className="form-group">
+          <div className="form-group select-dropdown sl-dropdown">
             {/* <label htmlFor="genreSelect">Chọn thể loại:</label> */}
             <select
               id="genreSelect"
@@ -172,7 +172,7 @@ export default function FilterFilmSeries() {
               ))}
             </select>
           </div>
-          <div className="form-group">
+          <div className="form-group select-dropdown sl-dropdown">
             {/* <label htmlFor="countrySelect">Chọn quốc gia:</label> */}
             <select
               id="countrySelect"
