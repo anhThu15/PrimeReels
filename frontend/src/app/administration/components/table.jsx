@@ -50,6 +50,8 @@ export default function Table(props) {
     };
   }, [props.data]);
 
+  console.log(props.data);
+  
   return (
     <div className='mt-5'>
       <canvas ref={chartRef} style={{ width: "100%", maxWidth: "800px" }}></canvas>

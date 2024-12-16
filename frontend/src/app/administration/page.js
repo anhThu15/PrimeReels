@@ -123,7 +123,7 @@ export default function Home() {
               </div>
 
               <div className="col-md-6 pt-3"  data-aos="fade-up-right" data-aos-duration="3000">
-                <div className="card text-center ">
+                <div className=" border border-gray-800 text-center ">
                   <div className="card-body">
                   <Table data={chartData}></Table>
                   </div>
@@ -132,7 +132,7 @@ export default function Home() {
               
 
               <div className="col-md-6 pt-3"  data-aos="fade-up-left" data-aos-duration="3000">
-                <div className="card text-start">
+                <div className=" border border-gray-800 text-start">
                   <div className="card-body">
                         <Table2 data={chartData2}></Table2>
                   </div>
