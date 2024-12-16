@@ -26,7 +26,7 @@ export default function chitiethoaDon({params}){
                   <Link className="btn btn-danger mb-2 me-2" href='/administration/hoaDon'><i class="fa-solid fa-chevron-left"></i></Link> 
                   <span className="fs-4 ">Chi Tiết Hóa Đơn Giao Dịch</span> 
                 </div>
-                <div class="card">
+                <div class=" border border-gray-500">
                   <div class="card-body">
                     <h2 class="card-title text-center"> Mã Hóa Đơn: {hds.invoice_code}</h2>
                     <h6 class="card-title text-center"> {hds.created_at}</h6>
