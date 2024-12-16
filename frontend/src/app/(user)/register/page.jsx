@@ -19,8 +19,9 @@ export default function Register() {
             rePassword: '',
         },
         validationSchema: Yup.object({
-            user_name: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Họ và tên không được chứa ký tự đặc biệt hoặc số')
-            .required('Họ và tên không được để trống'),
+            user_name: Yup.string()
+                .matches(/^[\p{L}\s]+$/u, 'Họ và tên không được chứa ký tự đặc biệt như !@#$%^&*()')
+                .required('Họ và tên không được để trống'),
             email: Yup.string()
                 .matches(/^[a-zA-Z0-9._%+-]+@gmail\.com$/, "Email phải có đuôi @gmail.com")
                 .required("Email không được để trống"),
