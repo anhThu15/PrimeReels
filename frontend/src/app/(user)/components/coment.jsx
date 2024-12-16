@@ -143,7 +143,8 @@ export default function Comment(props) {
                   <div className="col-auto pe-2">
                     <img
                       className="rounded-circle"
-                      src={userAvatar}  // Sử dụng avatar của người dùng hoặc avatar mặc định
+                      // src={userAvatar}  // Sử dụng avatar của người dùng hoặc avatar mặc định
+                      src={ userAvatar}
                       width={60}
                       height={60}
                       alt="Avatar"
@@ -194,8 +195,8 @@ export default function Comment(props) {
             <div className="col-auto d-flex">
               <img
                 className="rounded-circle"
-                // src={cmt.user.avatar || '/images/userAvatar.png'} // Avatar mặc định nếu không có avatar của người dùng
-                src={'/images/userAvatar.png'} // Avatar mặc định nếu không có avatar của người dùng
+                src={cmt.user.avatar || '/images/userAvatar.png'} // Avatar mặc định nếu không có avatar của người dùng
+                // src={'/images/userAvatar.png'} // Avatar mặc định nếu không có avatar của người dùng
                 width={60}
                 height={60}
                 alt="Avatar"
