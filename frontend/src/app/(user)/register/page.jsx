@@ -19,12 +19,10 @@ export default function Register() {
             rePassword: '',
         },
         validationSchema: Yup.object({
-            user_name: Yup.string()
-                .matches(/^[\p{L}\s]+$/u, 'Họ và tên không được chứa ký tự đặc biệt như !@#$%^&*()')
-                .required('Họ và tên không được để trống'),
-            // Nhận diện tất cả các ký tự chữ (letter) trong mọi ngôn ngữ, bao gồm cả tiếng Việt
+            user_name: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Họ và tên không được chứa ký tự đặc biệt hoặc số')
+            .required('Họ và tên không được để trống'),
             email: Yup.string()
-                .matches(/^\S+@\S+\.\S+$/, "Email phải đúng định dạng example@gmail.com")
+                .matches(/^[a-zA-Z0-9._%+-]+@gmail\.com$/, "Email phải có đuôi @gmail.com")
                 .required("Email không được để trống"),
             password: Yup.string()
                 .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/, 'Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ và số')

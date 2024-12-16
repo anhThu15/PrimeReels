@@ -31,7 +31,7 @@ export default function InfomationUser() {
     const [isUpdated, setIsUpdated] = useState(false);
     const [invoice, setInvoice] = useState([]);
     const [voucher, setVoucher] = useState([]);
-
+    const [isGoogleAccount, setIsGoogleAccount] = useState(false);
 
     useEffect(() => {
         showSection(activeSection);
@@ -95,6 +95,7 @@ export default function InfomationUser() {
                         password: '',
                         avatar: data.user.avatar || ''
                     });
+                    setIsGoogleAccount(!!data.user.google_id);
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -141,7 +142,7 @@ export default function InfomationUser() {
                     // fetchUserData();
                     setTimeout(() => {
                         window.location.reload();
-                      }, 1000); //đợi 1s mới reload lại
+                    }, 1000); //đợi 1s mới reload lại
                 } else {
                     toast.error("Có lỗi xảy ra: " + result.message);
                 }
@@ -175,7 +176,7 @@ export default function InfomationUser() {
         }, 2000);
     }, [isUpdated]); // Chỉ chạy khi có cập nhật
     // console.log(love);
-    
+
 
     const hanldeRemoveLove = async (id) => {
         // alert(id)
@@ -224,12 +225,46 @@ export default function InfomationUser() {
         const getInvoice = async () => {
             try {
                 const res = await axios.get(`/api/invoices`, { revalidate: 3600 }).then((res) => res.data)
-                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id && invoice.status ==='success')
+                const userInvoices = res.filter(invoice => invoice.user_id === user.user_id && invoice.status === 'success')
                 setInvoice(userInvoices)
-                if(userInvoices.length >= 1){
+                if (userInvoices.length === 1) {
+                    // alert('tặng m voucher mới nè ')
+                    // const getVouchers = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+                    // const find = getVouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
+
+                    // if(find.length === 0 ){
+                    //     const value ={
+                    //         name:`THUONGNAPLANDAU_${user.user_id}`,
+                    //         voucher_type_id: 4,
+                    //         voucher_quantity: 1,
+                    //         enddate: null
+                    //     }
+                    //     // console.log(value);
+
+                    //     const res = await fetch(`/api/vouchersUser`, {
+                    //         method: 'POST',
+                    //         headers: {
+                    //             'Accept': 'application/json',
+                    //             'Content-Type': 'application/json',
+                    //             'Authorization': `Bearer ${token}`,
+                    //         },
+                    //         body: JSON.stringify(value),
+                    //     });
+
+                    //     if(res){
+                    //         // console.log('thành công', value, res);
+                    //         toast.success('Chúc mừng bạn nhận thưởng nạp lần đầu hihi')
+
+                    //     }else{
+                    //         console.log('thất bai', value);
+
+                    //     }
+
+                    // }
+
                     try {
-                        const vouchers =  await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
-                        const find = vouchers.filter( v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
+                        const vouchers = await axios.get(`/api/vouchers`, { revalidate: 3600 }).then((res) => res.data)
+                        const find = vouchers.filter(v => v.name === `THUONGNAPLANDAU_${user.user_id}`)
                         setVoucher(find)
                     } catch (error) {
                         console.error("Error fetching vouchers:", error);
@@ -246,19 +281,21 @@ export default function InfomationUser() {
     }, [user.user_id])
     // console.log(invoice);
 
+
+
     useEffect(() => {
-        if(voucher){
+        if (voucher) {
             // console.log("Voucher has been updated:", voucher);
         }
-    },[voucher])
-    console.log(voucher);
+    }, [voucher])
+    // console.log(voucher);
 
     const marqueeStyle = {
         fontSize: '36px',
         fontWeight: 'bold',
         animation: 'colorChange 1s infinite',
-      };
-    
+    };
+
     const keyframesStyle = `
         @keyframes colorChange {
           0% { color: red; }
@@ -269,12 +306,12 @@ export default function InfomationUser() {
           100% { color: orange; }
         }
       `;
-    
-      // Thêm keyframes vào đầu tài liệu
-      if (typeof document !== 'undefined') {
+
+    // Thêm keyframes vào đầu tài liệu
+    if (typeof document !== 'undefined') {
         const styleSheet = document.styleSheets[0];
         styleSheet.insertRule(keyframesStyle, styleSheet.cssRules.length);
-      }
+    }
 
 
     return (
@@ -329,7 +366,7 @@ export default function InfomationUser() {
                         <div className="col-sm-2 text-center">
                             <div className="user-image">
                                 <img
-                                    src={userData.avatar || "images/userAvatar.png"}
+                                    src={userData.avatar || "images/default-user.png"}
                                     className="img-fluid rounded-circle"
                                     id="userImg"
                                     alt="User Avatar"
@@ -353,6 +390,9 @@ export default function InfomationUser() {
                                             required
                                         />
                                     </div>
+
+                                </div>
+                                <div className="row-mb-3">
                                     <div className="col-sm-6">
                                         <label className="form-label text-white">Giới tính:</label>
                                         <div className="d-flex">
@@ -440,78 +480,80 @@ export default function InfomationUser() {
                 </div>
 
                 {/* Modal for changing password */}
-                <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+                {/* <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} /> */}
+                {!isGoogleAccount && (
+                    <ChangePasswordModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+                )}
+
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
                     <div className="w-100 bg-danger mb-2">
                         {voucher[0]?.voucher_quantity === 1 ? (
-                            // console.log(voucher),
-                            
                             <>
                                 <marquee behavior="scroll" direction="left" scrollamount="5" loop="infinite" className="text-white fw-bold fs-4">
-                                    Chúc mừng bạn nạp lần đầu thành công, tặng bạn voucher <span  style={marqueeStyle} >{voucher[0]?.name}</span>hạn sử dụng lên đến 1 năm , Chúc bạn xem phim vui vẻ =)))
+                                    Chúc mừng bạn nạp lần đầu thành công, tặng bạn voucher <span style={marqueeStyle} >{voucher[0]?.name}</span>hạn sử dụng lên đến 1 năm , Chúc bạn xem phim vui vẻ =)))
                                 </marquee>
                             </>
-                        ):(<></>)}
+                        ) : (<></>)}
                     </div>
-                    {invoice.length === 0 ? (<DVDX></DVDX>):(
+                    {invoice.length === 0 ? (<DVDX></DVDX>) : (
                         <>
-                        <div className="row">
-                            {invoice.map((iv) => {
-                                let statusButton;
+                            <div className="row">
+                                {invoice.map((iv) => {
+                                    let statusButton;
 
-                                const calculateSeconds = (targetDate) => {
-                                    const now = new Date(); 
-                                    const target = new Date(targetDate); 
+                                    const calculateSeconds = (targetDate) => {
+                                        const now = new Date();
+                                        const target = new Date(targetDate);
 
-                                    // console.log('now:'+now , 'then:'+target);
-                                    
-                                    
-                                    // Tính khoảng cách bằng giây
-                                    const diffInSeconds = Math.floor((target - now) / 1000);
-                                    
-                                    return diffInSeconds;
-                                  };
+                                        // console.log('now:'+now , 'then:'+target);
 
-                    
-                            if(iv){
-                                const seconds = calculateSeconds(iv.end_date);
-                                // console.log(seconds);
-                                
-                                if(seconds > 0){
-                                  statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
-                                }else{
-                                  statusButton = <button className="btn btn-sm btn-warning">Hết Hạn</button>;
-                                }
-                                
-                            }
 
-                                return (
-                                    <>
-                                        <div className="col-md-6 mb-4">
-                                            <div className="card box-card">
-                                                <div className="row g-0">
-                                                    <div className="col-md-4">
-                                                        <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <div className="card-body">
-                                                            <div>
-                                                                <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
-                                                                {statusButton}
+                                        // Tính khoảng cách bằng giây
+                                        const diffInSeconds = Math.floor((target - now) / 1000);
+
+                                        return diffInSeconds;
+                                    };
+
+
+                                    if (iv) {
+                                        const seconds = calculateSeconds(iv.end_date);
+                                        // console.log(seconds);
+
+                                        if (seconds > 0) {
+                                            statusButton = <button className="btn btn-sm btn-success">Thành Công</button>;
+                                        } else {
+                                            statusButton = <button className="btn btn-sm btn-warning">Hết Hạn</button>;
+                                        }
+
+                                    }
+
+                                    return (
+                                        <>
+                                            <div className="col-md-6 mb-4">
+                                                <div className="card box-card">
+                                                    <div className="row g-0">
+                                                        <div className="col-md-4">
+                                                            <img src="images/cinema-4153289_640.webp" className="img-fluid rounded-start" alt="Service Image 1" />
+                                                        </div>
+                                                        <div className="col-md-8">
+                                                            <div className="card-body">
+                                                                <div>
+                                                                    <h5 className="u-service-buy-title">Gói {iv.package.name}</h5>
+                                                                    {statusButton}
+                                                                </div>
+                                                                <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
+                                                                <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name) : ('Không Dùng')}</p>
+                                                                <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
+                                                                <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
                                                             </div>
-                                                            <p className="card-text">Hình Thức Thanh Toán: {iv.payment_method}</p>
-                                                            <p className="card-text">Mã Giảm Giá: {iv?.voucher ? (iv?.voucher?.name) : ('Không Dùng')}</p>
-                                                            <p className="card-text">Ngày Giờ Bắt Đầu Sử Dụng: {iv.start_date}</p>
-                                                            <p className="card-text">Ngày Giờ Kết Thúc Sử Dụng: {iv.end_date}</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </>
-                                )
-                            })}
-                        </div>
+                                        </>
+                                    )
+                                })}
+                            </div>
                         </>
                     )}
                 </div>
@@ -519,122 +561,86 @@ export default function InfomationUser() {
                 <div className="u-history-view" id="u-history-view" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
-                            {history.length === 0 ? (<LSDX></LSDX>):(
+                            {history.length === 0 ? (<LSDX></LSDX>) : (
                                 <>
-                            <div className="history-view-title d-flex align-items-center">
-                                <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
-                            </div>
-                            {/* <div className="row mt-3">
-                                {history.map((ht) => {
-                                    return (
-                                        <>
-                                            <div key={ht.episode?.episode_id} className="card text-bg-dark hover-box me-5 ms-2 mt-3 " style={{ width: "350px", }}>
-                                                <div className="bg-black opacity-75">
-                                                    <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={ht.episode?.video_url} light={true} />
-                                                </div>
-                                                <div className="card-img-overlay ">
-                                                </div>
-                                                <div className="play-icon-overlay">
-                                                    <div className=" rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px" }}>
-                                                        {localStorage.getItem("token") ? (
-                                                            <Link href={`/watch/${ht.episode?.movie_id}/${ht.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
-                                                        ) : (
-                                                            <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </>
-                                    )
-                                })}
-                            </div> */}
-                            <div className="row mt-3">
-                                    {history.map((ht) => {
-                                        // console.log(ht.episode);
-                                        
-                                        return (
-                                            <div
-                                                key={ht.episode?.episode_id}
-                                                className="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 mb-3"
-                                            >
-                                                <div className="card text-bg-dark hover-box me-2 ms-2" style={{ width: "100%" }}>
-                                                    <div className="bg-black opacity-75">
-                                                        <ReactPlayer
-                                                            width="100%"
-                                                            height={220}
-                                                            // style={{ marginTop: "-18px" }}
-                                                            url={ht.episode?.video_url}
-                                                            light={true}
-                                                        />
-                                                    </div>
-                                                    <div className="card-img-overlay "></div>
-                                                    <div className="play-icon-overlay">
-                                                        <div
-                                                            className="rounded-circle bg-black opacity-50 border border-white"
-                                                            style={{ width: "50px", height: "50px" }}
-                                                        >
-                                                            {/* {localStorage.getItem("token") ? ( */}
-                                                                <Link
-                                                                    href={`/watch/${ht.episode?.movie_id}/${ht.episode.episode_number}`}
-                                                                    className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"
-                                                                ></Link>
-                                                            {/* ) : (
-                                                                <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
-                                                            )} */}
+                                    <div className="history-view-title d-flex align-items-center">
+                                        <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
+                                    </div>
+                                    <div className="row mt-3">
+
+                                        {history.map((ht) => {
+                                            return (
+                                                <>
+                                                    <div key={ht.episode?.episode_id} className="card text-bg-dark hover-box me-5 ms-2 mt-3 " style={{ width: "350px", }}>
+                                                        <div className="bg-black opacity-75">
+                                                            <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={ht.episode?.video_url} light={true} />
+                                                            {/* <video src={episodes.video_url} height={220} className="card-img" alt="..."/> */}
+                                                        </div>
+                                                        <div className="card-img-overlay ">
+                                                        </div>
+                                                        <div className="play-icon-overlay">
+                                                            <div className=" rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px" }}>
+                                                                {localStorage.getItem("token") ? (
+                                                                    <Link href={`/watch/${ht.episode?.movie_id}/${ht.episode_id}`} className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></Link>
+                                                                ) : (
+                                                                    <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
+                                                </>
+                                            )
+                                        })}
 
+
+
+
+                                    </div>
                                 </>
                             )}
                         </div>
                     </div>
                 </div>
-                
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
-                            {love.length === 0 ? (<DSYT></DSYT>):(
+                            {love.length === 0 ? (<DSYT></DSYT>) : (
                                 <>
-                            <div className="history-view-title d-flex align-items-center">
-                                <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã thích {love.length} phim gần đây</p>
-                                {/* <button className="btn btn-danger">Xóa toàn bộ</button> */}
-                            </div>
-                            <div className="row mt-3">
-                                {love?.map((mv) => {
-                                    // console.log(mv);
+                                    <div className="history-view-title d-flex align-items-center">
+                                        <p className="mb-0 text-white me-2 fw-bold fs-3">Bạn đã thích {love.length} phim gần đây</p>
+                                        {/* <button className="btn btn-danger">Xóa toàn bộ</button> */}
+                                    </div>
+                                    <div className="row mt-3">
+                                        {love?.map((mv) => {
+                                            // console.log(mv);
 
-                                    return (
-                                        <>
-                                            <div className="col-sm-2 position-relative mt-2">
-                                                <div className="card text-bg-dark hover-box">
-                                                    <div>
-                                                        <img src={mv.movie.poster} height={350} className="card-img" alt="..." />
-                                                    </div>
-                                                    <div className="play-icon-overlay d-flex justify-content-center align-items-center">
-                                                        <div className="d-flex">
-                                                            <div className="rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                                <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white" />
+                                            return (
+                                                <>
+                                                    <div className="col-sm-2 position-relative mt-2">
+                                                        <div className="card text-bg-dark hover-box">
+                                                            <div>
+                                                                <img src={mv.movie.poster} height={350} className="card-img" alt="..." />
                                                             </div>
-                                                            <div className="rounded-circle bg-black opacity-50 border border-white ms-2" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                                <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{ padding: 0 }}>
-                                                                    <i className="fa-solid fa-trash text-danger fa-xl"></i>
-                                                                </button>
+                                                            <div className="play-icon-overlay d-flex justify-content-center align-items-center">
+                                                                <div className="d-flex">
+                                                                    <div className="rounded-circle bg-black opacity-50 border border-white" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                        <Link href={`/film/${mv.movie.movie_id}`} className="nav-link fa-solid fa-play fa-2xl text-white" />
+                                                                    </div>
+                                                                    <div className="rounded-circle bg-black opacity-50 border border-white ms-2" style={{ width: "50px", height: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                                        <button className="btn" onClick={() => hanldeRemoveLove(mv.movie.movie_id)} style={{ padding: 0 }}>
+                                                                            <i className="fa-solid fa-trash text-danger fa-xl"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                        </>
-                                    )
-                                })}
+                                                </>
+                                            )
+                                        })}
 
-                            </div>
+                                    </div>
                                 </>
                             )}
                         </div>
