@@ -1868,3 +1868,71 @@ html,body {
   background-color: #dc3545; /* Màu Danger */
   border-color: #dc3545;
 }
+
+.item-title-carousel {
+  position: absolute;
+  top: 180px;
+  left: 110px;
+  width: 600px;
+}
+
+/* .image-banner-slide .image-banner{
+  height: 100vh;
+} */
+
+
+@media (max-width: 568px) {
+  .item-title-carousel {
+    position: absolute;
+    top: 30px;
+    left: 30px; /* Thêm px ở đây */
+    width: 300px;
+    font-size: 12px;
+    font-weight: 400;
+    
+  }
+  .item-title-carousel .overflow-auto {
+    max-height: 200px; /* Chiều cao ban đầu */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .image-banner{
+    height: 400px;
+  }
+  .gradient-overlay{
+    height: 100px;
+  }
+  .search-box-header,.icon-search-header,.buy-package{
+    margin-bottom: 20px;
+  }
+  .icon-buy-package-header{
+    margin: 7px 0 0 0;
+  }
+  .menu-nav-header,.logo-nav-header{
+    margin: 20px;
+  }
+  .select-film-byMovieType select{
+    position: absolute;
+    top: 111px;
+    right: -95px;
+  }
+  
+}
+
+.select-film-byMovieType{
+  position: absolute!important;
+  top: 200px!important;
+  right: 100px!important;
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu-end {
+    left: 0 !important;
+    right: 0 !important; 
+    margin: 0 auto; 
+    width: 100%;
+  }
+}
+
+

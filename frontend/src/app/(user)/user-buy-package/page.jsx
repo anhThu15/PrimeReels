@@ -124,7 +124,7 @@ export default function UserBuyPackage() {
     },[])
     
 
-      console.log(check);
+    //   console.log(vouchers[0]?.voucher_type?.voucher_type_id);
       
 
     const hanldeBack = () => {
@@ -170,7 +170,7 @@ export default function UserBuyPackage() {
                     return(
                         <>
                             <div className="col-md-4">
-                                <div className="card">
+                                <div className=" border border-gray-800">
                                     <div className="card-body">
                                         <div className="img">
                                             <div className="parkage-title">
@@ -206,6 +206,7 @@ export default function UserBuyPackage() {
                                         <h6>Chương trình ưu đãi</h6>
                                             {vouchers.map((vch) => {
                                                 if(vch?.voucher_type?.min_spend <= pk.price ){
+                                                    console.log(vch?.voucher_type?.voucher_type_id)
                                                     return(
                                                         <>
                                                             <div className="bx-vnpay d-flex">
@@ -213,7 +214,12 @@ export default function UserBuyPackage() {
                                                                     <img src="images/icon-vnpay.webp" alt="" />
                                                                 </div>
                                                                 <div className="text-sales">
-                                                                    Giảm {vch?.voucher_type?.discount}% khi thanh toán qua VNPAY với mã {vch.name}
+                                                                    {vch?.voucher_type?.voucher_type_id === 1 ? (
+                                                                        <p>Giảm {vch?.voucher_type?.discount}% khi thanh toán qua VNPAY với mã {vch.name}</p>
+                                                                    ):(
+                                                                        <p>Giảm {vch?.voucher_type?.discount.toLocaleString()} VND khi thanh toán qua VNPAY với mã {vch.name}</p>
+                                                                    )}
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </>

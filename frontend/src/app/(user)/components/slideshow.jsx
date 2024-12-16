@@ -134,9 +134,10 @@ export default function SlideShow(props) {
         breakpoint: 576,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1,
+          slidesToScroll: 2,
           autoplay: true,
           autoplaySpeed: 3000,
+          arrows:true
         },
       },
     ],

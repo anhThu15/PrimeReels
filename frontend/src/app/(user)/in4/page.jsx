@@ -329,7 +329,7 @@ export default function InfomationUser() {
                         <div className="col-sm-2 text-center">
                             <div className="user-image">
                                 <img
-                                    src={userData.avatar || "images/default-user.png"}
+                                    src={userData.avatar || "images/userAvatar.png"}
                                     className="img-fluid rounded-circle"
                                     id="userImg"
                                     alt="User Avatar"
@@ -398,7 +398,7 @@ export default function InfomationUser() {
                                             readOnly
                                         />
                                     </div>
-                                    <div className="col-sm-6">
+                                    {/* <div className="col-sm-6">
                                         <label htmlFor="avatar" className="form-label text-white">Avatar URL:</label>
                                         <input
                                             type="text"
@@ -409,7 +409,7 @@ export default function InfomationUser() {
                                             onChange={handleChange}
                                             required
                                         />
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col-sm-6">
@@ -444,7 +444,7 @@ export default function InfomationUser() {
                 <div className="u-service-buy mt-3 h-25" id="u-service-buy" style={{ display: 'none' }}>
                     <div className="w-100 bg-danger mb-2">
                         {voucher[0]?.voucher_quantity === 1 ? (
-                            console.log(voucher),
+                            // console.log(voucher),
                             
                             <>
                                 <marquee behavior="scroll" direction="left" scrollamount="5" loop="infinite" className="text-white fw-bold fs-4">
@@ -524,15 +524,13 @@ export default function InfomationUser() {
                             <div className="history-view-title d-flex align-items-center">
                                 <p className="mb-0 text-white">Bạn đã xem {history.length} phim gần đây</p>
                             </div>
-                            <div className="row mt-3">
-
+                            {/* <div className="row mt-3">
                                 {history.map((ht) => {
                                     return (
                                         <>
                                             <div key={ht.episode?.episode_id} className="card text-bg-dark hover-box me-5 ms-2 mt-3 " style={{ width: "350px", }}>
                                                 <div className="bg-black opacity-75">
                                                     <ReactPlayer width='100%' height={220} style={{ marginTop: "-18px" }} url={ht.episode?.video_url} light={true} />
-                                                    {/* <video src={episodes.video_url} height={220} className="card-img" alt="..."/> */}
                                                 </div>
                                                 <div className="card-img-overlay ">
                                                 </div>
@@ -549,16 +547,54 @@ export default function InfomationUser() {
                                         </>
                                     )
                                 })}
+                            </div> */}
+                            <div className="row mt-3">
+                                    {history.map((ht) => {
+                                        // console.log(ht.episode);
+                                        
+                                        return (
+                                            <div
+                                                key={ht.episode?.episode_id}
+                                                className="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 mb-3"
+                                            >
+                                                <div className="card text-bg-dark hover-box me-2 ms-2" style={{ width: "100%" }}>
+                                                    <div className="bg-black opacity-75">
+                                                        <ReactPlayer
+                                                            width="100%"
+                                                            height={220}
+                                                            // style={{ marginTop: "-18px" }}
+                                                            url={ht.episode?.video_url}
+                                                            light={true}
+                                                        />
+                                                    </div>
+                                                    <div className="card-img-overlay "></div>
+                                                    <div className="play-icon-overlay">
+                                                        <div
+                                                            className="rounded-circle bg-black opacity-50 border border-white"
+                                                            style={{ width: "50px", height: "50px" }}
+                                                        >
+                                                            {/* {localStorage.getItem("token") ? ( */}
+                                                                <Link
+                                                                    href={`/watch/${ht.episode?.movie_id}/${ht.episode.episode_number}`}
+                                                                    className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"
+                                                                ></Link>
+                                                            {/* ) : (
+                                                                <div className="nav-link fa-solid fa-play fa-2xl text-white ms-3 mt-4"></div>
+                                                            )} */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
 
-
-
-
-                            </div>
                                 </>
                             )}
                         </div>
                     </div>
                 </div>
+                
                 <div className="u-favorite mt-2" id="u-favorite" style={{ display: 'none' }}>
                     <div style={{ backgroundColor: "#353A3F" }}>
                         <div className="card-body">
