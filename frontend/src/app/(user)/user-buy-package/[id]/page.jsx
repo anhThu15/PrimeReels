@@ -57,7 +57,7 @@ export default function UserPayMentPackageDetail({params}){
               }
             }).then((res) => res.data);
             if (res) {
-              toast.success('thành công ròi đi chữa lãnh hoy ~~~')
+            //   toast.success('thành công ròi đi chữa lãnh hoy ~~~')
               window.location.href = res.url
             }
             
