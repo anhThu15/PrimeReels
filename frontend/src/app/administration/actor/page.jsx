@@ -166,19 +166,9 @@ export default function AdminActor() {
                 <tbody>
                     {currentActors.map((actor, i) => (
                         <tr key={actor.actor_id}>
-                            {/* <th scope="row">
-                                <input type="checkbox" />
-                            </th> */}
                             <td>{i + 1}</td>
                             <td>
-                                {/* <img src={actor.image_url} alt="" style={{ width: "50px", height: "50px", objectFit: "cover" }} className="rounded" /> */}
                                 <td>
-                                    {/* <img
-                                    src={actor.image_url || "/images/default-avatar.png"} // Sử dụng URL hoặc ảnh mặc định
-                                    alt="Actor Avatar"
-                                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
-                                    className="rounded"
-                                /> */}
                                 {actor.image_url && (actor.image_url.startsWith('http') || 
                                 actor.image_url.endsWith('.jpg') || 
                                 actor.image_url.endsWith('.jpeg') || 
@@ -198,14 +188,18 @@ export default function AdminActor() {
                             </td>
                             <td>{actor.name}</td>
                             <td style={{
-                                maxWidth: "300px",
-                                whiteSpace: "normal",
+                                whiteSpace: "nowrap",
                                 wordBreak: "break-word",
-                                overflowWrap: "break-word"
+                                overflowWrap: "break-word",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                maxWidth: "200px" // Bạn có thể thay đổi giá trị này để đặt giới hạn độ rộng
                             }}>
                                 {actor.biography}
                             </td>
-                            <td>{actor.birth_date}</td>
+
+                            <td>{new Date(actor.birth_date).toISOString().split("T")[0]}</td>
+
                             <td>
                                 <Link className="btn btn-secondary" href={`/administration/actor/edit/${actor.actor_id}`}>
                                     <i className="fa-solid fa-pen"></i>

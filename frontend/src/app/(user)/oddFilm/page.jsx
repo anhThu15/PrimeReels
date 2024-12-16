@@ -34,7 +34,7 @@ export default function FilmSeries() {
           axios.get(`/api/genres`), // Lấy danh sách thể loại phim
           axios.get(`/api/movies-type/2`) // Lấy danh sách phim
         ]);
-        const bannerData = resMovies.data;
+        const bannerData = resMovies.data.slice(0, 3);
         setMovieType2(bannerData)
         const genresData = resGenres.data; // Lưu thể loại phim
         setGenres(genresData); // Cập nhật state cho danh sách thể loại

@@ -38,7 +38,7 @@ export default function FilmSeries() {
 
         ]);
         // console.log(resMovies)
-        const bannerData = resMovies.data;
+        const bannerData = resMovies.data.slice(0, 3);
         setMovieType3(bannerData)
 
         const genresData = resGenres.data; // Lưu thể loại phim

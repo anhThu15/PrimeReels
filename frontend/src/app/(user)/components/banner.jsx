@@ -172,7 +172,6 @@ export default function Banner({ bannerData, genres, onGenreChange  }) {
                   className="image-banner"
                   src={item.banner}
                   width={"100%"}
-                  height={"600px"}
                   alt={item.title}
                   
                 />
